@@ -262,17 +262,17 @@ void stage3() {
       stage3Displays[i][0] + (stage3DisplayX/2), stage3Displays[i][1] + 50 + stage3DisplayY);
   }
   int holder = hour;
-  String hOne = (holder%10) + "";
+  String hOne = floor(holder%10) + "";
   holder = holder/10;
-  String hTen = (holder%10) + "";  
+  String hTen = floor(holder%10) + "";  
   holder = min;
-  String mOne = (holder%10) + "";
+  String mOne = floor(holder%10) + "";
   holder = holder/10;
-  String mTen = (holder%10) + "";  
+  String mTen = floor(holder%10) + "";  
   holder = sec;
-  String sOne = (holder%10) + "";
+  String sOne = floor(holder%10) + "";
   holder = holder/10;
-  String sTen = (holder%10) + "";  
+  String sTen = floor(holder%10) + "";  
   textSize(36);
   fill(0, 102, 153);
   text(hTen, stage3Displays[0][0] + 30, stage3Displays[0][1] + 100);
