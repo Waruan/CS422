@@ -337,10 +337,10 @@ void stage5(){
   threeButton();
   textSize(36);
   fill(0, 102, 153);
-  String text = "Time: " + (hour + "")+ ":" + (min+"") +  ":" +(sec+"");
-  text(text, 363, 236);
-  text = "Temp: " + (temp + "");
-  text(text, 363, 276);
+  String textTemp = "Time: " + (hour + "")+ ":" + (min+"") +  ":" +(sec+"");
+  text(textTemp, 363, 236);
+  textTemp = "Temp: " + (temp + "");
+  text(textTemp, 363, 276);
   if(mode == 1){
     text("Mode: Bake", 363, 316);
   }
