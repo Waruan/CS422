@@ -13,7 +13,7 @@
 
 // here is a processing.js solution from http://aaron-sherwood.com/processingjs/circleSound.html
 // uncomment this line to get audio in Processing.js
- Audio beepSound = new Audio();
+ //Audio beepSound = new Audio();
 
 // also note the soundfile needs to be in the data folder for processing and outside that folder for Processing.js
 // sounds are also a bit slowerer to start up in Processing.js
@@ -91,12 +91,12 @@ void loadSounds() {
   //beepSound = new SoundFile(this, "bing.mp3");
 
   // processing.js load sound
-  beepSound.setAttribute("src","bing.mp3");
+  //beepSound.setAttribute("src","bing.mp3");
 }
 
 void playBeep() {
   // play audio in processing or processing.js
-  beepSound.play();
+  //beepSound.play();
 }
 
 
@@ -203,11 +203,11 @@ void stage2() {
   String ten; 
   String hundred;
   int holder = temp;
-  one = (holder%10) + "";  
+  one = floor(holder%10) + "";  
   holder = holder/10;
-  ten = (holder%10) + "";  
+  ten = floor(holder%10) + "";  
   holder = holder/10;  
-  hundred = (holder%10) + "";  
+  hundred = floor(holder%10) + "";  
   holder = holder/10;
   textSize(36);
   fill(0, 102, 153);
