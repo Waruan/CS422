@@ -104,8 +104,9 @@ void loadSounds() {
 
 void playBeep() {
   // play audio in processing or processing.js
-   if(mute == false)
+   if(mute == false){
      beepSound.play();
+   }
 }
 
 
@@ -472,6 +473,11 @@ void stage6(){
     fill(0, 102, 153);
     textSize(36);
     text("Time Remaining " + remainingTime, 500, 60);
+    if(mode == 6)
+      text("Inside Temp " + temp, 500, 100 );
+    else{
+      text("Inside Temp 300", 500, 100 );
+    }
     if(remainingTime  == 0){
       stage = 7;
       playBeep();
