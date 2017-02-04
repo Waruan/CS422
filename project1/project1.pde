@@ -13,7 +13,7 @@
 
 // here is a processing.js solution from http://aaron-sherwood.com/processingjs/circleSound.html
 // uncomment this line to get audio in Processing.js
- //Audio beepSound = new Audio();
+Audio beepSound = new Audio();
 
 // also note the soundfile needs to be in the data folder for processing and outside that folder for Processing.js
 // sounds are also a bit slowerer to start up in Processing.js
@@ -60,14 +60,20 @@ int stage3DisplayX = 75;
 int stage3DisplayY = 150;
 int[][] stage3Buttons = { {250, 250}, {350, 250}, {500, 250}, {600, 250}, {750, 250}, {850, 250}};
 
-int[][] stage4Buttons = {{250, 250}, {250, 300}, {250, 350}, {750, 300}};
+int[][] stage4Buttons = {{250, 250}, {250, 300}, {250, 350},{250, 400},{250, 450}, {750, 300}};
 int stage4ButtonsX = 100;
 int stage4ButtonsY = 25;
-String[] stage4Text = {"Bake","Broil","Toast","Custom"};
+String[] stage4Text = {"Bake","Broil","Toast","Pizza","Bagel","Custom"};
 
 int[][] stage5Buttons = { {124, 600}, {900, 600}};
 String[] stage5Text = {"Preheat", "Start"};
 
+int stage10Buttons[][]= {{420,200},{420,220},{800,220},{420,420}};
+int stage10Size[][]= {{400,20},{20,200},{20,200},{400,20}}; 
+boolean stage10Selected[] = {false,false,false,false};
+
+String[] preSetName = {"Toast: White" ,"Toast: Golden" , "Toast: Burnt"};
+int[] preSetTime = {30,120,180};
 
 int hourToMs = 3600000;
 int minToMs = 60000;
@@ -76,10 +82,12 @@ int countDown = 0;
 int subtractor = 0;
 int currentTime;
 int time = 0;
+boolean stage9Enter = false;
+int shutoff = 0;
 int borderStroke = 10;
 int pauseSubtractor = 0;
 int pauseTime = 0;
-
+boolean mute = false;
 boolean firstPause = false;
 
 /////////////////////////////////////////////////////
@@ -91,12 +99,13 @@ void loadSounds() {
   //beepSound = new SoundFile(this, "bing.mp3");
 
   // processing.js load sound
-  //beepSound.setAttribute("src","bing.mp3");
+  beepSound.setAttribute("src","bing.mp3");
 }
 
 void playBeep() {
   // play audio in processing or processing.js
-  //beepSound.play();
+   if(mute == false)
+     beepSound.play();
 }
 
 
@@ -136,6 +145,12 @@ void draw() {
   case 8:
     preHeat();
     break;
+  case 9:
+    stage9();
+    break;
+  case 10:
+    stage10();
+    break;
   default: 
     turnOn();
     break;
@@ -152,35 +167,103 @@ void turnOn() {
   text("Turn ON", 580, 400);
 }
 
+// preset or custom
 void stage1() {
   noStroke();
   background(0);
   oneButton();
   pause = false;
   stop = false;
-  for (int i=0; i < stage1Buttons.length; i++) {
+  
     fill(127, 127, 127);
-    rect(stage1Buttons[i][0], stage1Buttons[i][1], stage1ButtonX, stage1ButtonY, 10);
+    rect(stage1Buttons[0][0], stage1Buttons[0][1], stage1ButtonX, stage1ButtonY, 10);
     textSize(20);
     fill(0, 102, 153);
-    text(stage1Text[i], stage1Buttons[i][0], stage1Buttons[i][1] + 23);
-  }
+    text(stage1Text[0], stage1Buttons[0][0], stage1Buttons[0][1] + 23);
+    
+    fill(127, 127, 127);
+    rect(stage1Buttons[1][0], stage1Buttons[1][1], stage1ButtonX, stage1ButtonY, 10);
+    textSize(20);
+    fill(0, 102, 153);
+    text(preSetName[0], stage1Buttons[1][0] , stage1Buttons[1][1] + 23);
   
     fill(127, 127, 127);
     rect(stage1Buttons[1][0], stage1Buttons[1][1]+150, stage1ButtonX, stage1ButtonY, 10);
     textSize(20);
     fill(0, 102, 153);
-    text(stage1Text[1], stage1Buttons[1][0] , stage1Buttons[1][1] + 23+150);
+    text(preSetName[1], stage1Buttons[1][0] , stage1Buttons[1][1] + 23+150);
     
     
     fill(127, 127, 127);
     rect(stage1Buttons[1][0], stage1Buttons[1][1]+300, stage1ButtonX, stage1ButtonY, 10);
     textSize(20);
     fill(0, 102, 153);
-    text(stage1Text[1], stage1Buttons[1][0], stage1Buttons[1][1] + 23+300);
+    text(preSetName[2], stage1Buttons[1][0], stage1Buttons[1][1] + 23+300);
 }
 
+// mode selection
 void stage2() {
+  noStroke();
+  background(0);
+  threeButton();
+  textSize(36);
+  fill(0, 102, 153);
+  text("Select mode", 500, 105);
+  for (int i=0; i<stage4Buttons.length; i++) {
+    fill(127, 127, 127);
+    rect(stage4Buttons[i][0], stage4Buttons[i][1], stage4ButtonsX, stage4ButtonsY, 10);
+    textSize(20);
+    fill(0, 102, 153);
+    text(stage4Text[i], stage4Buttons[i][0] + 5, stage4Buttons[i][1] + 23);
+    
+  }
+  if(mode == 1){
+    fill(240, 255, 76);
+    rect(stage4Buttons[0][0], stage4Buttons[0][1], stage4ButtonsX, stage4ButtonsY, 10);
+    textSize(20);
+    fill(0, 102, 153);
+    text(stage4Text[0], stage4Buttons[0][0] + 5, stage4Buttons[0][1] + 23);
+  }
+  if(mode == 2){
+    fill(240, 255, 76);
+    rect(stage4Buttons[1][0], stage4Buttons[1][1], stage4ButtonsX, stage4ButtonsY, 10);
+    textSize(20);
+    fill(0, 102, 153);
+    text(stage4Text[1], stage4Buttons[1][0] + 5, stage4Buttons[1][1] + 23);
+  }
+  if(mode == 3){
+    fill(240, 255, 76);
+    rect(stage4Buttons[2][0], stage4Buttons[2][1], stage4ButtonsX, stage4ButtonsY, 10);
+    textSize(20);
+    fill(0, 102, 153);
+    text(stage4Text[2], stage4Buttons[2][0] + 5, stage4Buttons[2][1] + 23);
+  }
+  if(mode == 4){
+    fill(240, 255, 76);
+    rect(stage4Buttons[3][0], stage4Buttons[3][1], stage4ButtonsX, stage4ButtonsY, 10);
+    textSize(20);
+    fill(0, 102, 153);
+    text(stage4Text[3], stage4Buttons[3][0] + 5, stage4Buttons[3][1] + 23);
+  }
+  if(mode == 5){
+    fill(240, 255, 76);
+    rect(stage4Buttons[4][0], stage4Buttons[4][1], stage4ButtonsX, stage4ButtonsY, 10);
+    textSize(20);
+    fill(0, 102, 153);
+    text(stage4Text[4], stage4Buttons[4][0] + 5, stage4Buttons[4][1] + 23);
+  }
+  if(mode == 6){
+    fill(240, 255, 76);
+    rect(stage4Buttons[5][0], stage4Buttons[5][1], stage4ButtonsX, stage4ButtonsY, 10);
+    textSize(20);
+    fill(0, 102, 153);
+    text(stage4Text[5], stage4Buttons[5][0] + 5, stage4Buttons[5][1] + 23);
+  }
+}
+
+
+// Temp selecting
+void stage3() {
   noStroke();
   background(0);
   threeButton();
@@ -240,8 +323,8 @@ void stage2() {
     text("C", 900 + 30, 280 +50+ (stage2DisplayY/2) );
   }
 }
-
-void stage3() {
+//Time Selecting
+void stage4() {
   noStroke();
   background(0);
   threeButton();
@@ -283,64 +366,55 @@ void stage3() {
   text(sOne, stage3Displays[5][0] + 30, stage3Displays[5][1] + 100);
 
   
-  
+  countDown = (hour*hourToMs) + (min*minToMs) + (sec*secToMs);
 }
 
-void stage4() {
-  noStroke();
-  background(0);
-  threeButton();
-  textSize(36);
-  fill(0, 102, 153);
-  text("Select mode", 500, 105);
-  for (int i=0; i<stage4Buttons.length; i++) {
-    fill(127, 127, 127);
-    rect(stage4Buttons[i][0], stage4Buttons[i][1], stage4ButtonsX, stage4ButtonsY, 10);
-    textSize(20);
-    fill(0, 102, 153);
-    text(stage4Text[i], stage4Buttons[i][0] + 5, stage4Buttons[i][1] + 23);
-    
-  }
-  if(mode == 1){
-    fill(240, 255, 76);
-    rect(stage4Buttons[0][0], stage4Buttons[0][1], stage4ButtonsX, stage4ButtonsY, 10);
-    textSize(20);
-    fill(0, 102, 153);
-    text(stage4Text[0], stage4Buttons[0][0] + 5, stage4Buttons[0][1] + 23);
-  }
-  if(mode == 2){
-    fill(240, 255, 76);
-    rect(stage4Buttons[1][0], stage4Buttons[1][1], stage4ButtonsX, stage4ButtonsY, 10);
-    textSize(20);
-    fill(0, 102, 153);
-    text(stage4Text[1], stage4Buttons[1][0] + 5, stage4Buttons[1][1] + 23);
-  }
-  if(mode == 3){
-    fill(240, 255, 76);
-    rect(stage4Buttons[2][0], stage4Buttons[2][1], stage4ButtonsX, stage4ButtonsY, 10);
-    textSize(20);
-    fill(0, 102, 153);
-    text(stage4Text[2], stage4Buttons[2][0] + 5, stage4Buttons[2][1] + 23);
-  }
-  if(mode == 4){
-    fill(240, 255, 76);
-    rect(stage4Buttons[3][0], stage4Buttons[3][1], stage4ButtonsX, stage4ButtonsY, 10);
-    textSize(20);
-    fill(0, 102, 153);
-    text(stage4Text[3], stage4Buttons[3][0] + 5, stage4Buttons[3][1] + 23);
-  }
-}
-
+//Comfirm page
 void stage5(){
   noStroke();
   background(0);
-  threeButton();
+  //threeButton();
+  
+  
+  fill(127, 127, 127);
+  rect(threeButtons[0][0], threeButtons[0][1], 100, 25, 10);
+  textSize(20);
+  fill(0, 102, 153);
+  text(threeButtonText[0], threeButtons[0][0] + 5, threeButtons[0][1] + 23);
+  
+  
+  fill(127, 127, 127);
+  rect(threeButtons[2][0], threeButtons[2][1], 100, 25, 10);
+  textSize(20);
+  fill(0, 102, 153);
+  text(threeButtonText[2], threeButtons[2][0] + 5, threeButtons[2][1] + 23);
+  
   textSize(36);
   fill(0, 102, 153);
   String textTemp = "Time: " + (hour + "")+ ":" + (min+"") +  ":" +(sec+"");
   text(textTemp, 363, 236);
-  textTemp = "Temp: " + (temp + "");
-  text(textTemp, 363, 276);
+  if(mode == 6){
+    textTemp = "Temp: " + (temp + "");
+    text(textTemp, 363, 276);  
+  }
+  else{
+    if(mode == 1){
+      text("Temp: Bake", 363, 276);
+    }
+    if(mode == 2){
+      text("Temp: Broil", 363, 276);
+    }
+    if(mode == 3){
+      text("Temp: Toast", 363, 276);
+    }
+    if(mode == 4){
+    text("Mode: Pizza", 363, 316);
+    }
+    if(mode == 5){
+      text("Mode: Bagel", 363, 316);
+    }
+  }
+    
   if(mode == 1){
     text("Mode: Bake", 363, 316);
   }
@@ -351,6 +425,12 @@ void stage5(){
     text("Mode: Toast", 363, 316);
   }
   if(mode == 4){
+    text("Mode: Pizza", 363, 316);
+  }
+  if(mode == 5){
+    text("Mode: Bagel", 363, 316);
+  }
+  if(mode == 6){
     text("Mode: Custom", 363, 316);
   }
   for(int i = 0;i<stage5Buttons.length;i++){
@@ -362,7 +442,7 @@ void stage5(){
   }
   subtractor = millis();
 }
-
+// Counting cooking
 void stage6(){
     noStroke();
     background(221, 44, 44);
@@ -386,7 +466,7 @@ void stage6(){
       if(pauseSubtractor == currentTime){
         pauseSubtractor = 0;
       }
-      remainingTime =  ((countDown) - (currentTime-pauseSubtractor ))/1000;
+      remainingTime =  floor(((countDown) - (currentTime-pauseSubtractor ))/1000);
       firstPause = false;
     }
     fill(0, 102, 153);
@@ -406,6 +486,7 @@ void stage6(){
     fill(0, 102, 153);
     text("Stop", threeButtons[2][0] + 5, threeButtons[2][1] + 23);
 }
+//stage 8 preheat
 void preHeat(){
   noStroke();
   background(0);
@@ -443,15 +524,64 @@ void preHeat(){
 
 
 }
+//Count Down done
 void stage7(){
     noStroke();
-    background(0);
-    text("Done", 500, 400);
+    background(221, 44, 44);
+    fill(0, 0, 0);
+    int twoBS = borderStroke*2;
+    rect(borderStroke, borderStroke, width-twoBS, height-twoBS);
+    
+    fill(127, 127, 127);
+    rect(550,350,200,75,10);
+    fill(0, 102, 153);
+    textSize(36);
+    fill(0, 102, 153);
+    text("Done", 580, 400);
+    text("open Door/Push Done", 450, 460);
     if (millis() - time >= 2000){
+      noStroke();
+      background(0);
       playBeep();
       time = millis();
     }
     
+}
+//After preheat
+void stage9(){
+  noStroke();
+  background(0);
+  threeButton();
+  fill(0, 102, 153);
+  text("PreHeating Done Place in Food", 300, 400);
+  if(stage9Enter == false){
+    stage9Enter = true;
+    shutoff = millis();
+  }
+  if (millis() - shutoff >= 10000){
+      
+      playBeep();
+      stage = 0;
+    }
+
+  
+}
+//Custom Mode
+void stage10(){
+  
+  background(0);
+  threeButton();
+  fill(127,127,127);
+  for(int i= 0;i<stage10Buttons.length;i++){
+    if(stage10Selected[i] == true){
+      fill(221, 44, 44);
+    }
+    else{
+      fill(127,127,127);
+    }
+    rect(stage10Buttons[i][0],stage10Buttons[i][1],stage10Size[i][0],stage10Size[i][1],10);
+  }
+  
 }
 void threeButton() {
   for (int loopCounter=0; loopCounter < threeButtons.length; loopCounter++) {
@@ -465,12 +595,29 @@ void threeButton() {
 void oneButton() {
   fill(127, 127, 127);
   rect(threeButtons[2][0], threeButtons[2][1], 100, 25, 10);
+  
   textSize(20);
   fill(0, 102, 153);
-  text(threeButtonText[2], threeButtons[2][0] + 5, threeButtons[2][1] + 23);
-  fill(127, 127, 127);
-  rect(threeButtons[2][0], threeButtons[2][1], 100, 25, 10);
+  text("Cancel", threeButtons[2][0] + 5, threeButtons[2][1] + 23);
+  
+  
+  if(mute == true){
+    fill(0, 102, 153);
+  }
+  else{
+    fill(127, 127, 127);
+  }
+  rect(threeButtons[0][0], threeButtons[0][1], 100, 25, 10);
+  textSize(20);
+  
+  fill(244, 215, 66);
+  
+  
+  text("Mute", threeButtons[0][0] + 5, threeButtons[0][1] + 23);
+  
 }
+
+
 void mouseReleased() {
   if (stage == 0 && overCircle(640, 400, 300)) {
     playBeep();
@@ -481,32 +628,125 @@ void mouseReleased() {
       playBeep();
       stage = 0;
     }
+    if (overRec(threeButtons[0][0], threeButtons[0][1], threeButtonX, threeButtonY)) {
+      mute = !mute;
+      playBeep();
+    }
     if (overRec(stage1Buttons[0][0], stage1Buttons[0][1], stage1ButtonX, stage1ButtonY)) {
       playBeep();
       stage = 2;
     }
     if (overRec(stage1Buttons[1][0], stage1Buttons[1][1], stage1ButtonX, stage1ButtonY)) {
       playBeep();
+      int tmp = preSetTime[0];
+      hour = floor(tmp/3600);
+      timeCounter[0] = floor(hour/10);
+      timeCounter[1] = floor(hour%10);
+      tmp = tmp - (hour*3600);
+      min = floor(tmp/60);
+      timeCounter[2] = floor(min/10);
+      timeCounter[3] = floor(min%10);
+      tmp = tmp - (min*60);
+      sec = tmp;
+      
+      timeCounter[4] = floor(sec/10);
+      timeCounter[5] = floor(sec%10);
+      
+      countDown = (hour*hourToMs) + (min*minToMs) + (sec*secToMs);
+      mode = 3;
+      stage = 5;
+      
     }
+    if (overRec(stage1Buttons[1][0], stage1Buttons[1][1]+150, stage1ButtonX, stage1ButtonY)) {
+      playBeep();
+      int tmp = preSetTime[1];
+      hour = floor(tmp/3600);
+      timeCounter[0] = floor(hour/10);
+      timeCounter[1] = floor(hour%10);
+      tmp = tmp - (hour*3600);
+      min = floor(tmp/60);
+      timeCounter[2] = floor(min/10);
+      timeCounter[3] = floor(min%10);
+      tmp = tmp - (min*60);
+      sec = tmp;
+      timeCounter[4] = floor(sec/10);
+      timeCounter[5] = floor(sec%10);
+      
+      countDown = (hour*hourToMs) + (min*minToMs) + (sec*secToMs);
+      mode = 3;
+      stage = 5;
+    }
+    if (overRec(stage1Buttons[1][0], stage1Buttons[1][1]+300, stage1ButtonX, stage1ButtonY)) {
+      playBeep();
+      int tmp = preSetTime[2];
+      hour = floor(tmp/3600);
+      timeCounter[0] = floor(hour/10);
+      timeCounter[1] = floor(hour%10);
+      tmp = tmp - (hour*3600);
+      min = floor(tmp/60);
+      timeCounter[2] = floor(min/10);
+      timeCounter[3] = floor(min%10);
+      tmp = tmp - (min*60);
+      sec = tmp;
+      timeCounter[4] = floor(sec/10);
+      timeCounter[5] = floor(sec%10);
+      
+      countDown = (hour*hourToMs) + (min*minToMs) + (sec*secToMs);
+      mode = 3;
+      stage = 5;
+    }
+    
   }
 
-  if (stage !=1 && stage != 0 && stage != 6 && stage != 8) {
+  if (stage !=1 && stage != 0 && stage != 6 && stage != 5 && stage != 7 && stage != 8) {
     if (overRec(threeButtons[2][0], threeButtons[2][1], threeButtonX, threeButtonY)) {
       playBeep();
       stage = 0;
     }
     if (overRec(threeButtons[1][0], threeButtons[1][1], threeButtonX, threeButtonY)) {
       playBeep();
-      if (temp != 0)
+      if (stage == 3){
+        if(temp != 0 || (mode >0 && mode < 6))
+          stage++;
+      }
+      else if (stage == 4){
+        if(countDown != 0)
+          stage++;
+      }
+      else if (stage == 2){
+        if(mode != 0)
+          if(mode == 6)
+            stage++;
+          else
+            stage = 4;
+      }
+      else if (stage == 8){
+        if(preHeatTemp != 0)
+          stage++;
+      }
+      else if (stage == 9){
+        stage = 6;
+      }
+      else if(stage == 10){
+        stage = 3;
+      }
+      else{
         stage++;
+      }
     }
     if (overRec(threeButtons[0][0], threeButtons[0][1], threeButtonX, threeButtonY)) {
       playBeep();
-      stage--;
+      if(stage == 10){
+        stage = 2;
+        mode = 0;
+      }
+      else{
+        stage--;
+      }
     }
   }
 
-  if (stage == 2) {
+  if (stage == 3) {
     //increase by 100
     if (overColor(221, 44, 44)) {
       playBeep();
@@ -584,7 +824,7 @@ void mouseReleased() {
       playBeep();
     }
   }
-  if(stage == 3){
+  if(stage == 4){
     //hour + 10 
     if (overColor(221, 44, 44)) {
       playBeep();
@@ -702,7 +942,7 @@ void mouseReleased() {
       }
     }
   }
-  if(stage == 4){
+  if(stage == 2){
     if(overRec(stage4Buttons[0][0], stage4Buttons[0][1], stage4ButtonsX, stage4ButtonsY)){
       mode = 1;
     }
@@ -715,14 +955,27 @@ void mouseReleased() {
     if(overRec(stage4Buttons[3][0], stage4Buttons[3][1], stage4ButtonsX, stage4ButtonsY)){
       mode = 4;
     }
-    countDown = (hour*hourToMs) + (min*minToMs) + (sec*secToMs);
+    if(overRec(stage4Buttons[4][0], stage4Buttons[4][1], stage4ButtonsX, stage4ButtonsY)){
+      mode = 5;
+    }
+    if(overRec(stage4Buttons[5][0], stage4Buttons[5][1], stage4ButtonsX, stage4ButtonsY)){
+      mode = 6;
+      stage = 10;
+    }
   }
+  
   if(stage == 5 ){
     if(overRec(stage5Buttons[0][0], stage5Buttons[0][1], stage1ButtonX, stage1ButtonY)){
       stage = 8;
     }
     if(overRec(stage5Buttons[1][0], stage5Buttons[1][1], stage1ButtonX, stage1ButtonY)){
       stage++;
+    }
+    if(overRec(threeButtons[0][0],threeButtons[0][1],threeButtonX,threeButtonY)){
+      stage--;
+    }
+    if(overRec(threeButtons[2][0],threeButtons[2][1],threeButtonX,threeButtonY)){
+      stage = 0;
     }
     
   }
@@ -812,14 +1065,39 @@ void mouseReleased() {
     }
     if (overRec(threeButtons[1][0], threeButtons[1][1], threeButtonX, threeButtonY)) {
       playBeep();
-      if (temp != 0)
-        stage = 5;
+      if (preHeatTemp != 0)
+        stage = 9;
     }
     if (overRec(threeButtons[0][0], threeButtons[0][1], threeButtonX, threeButtonY)) {
       playBeep();
       stage = 5;
     }
 
+  }
+   if(stage == 7){
+     if(overRec(550,350,200,75)){
+       stage = 0;
+     }
+   }
+  
+  if(stage == 10){
+    if(overRec(stage10Buttons[0][0],stage10Buttons[0][1],stage10Size[0][0],stage10Size[0][1])){
+      stage10Selected[0] = !stage10Selected[0];
+      playBeep();
+    }
+    if(overRec(stage10Buttons[1][0],stage10Buttons[1][1],stage10Size[1][0],stage10Size[1][1])){
+      stage10Selected[1] = !stage10Selected[1];
+      playBeep();
+    }
+    if(overRec(stage10Buttons[2][0],stage10Buttons[2][1],stage10Size[2][0],stage10Size[2][1])){
+      stage10Selected[2] = !stage10Selected[2];
+      playBeep();
+    }
+    if(overRec(stage10Buttons[3][0],stage10Buttons[3][1],stage10Size[3][0],stage10Size[3][1])){
+      stage10Selected[3] = !stage10Selected[3];
+      playBeep();
+    }
+    
   }
   
   
