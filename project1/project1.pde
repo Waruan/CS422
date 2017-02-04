@@ -470,6 +470,7 @@ void stage6(){
       firstPause = false;
     }
     fill(0, 102, 153);
+    textSize(36);
     text("Time Remaining " + remainingTime, 500, 30);
     if(remainingTime  == 0){
       stage = 7;
