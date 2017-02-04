@@ -470,15 +470,15 @@ void stage6() {
 
   int tmp = remainingTime;
   int remainingHour = floor(tmp/3600);
-  tmp = tmp - (hour*3600);
+  tmp = tmp - (remainingHour*3600);
   int remainingMin = floor(tmp/60);
-  tmp = tmp - (min*60);
+  tmp = tmp - (remainingMin*60);
   int remainingSec = tmp;
 
 
   fill(0, 102, 153);
   textSize(36);
-  text("Time Remaining " + (remainingHour+":") +remainingMin+":"+remainingSec+":" , 500, 60);
+  text("Time Remaining " + (remainingHour+":") +remainingMin+":"+remainingSec+"" , 500, 60);
   if (mode == 6)
     text("Inside Temp " + temp, 500, 100 );
   else {
