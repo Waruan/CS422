@@ -510,11 +510,11 @@ void preHeat(){
   String ten; 
   String hundred;
   int holder = preHeatTemp;
-  one = (holder%10) + "";  
+  one = floor(holder%10) + "";  
   holder = holder/10;
-  ten = (holder%10) + "";  
+  ten = floor(holder%10) + "";  
   holder = holder/10;  
-  hundred = (holder%10) + "";  
+  hundred = floor(holder%10) + "";  
   holder = holder/10;
   textSize(36);
   fill(0, 102, 153);
