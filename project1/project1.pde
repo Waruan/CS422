@@ -512,12 +512,23 @@ void stage6() {
   else{
     remainingtext = remainingtext +remainingSec;
   }
-  
+   String type;
   text(remainingtext , 500, 60);
+  if(celsius == true){
+    type = " C";
+  }
+  else{
+    type = " F";
+  }
+  
   if (mode == 6)
-    text("Inside Temp " + temp, 500, 100 );
+  
+    text("Inside Temp " + temp + type, 500, 100 );
   else {
-    text("Inside Temp 300", 500, 100 );
+    if(celsius == true)
+      text("Inside Temp 149 C", 500, 100 );
+    else
+      text("Inside Temp 300 F", 500, 100 );
   }
   if (remainingTime  == 0) {
     stage = 7;
