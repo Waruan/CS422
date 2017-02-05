@@ -39,7 +39,7 @@ int timeCounter[] = {0, 0, 0, 0, 0, 0};
 boolean celsius = false;
 boolean stop = false;
 boolean pause = false;
-int[][] threeButtons={ {0, 700}, {560, 700}, {1180, 700}};
+int[][] threeButtons={ {50, 700}, {560, 700}, {1130, 700}};
 String[] threeButtonText = {"back", "OK", "cancel" };
 int threeButtonX = 100;
 int threeButtonY = 25;
@@ -65,7 +65,7 @@ int stage4ButtonsX = 100;
 int stage4ButtonsY = 25;
 String[] stage4Text = {"Bake", "Broil", "Toast", "Pizza", "Bagel", "Custom"};
 
-int[][] stage5Buttons = { {124, 600}, {900, 600}};
+int[][] stage5Buttons = { {200, 600}, {850, 600}};
 String[] stage5Text = {"Preheat", "Start"};
 
 int stage10Buttons[][]= {{420, 200}, {420, 220}, {800, 220}, {420, 420}};
@@ -89,7 +89,9 @@ int pauseSubtractor = 0;
 int pauseTime = 0;
 boolean mute = false;
 boolean firstPause = false;
-
+boolean tempWarning = false;
+boolean timeWarning = false;
+boolean preHeatWarning = false;
 /////////////////////////////////////////////////////
 
 void loadSounds() {
@@ -178,28 +180,28 @@ void stage1() {
 
   fill(127, 127, 127);
   rect(stage1Buttons[0][0], stage1Buttons[0][1], stage1ButtonX, stage1ButtonY, 10);
-  textSize(20);
+  textSize(36);
   fill(0, 102, 153);
-  text(stage1Text[0], stage1Buttons[0][0], stage1Buttons[0][1] + 23);
+  text(stage1Text[0], stage1Buttons[0][0] + (stage1ButtonX/2)-70, stage1Buttons[0][1] + 50);
 
   fill(127, 127, 127);
   rect(stage1Buttons[1][0], stage1Buttons[1][1], stage1ButtonX, stage1ButtonY, 10);
-  textSize(20);
+  textSize(32);
   fill(0, 102, 153);
-  text(preSetName[0], stage1Buttons[1][0], stage1Buttons[1][1] + 23);
+  text(preSetName[0], stage1Buttons[1][0]+5, stage1Buttons[1][1] + 50);
 
   fill(127, 127, 127);
   rect(stage1Buttons[1][0], stage1Buttons[1][1]+150, stage1ButtonX, stage1ButtonY, 10);
-  textSize(20);
+  textSize(28);
   fill(0, 102, 153);
-  text(preSetName[1], stage1Buttons[1][0], stage1Buttons[1][1] + 23+150);
+  text(preSetName[1], stage1Buttons[1][0]+5, stage1Buttons[1][1] + 50+150);
 
 
   fill(127, 127, 127);
   rect(stage1Buttons[1][0], stage1Buttons[1][1]+300, stage1ButtonX, stage1ButtonY, 10);
-  textSize(20);
+  textSize(32);
   fill(0, 102, 153);
-  text(preSetName[2], stage1Buttons[1][0], stage1Buttons[1][1] + 23+300);
+  text(preSetName[2], stage1Buttons[1][0]+5, stage1Buttons[1][1] + 50+300);
 }
 
 // mode selection
@@ -282,6 +284,12 @@ void stage3() {
     triangle(stage2Displays[i][0], stage2Displays[i][1] + 20 + stage2DisplayY, stage2Displays[i][0] + stage2DisplayX, stage2Displays[i][1] + stage2DisplayY + 20, 
       stage2Displays[i][0] + (stage2DisplayX/2), stage2Displays[i][1] + 50 + stage2DisplayY);
   }
+  if(tempWarning == true){
+    textSize(36);
+    fill(221, 44, 80);
+    text("Input Temp Higher Than Zero", 400, 760);
+  }
+  
   String one;
   String ten; 
   String hundred;
@@ -297,7 +305,7 @@ void stage3() {
   text(hundred, stage2Displays[0][0] + 30, stage2Displays[0][1] +100);
   text(ten, stage2Displays[1][0] + 30, stage2Displays[1][1] + 100);
   text(one, stage2Displays[2][0] + 30, stage2Displays[2][1] + 100);
-
+  
   if (celsius == false) {
 
     fill(240, 255, 76);
@@ -343,6 +351,11 @@ void stage4() {
     fill(0, 137+i, 229);
     triangle(stage3Displays[i][0], stage3Displays[i][1] + 20 + stage3DisplayY, stage3Displays[i][0] + stage3DisplayX, stage3Displays[i][1] + stage3DisplayY + 20, 
       stage3Displays[i][0] + (stage3DisplayX/2), stage3Displays[i][1] + 50 + stage3DisplayY);
+  }
+  if(timeWarning == true){
+    textSize(36);
+    fill(221, 44, 80);
+    text("Input Time Higher Than Zero", 400, 760);
   }
   int holder = hour;
   String hOne = floor(holder%10) + "";
@@ -435,9 +448,9 @@ void stage5() {
   for (int i = 0; i<stage5Buttons.length; i++) {
     fill(127, 127, 127);
     rect(stage5Buttons[i][0], stage5Buttons[i][1], stage1ButtonX, stage1ButtonY, 10);
-    textSize(20);
+    textSize(36);
     fill(0, 102, 153);
-    text(stage5Text[i], stage5Buttons[i][0] + 5, stage5Buttons[i][1] + 23);
+    text(stage5Text[i], stage5Buttons[i][0] + 50, stage5Buttons[i][1] + 50);
   }
   subtractor = millis();
 }
@@ -478,7 +491,29 @@ void stage6() {
 
   fill(0, 102, 153);
   textSize(36);
-  text("Time Remaining " + (remainingHour+":") +remainingMin+":"+remainingSec+"" , 500, 60);
+  String remainingtext ="Time Remaining: "  ;
+  if(remainingHour < 10 ){
+    remainingtext = remainingtext +"0"+remainingHour+":";
+  }
+  else{
+    remainingtext = remainingtext +remainingHour+":";
+  }
+  
+  if(remainingMin < 10){
+    remainingtext = remainingtext +"0"+remainingMin+":";
+  }
+  else{
+    remainingtext = remainingtext +remainingMin+":";
+  }
+  
+  if(remainingSec < 10){
+    remainingtext = remainingtext +"0"+remainingSec;
+  }
+  else{
+    remainingtext = remainingtext +remainingSec;
+  }
+  
+  text(remainingtext , 500, 60);
   if (mode == 6)
     text("Inside Temp " + temp, 500, 100 );
   else {
@@ -506,7 +541,7 @@ void preHeat() {
   threeButton();
   textSize(36);
   fill(0, 102, 153);
-  text("Set Preheat Temperature", 500, 105);
+  text("Set Preheat Temperature", 450, 105);
   for (int i=0; i<stage2Displays.length; i++) {
     fill(127, 127, 127);
 
@@ -518,6 +553,11 @@ void preHeat() {
     fill(0, 137+i, 229);
     triangle(stage2Displays[i][0], stage2Displays[i][1] + 20 + stage2DisplayY, stage2Displays[i][0] + stage2DisplayX, stage2Displays[i][1] + stage2DisplayY + 20, 
       stage2Displays[i][0] + (stage2DisplayX/2), stage2Displays[i][1] + 50 + stage2DisplayY);
+  }
+  if(preHeatWarning == true){
+    textSize(36);
+    fill(221, 44, 80);
+    text("Input Temp Higher Than Zero", 400, 760);
   }
   String one;
   String ten; 
@@ -563,7 +603,8 @@ void stage9() {
   background(0);
   threeButton();
   fill(0, 102, 153);
-  text("PreHeating Done Place in Food", 300, 400);
+  textSize(36);
+  text("PreHeating Done Place in Food", 420, 400);
   if (stage9Enter == false) {
     stage9Enter = true;
     shutoff = millis();
@@ -573,12 +614,17 @@ void stage9() {
     playBeep();
     stage = 0;
   }
+  subtractor = millis();
 }
 //Custom Mode
 void stage10() {
 
   background(0);
   threeButton();
+  textSize(36);
+  fill(0, 102, 153);
+  text("Select Heat Source", 450, 105);
+  
   fill(127, 127, 127);
   for (int i= 0; i<stage10Buttons.length; i++) {
     if (stage10Selected[i] == true) {
@@ -708,11 +754,19 @@ void mouseReleased() {
     if (overRec(threeButtons[1][0], threeButtons[1][1], threeButtonX, threeButtonY)) {
       playBeep();
       if (stage == 3) {
-        if (temp != 0 || (mode >0 && mode < 6))
+        if (temp != 0 || (mode >0 && mode < 6)){
           stage++;
+          tempWarning = false;
+        }
+        else
+          tempWarning = true;
       } else if (stage == 4) {
-        if (countDown != 0)
+        if (countDown != 0){
           stage++;
+          timeWarning = false;
+        }
+        else
+          timeWarning = true;
       } else if (stage == 2) {
         if (mode != 0)
           if (mode == 6)
@@ -720,8 +774,12 @@ void mouseReleased() {
           else
             stage = 4;
       } else if (stage == 8) {
-        if (preHeatTemp != 0)
+        if (preHeatTemp != 0){
           stage++;
+          preHeatWarning = false;
+        }
+        else
+          preHeatWarning = true;
       } else if (stage == 9) {
         stage = 6;
       } else if (stage == 10) {
@@ -1059,8 +1117,12 @@ void mouseReleased() {
     }
     if (overRec(threeButtons[1][0], threeButtons[1][1], threeButtonX, threeButtonY)) {
       playBeep();
-      if (preHeatTemp != 0)
+      if (preHeatTemp != 0){
         stage = 9;
+        preHeatWarning = false;
+      }
+      else
+        preHeatWarning = true;
     }
     if (overRec(threeButtons[0][0], threeButtons[0][1], threeButtonX, threeButtonY)) {
       playBeep();
