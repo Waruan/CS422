@@ -472,7 +472,7 @@ void stage6() {
       firstPause = true;
     }
     pauseSubtractor = currentTime - pauseTime;
-    remainingTime =  ((countDown) - pauseTime)/1000;
+    remainingTime =  floor(((countDown) - pauseTime)/1000);
   } else {
     if (pauseSubtractor == currentTime) {
       pauseSubtractor = 0;
