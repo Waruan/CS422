@@ -486,7 +486,7 @@ void stage6() {
   tmp = tmp - (remainingHour*3600);
   int remainingMin = floor(tmp/60);
   tmp = tmp - (remainingMin*60);
-  int remainingSec = tmp;
+  int remainingSec = floor(tmp);
 
 
   fill(0, 102, 153);
