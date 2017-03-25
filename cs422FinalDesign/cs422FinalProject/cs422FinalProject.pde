@@ -15,7 +15,33 @@ SoundFile beepSound;
 
 // also note the soundfile needs to be in the data folder for processing and outside that folder for Processing.js
 // sounds are also a bit slowerer to start up in Processing.js
-
+class Button{
+  int x_Axis;
+  int y_Axis;
+  int width;
+  int height;
+  int function;
+  Button(int x, int y,int w,int h, int f){
+    x_Axis = x;
+    y_Axis = y;
+    width = w;
+    height = h;
+    //0 for function menu
+    //1 for setting
+    function = f;
+  }
+  void changeFunction(int f){
+    function = f;
+  }
+  void changeLocation(int x, int y){
+    x_Axis = x;
+    y_Axis = y;
+  }
+  void changeX(int x){
+    x_Axis = x;
+  }
+  
+}
 // placeholder for future image
 PImage img;
 PImage bgroundimg;
@@ -25,24 +51,29 @@ int buttonX = 33;
 int buttonY = 30;
 
 // evl monitor size
-//int canvasWidth = 2732;
-//int canvasHeight = 1536;
+//float canvasWidth = 2732;
+//float canvasHeight = 1536;
 
 // scale down for home monitors
-int canvasWidth = 1366;
-int canvasHeight = 768;
+float canvasWidth = 1366;
+float canvasHeight = 768;
 
-int xLocation = (canvasWidth/100)*40;
-int yLocation = (canvasHeight/100)*40; 
+int xLocation = int((canvasWidth/100)*40);
+int yLocation = int((canvasHeight/100)*40); 
 
 //Size of popup or popups
-int popUpX = (canvasWidth/100)*20;
-int popUpY = (canvasHeight/100)*20;
+int popUpX = int((canvasWidth/100)*20);
+int popUpY = int((canvasHeight/100)*20);
 
-int[][] buttons = { {(canvasWidth/100)*10, (canvasHeight/100)*90}};
+ArrayList<Button> buttons = new ArrayList<Button>();
+
+
 //int[][] buttons = { {200, 300}, {250, 300}, {300, 300}, {400, 300}, {450, 300}};
 // no buttons / mode currently selected
 int selectedOne = -1;
+//Atleast 2 one for function list and other for setting
+
+ArrayList functionActive =  new ArrayList();
 
 int currentTime;
 boolean boxInUse = false;
@@ -78,7 +109,12 @@ void setup() {
   
   //Use for processing and testing 
   size( 1366 ,768);
-  
+  Button temp = new Button(int((canvasWidth/100)*49 - buttonX), int((canvasHeight/100)*90) ,buttonX,buttonY,0);
+  buttons.add(temp);
+  functionActive.add(temp.function);
+  temp = new Button(int((canvasWidth/100)*51), int((canvasHeight/100)*90) ,buttonX,buttonY,1);
+  buttons.add(temp);
+  functionActive.add(temp.function);
   // grab an image to use later
   // as with sounds Processing likes files in the data directory, Processing.js outside that directory
   //stroke(0);
@@ -89,9 +125,22 @@ void setup() {
   //img = loadImage("sketch2.gif", "gif");
   //img.loadPixels();
   
+  int begin =int((canvasWidth/100)*50 - (buttonX + (canvasWidth/100))*(buttons.size()/2));
+   int end = int((canvasWidth/100)*50 + (buttonX + (canvasWidth/100))*(buttons.size()/2));
+   println(begin);
+   println(end);
+   int len = end - begin;
+   println(len);
+  
   f = createFont("Arial",24,true);
   background(255);
   loadSounds();
+      stroke(126);
+   println((float(1366)/100)*50);
+   line((canvasWidth/100)*50,0,(canvasWidth/100)*50,canvasHeight );
+   line(683,0,683,canvasHeight );
+    line(636,0,636,canvasHeight );
+     line(729,0,729,canvasHeight );
 }
 
 /////////////////////////////////////////////////////
@@ -101,18 +150,19 @@ void draw() {
   //clear();
   
   noStroke();
-
-  rect(100,100, 100, 100, 7);  
+  
+  //rect(100,100, 100, 100, 7);  
   // draw some buttons
   fill(127,127,127);
-
-  for (int loopCounter=0; loopCounter < buttons.length; loopCounter++)
-    rect(buttons[loopCounter][0], buttons[loopCounter][1], buttonX, buttonY, 10);
-    
+  Button temp;
+  for (int loopCounter=0; loopCounter < buttons.size(); loopCounter++){
+    temp = buttons.get(loopCounter);
+    rect(temp.x_Axis,temp.y_Axis,temp.width,temp.height, 10);
+  }  
   // draw the active button in a different color
   fill(127,127,0);
   if (selectedOne >= 0)
-    rect(buttons[selectedOne][0], buttons[selectedOne][1], buttonX, buttonY, 10);
+   // rect(buttons[selectedOne][0], buttons[selectedOne][1], buttonX, buttonY, 10);
     
     
   // draw the state of the thing that the buttons control
@@ -160,11 +210,11 @@ void draw() {
 //}
 
 //Mouse handlers
-void mouseClicked() {
+void mousePressed() {
   println("DEBUG(0): YOU CLICKED!");
   
   
-  if(insideBox(100,100,100,100) && !boxInUse){
+  if(loopInsideBox() && !boxInUse){
     println("DEBUG(1): BoxInUse: " + boxInUse + " Clicked");
     pop_up_box(xLocation, yLocation);
     println("DEBUG(2): BoxInUse: " + boxInUse + " Created Box");
@@ -205,13 +255,25 @@ String getCurrentTime(){
     hr = str(h%12);
   }
   if(h > 12){
-     timeString = hr +":"+ str(m)+ "PM";
+     timeString = hr +":"+ min+ "PM";
   }
   else{
-     timeString = hr +":"+ str(m)+ "AM";
+     timeString = hr +":"+ min+ "AM";
   }
   return timeString;
   
+}
+
+boolean loopInsideBox(){
+  Button temp;
+  for(int i = 0;i<buttons.size();i++){
+    
+    temp = buttons.get(i);
+    if(insideBox(temp.x_Axis,temp.y_Axis,temp.width,temp.height)){
+      return true;
+    }
+  }
+  return false;
 }
 
 //Function to check if mouse cursor is INSIDE the specified box
@@ -228,7 +290,7 @@ boolean insideBox(int x, int y, int boxWidth, int boxHeight) {
 //Function to check if mouse cursor is OUTSIDE the specified box
 boolean outsideBox(int x, int y, int boxWidth, int boxHeight) {
 
-   if((mouseX < x || mouseX >= (x+boxWidth)) && ((mouseY < y) || mouseY > (y+boxHeight))) {
+   if((mouseX < x || mouseX >= (x+boxWidth)) || ((mouseY < y) || mouseY > (y+boxHeight))) {
    
      return true;
    }
@@ -240,7 +302,46 @@ boolean outsideBox(int x, int y, int boxWidth, int boxHeight) {
 //Function to create a new box/window
 void pop_up_box(int x, int y) {
 
-  rect(x, y, popUpX, popUpX, 7);
+  rect(x, y, popUpX, popUpY, 7);
   boxInUse = true;
   
+}
+// change the location of button by changing their function value
+void addButton(int f){
+  if(buttons.size() >= functionActive.size() ){
+    return;
+  }
+ 
+
+ 
+ // even number of functions
+ if(functionActive.size()%2 == 0){
+   
+  Button temp; 
+    //Button temp = new Button(int((canvasWidth/100)*49 - buttonX), int((canvasHeight/100)*90) ,buttonX,buttonY,0);
+   int begin =int((canvasWidth/100)*50 - (buttonX + (canvasWidth/100))*(buttons.size()/2));
+   int end = int((canvasWidth/100)*50 + (buttonX + (canvasWidth/100))*(buttons.size()/2));
+   
+   for (int i=0; i < buttons.size(); i++){
+      temp = buttons.get(i);
+      temp.changeX(begin*i);
+   }
+   temp = new Button(begin + (buttons.size()+1), int((canvasHeight/100)*90) ,buttonX,buttonY,f);
+   buttons.add(temp);
+   
+ }
+ // odd number of functions
+ else{
+ 
+ }
+}
+
+
+
+void drawFunctionIcons(){
+   Button temp;
+  for (int loopCounter=0; loopCounter < buttons.size(); loopCounter++){
+    temp = buttons.get(loopCounter);
+    rect(temp.x_Axis,temp.y_Axis,temp.width,temp.height, 10);
+  } 
 }
