@@ -30,6 +30,7 @@ class Button{
     //1 for setting
     function = f;
   }
+ 
   void changeFunction(int f){
     function = f;
   }
@@ -109,12 +110,20 @@ void setup() {
   
   //Use for processing and testing 
   size( 1366 ,768);
-  Button temp = new Button(int((canvasWidth/100)*49 - buttonX), int((canvasHeight/100)*90) ,buttonX,buttonY,0);
+  Button temp = new Button(int((canvasWidth/100)*49.5 - buttonX), int((canvasHeight/100)*90) ,buttonX,buttonY,0);
   buttons.add(temp);
   functionActive.add(temp.function);
-  temp = new Button(int((canvasWidth/100)*51), int((canvasHeight/100)*90) ,buttonX,buttonY,1);
+  
+  temp = new Button(int((canvasWidth/100)*50.5), int((canvasHeight/100)*90) ,buttonX,buttonY,1);
   buttons.add(temp);
   functionActive.add(temp.function);
+  
+  temp = new Button(int((canvasWidth/100)*50.5), int((canvasHeight/100)*90) ,buttonX,buttonY,1);
+  buttons.add(temp);
+  functionActive.add(temp.function);
+  
+   addButton(2);
+  
   // grab an image to use later
   // as with sounds Processing likes files in the data directory, Processing.js outside that directory
   //stroke(0);
@@ -125,12 +134,6 @@ void setup() {
   //img = loadImage("sketch2.gif", "gif");
   //img.loadPixels();
   
-  int begin =int((canvasWidth/100)*50 - (buttonX + (canvasWidth/100))*(buttons.size()/2));
-   int end = int((canvasWidth/100)*50 + (buttonX + (canvasWidth/100))*(buttons.size()/2));
-   println(begin);
-   println(end);
-   int len = end - begin;
-   println(len);
   
   f = createFont("Arial",24,true);
   background(255);
@@ -308,31 +311,36 @@ void pop_up_box(int x, int y) {
 }
 // change the location of button by changing their function value
 void addButton(int f){
-  if(buttons.size() >= functionActive.size() ){
-    return;
-  }
- 
 
- 
- // even number of functions
- if(functionActive.size()%2 == 0){
+ // odd number of functions before add new
+ if(functionActive.size()%2 == 1){
    
-  Button temp; 
-    //Button temp = new Button(int((canvasWidth/100)*49 - buttonX), int((canvasHeight/100)*90) ,buttonX,buttonY,0);
-   int begin =int((canvasWidth/100)*50 - (buttonX + (canvasWidth/100))*(buttons.size()/2));
-   int end = int((canvasWidth/100)*50 + (buttonX + (canvasWidth/100))*(buttons.size()/2));
-   
-   for (int i=0; i < buttons.size(); i++){
-      temp = buttons.get(i);
-      temp.changeX(begin*i);
-   }
-   temp = new Button(begin + (buttons.size()+1), int((canvasHeight/100)*90) ,buttonX,buttonY,f);
+   Button temp; 
+   Button temp2; 
+   temp = new Button(0, int((canvasHeight/100)*90) ,buttonX,buttonY,f);
    buttons.add(temp);
+   functionActive.add(temp.function);
+   temp = buttons.get(0);
+   temp.changeX(int((canvasWidth/100)*50.5));
+   temp = buttons.get(1);
+   temp.changeX(int(((canvasWidth/100)*49.5) - buttonX));
+   
+   for (int i=2; i < buttons.size(); i = i+2){
+      temp  = buttons.get(i);
+      temp2 = buttons.get(i+1);
+      
+      temp.changeX( ((buttons.get(i-1)).x_Axis) - int(buttonX + (canvasWidth/100)) );
+      temp2.changeX( ((buttons.get(i-2)).x_Axis) + int(buttonX + (canvasWidth/100)) );
+      
+   }
+
    
  }
- // odd number of functions
+ // even number of functions before add new
  else{
  
+   
+   
  }
 }
 
