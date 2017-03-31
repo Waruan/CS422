@@ -1,3 +1,5 @@
+import java.util.Collections;
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 // sample simple processing / processing.js file from Andy Johnson - CS 422 - Spring 2017
 
@@ -74,8 +76,8 @@ ArrayList<Button> buttons = new ArrayList<Button>();
 int selectedOne = -1;
 //Atleast 2 one for function list and other for setting
 
-ArrayList functionActive =  new ArrayList();
 
+ArrayList<Integer> functionActive = new ArrayList<Integer>();
 int currentTime;
 boolean boxInUse = false;
 int functionInUse;
@@ -120,9 +122,18 @@ void setup() {
   buttons.add(temp);
   functionActive.add(temp.function);
   
-
+  println("Debug pre" + functionActive.get(0));
+  
   addButton(2);
   addButton(3);
+  
+  Collections.sort(functionActive);
+  for (Button item : buttons) {
+    System.out.println(item.function);
+  }
+  fixOrderofButton();
+  
+  
   // grab an image to use later
   // as with sounds Processing likes files in the data directory, Processing.js outside that directory
   //stroke(0);
@@ -266,8 +277,6 @@ void mousePressed() {
 
 boolean clickOtherButton(){
   int temp = findButton();
-  println("DEBUG(5): functionInUse: " + functionInUse );
-  println("DEBUG(6): temp: " + temp );
   if(temp != -1 && temp != functionInUse ){
     functionInUse = temp;
     //println("DEBUG(5): functionInUse: " + functionInUse );
@@ -283,6 +292,7 @@ boolean loopInsideBox(){
     temp = buttons.get(i);
     if(insideBox(temp.x_Axis,temp.y_Axis,temp.width,temp.height)){
       functionInUse = temp.function;
+      println("Button "+ i + " Clicked" );
       return true;
     }
   }
@@ -295,6 +305,7 @@ int findButton(){
     
     temp = buttons.get(i);
     if(insideBox(temp.x_Axis,temp.y_Axis,temp.width,temp.height)){
+      println("Button "+ i + " Clicked" );
       return temp.function;
     }
   }
@@ -305,6 +316,7 @@ int findButton(){
 boolean insideBox(int x, int y, int boxWidth, int boxHeight) {
 
   if((mouseX >= x && mouseX <= (x+boxWidth)) && ((mouseY >= y) && mouseY <= (y+boxHeight)))  {
+    
     return true;
   }
   else {
@@ -407,7 +419,58 @@ String getCurrentTime(){
   return timeString;
   
 }
+void fixOrderofButton(){
+  int size = functionActive.size();
+  fixedLocation();
+  for(int i = 0;i<size;i++){
+    if((functionActive.get(i) != (buttons.get(i)).function)){
+      int index = findButtonIndex(functionActive.get(i));
+      if(index != -1){
+        Button temp = buttons.get(index);
+        Button temp2 = buttons.get(i);
+        int holder = temp.function;
+        
+        temp.function = temp2.function;
+        temp2.function = holder;
+        
+      }
+    }
+  }
+}
 
+int findButtonIndex(int function){
+  int size = buttons.size();
+
+  for(int i = 0;i<size;i++){
+    if((buttons.get(i)).function == function){
+      return i;
+    }
+  }
+  return -1;
+}
+
+int findFunctionIndex(int function){
+  int size = buttons.size();
+
+  for(int i = 0;i<size;i++){
+    if((functionActive.get(i)) == function){
+      return i;
+    }
+  }
+  return -1;
+}
+
+void fixedLocation(){
+  int setting = findFunctionIndex(0);
+  int menu = findFunctionIndex(1);
+  
+  Collections.swap(buttons,setting,buttons.size()-1);
+  Collections.swap(buttons,menu,buttons.size()-2);
+   for (Button item : buttons) {
+    System.out.println("Debug(7) "+ item.function);
+  }
+  
+}
 void drawFunctionIcons(){
    Button temp;
   for (int loopCounter=0; loopCounter < buttons.size(); loopCounter++){
