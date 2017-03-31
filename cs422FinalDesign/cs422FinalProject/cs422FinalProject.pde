@@ -78,7 +78,7 @@ ArrayList functionActive =  new ArrayList();
 
 int currentTime;
 boolean boxInUse = false;
-
+int functionInUse;
 PFont f;
 
 //Sounds
@@ -110,20 +110,19 @@ void setup() {
   
   //Use for processing and testing 
   size( 1366 ,768);
+  
+  //setting button
   Button temp = new Button(int((canvasWidth/100)*49.5 - buttonX), int((canvasHeight/100)*90) ,buttonX,buttonY,0);
   buttons.add(temp);
   functionActive.add(temp.function);
-  
+  //function button
   temp = new Button(int((canvasWidth/100)*50.5), int((canvasHeight/100)*90) ,buttonX,buttonY,1);
   buttons.add(temp);
   functionActive.add(temp.function);
   
-  temp = new Button(int((canvasWidth/100)*50.5), int((canvasHeight/100)*90) ,buttonX,buttonY,1);
-  buttons.add(temp);
-  functionActive.add(temp.function);
-  
-   addButton(2);
-  
+
+  addButton(2);
+  addButton(3);
   // grab an image to use later
   // as with sounds Processing likes files in the data directory, Processing.js outside that directory
   //stroke(0);
@@ -140,10 +139,7 @@ void setup() {
   loadSounds();
       stroke(126);
    println((float(1366)/100)*50);
-   line((canvasWidth/100)*50,0,(canvasWidth/100)*50,canvasHeight );
-   line(683,0,683,canvasHeight );
-    line(636,0,636,canvasHeight );
-     line(729,0,729,canvasHeight );
+   drawGrid();
 }
 
 /////////////////////////////////////////////////////
@@ -195,6 +191,32 @@ void draw() {
   text(timeString, (canvasWidth/100)*5 , 50);
 
 }
+// Draw a grid 
+void drawGrid(){
+  int xLocation = 0;
+  while(xLocation < canvasWidth){
+    line(xLocation,0,xLocation,canvasHeight );
+    xLocation = xLocation + int(canvasWidth/29);
+  }
+  int yLocation = 0;
+  while(yLocation < canvasHeight){
+    line(0,yLocation,canvasWidth,yLocation );
+    yLocation = yLocation + int(canvasWidth/29);
+  }
+}
+// Draw Custom grid
+void drawGrid(int xSize,int ySize){
+  int xLocation = 0;
+  while(xLocation < canvasWidth){
+    line(xLocation,0,xLocation,canvasHeight );
+    xLocation = xLocation + xSize;
+  }
+  int yLocation = 0;
+  while(yLocation < canvasHeight){
+    line(0,yLocation,canvasWidth,yLocation );
+    yLocation = yLocation + ySize;
+  }
+}
 
 /////////////////////////////////////////////////////
 
@@ -217,54 +239,41 @@ void mousePressed() {
   println("DEBUG(0): YOU CLICKED!");
   
   
-  if(loopInsideBox() && !boxInUse){
-    println("DEBUG(1): BoxInUse: " + boxInUse + " Clicked");
-    pop_up_box(xLocation, yLocation);
-    println("DEBUG(2): BoxInUse: " + boxInUse + " Created Box");
-    println("===========");
-    return;
-  }
-  
   if(boxInUse && outsideBox(xLocation, yLocation, popUpX, popUpY)) {
     println("DEBUG(3): BoxInUse: " + boxInUse + " Clicked");
     background(255);
     boxInUse = false;
+    if(clickOtherButton()){
+      boxInUse = true;
+      pop_up_box(xLocation, yLocation);
+    }
     println("DEBUG(4): BoxInUse: " + boxInUse + " Delete Box");
     println("===========");
     return;
       
     
   }
+    if(loopInsideBox() && !boxInUse){
+    println("DEBUG(1): BoxInUse: " + boxInUse + " Clicked");
+    pop_up_box(xLocation, yLocation);
+    
+    println("DEBUG(2): BoxInUse: " + boxInUse + " Created Box");
+    println("===========");
+    return;
+  }
   
 }
 
-//Function to get current Time
-String getCurrentTime(){
-    
-  int m = minute();  // Values from 0 - 59
-  int h = hour();    // Values from 0 - 23
-  String min;
-  String hr;
-  String timeString;
-
-  if(m < 10)
-    min = "0"+str(m); 
-  else
-    min =str(m);
-  if(h%12 == 0){
-    hr = "12";
-  }
-  else{
-    hr = str(h%12);
-  }
-  if(h > 12){
-     timeString = hr +":"+ min+ "PM";
-  }
-  else{
-     timeString = hr +":"+ min+ "AM";
-  }
-  return timeString;
-  
+boolean clickOtherButton(){
+  int temp = findButton();
+  println("DEBUG(5): functionInUse: " + functionInUse );
+  println("DEBUG(6): temp: " + temp );
+  if(temp != -1 && temp != functionInUse ){
+    functionInUse = temp;
+    //println("DEBUG(5): functionInUse: " + functionInUse );
+    return true;
+  } 
+  return false;
 }
 
 boolean loopInsideBox(){
@@ -273,10 +282,23 @@ boolean loopInsideBox(){
     
     temp = buttons.get(i);
     if(insideBox(temp.x_Axis,temp.y_Axis,temp.width,temp.height)){
+      functionInUse = temp.function;
       return true;
     }
   }
   return false;
+}
+
+int findButton(){
+  Button temp;
+  for(int i = 0;i<buttons.size();i++){
+    
+    temp = buttons.get(i);
+    if(insideBox(temp.x_Axis,temp.y_Axis,temp.width,temp.height)){
+      return temp.function;
+    }
+  }
+  return -1;
 }
 
 //Function to check if mouse cursor is INSIDE the specified box
@@ -338,13 +360,53 @@ void addButton(int f){
  }
  // even number of functions before add new
  else{
- 
-   
-   
+   Button temp; 
+   Button temp2; 
+   temp = new Button(0, int((canvasHeight/100)*90) ,buttonX,buttonY,f);
+   buttons.add(temp);
+   functionActive.add(temp.function);
+   temp = buttons.get(0);
+   temp.changeX(int((canvasWidth/100)*50)-(buttonX/2));
+
+   for (int i=1; i < buttons.size(); i = i+2){
+      temp  = buttons.get(i);
+      temp2 = buttons.get(i+1);
+      
+      temp.changeX( ((buttons.get(i-1)).x_Axis) - int(buttonX + (canvasWidth/100)) );
+      temp2.changeX( ((buttons.get(i-1)).x_Axis) + int(buttonX + (canvasWidth/100)) );
+      
+   }
  }
 }
 
+//Function to get current Time
+String getCurrentTime(){
+    
+  int m = minute();  // Values from 0 - 59
+  int h = hour();    // Values from 0 - 23
+  String min;
+  String hr;
+  String timeString;
 
+  if(m < 10)
+    min = "0"+str(m); 
+  else
+    min =str(m);
+  if(h%12 == 0){
+    hr = "12";
+  }
+  else{
+    hr = str(h%12);
+  }
+  if(h > 12){
+     timeString = hr +":"+ min+ "PM";
+  }
+  else{
+     timeString = hr +":"+ min+ "AM";
+  }
+  return timeString;
+  
+}
 
 void drawFunctionIcons(){
    Button temp;
