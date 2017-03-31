@@ -148,9 +148,9 @@ void setup() {
   f = createFont("Arial",24,true);
   background(255);
   loadSounds();
-      stroke(126);
-   println((float(1366)/100)*50);
-   drawGrid();
+  stroke(126);
+
+
 }
 
 /////////////////////////////////////////////////////
@@ -159,6 +159,9 @@ void draw() {
   String timeString;
   //clear();
   background(255);
+  //comment out drawGrid if you dont want to see the grid
+  stroke(126);
+  drawGrid();
   noStroke();
   
   //rect(100,100, 100, 100, 7);  
