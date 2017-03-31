@@ -158,17 +158,22 @@ void setup() {
 void draw() {
   String timeString;
   //clear();
-  
+  background(255);
   noStroke();
   
   //rect(100,100, 100, 100, 7);  
   // draw some buttons
+ 
   fill(127,127,127);
   Button temp;
   for (int loopCounter=0; loopCounter < buttons.size(); loopCounter++){
     temp = buttons.get(loopCounter);
     rect(temp.x_Axis,temp.y_Axis,temp.width,temp.height, 10);
   }  
+  // need to change to so that it popup the correct function
+  if(boxInUse == true){
+   pop_up_box(xLocation, yLocation);
+  }
   // draw the active button in a different color
   fill(127,127,0);
   if (selectedOne >= 0)
