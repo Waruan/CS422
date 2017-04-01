@@ -1,4 +1,4 @@
-import java.util.Collections;
+//import java.util.Collections;
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 // sample simple processing / processing.js file from Andy Johnson - CS 422 - Spring 2017
@@ -131,9 +131,9 @@ void setup() {
   addButton(2);
   //addButton(3);
   
-  Collections.sort(functionActive);
+  //Collections.sort(functionActive);
   for (Button item : buttons) {
-    System.out.println(item.function);
+    println(item.function);
   }
   fixOrderofButton();
   
@@ -469,22 +469,22 @@ void fixOrderofButton(){
   }
 }
 
-int findButtonIndex(int function){
+int findButtonIndex(int fun){
   int size = buttons.size();
 
   for(int i = 0;i<size;i++){
-    if((buttons.get(i)).function == function){
+    if((buttons.get(i)).function == fun){
       return i;
     }
   }
   return -1;
 }
 
-int findFunctionIndex(int function){
+int findFunctionIndex(int fun){
   int size = buttons.size();
 
   for(int i = 0;i<size;i++){
-    if((functionActive.get(i)) == function){
+    if((functionActive.get(i)) == fun){
       return i;
     }
   }
@@ -495,10 +495,10 @@ void fixedLocation(){
   int setting = findFunctionIndex(0);
   int menu = findFunctionIndex(1);
   
-  Collections.swap(buttons,setting,buttons.size()-1);
-  Collections.swap(buttons,menu,buttons.size()-2);
+  //Collections.swap(buttons,setting,buttons.size()-1);
+ //Collections.swap(buttons,menu,buttons.size()-2);
    for (Button item : buttons) {
-    System.out.println("Debug(7) "+ item.function);
+    //System.out.println("Debug(7) "+ item.function);
   }
   
 }
