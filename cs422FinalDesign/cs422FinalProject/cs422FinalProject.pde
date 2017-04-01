@@ -68,6 +68,10 @@ int yLocation = int((canvasHeight/100)*40);
 int popUpX = int((canvasWidth/100)*20);
 int popUpY = int((canvasHeight/100)*20);
 
+//Hide button
+boolean isHidden = false;
+Button hid = new Button(int((canvasWidth - buttonX) - ((canvasWidth/100) *2)),int((canvasHeight- buttonY) - ((canvasHeight/100) *2)),buttonX,buttonY,-1);
+
 ArrayList<Button> buttons = new ArrayList<Button>();
 
 
@@ -125,7 +129,7 @@ void setup() {
   println("Debug pre" + functionActive.get(0));
   
   addButton(2);
-  addButton(3);
+  //addButton(3);
   
   Collections.sort(functionActive);
   for (Button item : buttons) {
@@ -156,6 +160,7 @@ void setup() {
 /////////////////////////////////////////////////////
 
 void draw() {
+  
   String timeString;
   //clear();
   background(255);
@@ -167,12 +172,25 @@ void draw() {
   //rect(100,100, 100, 100, 7);  
   // draw some buttons
  
+  if(isHidden){
+    textFont(f);
+    textSize(36);
+    fill(127,127,127);
+    textAlign(CENTER);
+  
+    timeString = getCurrentTime();
+    text(timeString, (canvasWidth/100)*5 , 50);
+    rect(hid.x_Axis,hid.y_Axis,hid.width,hid.height, 10);
+    return;
+  }
+ 
   fill(127,127,127);
   Button temp;
   for (int loopCounter=0; loopCounter < buttons.size(); loopCounter++){
     temp = buttons.get(loopCounter);
     rect(temp.x_Axis,temp.y_Axis,temp.width,temp.height, 10);
-  }  
+  } 
+  rect(hid.x_Axis,hid.y_Axis,hid.width,hid.height, 10);
   // need to change to so that it popup the correct function
   if(boxInUse == true){
    pop_up_box(xLocation, yLocation);
@@ -200,7 +218,6 @@ void draw() {
   }
   
   // print out the number of seconds the app has been running
-  
   textFont(f);
   textSize(36);
   fill(127,127,127);
@@ -257,6 +274,10 @@ void drawGrid(int xSize,int ySize){
 void mousePressed() {
   println("DEBUG(0): YOU CLICKED!");
   
+  if(insideBox(hid.x_Axis,hid.y_Axis,hid.width,hid.height)){
+    isHidden = !isHidden;
+    return;
+  }
   
   if(boxInUse && outsideBox(xLocation, yLocation, popUpX, popUpY)) {
     println("DEBUG(3): BoxInUse: " + boxInUse + " Clicked");
@@ -282,6 +303,8 @@ void mousePressed() {
   }
   
 }
+
+
 
 boolean clickOtherButton(){
   int temp = findButton();
