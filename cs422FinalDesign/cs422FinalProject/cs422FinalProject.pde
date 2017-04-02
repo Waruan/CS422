@@ -45,6 +45,34 @@ class Button{
   }
   
 }
+
+class Popup{
+  int x_Axis;
+  int y_Axis;
+  int width;
+  int height;
+  int function;
+  PImage img;
+  // save the location of the function where it clickable
+  ArrayList<Button> clickable = new ArrayList<Button>();
+  
+  Popup(int x, int y , int w , int h, int f){
+    x_Axis = x;
+    y_Axis = y;
+    width = w;
+    height = h;
+    //0 for function menu
+    //1 for setting
+    function = f;
+  }
+  
+  void PopupAddClickable(int x, int y , int w , int h, int f){
+    // x and y is the location with respect to the popup
+    Button temp = new Button(x_Axis + x,y_Axis + y,w,h,f);
+    clickable.add(temp);
+   
+  }
+}
 // placeholder for future image
 PImage img;
 PImage bgroundimg;
