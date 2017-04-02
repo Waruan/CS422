@@ -129,12 +129,13 @@ void setup() {
   println("Debug pre" + functionActive.get(0));
   
   addButton(2);
-  //addButton(3);
+  addButton(3);
   
   //Collections.sort(functionActive);
   for (Button item : buttons) {
     println(item.function);
   }
+  
   fixOrderofButton();
   
   
@@ -323,7 +324,7 @@ boolean loopInsideBox(){
     temp = buttons.get(i);
     if(insideBox(temp.x_Axis,temp.y_Axis,temp.width,temp.height)){
       functionInUse = temp.function;
-      println("Button "+ i + " Clicked" );
+      println("Button "+ temp.function  + " Clicked" );
       return true;
     }
   }
@@ -336,7 +337,7 @@ int findButton(){
     
     temp = buttons.get(i);
     if(insideBox(temp.x_Axis,temp.y_Axis,temp.width,temp.height)){
-      println("Button "+ i + " Clicked" );
+      println("Button "+ temp.function + " Clicked" );
       return temp.function;
     }
   }
@@ -452,6 +453,10 @@ String getCurrentTime(){
 }
 void fixOrderofButton(){
   int size = functionActive.size();
+
+  for (Button item : buttons) {
+    println("Debug(8) "+ item.function);
+  }
   fixedLocation();
   for(int i = 0;i<size;i++){
     if((functionActive.get(i) != (buttons.get(i)).function)){
@@ -496,10 +501,30 @@ void fixedLocation(){
   int menu = findFunctionIndex(1);
   
   //Collections.swap(buttons,setting,buttons.size()-1);
+  
+  buttonSwap(setting,buttons.size()-1);
+  buttonSwap(menu,buttons.size()-2);
  //Collections.swap(buttons,menu,buttons.size()-2);
    for (Button item : buttons) {
-    //System.out.println("Debug(7) "+ item.function);
+    println("Debug(7) "+ item.function);
   }
+  
+}
+
+void buttonSwap(int index1 , int index2){
+  int temp = buttons.get(index1).function;
+  int temp2 = buttons.get(index2).function;
+  int tempX = buttons.get(index1).x_Axis;
+  int tempX2 =  buttons.get(index2).x_Axis;
+  int tempY = buttons.get(index1).y_Axis;
+  int tempY2 = buttons.get(index2).y_Axis;
+  
+  buttons.get(index1).changeFunction(temp2);
+  buttons.get(index1).changeLocation(tempX2,tempY2);
+  
+  buttons.get(index2).changeFunction(temp);
+  buttons.get(index2).changeLocation(tempX,tempY);
+  
   
 }
 void drawFunctionIcons(){
