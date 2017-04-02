@@ -17,6 +17,21 @@ SoundFile beepSound;
 
 // also note the soundfile needs to be in the data folder for processing and outside that folder for Processing.js
 // sounds are also a bit slowerer to start up in Processing.js
+
+
+// some buttons
+int buttonX = 33;
+int buttonY = 30;
+
+// evl monitor size
+//float canvasWidth = 2732;
+//float canvasHeight = 1536;
+
+// scale down for home monitors
+float canvasWidth = 1366;
+float canvasHeight = 768;
+
+
 class Button{
   int x_Axis;
   int y_Axis;
@@ -73,21 +88,99 @@ class Popup{
    
   }
 }
+
+class User{
+
+  String name;
+  ArrayList<Button> buttonSet = new ArrayList<Button>();
+  ArrayList<Integer> usrFunctionActive = new ArrayList<Integer>();
+  Button hid;
+  
+  //Saved Setting info
+  ////////////////////////
+  
+  
+  ////////////////////////
+  // some buttons
+  int iconSizeX = 33;
+  int iconSizeY = 30;
+  String pin;
+  boolean isHidden;
+  
+  User(String usr, String pass){
+    name = usr;
+    pin = pass;
+    hid = new Button(int((canvasWidth - buttonX) - ((canvasWidth/100) *2)),int((canvasHeight- buttonY) - ((canvasHeight/100) *2)),buttonX,buttonY,-1);
+    isHidden = false;
+    //Create the Default buttons
+    ///////////////////////////////////////////////////
+    
+    //setting button
+    Button temp = new Button(int((canvasWidth/100)*49.5 - buttonX), int((canvasHeight/100)*90) ,iconSizeX,iconSizeY,0);
+    buttonSet.add(temp);
+    usrFunctionActive.add(temp.function);
+    //function button
+    temp = new Button(int((canvasWidth/100)*50.5), int((canvasHeight/100)*90) ,iconSizeX,iconSizeY,1);
+    buttonSet.add(temp);
+    usrFunctionActive.add(temp.function);
+    
+    ///////////////////////////////////////////////////
+    
+  }
+  
+  void addButton(int f){
+
+ // odd number of functions before add new
+ if(usrFunctionActive.size()%2 == 1){
+   
+   Button temp; 
+   Button temp2; 
+   temp = new Button(0, int((canvasHeight/100)*90) ,buttonX,buttonY,f);
+   buttonSet.add(temp);
+   usrFunctionActive.add(temp.function);
+   temp = buttonSet.get(0);
+   temp.changeX(int((canvasWidth/100)*50.5));
+   temp = buttonSet.get(1);
+   temp.changeX(int(((canvasWidth/100)*49.5) - buttonX));
+   
+   for (int i=2; i < buttonSet.size(); i = i+2){
+      temp  = buttonSet.get(i);
+      temp2 = buttonSet.get(i+1);
+      
+      temp.changeX( ((buttonSet.get(i-1)).x_Axis) - int(buttonX + (canvasWidth/100)) );
+      temp2.changeX( ((buttonSet.get(i-2)).x_Axis) + int(buttonX + (canvasWidth/100)) );
+      
+   }
+ }
+ // even number of functions before add new
+ else{
+   Button temp; 
+   Button temp2; 
+   temp = new Button(0, int((canvasHeight/100)*90) ,buttonX,buttonY,f);
+   buttonSet.add(temp);
+   usrFunctionActive.add(temp.function);
+   temp = buttonSet.get(0);
+   temp.changeX(int((canvasWidth/100)*50)-(buttonX/2));
+
+   for (int i=1; i < buttonSet.size(); i = i+2){
+      temp  = buttonSet.get(i);
+      temp2 = buttonSet.get(i+1);
+      
+      temp.changeX( ((buttonSet.get(i-1)).x_Axis) - int(buttonX + (canvasWidth/100)) );
+      temp2.changeX( ((buttonSet.get(i-1)).x_Axis) + int(buttonX + (canvasWidth/100)) );
+      
+   }
+ }
+ 
+ 
+}
+  
+
+}
 // placeholder for future image
 PImage img;
 PImage bgroundimg;
 
-// some buttons
-int buttonX = 33;
-int buttonY = 30;
-
-// evl monitor size
-//float canvasWidth = 2732;
-//float canvasHeight = 1536;
-
-// scale down for home monitors
-float canvasWidth = 1366;
-float canvasHeight = 768;
 
 int xLocation = int((canvasWidth/100)*40);
 int yLocation = int((canvasHeight/100)*40); 
@@ -97,10 +190,10 @@ int popUpX = int((canvasWidth/100)*20);
 int popUpY = int((canvasHeight/100)*20);
 
 //Hide button
-boolean isHidden = false;
-Button hid = new Button(int((canvasWidth - buttonX) - ((canvasWidth/100) *2)),int((canvasHeight- buttonY) - ((canvasHeight/100) *2)),buttonX,buttonY,-1);
+//boolean isHidden = false;
+//Button hid = new Button(int((canvasWidth - buttonX) - ((canvasWidth/100) *2)),int((canvasHeight- buttonY) - ((canvasHeight/100) *2)),buttonX,buttonY,-1);
 
-ArrayList<Button> buttons = new ArrayList<Button>();
+//ArrayList<Button> buttons = new ArrayList<Button>();
 
 
 //int[][] buttons = { {200, 300}, {250, 300}, {300, 300}, {400, 300}, {450, 300}};
@@ -109,7 +202,7 @@ int selectedOne = -1;
 //Atleast 2 one for function list and other for setting
 
 
-ArrayList<Integer> functionActive = new ArrayList<Integer>();
+//ArrayList<Integer> functionActive = new ArrayList<Integer>();
 int currentTime;
 boolean boxInUse = false;
 int functionInUse;
@@ -135,6 +228,7 @@ void playBeep() {
 
 /////////////////////////////////////////////////////
 
+User guess = new User("guess","0000");
 
 void setup() {
   // set the canvas size
@@ -145,26 +239,26 @@ void setup() {
   //Use for processing and testing 
   size( 1366 ,768);
   
-  //setting button
-  Button temp = new Button(int((canvasWidth/100)*49.5 - buttonX), int((canvasHeight/100)*90) ,buttonX,buttonY,0);
-  buttons.add(temp);
-  functionActive.add(temp.function);
-  //function button
-  temp = new Button(int((canvasWidth/100)*50.5), int((canvasHeight/100)*90) ,buttonX,buttonY,1);
-  buttons.add(temp);
-  functionActive.add(temp.function);
+  ////setting button
+  //Button temp = new Button(int((canvasWidth/100)*49.5 - buttonX), int((canvasHeight/100)*90) ,buttonX,buttonY,0);
+  //buttons.add(temp);
+  //functionActive.add(temp.function);
+  ////function button
+  //temp = new Button(int((canvasWidth/100)*50.5), int((canvasHeight/100)*90) ,buttonX,buttonY,1);
+  //buttons.add(temp);
+  //functionActive.add(temp.function);
   
-  println("Debug pre" + functionActive.get(0));
+  //println("Debug pre" + functionActive.get(0));
   
-  addButton(2);
-  addButton(3);
+  //addButton(2,buttons,functionActive,buttonX,buttonY);
+  //addButton(3,buttons,functionActive,buttonX,buttonY);
   
-  //Collections.sort(functionActive);
-  for (Button item : buttons) {
-    println(item.function);
-  }
+  ////Collections.sort(functionActive);
+  //for (Button item : buttons) {
+  //  println(item.function);
+  //}
   
-  fixOrderofButton();
+  //fixOrderofButton(buttons,functionActive);
   
   
   // grab an image to use later
@@ -178,12 +272,22 @@ void setup() {
   //img.loadPixels();
   
   
+  //f = createFont("Arial",24,true);
+  //background(255);
+  //loadSounds();
+  //stroke(126);
+
+  
+  ////////////////////////////////////
+  
+  
+  fixOrderofButton(guess.buttonSet,guess.usrFunctionActive);
+  addButton(3,guess.buttonSet,guess.usrFunctionActive,33,30);
   f = createFont("Arial",24,true);
   background(255);
   loadSounds();
   stroke(126);
-
-
+  
 }
 
 /////////////////////////////////////////////////////
@@ -201,7 +305,7 @@ void draw() {
   //rect(100,100, 100, 100, 7);  
   // draw some buttons
  
-  if(isHidden){
+  if(guess.isHidden){
     textFont(f);
     textSize(36);
     fill(127,127,127);
@@ -209,17 +313,17 @@ void draw() {
   
     timeString = getCurrentTime();
     text(timeString, (canvasWidth/100)*5 , 50);
-    rect(hid.x_Axis,hid.y_Axis,hid.width,hid.height, 10);
+    rect(guess.hid.x_Axis,guess.hid.y_Axis,guess.hid.width,guess.hid.height, 10);
     return;
   }
  
   fill(127,127,127);
   Button temp;
-  for (int loopCounter=0; loopCounter < buttons.size(); loopCounter++){
-    temp = buttons.get(loopCounter);
+  for (int loopCounter=0; loopCounter < guess.buttonSet.size(); loopCounter++){
+    temp = guess.buttonSet.get(loopCounter);
     rect(temp.x_Axis,temp.y_Axis,temp.width,temp.height, 10);
   } 
-  rect(hid.x_Axis,hid.y_Axis,hid.width,hid.height, 10);
+  rect(guess.hid.x_Axis,guess.hid.y_Axis,guess.hid.width,guess.hid.height, 10);
   // need to change to so that it popup the correct function
   if(boxInUse == true){
    pop_up_box(xLocation, yLocation);
@@ -303,8 +407,8 @@ void drawGrid(int xSize,int ySize){
 void mousePressed() {
   println("DEBUG(0): YOU CLICKED!");
   
-  if(insideBox(hid.x_Axis,hid.y_Axis,hid.width,hid.height)){
-    isHidden = !isHidden;
+  if(insideBox(guess.hid.x_Axis,guess.hid.y_Axis,guess.hid.width,guess.hid.height)){
+    guess.isHidden = !guess.isHidden;
     return;
   }
   
@@ -347,9 +451,9 @@ boolean clickOtherButton(){
 
 boolean loopInsideBox(){
   Button temp;
-  for(int i = 0;i<buttons.size();i++){
+  for(int i = 0;i<guess.buttonSet.size();i++){
     
-    temp = buttons.get(i);
+    temp = guess.buttonSet.get(i);
     if(insideBox(temp.x_Axis,temp.y_Axis,temp.width,temp.height)){
       functionInUse = temp.function;
       println("Button "+ temp.function  + " Clicked" );
@@ -361,9 +465,9 @@ boolean loopInsideBox(){
 
 int findButton(){
   Button temp;
-  for(int i = 0;i<buttons.size();i++){
+  for(int i = 0;i<guess.buttonSet.size();i++){
     
-    temp = buttons.get(i);
+    temp = guess.buttonSet.get(i);
     if(insideBox(temp.x_Axis,temp.y_Axis,temp.width,temp.height)){
       println("Button "+ temp.function + " Clicked" );
       return temp.function;
@@ -404,27 +508,27 @@ void pop_up_box(int x, int y) {
   
 }
 // change the location of button by changing their function value
-void addButton(int f){
+void addButton(int f,ArrayList<Button> blist,ArrayList<Integer> funcList, int x ,int y){
 
  // odd number of functions before add new
- if(functionActive.size()%2 == 1){
+ if(guess.usrFunctionActive.size()%2 == 1){
    
    Button temp; 
    Button temp2; 
-   temp = new Button(0, int((canvasHeight/100)*90) ,buttonX,buttonY,f);
-   buttons.add(temp);
-   functionActive.add(temp.function);
-   temp = buttons.get(0);
+   temp = new Button(0, int((canvasHeight/100)*90) ,x,y,f);
+   blist.add(temp);
+   funcList.add(temp.function);
+   temp = blist.get(0);
    temp.changeX(int((canvasWidth/100)*50.5));
-   temp = buttons.get(1);
-   temp.changeX(int(((canvasWidth/100)*49.5) - buttonX));
+   temp = blist.get(1);
+   temp.changeX(int(((canvasWidth/100)*49.5) - x));
    
-   for (int i=2; i < buttons.size(); i = i+2){
-      temp  = buttons.get(i);
-      temp2 = buttons.get(i+1);
+   for (int i=2; i < blist.size(); i = i+2){
+      temp  = blist.get(i);
+      temp2 = blist.get(i+1);
       
-      temp.changeX( ((buttons.get(i-1)).x_Axis) - int(buttonX + (canvasWidth/100)) );
-      temp2.changeX( ((buttons.get(i-2)).x_Axis) + int(buttonX + (canvasWidth/100)) );
+      temp.changeX( ((blist.get(i-1)).x_Axis) - int(x + (canvasWidth/100)) );
+      temp2.changeX( ((blist.get(i-2)).x_Axis) + int(x + (canvasWidth/100)) );
       
    }
 
@@ -434,18 +538,18 @@ void addButton(int f){
  else{
    Button temp; 
    Button temp2; 
-   temp = new Button(0, int((canvasHeight/100)*90) ,buttonX,buttonY,f);
-   buttons.add(temp);
-   functionActive.add(temp.function);
-   temp = buttons.get(0);
-   temp.changeX(int((canvasWidth/100)*50)-(buttonX/2));
+   temp = new Button(0, int((canvasHeight/100)*90) ,x,y,f);
+   blist.add(temp);
+   funcList.add(temp.function);
+   temp = blist.get(0);
+   temp.changeX(int((canvasWidth/100)*50)-(x/2));
 
-   for (int i=1; i < buttons.size(); i = i+2){
-      temp  = buttons.get(i);
-      temp2 = buttons.get(i+1);
+   for (int i=1; i < blist.size(); i = i+2){
+      temp  = blist.get(i);
+      temp2 = blist.get(i+1);
       
-      temp.changeX( ((buttons.get(i-1)).x_Axis) - int(buttonX + (canvasWidth/100)) );
-      temp2.changeX( ((buttons.get(i-1)).x_Axis) + int(buttonX + (canvasWidth/100)) );
+      temp.changeX( ((blist.get(i-1)).x_Axis) - int(x + (canvasWidth/100)) );
+      temp2.changeX( ((blist.get(i-1)).x_Axis) + int(x + (canvasWidth/100)) );
       
    }
  }
@@ -479,19 +583,19 @@ String getCurrentTime(){
   return timeString;
   
 }
-void fixOrderofButton(){
-  int size = functionActive.size();
+void fixOrderofButton(ArrayList<Button> blist,ArrayList<Integer> funcList){
+  int size = funcList.size();
 
-  for (Button item : buttons) {
+  for (Button item : blist) {
     println("Debug(8) "+ item.function);
   }
-  fixedLocation();
+  fixedLocation(blist,funcList);
   for(int i = 0;i<size;i++){
-    if((functionActive.get(i) != (buttons.get(i)).function)){
-      int index = findButtonIndex(functionActive.get(i));
+    if((funcList.get(i) != (blist.get(i)).function)){
+      int index = findButtonIndex(blist,funcList.get(i));
       if(index != -1){
-        Button temp = buttons.get(index);
-        Button temp2 = buttons.get(i);
+        Button temp = blist.get(index);
+        Button temp2 = blist.get(i);
         int holder = temp.function;
         
         temp.function = temp2.function;
@@ -502,63 +606,63 @@ void fixOrderofButton(){
   }
 }
 
-int findButtonIndex(int fun){
-  int size = buttons.size();
+int findButtonIndex(ArrayList<Button> blist,int fun){
+  int size = blist.size();
 
   for(int i = 0;i<size;i++){
-    if((buttons.get(i)).function == fun){
+    if((blist.get(i)).function == fun){
       return i;
     }
   }
   return -1;
 }
 
-int findFunctionIndex(int fun){
-  int size = buttons.size();
+int findFunctionIndex(ArrayList<Button> blist,ArrayList<Integer> funcList,int fun){
+  int size = blist.size();
 
   for(int i = 0;i<size;i++){
-    if((functionActive.get(i)) == fun){
+    if((funcList.get(i)) == fun){
       return i;
     }
   }
   return -1;
 }
 
-void fixedLocation(){
-  int setting = findFunctionIndex(0);
-  int menu = findFunctionIndex(1);
+void fixedLocation(ArrayList<Button> blist,ArrayList<Integer> funcList){
+  int setting = findFunctionIndex(blist,funcList,0);
+  int menu = findFunctionIndex(blist,funcList,1);
   
   //Collections.swap(buttons,setting,buttons.size()-1);
   
-  buttonSwap(setting,buttons.size()-1);
-  buttonSwap(menu,buttons.size()-2);
+  buttonSwap(blist,setting,blist.size()-1);
+  buttonSwap(blist,menu,blist.size()-2);
  //Collections.swap(buttons,menu,buttons.size()-2);
-   for (Button item : buttons) {
+   for (Button item : blist) {
     println("Debug(7) "+ item.function);
   }
   
 }
 
-void buttonSwap(int index1 , int index2){
-  int temp = buttons.get(index1).function;
-  int temp2 = buttons.get(index2).function;
-  int tempX = buttons.get(index1).x_Axis;
-  int tempX2 =  buttons.get(index2).x_Axis;
-  int tempY = buttons.get(index1).y_Axis;
-  int tempY2 = buttons.get(index2).y_Axis;
+void buttonSwap(ArrayList<Button> blist,int index1 , int index2){
+  int temp = blist.get(index1).function;
+  int temp2 = blist.get(index2).function;
+  int tempX = blist.get(index1).x_Axis;
+  int tempX2 =  blist.get(index2).x_Axis;
+  int tempY = blist.get(index1).y_Axis;
+  int tempY2 = blist.get(index2).y_Axis;
   
-  buttons.get(index1).changeFunction(temp2);
-  buttons.get(index1).changeLocation(tempX2,tempY2);
+  blist.get(index1).changeFunction(temp2);
+  blist.get(index1).changeLocation(tempX2,tempY2);
   
-  buttons.get(index2).changeFunction(temp);
-  buttons.get(index2).changeLocation(tempX,tempY);
+  blist.get(index2).changeFunction(temp);
+  blist.get(index2).changeLocation(tempX,tempY);
   
   
 }
-void drawFunctionIcons(){
+void drawFunctionIcons(ArrayList<Button>blist){
    Button temp;
-  for (int loopCounter=0; loopCounter < buttons.size(); loopCounter++){
-    temp = buttons.get(loopCounter);
+  for (int loopCounter=0; loopCounter < blist.size(); loopCounter++){
+    temp = blist.get(loopCounter);
     rect(temp.x_Axis,temp.y_Axis,temp.width,temp.height, 10);
   } 
 }
