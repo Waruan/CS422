@@ -22,7 +22,13 @@ SoundFile beepSound;
 // some buttons
 int buttonX = 33;
 int buttonY = 30;
+//
 
+//0 = screen screen
+//1 = profile selection
+//2 = login 
+//3 = display
+int stage = 0;
 // evl monitor size
 //float canvasWidth = 2732;
 //float canvasHeight = 1536;
@@ -172,10 +178,7 @@ class User{
    }
  }
  
- 
 }
-  
-
 }
 // placeholder for future image
 PImage img;
@@ -189,20 +192,15 @@ int yLocation = int((canvasHeight/100)*40);
 int popUpX = int((canvasWidth/100)*20);
 int popUpY = int((canvasHeight/100)*20);
 
+// Old code before creating user class
+/////////////////////////////////////////////////////////////////////////
 //Hide button
 //boolean isHidden = false;
 //Button hid = new Button(int((canvasWidth - buttonX) - ((canvasWidth/100) *2)),int((canvasHeight- buttonY) - ((canvasHeight/100) *2)),buttonX,buttonY,-1);
-
 //ArrayList<Button> buttons = new ArrayList<Button>();
-
-
-//int[][] buttons = { {200, 300}, {250, 300}, {300, 300}, {400, 300}, {450, 300}};
-// no buttons / mode currently selected
-int selectedOne = -1;
-//Atleast 2 one for function list and other for setting
-
-
 //ArrayList<Integer> functionActive = new ArrayList<Integer>();
+
+/////////////////////////////////////////////////////////////////////////
 int currentTime;
 boolean boxInUse = false;
 int functionInUse;
@@ -239,6 +237,8 @@ void setup() {
   //Use for processing and testing 
   size( 1366 ,768);
   
+  //Old code before creating a User class
+  ////////////////////////////////////////////////////////////////////////////
   ////setting button
   //Button temp = new Button(int((canvasWidth/100)*49.5 - buttonX), int((canvasHeight/100)*90) ,buttonX,buttonY,0);
   //buttons.add(temp);
@@ -260,7 +260,7 @@ void setup() {
   
   //fixOrderofButton(buttons,functionActive);
   
-  
+  ////////////////////////////////////////////////////////////////////////////////////
   // grab an image to use later
   // as with sounds Processing likes files in the data directory, Processing.js outside that directory
   //stroke(0);
@@ -282,7 +282,7 @@ void setup() {
   
   
   fixOrderofButton(guess.buttonSet,guess.usrFunctionActive);
-  addButton(3,guess.buttonSet,guess.usrFunctionActive,33,30);
+  guess.addButton(4);
   f = createFont("Arial",24,true);
   background(255);
   loadSounds();
@@ -295,15 +295,14 @@ void setup() {
 void draw() {
   
   String timeString;
-  //clear();
-  background(255);
-  //comment out drawGrid if you dont want to see the grid
+
+  background(255); 
   stroke(126);
+  //comment out drawGrid if you dont want to see the grid
   drawGrid();
   noStroke();
   
-  //rect(100,100, 100, 100, 7);  
-  // draw some buttons
+
  
   if(guess.isHidden){
     textFont(f);
@@ -330,27 +329,9 @@ void draw() {
   }
   // draw the active button in a different color
   fill(127,127,0);
-  if (selectedOne >= 0)
-   // rect(buttons[selectedOne][0], buttons[selectedOne][1], buttonX, buttonY, 10);
-    
-    
-  // draw the state of the thing that the buttons control
-  if (selectedOne == 0){
-    //fill(127,0,0);
-    //rect (300, 100, 300, 300);
-  }
+
   
-  if (selectedOne == 1){
-    //fill(0,127,0);
-    //ellipse(450,250,300,300);
-  }
-  
-  if (selectedOne == 2){
-    //img.resize(300, 300);
-    //image(img, 300, 100);
-  }
-  
-  // print out the number of seconds the app has been running
+
   textFont(f);
   textSize(36);
   fill(127,127,127);
@@ -389,19 +370,6 @@ void drawGrid(int xSize,int ySize){
 
 /////////////////////////////////////////////////////
 
-// if the mouse button is released inside a known button keep track of which button was pressed
-// and play a confirmation sound
-
-//void mouseReleased() {
-  
-//  for (int loopCounter=0; loopCounter < buttons.length; loopCounter++){
-//      if ((mouseX > buttons[loopCounter][0]) && (mouseX < buttons[loopCounter][0]+buttonX)
-//      && (mouseY > buttons[loopCounter][1]) && (mouseY < buttons[loopCounter][1]+buttonY)){
-//        selectedOne = loopCounter;
-//        //playBeep();
-//      }
-//  }
-//}
 
 //Mouse handlers
 void mousePressed() {
@@ -507,53 +475,7 @@ void pop_up_box(int x, int y) {
   boxInUse = true;
   
 }
-// change the location of button by changing their function value
-void addButton(int f,ArrayList<Button> blist,ArrayList<Integer> funcList, int x ,int y){
 
- // odd number of functions before add new
- if(guess.usrFunctionActive.size()%2 == 1){
-   
-   Button temp; 
-   Button temp2; 
-   temp = new Button(0, int((canvasHeight/100)*90) ,x,y,f);
-   blist.add(temp);
-   funcList.add(temp.function);
-   temp = blist.get(0);
-   temp.changeX(int((canvasWidth/100)*50.5));
-   temp = blist.get(1);
-   temp.changeX(int(((canvasWidth/100)*49.5) - x));
-   
-   for (int i=2; i < blist.size(); i = i+2){
-      temp  = blist.get(i);
-      temp2 = blist.get(i+1);
-      
-      temp.changeX( ((blist.get(i-1)).x_Axis) - int(x + (canvasWidth/100)) );
-      temp2.changeX( ((blist.get(i-2)).x_Axis) + int(x + (canvasWidth/100)) );
-      
-   }
-
-   
- }
- // even number of functions before add new
- else{
-   Button temp; 
-   Button temp2; 
-   temp = new Button(0, int((canvasHeight/100)*90) ,x,y,f);
-   blist.add(temp);
-   funcList.add(temp.function);
-   temp = blist.get(0);
-   temp.changeX(int((canvasWidth/100)*50)-(x/2));
-
-   for (int i=1; i < blist.size(); i = i+2){
-      temp  = blist.get(i);
-      temp2 = blist.get(i+1);
-      
-      temp.changeX( ((blist.get(i-1)).x_Axis) - int(x + (canvasWidth/100)) );
-      temp2.changeX( ((blist.get(i-1)).x_Axis) + int(x + (canvasWidth/100)) );
-      
-   }
- }
-}
 
 //Function to get current Time
 String getCurrentTime(){
@@ -632,12 +554,9 @@ void fixedLocation(ArrayList<Button> blist,ArrayList<Integer> funcList){
   int setting = findFunctionIndex(blist,funcList,0);
   int menu = findFunctionIndex(blist,funcList,1);
   
-  //Collections.swap(buttons,setting,buttons.size()-1);
-  
   buttonSwap(blist,setting,blist.size()-1);
   buttonSwap(blist,menu,blist.size()-2);
- //Collections.swap(buttons,menu,buttons.size()-2);
-   for (Button item : blist) {
+  for (Button item : blist) {
     println("Debug(7) "+ item.function);
   }
   
