@@ -1,10 +1,10 @@
-//import java.util.Collections;
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 // sample simple processing / processing.js file from Andy Johnson - CS 422 - Spring 2017
 
 // one current issue is dealing with sounds between Processing and Processing.js
-// without compiler directives its hard to easily comment in and out the two different versions
+// without cbompiler directives its hard to easily comment in and out the two different versions
 
 // the external sound library (Sketch / Import Library / Sound) will work in processing but not in processing.js
 // uncomment these two lines to get audio in Processing
@@ -24,10 +24,11 @@ int buttonX = 33;
 int buttonY = 30;
 //
 
-//0 = screen screen
+//0 = start screen
 //1 = profile selection
 //2 = login 
-//3 = display
+//3 = Exsitng User display
+//4 = Guess User display
 int stage = 0;
 // evl monitor size
 //float canvasWidth = 2732;
@@ -65,6 +66,19 @@ class Button{
     x_Axis = x;
   }
   
+}
+
+class CircleButton{
+  int x_Axis;
+  int y_Axis;
+  int width;
+  int height;
+  CircleButton(int x, int y,int w,int h){
+    x_Axis = x;
+    y_Axis = y;
+    width = w;
+    height = h;
+  }
 }
 
 class Popup{
@@ -206,6 +220,10 @@ boolean boxInUse = false;
 int functionInUse;
 PFont f;
 
+
+//Profiles
+ArrayList<Button> profile = new ArrayList<Button>();
+CircleButton newUserButton;
 //Sounds
 /////////////////////////////////////////////////////
 
@@ -288,12 +306,126 @@ void setup() {
   loadSounds();
   stroke(126);
   
+  
+  //Profile Setup
+  //////////////////////////////////////////////////
+  
+  Button temp = new Button(int((canvasWidth/100)*49.5 - buttonX), int((canvasHeight/100)*90) ,66,30,0);
+  profile.add(temp);
+  int index = findMostRight(profile);
+  newUserButton = new CircleButton(int(index+66+(2*(canvasWidth/100))),temp.y_Axis+15, 30, 30);
+  
+  
+  //addButton(profile,66,30,-2);
+  //////////////////////////////////////////////////
+  
 }
 
 /////////////////////////////////////////////////////
 
 void draw() {
+  if(stage == 0){
+    startDraw();
+  }
+  else if(stage == 1){
+    profileDraw();
+  }
+  else if(stage == 2){
+    loginDraw();
+  }
+  else if(stage == 3){
+    loginDraw();
+  }
+  else if(stage == 4){
+    //change to genric displayDraw 
+    guessDraw();
+  }
+
+}
+
+void startDraw(){
+  String timeString;
+
+  background(255); 
+  stroke(126);
+  //comment out drawGrid if you dont want to see the grid
+  drawGrid();
+  noStroke();
   
+  
+  // draw the active button in a different color
+  fill(127,127,0);
+
+  textFont(f);
+  textSize(36);
+  fill(127,127,127);
+  textAlign(CENTER);
+  
+  timeString = getCurrentTime();
+  text(timeString, (canvasWidth/100)*5 , 50);
+  
+  text("Touch Screen to Start", (canvasWidth/100)*50 , (canvasHeight/100)*90);
+
+}
+
+
+void profileDraw(){
+  String timeString;
+
+  background(255); 
+  stroke(126);
+  //comment out drawGrid if you dont want to see the grid
+  drawGrid();
+  noStroke();
+  
+  
+  // draw the active button in a different color
+  fill(127,127,0);
+
+  textFont(f);
+  textSize(36);
+  fill(127,127,127);
+  textAlign(CENTER);
+  
+  timeString = getCurrentTime();
+  text(timeString, (canvasWidth/100)*5 , 50);
+  
+  //add new user
+  Button temp;
+  for (int loopCounter=0; loopCounter < profile.size(); loopCounter++){
+    temp = profile.get(loopCounter);
+    rect(temp.x_Axis,temp.y_Axis,temp.width,temp.height, 10);
+  } 
+  temp = profile.get(profile.size()-1);
+  
+   
+  ellipse(newUserButton.x_Axis,newUserButton.y_Axis,newUserButton.width, newUserButton.height);
+  
+}
+
+void loginDraw(){
+  String timeString;
+
+  background(255); 
+  stroke(126);
+  //comment out drawGrid if you dont want to see the grid
+  drawGrid();
+  noStroke();
+  
+  
+  // draw the active button in a different color
+  fill(127,127,0);
+
+  textFont(f);
+  textSize(36);
+  fill(127,127,127);
+  textAlign(CENTER);
+  
+  timeString = getCurrentTime();
+  text(timeString, (canvasWidth/100)*5 , 50);
+}
+
+void guessDraw(){
   String timeString;
 
   background(255); 
@@ -340,7 +472,9 @@ void draw() {
   timeString = getCurrentTime();
   text(timeString, (canvasWidth/100)*5 , 50);
 
+
 }
+
 // Draw a grid 
 void drawGrid(){
   int xLocation = 0;
@@ -373,8 +507,55 @@ void drawGrid(int xSize,int ySize){
 
 //Mouse handlers
 void mousePressed() {
-  println("DEBUG(0): YOU CLICKED!");
   
+  if(stage == 0){
+    stage = 1;
+    
+    return;
+  }
+  if(stage == 1){
+    stage2MousePressed();
+    
+    return;
+  }
+  if(stage == 2){
+    stage = 3;
+    return;
+  }
+  if(stage == 3){
+    stage = 4;
+    return;
+  }
+  if(stage == 4){
+    stage4MousePressed();
+    return;
+  }
+  
+  
+}
+void stage2MousePressed(){
+  Button temp;
+  
+  //ellipse((index+66+(2*(canvasWidth/100))),temp.y_Axis+15, 30, 30);
+  if(insideCircle(newUserButton.x_Axis,newUserButton.y_Axis,newUserButton.width)){
+    println("DEBUG(9): New user");
+    // new the stage for that
+    
+  }
+  
+  
+  for (int loopCounter=0; loopCounter < profile.size(); loopCounter++){
+    temp = profile.get(loopCounter);
+    if(insideBox(temp.x_Axis,temp.y_Axis,temp.width,temp.height)){
+      stage = 3;
+      return;
+    }
+  }
+  
+
+}
+
+void stage4MousePressed(){
   if(insideBox(guess.hid.x_Axis,guess.hid.y_Axis,guess.hid.width,guess.hid.height)){
     guess.isHidden = !guess.isHidden;
     return;
@@ -402,9 +583,8 @@ void mousePressed() {
     println("===========");
     return;
   }
-  
-}
 
+}
 
 
 boolean clickOtherButton(){
@@ -443,6 +623,12 @@ int findButton(){
   }
   return -1;
 }
+boolean insideCircle(int x, int y,int d){
+ if( dist(mouseX,mouseY,x,y)<d/2){
+   return true;
+ }
+ return false;
+}
 
 //Function to check if mouse cursor is INSIDE the specified box
 boolean insideBox(int x, int y, int boxWidth, int boxHeight) {
@@ -456,6 +642,7 @@ boolean insideBox(int x, int y, int boxWidth, int boxHeight) {
   }
   
 }
+
 //Function to check if mouse cursor is OUTSIDE the specified box
 boolean outsideBox(int x, int y, int boxWidth, int boxHeight) {
 
@@ -584,4 +771,62 @@ void drawFunctionIcons(ArrayList<Button>blist){
     temp = blist.get(loopCounter);
     rect(temp.x_Axis,temp.y_Axis,temp.width,temp.height, 10);
   } 
+}
+
+int findMostRight(ArrayList<Button> blist){
+  Button temp;
+  temp = blist.get(0);
+  int index = temp.x_Axis;
+  
+  for (int loopCounter=0; loopCounter < blist.size(); loopCounter++){
+    temp = blist.get(loopCounter);
+    if(index < temp.x_Axis){
+      index = temp.x_Axis;
+    }
+  } 
+  return index;
+}
+void addButton(ArrayList<Button> blist , int X, int Y,int f){
+
+ // odd number of functions before add new
+ if(blist.size()%2 == 1){
+   
+   Button temp; 
+   Button temp2; 
+   temp = new Button(0, int((canvasHeight/100)*90) ,X,Y,f);
+   blist.add(temp);
+   temp = blist.get(0);
+   temp.changeX(int((canvasWidth/100)*50.5));
+   temp = blist.get(1);
+   temp.changeX(int(((canvasWidth/100)*49.5) - X));
+   
+   for (int i=2; i < blist.size(); i = i+2){
+      temp  = blist.get(i);
+      temp2 = blist.get(i+1);
+      
+      temp.changeX( ((blist.get(i-1)).x_Axis) - int(X + (canvasWidth/100)) );
+      temp2.changeX( ((blist.get(i-2)).x_Axis) + int(X + (canvasWidth/100)) );
+      
+   }
+ }
+ // even number of functions before add new
+ else{
+   Button temp; 
+   Button temp2; 
+   temp = new Button(0, int((canvasHeight/100)*90) ,X,Y,f);
+   blist.add(temp);
+  
+   temp = blist.get(0);
+   temp.changeX(int((canvasWidth/100)*50)-(X/2));
+
+   for (int i=1; i < blist.size(); i = i+2){
+      temp  = blist.get(i);
+      temp2 = blist.get(i+1);
+      
+      temp.changeX( ((blist.get(i-1)).x_Axis) - int(X + (canvasWidth/100)) );
+      temp2.changeX( ((blist.get(i-1)).x_Axis) + int(X + (canvasWidth/100)) );
+      
+   }
+ }
+ 
 }
