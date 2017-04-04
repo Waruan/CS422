@@ -1,77 +1,110 @@
-/**
-  * This sketch demonstrates how to play a file with Minim using an AudioPlayer. <br />
-  * It's also a good example of how to draw the waveform of the audio. Full documentation 
-  * for AudioPlayer can be found at http://code.compartmental.net/minim/audioplayer_class_audioplayer.html
-  * <p>
-  * For more information about Minim and additional features, 
-  * visit http://code.compartmental.net/minim/
-  */
+//make a new HTML5 audio object named audio
+Audio audio = new Audio();
+// make string that will house the audio extension
+String fileExt;
 
-import ddf.minim.*;
+//make a variable for volume and set it to 0
+//(volume runs between 0 and 1)
+float vol=0;
+bool fadeOut=false;
 
-Minim minim;
-AudioPlayer player;
+int col=0;
+ArrayList<String> songNames = new ArrayList<String>();
+int current = 0;
 
-void setup()
-{
-  size(512, 200, P3D);
+void setup(){
+  size(300,300);
+  noStroke(); 
   
-  // we pass this to Minim so that it can load files from the data directory
-  minim = new Minim(this);
+  String temp  = "snow";
+  songNames.add("groove");
+  songNames.add(temp);
+
+  //this checks to see what type of audio the browser can play
+  //then assigns that file extension to our string
+  fileExt = ".mp3";
+  //loads the audio file and appends the file extension
+  audio.setAttribute("src",songNames.get(current)+fileExt);
+  //this adds a listener to see when the file has finished playing
+  //then calls a function that we named "repeat"
+  audio.addEventListener("ended",next);
+  //play the audio
+  audio.play();
+  audio.volume=constrain(vol,0,1);
   
-  // loadFile will look in all the same places as loadImage does.
-  // this means you can find files that are in the data folder and the 
-  // sketch folder. you can also pass an absolute path, or a URL.
-  player = minim.loadFile("groove.mp3");
+  
 }
 
-void draw()
-{
-  background(0);
-  stroke(255);
+void draw(){
+  background(220);
+  //constrain the R value between 0 and 255
+  fill(constrain(col,0,255),0,0);
+  ellipse(width/2,height/2,150,150);
+  ellipse(width-30,height-30,30,30);
+  ellipse(30,height-30,30,30);
+  //constrain the audio level between 0 and 1
+  audio.volume=constrain(vol,0,1);
+  //fade the volume and color out at the same rate
   
-  // draw the waveforms
-  // the values returned by left.get() and right.get() will be between -1 and 1,
-  // so we need to scale them up to see the waveform
-  // note that if the file is MONO, left.get() and right.get() will return the same value
-  for(int i = 0; i < player.bufferSize() - 1; i++)
-  {
-    float x1 = map( i, 0, player.bufferSize(), 0, width );
-    float x2 = map( i+1, 0, player.bufferSize(), 0, width );
-    line( x1, 50 + player.left.get(i)*50, x2, 50 + player.left.get(i+1)*50 );
-    line( x1, 150 + player.right.get(i)*50, x2, 150 + player.right.get(i+1)*50 );
+}
+
+
+void mouseReleased(){
+  //turn fadeout on
+  fadeOut=!fadeOut;
+  if (dist(mouseX,mouseY,width/2,height/2)<150/2){
+    
+    if (fadeOut){
+      vol=1;
+      col=255;
+      audio.play();
+    }
+    else if (!fadeOut){
+      vol-=.1;
+      col-=25;
+      audio.pause();
+    }
+    return;
+  }  
+  if(dist(mouseX,mouseY,width-30,height-30)<30/2){
+    next();
+    return;
   }
-  
-  // draw a line to show where in the song playback is currently located
-  float posx = map(player.position(), 0, player.length(), 0, width);
-  stroke(0,200,0);
-  line(posx, 0, posx, height);
-  
-  if ( player.isPlaying() )
-  {
-    text("Press any key to pause playback.", 10, 20 );
-  }
-  else
-  {
-    text("Press any key to start playback.", 10, 20 );
+  if(dist(mouseX,mouseY,30,height-30)<30/2){
+    previous();
+    return;
   }
 }
 
-void keyPressed()
-{
-  if ( player.isPlaying() )
-  {
-    player.pause();
+//function called by the event listener when audio tracks ends
+//that loops the track
+void repeat(){
+  audio.play();
+}
+
+void next(){
+  current++;
+  int track = current%(songNames.size());
+  println(track);
+  audio.setAttribute("src",songNames.get(current%(songNames.size()))+fileExt);
+  audio.play();
+}
+
+void previous(){
+  println(audio.currentTime);
+  if(audio.currentTime < 2){
+    current--;
+    if(current < 0){
+      current = songNames.size()-1;
+    }
+    int track = current%(songNames.size());
+    println(track);
+    audio.setAttribute("src",songNames.get(current%(songNames.size()))+fileExt);
+    audio.play();
   }
-  // if the player is at the end of the file,
-  // we have to rewind it before telling it to play again
-  else if ( player.position() == player.length() )
-  {
-    player.rewind();
-    player.play();
+  else{
+    audio.setAttribute("src",songNames.get(current%(songNames.size()))+fileExt);
+    audio.play();
   }
-  else
-  {
-    player.play();
-  }
+  
 }
