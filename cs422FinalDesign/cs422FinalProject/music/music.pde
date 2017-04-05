@@ -13,7 +13,7 @@ class HScrollbar
 
   int loose;              // how loose/heavy
 
-  boolean over;           // is the mouse over the slider?
+  boolean isOver;           // is the mouse over the slider?
 
   boolean locked;
 
@@ -49,19 +49,19 @@ class HScrollbar
 
 
 
-  void update() {
+  boolean update() {
 
     if(over()) {
 
-      over = true;
+      isOver = true;
 
     } else {
 
-      over = false;
+      isOver = false;
 
     }
 
-    if(mousePressed && over) {
+    if(mousePressed && isOver) {
 
       locked = true;
 
@@ -82,9 +82,9 @@ class HScrollbar
     if(abs(newspos - spos) > 1) {
 
       spos = spos + (newspos-spos)/loose;
-
+      return true;
     }
-
+    return false;
   }
 
 
@@ -113,15 +113,24 @@ class HScrollbar
 
   }
 
+  void setsPos(int dur){
+  
+    newspos = constrain(dur-sheight/2, sposMin, sposMax);
+    if(abs(newspos - spos) > 1) {
 
+      spos = spos + (newspos-spos)/loose;
+
+    }
+    
+  }
 
   void display() {
 
     fill(255);
 
     rect(xpos, ypos, swidth, sheight);
-
-    if(over || locked) {
+    //println(swidth);
+    if(isOver || locked) {
 
       fill(153, 102, 0);
 
@@ -132,7 +141,7 @@ class HScrollbar
     }
 
     rect(spos, ypos, sheight, sheight);
-
+    //println(spos);
   }
 
 
@@ -155,14 +164,14 @@ class HScrollbar
 Audio audio = new Audio();
 // make string that will house the audio extension
 
-
+//100 100 before resize
 HScrollbar   hs1 = new HScrollbar(0, 20, width, 10, 1);
 
 HScrollbar  hs2 = new HScrollbar(0, height-20, width, 10, 1);
 
 
 String fileExt;
-
+var  seek;
 //make a variable for volume and set it to 0
 //(volume runs between 0 and 1)
 float vol=0;
@@ -175,7 +184,7 @@ int current = 0;
 void setup(){
   size(300,300);
   noStroke(); 
-  
+  println(width);
   String temp  = "snow";
   songNames.add("groove");
   songNames.add(temp);
@@ -185,13 +194,15 @@ void setup(){
   fileExt = ".mp3";
   //loads the audio file and appends the file extension
   audio.setAttribute("src",songNames.get(current)+fileExt);
+ 
+  //println(end);
   //this adds a listener to see when the file has finished playing
   //then calls a function that we named "repeat"
   audio.addEventListener("ended",next);
   //play the audio
-  audio.play();
-  audio.volume=constrain(vol,0,1);
-  
+  //audio.play();
+  audio.volume=constrain((hs1.spos/(hs1.swidth-10)),0,1);
+  hs2.setsPos(0);
   
 }
 
@@ -203,17 +214,25 @@ void draw(){
   ellipse(width-30,height-30,30,30);
   ellipse(30,height-30,30,30);
   //constrain the audio level between 0 and 1
-  audio.volume=constrain(vol,0,1);
+  audio.volume=constrain((hs1.spos/(hs1.swidth-10)),0,1);
   //fade the volume and color out at the same rate
+  seek = (audio.currentTime);
+  //println(seek);
+  hs2.setsPos(hs2.xpos+audio.currentTime/(audio.duration/hs2.swidth));
+  //println((hs2.swidth/));
+  hs1.update();
   
-  
-  //hs1.update();
+  if(hs2.update() == true){
+    println("DEBUG 1 TRUE");
+    audio.pause();
+    audio.currentTime = (hs2.spos - hs2.xpos)* (audio.duration/hs2.swidth);
+    
+    audio.play();
+  }
 
-  //hs2.update();
+  hs1.display();
 
-  //hs1.display();
-
-  //hs2.display();
+  hs2.display();
   
 }
 
@@ -277,13 +296,18 @@ void previous(){
   }
   
 }
+boolean over(int xpos,int ypos,int swidth,int sheight) {
 
+    if(mouseX > xpos && mouseX < xpos+swidth &&
 
+    mouseY > ypos && mouseY < ypos+sheight) {
 
+      return true;
 
+    } else {
 
-// All Examples Written by Casey Reas and Ben Fry
+      return false;
 
-// unless otherwise stated.
+    }
 
-/* @pjs preload="data/seedTop.jpg, data/seedBottom.jpg"; */
+}
