@@ -21,11 +21,21 @@ String pin = ""; //Keeps track of the pins and stores them
 String pinRep = ""; //Represents the stars in the pin and how many there are by storing the number
 boolean isPressed = false;
 PFont f;
+
+// evl monitor size
+//float canvasWidth = 2732;
+//float canvasHeight = 1536;
+
+// scale down for home monitors
+float canvasWidth = 1366;
+float canvasHeight = 768;
+
+
 void setup()
 
 {
 
-  size(640, 360);
+  size(1366, 768);
 
   background(102, 102, 102);
   
