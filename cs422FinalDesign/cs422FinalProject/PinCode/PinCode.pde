@@ -30,7 +30,7 @@ PFont f;
 float canvasWidth = 1366;
 float canvasHeight = 768;
 
-
+PImage but0;
 void setup()
 
 {
@@ -41,7 +41,7 @@ void setup()
   
   // Define and create image button
 
-  PImage but0 = loadImage("Data/pin0.png");
+  but0 = loadImage("Data/pin0.png");
   
   PImage but1 = loadImage("Data/pin1.png");
 
@@ -139,6 +139,8 @@ void setup()
 
   int w0 = but0.width;
   
+  println(w0);
+  
   int w = but1.width;
 
   int w2 = but2.width;
@@ -162,6 +164,7 @@ void setup()
   int w11 = butpinOk.width;
 
   int h0 = but0.height;
+  println(h0);
   
   int h =  but1.height;
 
@@ -211,53 +214,55 @@ void setup()
 void draw()
 
 {
-  button0.update();
+  image(but0, 20, 20);
   
-  button1.update();
+  //button0.update();
   
-  button2.update();
+  //button1.update();
   
-  button3.update();
+  //button2.update();
   
-  button4.update();
+  //button3.update();
   
-  button5.update();
+  //button4.update();
   
-  button6.update();
+  //button5.update();
   
-  button7.update();
+  //button6.update();
   
-  button8.update();
+  //button7.update();
   
-  button9.update();
+  //button8.update();
   
-  buttonpinBack.update();
+  //button9.update();
   
-  buttonpinOk.update();
+  //buttonpinBack.update();
   
-  button0.display();
+  //buttonpinOk.update();
+  
+  //button0.display();
 
-  button1.display();
+  //button1.display();
   
-  button2.display();
+  //button2.display();
   
-  button3.display();
+  //button3.display();
   
-  button4.display();
+  //button4.display();
   
-  button5.display();
+  //button5.display();
   
-  button6.display();
+  //button6.display();
   
-  button7.display();
+  //button7.display();
   
-  button8.display();
+  //button8.display();
   
-  button9.display();
+  //button9.display();
   
-  buttonpinBack.display();
+  //buttonpinBack.display();
   
-  buttonpinOk.display();
+  //buttonpinOk.display();
 
 }
 
@@ -346,11 +351,11 @@ class ImageButtons extends Button
     h = ih;
 
     base = ibase;
-
+    base.resize(0,30);
     roll = iroll;
-
+    //roll.resize(0,30);
     down = idown;
-
+    //down.resize(60,30);
     currentimage = base;
     
     number = num;
