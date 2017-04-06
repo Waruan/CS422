@@ -433,13 +433,13 @@ class ImageButtons extends Button
         println(pin);  //Testing purpose
         pinRep = pinRep.substring( 0, pinRep.length()-1 );
         pinSpace = pinSpace - 15;
+        textSize(40);
         fill(102);
         text("*", (int)canvasWidth/4 + 310 + pinSpace, (int)canvasHeight/3 + 45);
         println(pinRep);    //Testing purpose
       }
       else if(pinFlag < 4 && number != "back" && number!= "ok")
-      {
-        textFont(f,16);                  
+      {                 
         fill(0);
         pinRep = pinRep + "*";
         textSize(40);
