@@ -248,7 +248,7 @@ void setup()
   f = createFont("Arial",16,true);
   textSize(20);
   fill(102);
-  rect((int)canvasWidth/4 + 295,(int)canvasHeight/3,100,40);
+  rect((int)canvasWidth/4 + 300,(int)canvasHeight/3,95,40);
   fill(0);
   text("Please Enter Pin:", (int)canvasWidth/4 + 265, (int)canvasHeight/3 - 20);
  
@@ -435,7 +435,7 @@ class ImageButtons extends Button
         pinSpace = pinSpace - 15;
         textSize(40);
         fill(102);
-        text("*", (int)canvasWidth/4 + 310 + pinSpace, (int)canvasHeight/3 + 45);
+        text("*", (int)canvasWidth/4 + 315 + pinSpace, (int)canvasHeight/3 + 45);
         println(pinRep);    //Testing purpose
       }
       else if(pinFlag < 4 && number != "back" && number!= "ok")
@@ -443,7 +443,7 @@ class ImageButtons extends Button
         fill(0);
         pinRep = pinRep + "*";
         textSize(40);
-        text("*",(int)canvasWidth/4 + 310 + pinSpace, (int)canvasHeight/3 + 45);
+        text("*",(int)canvasWidth/4 + 315 + pinSpace, (int)canvasHeight/3 + 45);
         pinSpace = pinSpace + 15;
         pin = pin + number;
         println(pin);  //Testing purpose
@@ -462,7 +462,7 @@ class ImageButtons extends Button
         pinSpace = 0;
         for(int i = 0; i < 4; i++)
         {
-        text("*",(int)canvasWidth/4 + 310 + pinSpace,(int)canvasHeight/3 + 45);
+        text("*",(int)canvasWidth/4 + 315 + pinSpace,(int)canvasHeight/3 + 45);
         pinSpace = pinSpace+15;
         }
         pin = "";
