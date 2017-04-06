@@ -39,204 +39,9 @@ float canvasWidth = 1366;
 float canvasHeight = 768;
 
 //pin
-boolean isPressed = false;
 
 
 
-class Button2
-
-{
-
-  int x, y;
-
-  int w, h;
-
-  color basecolor, highlightcolor;
-
-  color currentcolor;
-
-  boolean over = false;
-
-  boolean pressed = false;   
-
-  
-
-  
-  
-  void mousePressed() 
-  {
-    if(over && mousePressed) {
-      
-      pressed = true;
-
-    } else {
-
-      pressed = false;
-
-    }
-  }
-
-  
-
-  boolean overRect(int x, int y, int width, int height) {
-
-  if (mouseX >= x && mouseX <= x+width && 
-
-      mouseY >= y && mouseY <= y+height) {
-
-    return true;
-
-  } else {
-
-    return false;
-
-  }
-
-}
-
-}
-
-
-class ImageButtons extends Button2 
-
-{
-
-  PImage base;
-
-  PImage roll;
-
-  PImage down;
-
-  PImage currentimage;
-  
-  String number = "";
-
-
-  ImageButtons(int ix, int iy, int iw, int ih, PImage ibase, PImage iroll, PImage idown, String num) 
-
-  {
-
-    x = ix;
-
-    y = iy;
-
-    w = iw;
-
-    h = ih;
-
-    base = ibase;
-
-    roll = iroll;
-
-    down = idown;
-
-    currentimage = base;
-    
-    number = num;
-
-  }
-
-  
-
-  void update() 
-
-  {
-
-    over();
-
-    mousePressed();
-
-    if(pressed) {
-      currentimage = down;
-      isPressed = true;
-
-    } else if (over){
-      
-      currentimage = roll;
-      if(isPressed == true)
-      {
-      isPressed = false; 
-      if(number == "back" && pinFlag > 0)
-      {  
-        pinFlag = pinFlag-1;
-        pin = pin.substring (  0, pin.length()-1 );
-        println(pin);  //Testing purpose
-        pinRep = pinRep.substring( 0, pinRep.length()-1 );
-        pinSpace = pinSpace - 15;
-        fill(102);
-        text("*",(290+pinSpace),70);
-        println(pinRep);    //Testing purpose
-      }
-      else if(pinFlag < 4 && number != "back" && number!= "ok")
-      {
-        textFont(f,16);                  
-        fill(0);
-        pinRep = pinRep + "*";
-        textSize(40);
-        text("*",(290+pinSpace),70);
-        pinSpace = pinSpace + 15;
-        pin = pin + number;
-        println(pin);  //Testing purpose
-        pinFlag = pinFlag+1;
-      }
-      if(number == "ok" && pinFlag < 4)
-      {
-        showMessageDialog(null, "Pin requires four numbers!", "Alert", ERROR_MESSAGE);
-      }
-      if(number == "ok" && pinFlag == 4)
-      {
-        showMessageDialog(null, "PIN successfully added", "Info", INFORMATION_MESSAGE);
-        textSize(40);
-        fill(102);
-        pinFlag = 0;
-        pinSpace = 0;
-        for(int i = 0; i < 4; i++)
-        {
-        text("*",(290+pinSpace),70);
-        pinSpace = pinSpace+15;
-        }
-        pin = "";
-        pinRep = "";
-        pinSpace = 0;
-      }
-      }
-    } else {
-      
-      currentimage = base;
-
-    }
-
-  }
-
-  
-
-  void over() 
-
-  {
-
-    if( overRect(x, y, w, h) ) {
-
-      over = true;
-
-    } else {
-
-      over = false;
-
-    }
-
-  }
-
-  
-
-  void display() 
-
-  {
-
-    image(currentimage, x, y);
-
-  }
-
-}
 
 
 
@@ -519,7 +324,7 @@ void setup() {
   
   //addButton(profile,66,30,-2);
   //////////////////////////////////////////////////
-  
+  pinSetup();
 }
 
 /////////////////////////////////////////////////////
@@ -532,7 +337,7 @@ void draw() {
     profileDraw();
   }
   else if(stage == 2){
-    loginDraw();
+    pinDraw();
   }
   else if(stage == 3){
     loginDraw();
@@ -717,12 +522,12 @@ void mousePressed() {
     return;
   }
   if(stage == 1){
-    stage2MousePressed();
+    stage1MousePressed();
     
     return;
   }
   if(stage == 2){
-    stage = 3;
+    //stage = 3;
     return;
   }
   if(stage == 3){
@@ -736,7 +541,7 @@ void mousePressed() {
   
   
 }
-void stage2MousePressed(){
+void stage1MousePressed(){
   Button temp;
   
   //ellipse((index+66+(2*(canvasWidth/100))),temp.y_Axis+15, 30, 30);
@@ -750,7 +555,7 @@ void stage2MousePressed(){
   for (int loopCounter=0; loopCounter < profile.size(); loopCounter++){
     temp = profile.get(loopCounter);
     if(insideBox(temp.x_Axis,temp.y_Axis,temp.width,temp.height)){
-      stage = 3;
+      stage = 2;
       return;
     }
   }
