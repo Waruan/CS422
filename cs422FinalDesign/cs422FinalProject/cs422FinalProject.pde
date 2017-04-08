@@ -23,13 +23,25 @@ SoundFile beepSound;
 int buttonX = 33;
 int buttonY = 30;
 //
+float dragX;
+float dragY;
+
+float dragDifx;
+float dragDify;
+
+float x_drag = 150;
+float y_drag = 50;
+float drag_box_width = 1000;
+float drag_box_height = 700;
+
+boolean drag = false;
 
 //0 = start screen
 //1 = profile selection
 //2 = login 
 //3 = Exsitng User display
 //4 = Guess User display
-int stage = 0;
+int stage = 3;
 // evl monitor size
 //float canvasWidth = 2732;
 //float canvasHeight = 1536;
@@ -205,8 +217,8 @@ PImage img;
 PImage bgroundimg;
 
 
-int xLocation = int((canvasWidth/100)*40);
-int yLocation = int((canvasHeight/100)*40); 
+float xLocation = int((canvasWidth/100)*40);
+float yLocation = int((canvasHeight/100)*40); 
 
 //Size of popup or popups
 int popUpX = int((canvasWidth/100)*20);
@@ -465,7 +477,14 @@ void guessDraw(){
   rect(guess.hid.x_Axis,guess.hid.y_Axis,guess.hid.width,guess.hid.height, 10);
   // need to change to so that it popup the correct function
   if(boxInUse == true){
-   pop_up_box(xLocation, yLocation);
+    
+    if(drag) {
+      fill(192,192,192);
+      rect(x_drag, y_drag, drag_box_width, drag_box_height, 10);
+    }
+   
+    fill(127,127,127);
+    pop_up_box(xLocation, yLocation);
   }
   // draw the active button in a different color
   fill(127,127,0);
@@ -512,6 +531,27 @@ void drawGrid(int xSize,int ySize){
 
 /////////////////////////////////////////////////////
 
+void mouseDragged() {
+
+  if(drag) {
+  
+    xLocation = mouseX-dragDifx;
+    yLocation = mouseY-dragDify;
+  }
+  
+}
+
+void mouseReleased() {
+    drag = false;
+    
+    if(xLocation < x_drag || xLocation+popUpX > x_drag + drag_box_width || yLocation < y_drag || yLocation+popUpY > y_drag + drag_box_height) {
+    
+      xLocation = canvasWidth/2;
+      yLocation = canvasHeight/2;
+    
+    }
+
+}
 
 //Mouse handlers
 void mousePressed() {
@@ -568,6 +608,16 @@ void stage4MousePressed(){
     guess.isHidden = !guess.isHidden;
     return;
   }
+  
+  if(insideBox(xLocation, yLocation, popUpX, popUpY)) {
+    drag = true;
+  }
+  else {
+    drag = false;
+  }
+  
+  dragDifx = mouseX-xLocation;
+  dragDify = mouseY-yLocation;
   
   if(boxInUse && outsideBox(xLocation, yLocation, popUpX, popUpY)) {
     println("DEBUG(3): BoxInUse: " + boxInUse + " Clicked");
@@ -639,7 +689,7 @@ boolean insideCircle(int x, int y,int d){
 }
 
 //Function to check if mouse cursor is INSIDE the specified box
-boolean insideBox(int x, int y, int boxWidth, int boxHeight) {
+boolean insideBox(float x, float y, int boxWidth, int boxHeight) {
 
   if((mouseX >= x && mouseX <= (x+boxWidth)) && ((mouseY >= y) && mouseY <= (y+boxHeight)))  {
     
@@ -652,7 +702,7 @@ boolean insideBox(int x, int y, int boxWidth, int boxHeight) {
 }
 
 //Function to check if mouse cursor is OUTSIDE the specified box
-boolean outsideBox(int x, int y, int boxWidth, int boxHeight) {
+boolean outsideBox(float x,float y, int boxWidth, int boxHeight) {
 
    if((mouseX < x || mouseX >= (x+boxWidth)) || ((mouseY < y) || mouseY > (y+boxHeight))) {
    
@@ -664,7 +714,7 @@ boolean outsideBox(int x, int y, int boxWidth, int boxHeight) {
 
 }
 //Function to create a new box/window
-void pop_up_box(int x, int y) {
+void pop_up_box(float x, float y) {
 
   rect(x, y, popUpX, popUpY, 7);
   boxInUse = true;
