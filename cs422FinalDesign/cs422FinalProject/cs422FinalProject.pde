@@ -34,6 +34,9 @@ float y_drag = 50;
 float drag_box_width = 1000;
 float drag_box_height = 700;
 
+float originalX;
+float originalY;
+
 boolean drag = false;
 
 //0 = start screen
@@ -546,8 +549,8 @@ void mouseReleased() {
     
     if(xLocation < x_drag || xLocation+popUpX > x_drag + drag_box_width || yLocation < y_drag || yLocation+popUpY > y_drag + drag_box_height) {
     
-      xLocation = canvasWidth/2;
-      yLocation = canvasHeight/2;
+      xLocation = originalX;
+      yLocation = originalY;
     
     }
 
@@ -611,6 +614,8 @@ void stage4MousePressed(){
   
   if(insideBox(xLocation, yLocation, popUpX, popUpY)) {
     drag = true;
+    originalX = xLocation;
+    originalY = yLocation;
   }
   else {
     drag = false;
