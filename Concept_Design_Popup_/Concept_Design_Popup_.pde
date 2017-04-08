@@ -49,7 +49,7 @@ void draw() {
     if(drag) {
     
        fill(192,192,192);
-       rect(xDragArea, yDragArea, dragWidth, dragHeight);
+       rect(xDragArea, yDragArea, dragWidth, dragHeight, 10);
     
     }
     
@@ -140,7 +140,7 @@ void mousePressed() {
 void mouseDragged() {
 
   if(drag) {
-  
+    
     xBox = mouseX-bdifx;
     yBox = mouseY-bdify;
   }
@@ -150,4 +150,13 @@ void mouseDragged() {
 void mouseReleased() {
 
   drag = false;
+  
+  if(xBox < xDragArea || xBox+boxWidth > xDragArea + dragWidth || yBox < yDragArea || yBox+boxHeight > yDragArea + dragHeight) {
+    
+      //Do nothing.
+      xBox = canvasWidth/2;
+      yBox = canvasHeight/2;
+    
+  }
+  
 }

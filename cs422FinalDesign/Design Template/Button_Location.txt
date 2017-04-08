@@ -1,0 +1,36 @@
+Button Location/Dimentions
+
+9gag_desktop
+	Next Post: 343, 733px (to left) -> 443, 766px (bottom right)
+
+Article Template
+	1st Article: 10, 20px -> 301, 78px
+	2nd Article: 10, 91px -> 301, 147px
+	3rd Article: 10, 161px -> 301, 220px
+	4th Article: 10, 232px -> 301, 291px
+	5th Article: 10, 302px -> 301, 360px
+
+	Left Box: 11, 380px -> 100, 440px
+	Mid Box: 111, 380px -> 200, 440px
+	Right Box: 211, 380px -> 300, 440px
+
+Health Template
+	Sleep: 140, 370px -> 290, 430px
+	Steps: 304, 370px -> 455, 430px
+	Weight: 470, 370px -> 622, 430px
+
+
+Weather Template
+	Today: 150, 450px -> 274, 512px
+	Hourly: 289, 450px -> 412, 512px
+	Weekly: 429, 450px -> 553, 512px
+	Map: 570, 450px -> 692, 512px
+
+
+Timer(Small)
+	Center: 158, 151px
+
+Timer(Big)
+	Center: 197, 183px
+
+	Start: 29, 440px -> 373, 503px
