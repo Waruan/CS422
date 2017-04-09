@@ -43,7 +43,7 @@ boolean drag = false;
 //1 = profile selection
 //2 = login 
 //3 = Exsitng User display
-//4 = Guess User display
+//4 = guest User display
 int stage = 3;
 // evl monitor size
 //float canvasWidth = 2732;
@@ -181,17 +181,25 @@ class User{
    usrFunctionActive.add(temp.function);
    temp = buttonSet.get(0);
    temp.changeX(int((canvasWidth/100)*50.5));
+   println("DEBUG 9 " + temp.x_Axis);
+   
    temp = buttonSet.get(1);
    temp.changeX(int(((canvasWidth/100)*49.5) - buttonX));
-   
+   int tempx = int(((canvasWidth/100)*49.5)- buttonX);
+
    for (int i=2; i < buttonSet.size(); i = i+2){
-      temp  = buttonSet.get(i);
-      temp2 = buttonSet.get(i+1);
-      
-      temp.changeX( ((buttonSet.get(i-1)).x_Axis) - int(buttonX + (canvasWidth/100)) );
-      temp2.changeX( ((buttonSet.get(i-2)).x_Axis) + int(buttonX + (canvasWidth/100)) );
-      
+      tempx = tempx - int(buttonX + (canvasWidth/100));
    }
+   temp = buttonSet.get(0);
+   temp.changeX(tempx);
+   for (int i=1; i < buttonSet.size(); i++){
+     temp = buttonSet.get(i);
+     temp.changeX(tempx +(i* int(buttonX + (canvasWidth/100))));
+     
+     println("DEBUG 10 tempx " +i+ ": " + tempx);
+   }
+   
+   
  }
  // even number of functions before add new
  else{
@@ -202,14 +210,24 @@ class User{
    usrFunctionActive.add(temp.function);
    temp = buttonSet.get(0);
    temp.changeX(int((canvasWidth/100)*50)-(buttonX/2));
-
+   int tempx = int((canvasWidth/100)*50)-(buttonX/2);
+   
    for (int i=1; i < buttonSet.size(); i = i+2){
-      temp  = buttonSet.get(i);
-      temp2 = buttonSet.get(i+1);
+      //temp  = buttonSet.get(i);
+      //temp2 = buttonSet.get(i+1);
+      tempx = tempx  - int(buttonX + (canvasWidth/100));
       
-      temp.changeX( ((buttonSet.get(i-1)).x_Axis) - int(buttonX + (canvasWidth/100)) );
-      temp2.changeX( ((buttonSet.get(i-1)).x_Axis) + int(buttonX + (canvasWidth/100)) );
+      //temp.changeX( ((buttonSet.get(i-1)).x_Axis) - int(buttonX + (canvasWidth/100)) );
+      //temp2.changeX( ((buttonSet.get(i-1)).x_Axis) + int(buttonX + (canvasWidth/100)) );
       
+   }
+   temp = buttonSet.get(0);
+   temp.changeX(tempx);
+   for (int i=1; i < buttonSet.size(); i++){
+     temp = buttonSet.get(i);
+     temp.changeX(tempx +(i* int(buttonX + (canvasWidth/100))));
+     
+     println("DEBUG 10 tempx " +i+ ": " + tempx);
    }
  }
  
@@ -265,7 +283,7 @@ void playBeep() {
 
 /////////////////////////////////////////////////////
 
-User guess = new User("guess","0000");
+User guest = new User("guest","0000");
 
 void setup() {
   // set the canvas size
@@ -320,8 +338,9 @@ void setup() {
   ////////////////////////////////////
   
   
-  fixOrderofButton(guess.buttonSet,guess.usrFunctionActive);
-  guess.addButton(4);
+  //fixOrderofButton(guest.buttonSet,guest.usrFunctionActive);
+  guest.addButton(4);
+  //guest.addButton(5);
   f = createFont("Arial",24,true);
   background(255);
   loadSounds();
@@ -359,10 +378,11 @@ void draw() {
   }
   else if(stage == 4){
     //change to genric displayDraw 
-    guessDraw();
+    guestDraw();
   }
 
 }
+
 
 void startDraw(){
   String timeString;
@@ -448,7 +468,7 @@ void loginDraw(){
   text(timeString, (canvasWidth/100)*5 , 50);
 }
 
-void guessDraw(){
+void guestDraw(){
   String timeString;
 
   background(255); 
@@ -459,7 +479,7 @@ void guessDraw(){
   
 
  
-  if(guess.isHidden){
+  if(guest.isHidden){
     textFont(f);
     textSize(36);
     fill(127,127,127);
@@ -467,17 +487,17 @@ void guessDraw(){
   
     timeString = getCurrentTime();
     text(timeString, (canvasWidth/100)*5 , 50);
-    rect(guess.hid.x_Axis,guess.hid.y_Axis,guess.hid.width,guess.hid.height, 10);
+    rect(guest.hid.x_Axis,guest.hid.y_Axis,guest.hid.width,guest.hid.height, 10);
     return;
   }
  
   fill(127,127,127);
   Button temp;
-  for (int loopCounter=0; loopCounter < guess.buttonSet.size(); loopCounter++){
-    temp = guess.buttonSet.get(loopCounter);
+  for (int loopCounter=0; loopCounter < guest.buttonSet.size(); loopCounter++){
+    temp = guest.buttonSet.get(loopCounter);
     rect(temp.x_Axis,temp.y_Axis,temp.width,temp.height, 10);
   } 
-  rect(guess.hid.x_Axis,guess.hid.y_Axis,guess.hid.width,guess.hid.height, 10);
+  rect(guest.hid.x_Axis,guest.hid.y_Axis,guest.hid.width,guest.hid.height, 10);
   // need to change to so that it popup the correct function
   if(boxInUse == true){
     
@@ -623,8 +643,8 @@ void stage1MousePressed(){
 }
 
 void stage4MousePressed(){
-  if(insideBox(guess.hid.x_Axis,guess.hid.y_Axis,guess.hid.width,guess.hid.height)){
-    guess.isHidden = !guess.isHidden;
+  if(insideBox(guest.hid.x_Axis,guest.hid.y_Axis,guest.hid.width,guest.hid.height)){
+    guest.isHidden = !guest.isHidden;
     return;
   }
   
@@ -678,9 +698,9 @@ boolean clickOtherButton(){
 
 boolean loopInsideBox(){
   Button temp;
-  for(int i = 0;i<guess.buttonSet.size();i++){
+  for(int i = 0;i<guest.buttonSet.size();i++){
     
-    temp = guess.buttonSet.get(i);
+    temp = guest.buttonSet.get(i);
     if(insideBox(temp.x_Axis,temp.y_Axis,temp.width,temp.height)){
       functionInUse = temp.function;
       println("Button "+ temp.function  + " Clicked" );
@@ -692,9 +712,9 @@ boolean loopInsideBox(){
 
 int findButton(){
   Button temp;
-  for(int i = 0;i<guess.buttonSet.size();i++){
+  for(int i = 0;i<guest.buttonSet.size();i++){
     
-    temp = guess.buttonSet.get(i);
+    temp = guest.buttonSet.get(i);
     if(insideBox(temp.x_Axis,temp.y_Axis,temp.width,temp.height)){
       println("Button "+ temp.function + " Clicked" );
       return temp.function;
@@ -865,28 +885,43 @@ int findMostRight(ArrayList<Button> blist){
   } 
   return index;
 }
+
+
+
 void addButton(ArrayList<Button> blist , int X, int Y,int f){
 
  // odd number of functions before add new
  if(blist.size()%2 == 1){
-   
+   int tempx;
    Button temp; 
    Button temp2; 
    temp = new Button(0, int((canvasHeight/100)*90) ,X,Y,f);
    blist.add(temp);
    temp = blist.get(0);
+   tempx = int((canvasWidth/100)*50.5);
+   
    temp.changeX(int((canvasWidth/100)*50.5));
    temp = blist.get(1);
    temp.changeX(int(((canvasWidth/100)*49.5) - X));
    
    for (int i=2; i < blist.size(); i = i+2){
-      temp  = blist.get(i);
-      temp2 = blist.get(i+1);
+      //temp  = blist.get(i);
+      //temp2 = blist.get(i+1);
       
-      temp.changeX( ((blist.get(i-1)).x_Axis) - int(X + (canvasWidth/100)) );
-      temp2.changeX( ((blist.get(i-2)).x_Axis) + int(X + (canvasWidth/100)) );
+      //temp.changeX( ((blist.get(i-1)).x_Axis) - int(X + (canvasWidth/100)) );
+      tempx = tempx - int(X + (canvasWidth/100));
+      
+      //temp2.changeX( ((blist.get(i-2)).x_Axis) + int(X + (canvasWidth/100)) );
       
    }
+   temp = blist.get(0);
+   temp.changeX(tempx);
+   for (int i=1; i < blist.size(); i++){
+     temp = blist.get(i);
+     temp.changeX(tempx + int(X + (canvasWidth/100)));
+   
+   }
+   
  }
  // even number of functions before add new
  else{
