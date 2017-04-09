@@ -139,51 +139,51 @@ void setup()
   
   int x0 = (int)canvasWidth/3 + buttonSize/2+158;
   
-  int x = (int)canvasWidth/3 + buttonSize/2+58;
+  int x = (int)canvasWidth/3 + buttonSize/2+78;
   
   int x2 = (int)canvasWidth/3 + buttonSize/2+158;
 
-  int x3 = (int)canvasWidth/3 + buttonSize/2+258;
+  int x3 = (int)canvasWidth/3 + buttonSize/2+238;
   
-  int x4 = (int)canvasWidth/3 + buttonSize/2+58;
+  int x4 = (int)canvasWidth/3 + buttonSize/2+78;
   
   int x5 = (int)canvasWidth/3 + buttonSize/2+158;
   
-  int x6 = (int)canvasWidth/3 + buttonSize/2+258;
+  int x6 = (int)canvasWidth/3 + buttonSize/2+238;
   
-  int x7 = (int)canvasWidth/3 + buttonSize/2+58;
+  int x7 = (int)canvasWidth/3 + buttonSize/2+78;
   
   int x8 = (int)canvasWidth/3 + buttonSize/2+158;
   
-  int x9 = (int)canvasWidth/3 + buttonSize/2+258;
+  int x9 = (int)canvasWidth/3 + buttonSize/2+238;
   
-  int x10 = (int)canvasWidth/3 + buttonSize/2+58;
+  int x10 = (int)canvasWidth/3 + buttonSize/2+78;
   
-  int x11 = (int)canvasWidth/3 + buttonSize/2+258;
+  int x11 = (int)canvasWidth/3 + buttonSize/2+238;
   
-  int y0 = (int)canvasHeight/4+buttonSize+230;
+  int y0 = (int)canvasHeight/4+buttonSize+200;
   
-  int y = (int)canvasHeight/4+buttonSize+30;
+  int y = (int)canvasHeight/4+buttonSize+80;
   
-  int y2 = (int)canvasHeight/4+buttonSize+30;
+  int y2 = (int)canvasHeight/4+buttonSize+80;
   
-  int y3 = (int)canvasHeight/4+buttonSize+30;
+  int y3 = (int)canvasHeight/4+buttonSize+80;
   
-  int y4 = (int)canvasHeight/4+buttonSize+100;
+  int y4 = (int)canvasHeight/4+buttonSize+120;
   
-  int y5 = (int)canvasHeight/4+buttonSize+100;
+  int y5 = (int)canvasHeight/4+buttonSize+120;
   
-  int y6 = (int)canvasHeight/4+buttonSize+100;
+  int y6 = (int)canvasHeight/4+buttonSize+120;
   
-  int y7 = (int)canvasHeight/4+buttonSize+170;
+  int y7 = (int)canvasHeight/4+buttonSize+160;
   
-  int y8 = (int)canvasHeight/4+buttonSize+170;
+  int y8 = (int)canvasHeight/4+buttonSize+160;
   
-  int y9 = (int)canvasHeight/4+buttonSize+170;
+  int y9 = (int)canvasHeight/4+buttonSize+160;
   
-  int y10 = (int)canvasHeight/4+buttonSize+230;
+  int y10 = (int)canvasHeight/4+buttonSize+200;
   
-  int y11 = (int)canvasHeight/4+buttonSize+230;
+  int y11 = (int)canvasHeight/4+buttonSize+200;
 
   int w0 = 66;
   
