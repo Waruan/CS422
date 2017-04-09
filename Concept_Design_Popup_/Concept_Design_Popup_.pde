@@ -38,6 +38,17 @@ void setup() {
 
 void draw() {
   
+  
+  
+  if(!drag){
+  
+    background(255);
+    fill(255);
+    rect(xClickBox,yClickBox, clickBoxWidth, clickBoxHeight, 7);
+  
+  
+  }
+  
   background(255);
   fill(255);
   rect(xClickBox,yClickBox, clickBoxWidth, clickBoxHeight, 7);
@@ -139,11 +150,34 @@ void mousePressed() {
 
 void mouseDragged() {
 
-  if(drag) {
-    
+  if( mouseX-bdifx < xDragArea || mouseX-bdifx+boxWidth > xDragArea + dragWidth || mouseY-bdify < yDragArea || mouseY-bdify+boxHeight > yDragArea + dragHeight) {
+
+      //Do nothing.
+      if(xBox < xDragArea){
+        xBox = xDragArea;
+      }
+      if( xBox+boxWidth > xDragArea + dragWidth){
+         xBox = xDragArea + dragWidth - boxWidth;
+      
+      }
+      if( yBox < yDragArea){
+        yBox = yDragArea;
+      }
+       if(yBox+boxHeight > yDragArea + dragHeight){
+        yBox = yDragArea + dragHeight - boxHeight;
+      }
+
+
+  }
+
+
+  else if(drag) {
+
     xBox = mouseX-bdifx;
     yBox = mouseY-bdify;
   }
+
+
 
 }
 
