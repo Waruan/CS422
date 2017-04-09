@@ -536,23 +536,39 @@ void drawGrid(int xSize,int ySize){
 
 void mouseDragged() {
 
-  if(drag) {
-  
+  if( mouseX-dragDifx < x_drag || mouseX-dragDifx+popUpX > x_drag + drag_box_width || mouseY-dragDify < y_drag || mouseY-dragDify+popUpY > y_drag + drag_box_height) {
+
+      //Do nothing.
+      if(xLocation < x_drag){
+        xLocation = x_drag;
+      }
+      if( xLocation+popUpX > x_drag + drag_box_width){
+         xLocation = x_drag + drag_box_width - popUpX;
+      }
+      if( yLocation < y_drag){
+        yLocation = y_drag;
+      }
+       if(yLocation+popUpY > y_drag + drag_box_height){
+        yLocation = y_drag + drag_box_height - popUpY;
+      }
+
+
+  }
+
+
+  else if(drag) {
+
     xLocation = mouseX-dragDifx;
     yLocation = mouseY-dragDify;
   }
+
+
   
 }
 
 void mouseReleased() {
     drag = false;
-    
-    if(xLocation < x_drag || xLocation+popUpX > x_drag + drag_box_width || yLocation < y_drag || yLocation+popUpY > y_drag + drag_box_height) {
-    
-      xLocation = originalX;
-      yLocation = originalY;
-    
-    }
+
 
 }
 
@@ -694,9 +710,9 @@ boolean insideCircle(int x, int y,int d){
 }
 
 //Function to check if mouse cursor is INSIDE the specified box
-boolean insideBox(float x, float y, int boxWidth, int boxHeight) {
+boolean insideBox(float x, float y, int popUpX, int popUpY) {
 
-  if((mouseX >= x && mouseX <= (x+boxWidth)) && ((mouseY >= y) && mouseY <= (y+boxHeight)))  {
+  if((mouseX >= x && mouseX <= (x+popUpX)) && ((mouseY >= y) && mouseY <= (y+popUpY)))  {
     
     return true;
   }
@@ -707,9 +723,9 @@ boolean insideBox(float x, float y, int boxWidth, int boxHeight) {
 }
 
 //Function to check if mouse cursor is OUTSIDE the specified box
-boolean outsideBox(float x,float y, int boxWidth, int boxHeight) {
+boolean outsideBox(float x,float y, int popUpX, int popUpY) {
 
-   if((mouseX < x || mouseX >= (x+boxWidth)) || ((mouseY < y) || mouseY > (y+boxHeight))) {
+   if((mouseX < x || mouseX >= (x+popUpX)) || ((mouseY < y) || mouseY > (y+popUpY))) {
    
      return true;
    }
