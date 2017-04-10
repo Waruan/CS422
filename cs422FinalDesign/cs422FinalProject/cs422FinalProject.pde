@@ -33,7 +33,7 @@ int buttonY = 30;
 //2 = login 
 //3 = Exsitng User display
 //4 = guest User display
-int stage = 3;
+int stage = 0;
 
 // evl monitor size
 float canvasWidth = 2732;
@@ -1276,7 +1276,7 @@ class PinButton
   
   void mouseReleased() 
   {
-    if(isOver) {
+    if(isOver && mousePressed) {
       
       pressed = true;
 
