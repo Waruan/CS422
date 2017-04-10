@@ -36,12 +36,12 @@ int buttonY = 30;
 int stage = 3;
 
 // evl monitor size
-float canvasWidth = 2732;
-float canvasHeight = 1536;
+//float canvasWidth = 2732;
+//float canvasHeight = 1536;
 
 // scale down for home monitors
-//float canvasWidth = 1366;
-//float canvasHeight = 768;
+float canvasWidth = 1366;
+float canvasHeight = 768;
 
 int currentTime;
 
@@ -417,8 +417,8 @@ void pinSetup()
 
 void setup() {
   
-  size(canvasWidth, canvasHeight);
-  //size( 1366 ,768);
+  //size(canvasWidth, canvasHeight);
+  size( 1366 ,768);
 
   
   //fixOrderofButton(guest.buttonSet,guest.usrFunctionActive);
@@ -941,7 +941,7 @@ void UserScreen_MouseReleased(){
   }
   
   
-  if(boxInUse && outsideBox(xLocation, yLocation, popUpX, popUpY)) {
+  if(boxInUse && outsideBox(xLocation, yLocation, currentPopup.width, currentPopup.height)) {
     println("DEBUG(1)");
     background(255);
     boxInUse = false;
@@ -1069,7 +1069,7 @@ boolean outsideBox(float x,float y, int popUpX, int popUpY) {
 //Function to create a new box/window
 void pop_up_box(float x, float y) {
 
-  rect(x, y, popUpX, popUpY, 7);
+  rect(x, y, currentPopup.width, currentPopup.height, 7);
   boxInUse = true;
   
 }
