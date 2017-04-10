@@ -64,13 +64,14 @@ int functionInUse;
 float dragX;
 float dragY;
 
+
 float dragDifx;
 float dragDify;
 
 
-
 float originalX;
 float originalY;
+
 
 boolean drag = false;
 
@@ -79,8 +80,26 @@ float y_drag = (canvasHeight/29)*3;
 
 float drag_box_width = canvasWidth - ((canvasWidth/29)*4);
 float drag_box_height = canvasHeight - ((canvasHeight/29)*7);
+
+Timer timer = new Timer(2000);
 //////////////////////////////////////////////////////////////////////////////
 
+
+//Variable for icon drag
+/////////////////////////////////////////////////////////////////////////////////
+
+boolean iconDrag = false;
+float iconX_drag = (canvasWidth/29)*3;
+float iconY_drag = (canvasHeight/29)*20;
+
+float iconDrag_box_width = canvasWidth - ((canvasWidth/29)*4);
+float iconDrag_box_height = canvasHeight - ((canvasHeight/29)*2);
+int iconIndex;
+
+float iconDragDifx;
+float iconDragDify;
+
+/////////////////////////////////////////////////////////////////////////////////
 //Variable relate to Pin
 //////////////////////////////////////////////////////////////////////////////////////
 ImageButtons button0;
@@ -120,7 +139,7 @@ int popUpY = int((canvasHeight/100)*20);
 // Old code before creating user class
 /////////////////////////////////////////////////////////////////////////
 //Hide button
-//boolean isHidden = false;
+boolean isHidden = false;
 //Button hid = new Button(int((canvasWidth - buttonX) - ((canvasWidth/100) *2)),int((canvasHeight- buttonY) - ((canvasHeight/100) *2)),buttonX,buttonY,-1);
 //ArrayList<Button> buttons = new ArrayList<Button>();
 //ArrayList<Integer> functionActive = new ArrayList<Integer>();
@@ -140,6 +159,1008 @@ ArrayList<User> userList = new ArrayList<User>();
 
 //////////////////////////////////////////////////////////////////////////
 
+
+
+
+//Sounds
+/////////////////////////////////////////////////////
+
+void loadSounds(){
+  // beep soundfile shortened from http://soundbible.com/2158-Text-Message-Alert-5.html
+  
+  //Processing load sound
+  //beepSound = new SoundFile(this, "bing.mp3");
+  
+  // processing.js load sound
+  //beepSound.setAttribute("src","bing.mp3");
+}
+
+void playBeep() {
+  // play audio in processing or processing.js
+  //beepSound.play();
+}
+
+/////////////////////////////////////////////////////
+
+// Setup the image and button location for pin input
+void pinSetup()
+
+{
+
+  
+
+  background(102, 102, 102);
+  
+  // Define and create image button
+
+  PImage but0 = loadImage("Data/pin0.png");
+  
+  but0.resize(66, 30);
+  
+  PImage but1 = loadImage("Data/pin1.png");
+  
+  but1.resize(66, 30);
+
+  PImage but2 = loadImage("Data/pin2.png");
+  
+  but2.resize(66, 30);
+
+  PImage but3 = loadImage("Data/pin3.png");
+  
+  but3.resize(66, 30);
+  
+  PImage but4 = loadImage("Data/pin4.png");
+  
+  but4.resize(66, 30);
+  
+  PImage but5 = loadImage("Data/pin5.png");
+  
+  but5.resize(66, 30);
+  
+  PImage but6 = loadImage("Data/pin6.png");
+  
+  but6.resize(66, 30);
+  
+  PImage but7 = loadImage("Data/pin7.png");
+  
+  but7.resize(66, 30);
+  
+  PImage but8 = loadImage("Data/pin8.png");
+  
+  but8.resize(66, 30);
+  
+  PImage but9 = loadImage("Data/pin9.png");
+  
+  but9.resize(66, 30);
+  
+  PImage butpinBack = loadImage("Data/pinback.png");
+  
+  butpinBack.resize(66, 30);
+  
+  PImage butpinOk = loadImage("Data/pinok.png");
+  
+  butpinOk.resize(66, 30);
+  
+  PImage butpin0Changed = loadImage("Data/pin0changed.gif");
+  
+  butpin0Changed.resize(66, 30);
+  
+  PImage butpin1Changed = loadImage("Data/pin1changed.gif");
+  
+  butpin1Changed.resize(66, 30);
+  
+  PImage butpin2Changed = loadImage("Data/pin2changed.gif");
+  
+  butpin2Changed.resize(66, 30);
+  
+  PImage butpin3Changed = loadImage("Data/pin3changed.gif");
+  
+  butpin3Changed.resize(66, 30);
+  
+  PImage butpin4Changed = loadImage("Data/pin4changed.gif");
+  
+  butpin4Changed.resize(66, 30);
+  
+  PImage butpin5Changed = loadImage("Data/pin5changed.gif");
+  
+  butpin5Changed.resize(66, 30);
+  
+  PImage butpin6Changed = loadImage("Data/pin6changed.gif");
+  
+  butpin6Changed.resize(66, 30);
+  
+  PImage butpin7Changed = loadImage("Data/pin7changed.gif");
+  
+  butpin7Changed.resize(66, 30);
+  
+  PImage butpin8Changed = loadImage("Data/pin8changed.gif");
+  
+  butpin8Changed.resize(66, 30);
+  
+  PImage butpin9Changed = loadImage("Data/pin9changed.gif");
+  
+  butpin9Changed.resize(66, 30);
+  
+  PImage butpinbackChanged = loadImage("Data/pinbackchanged.gif");
+  
+  butpinbackChanged.resize(66, 30);
+  
+  PImage butpinokChanged = loadImage("Data/pinokchanged.gif");
+  
+  butpinokChanged.resize(66, 30);
+  
+  int x0 = (int)canvasWidth/3 + buttonSize/2+158;
+  
+  int x = (int)canvasWidth/3 + buttonSize/2+78;
+  
+  int x2 = (int)canvasWidth/3 + buttonSize/2+158;
+
+  int x3 = (int)canvasWidth/3 + buttonSize/2+238;
+  
+  int x4 = (int)canvasWidth/3 + buttonSize/2+78;
+  
+  int x5 = (int)canvasWidth/3 + buttonSize/2+158;
+  
+  int x6 = (int)canvasWidth/3 + buttonSize/2+238;
+  
+  int x7 = (int)canvasWidth/3 + buttonSize/2+78;
+  
+  int x8 = (int)canvasWidth/3 + buttonSize/2+158;
+  
+  int x9 = (int)canvasWidth/3 + buttonSize/2+238;
+  
+  int x10 = (int)canvasWidth/3 + buttonSize/2+78;
+  
+  int x11 = (int)canvasWidth/3 + buttonSize/2+238;
+  
+  int y0 = (int)canvasHeight/4+buttonSize+200;
+  
+  int y = (int)canvasHeight/4+buttonSize+80;
+  
+  int y2 = (int)canvasHeight/4+buttonSize+80;
+  
+  int y3 = (int)canvasHeight/4+buttonSize+80;
+  
+  int y4 = (int)canvasHeight/4+buttonSize+120;
+  
+  int y5 = (int)canvasHeight/4+buttonSize+120;
+  
+  int y6 = (int)canvasHeight/4+buttonSize+120;
+  
+  int y7 = (int)canvasHeight/4+buttonSize+160;
+  
+  int y8 = (int)canvasHeight/4+buttonSize+160;
+  
+  int y9 = (int)canvasHeight/4+buttonSize+160;
+  
+  int y10 = (int)canvasHeight/4+buttonSize+200;
+  
+  int y11 = (int)canvasHeight/4+buttonSize+200;
+
+  int w0 = 66;
+ 
+  int w = 66;
+
+  int w2 = 66;
+  
+  int w3 = 66;
+  
+  int w4 = 66;
+  
+  int w5 = 66;
+  
+  int w6 = 66;
+  
+  int w7 = 66;
+  
+  int w8 = 66;
+  
+  int w9 = 66;
+  
+  int w10 = 66;
+  
+  int w11 = 66;
+
+  int h0 = 30;
+  
+  int h =  30;
+
+  int h2 = 30;
+  
+  int h3 = 30;
+  
+  int h4 = 30;
+  
+  int h5 = 30;
+  
+  int h6 = 30;
+  
+  int h7 = 30;
+  
+  int h8 = 30;
+  
+  int h9 = 30;
+  
+  int h10 = 30;
+  
+  int h11 = 30;
+  
+  button0 = new ImageButtons(x0, y0, w0, h0, but0, but0, butpin0Changed, "0");
+  button1 = new ImageButtons(x, y, w, h, but1, but1, butpin1Changed, "1");
+  button2 = new ImageButtons(x2, y2, w2, h2, but2, but2, butpin2Changed, "2");
+  button3 = new ImageButtons(x3, y3, w3, h3, but3, but3, butpin3Changed, "3");
+  button4 = new ImageButtons(x4, y4, w4, h4, but4, but4, butpin4Changed, "4");
+  button5 = new ImageButtons(x5, y5, w5, h5, but5, but5, butpin5Changed, "5");
+  button6 = new ImageButtons(x6, y6, w6, h6, but6, but6, butpin6Changed, "6");
+  button7 = new ImageButtons(x7, y7, w7, h7, but7, but7, butpin7Changed, "7");
+  button8 = new ImageButtons(x8, y8, w8, h8, but8, but8, butpin8Changed, "8");
+  button9 = new ImageButtons(x9, y9, w9, h9, but9, but9, butpin9Changed, "9");
+  buttonpinBack = new ImageButtons(x10, y10, w10, h10, butpinBack, butpinBack, butpinbackChanged, "back");
+  buttonpinOk = new ImageButtons(x11, y11, w11, h11, butpinOk, butpinOk, butpinokChanged, "ok");
+  f = createFont("Arial",16,true);
+  textSize(20);
+  fill(102);
+  rect((int)canvasWidth/4 + 300,(int)canvasHeight/3,95,40);
+  fill(0);
+  text("Please Enter Pin:", (int)canvasWidth/4 + 265, (int)canvasHeight/3 - 20);
+ 
+}
+
+
+
+
+
+void setup() {
+  
+  //size(canvasWidth, canvasHeight);
+  size( 1366 ,768);
+
+  
+  //fixOrderofButton(guest.buttonSet,guest.usrFunctionActive);
+  
+  
+  User guest = new User("guest","0000");
+  userList.add(guest);
+  userList.get(0).addButton(4);
+  f = createFont("Arial",24,true);
+  background(255);
+  loadSounds();
+  stroke(126);
+  
+  
+  //Profile Setup
+  //////////////////////////////////////////////////
+  
+  Button temp = new Button(int((canvasWidth/100)*49.5 - buttonX), int((canvasHeight/100)*90) ,66,30,0);
+  profile.add(temp);
+  addProfileButton(profile,66,30,1);
+  int index = findMostRight(profile);
+  newUserButton = new CircleButton(int(index+66+(2*(canvasWidth/100))),temp.y_Axis+15, 30, 30);
+  
+  
+  addProfileButton(profile,66,30,-2);
+  //////////////////////////////////////////////////
+  pinSetup();
+}
+
+/////////////////////////////////////////////////////
+
+
+void draw() {
+  if(stage == 0){
+    startDraw();
+  }
+  else if(stage == 1){
+    profileDraw();
+  }
+  else if(stage == 2){
+    pinDraw();
+  }
+  else if(stage == 3){
+    userScreenDraw(userList.get(whichUser));
+  }
+  else if(stage == 4){
+    //change to genric displayDraw 
+   
+  }
+
+}
+// Draw the pin on to the canvas
+void pinDraw()
+{
+  String timeString;
+
+  background(255); 
+  stroke(126);
+  //comment out drawGrid if you dont want to see the grid
+  drawGrid();
+  noStroke();
+  
+  
+  // draw the active button in a different color
+  fill(127,127,0);
+
+  textFont(f);
+  textSize(36);
+  fill(127,127,127);
+  textAlign(CENTER);
+  
+  timeString = getCurrentTime();
+  text(timeString, (canvasWidth/100)*5 , 50);
+  fill(0);
+  for(int i = 0;i<pinFlag ;i++){
+    
+    text("*",(int)canvasWidth/4 + 315 + pinSpace - (15 * i), (int)canvasHeight/3 + 45);
+   
+  }
+  
+  button0.update();
+  
+  button1.update();
+  
+  button2.update();
+  
+  button3.update();
+  
+  button4.update();
+  
+  button5.update();
+  
+  button6.update();
+  
+  button7.update();
+  
+  button8.update();
+  
+  button9.update();
+  
+  buttonpinBack.update();
+  
+  buttonpinOk.update();
+  
+  button0.display();
+
+  button1.display();
+  
+  button2.display();
+  
+  button3.display();
+  
+  button4.display();
+  
+  button5.display();
+  
+  button6.display();
+  
+  button7.display();
+  
+  button8.display();
+  
+  button9.display();
+  
+  buttonpinBack.display();
+  
+  buttonpinOk.display();
+  
+  fill(127,127,127);
+  
+   text("Enter Pin ", (canvasWidth/100)*50 , (canvasHeight/100)*40);
+  
+  Button temp;
+  for (int loopCounter=0; loopCounter < profile.size(); loopCounter++){
+    temp = profile.get(loopCounter);
+    rect(temp.x_Axis,temp.y_Axis,temp.width,temp.height, 10);
+  } 
+  temp = profile.get(profile.size()-1);
+  
+   
+  ellipse(newUserButton.x_Axis,newUserButton.y_Axis,newUserButton.width, newUserButton.height);
+  
+  
+}
+
+
+// Drawing the starting Screen
+void startDraw(){
+  String timeString;
+
+  background(255); 
+  stroke(126);
+  //comment out drawGrid if you dont want to see the grid
+  drawGrid();
+  noStroke();
+  
+  
+  // draw the active button in a different color
+  fill(127,127,0);
+
+  textFont(f);
+  textSize(36);
+  fill(127,127,127);
+  textAlign(CENTER);
+  
+  timeString = getCurrentTime();
+  text(timeString, (canvasWidth/100)*5 , 50);
+  
+  text("Touch Screen to Start ", (canvasWidth/100)*50 , (canvasHeight/100)*90);
+
+}
+
+//Draw the profile Selection Screen
+void profileDraw(){
+  String timeString;
+
+  background(255); 
+  stroke(126);
+  //comment out drawGrid if you dont want to see the grid
+  drawGrid();
+  noStroke();
+  
+  
+  // draw the active button in a different color
+  fill(127,127,0);
+
+  textFont(f);
+  textSize(36);
+  fill(127,127,127);
+  textAlign(CENTER);
+  
+  timeString = getCurrentTime();
+  text(timeString, (canvasWidth/100)*5 , 50);
+  
+  //add new user
+  Button temp;
+  for (int loopCounter=0; loopCounter < profile.size(); loopCounter++){
+    temp = profile.get(loopCounter);
+    rect(temp.x_Axis,temp.y_Axis,temp.width,temp.height, 10);
+  } 
+  temp = profile.get(profile.size()-1);
+  
+   
+  ellipse(newUserButton.x_Axis,newUserButton.y_Axis,newUserButton.width, newUserButton.height);
+  
+}
+
+//Draw the User Screen 
+void userScreenDraw(User current){
+  String timeString;
+  background(255); 
+  stroke(126);
+  //comment out drawGrid if you dont want to see the grid
+  drawGrid();
+  noStroke();
+  
+
+ 
+  if(isHidden){
+    textFont(f);
+    textSize(36);
+    fill(127,127,127);
+    textAlign(CENTER);
+  
+    timeString = getCurrentTime();
+    text(timeString, (canvasWidth/100)*5 , 50);
+    rect(current.hid.x_Axis,current.hid.y_Axis,current.hid.width,current.hid.height, 10);
+    return;
+  }
+ 
+
+  Button temp;
+  if(iconDrag) {
+      fill(192,192,192);
+      rect(iconX_drag, iconY_drag, iconDrag_box_width,iconDrag_box_height, 10);
+  }
+  fill(127,127,127);
+  for (int loopCounter=0; loopCounter < current.buttonSet.size(); loopCounter++){
+    temp = current.buttonSet.get(loopCounter);
+    if(loopCounter == iconIndex && iconDrag){
+      rect(temp.x_Axis,temp.y_Axis,temp.width,temp.height, 10);
+    }
+    else{
+      rect(temp.x_Axis,temp.y_Axis,temp.width,temp.height, 10);
+    }
+  } 
+  rect(current.hid.x_Axis,current.hid.y_Axis,current.hid.width,current.hid.height, 10);
+  
+  
+  // need to change to so that it popup the correct function
+  if(boxInUse == true){
+    
+    if(drag) {
+      fill(192,192,192);
+      rect(x_drag, y_drag, drag_box_width, drag_box_height, 10);
+    }
+   
+    fill(127,127,127);
+    pop_up_box(xLocation, yLocation);
+  }
+  // draw the active button in a different color
+  fill(127,127,0);
+
+  
+
+  textFont(f);
+  textSize(36);
+  fill(127,127,127);
+  textAlign(CENTER);
+  
+  timeString = getCurrentTime();
+  text(timeString, (canvasWidth/100)*5 , 50);
+
+
+}
+
+// Draw a grid 
+void drawGrid(){
+  int xLocation = 0;
+  while(xLocation < canvasWidth){
+    line(xLocation,0,xLocation,canvasHeight );
+    xLocation = xLocation + int(canvasWidth/29);
+  }
+  int yLocation = 0;
+  while(yLocation < canvasHeight){
+    line(0,yLocation,canvasWidth,yLocation );
+    yLocation = yLocation + int(canvasWidth/29);
+  }
+}
+// Draw Custom grid
+void drawGrid(int xSize,int ySize){
+  int xLocation = 0;
+  while(xLocation < canvasWidth){
+    line(xLocation,0,xLocation,canvasHeight );
+    xLocation = xLocation + xSize;
+  }
+  int yLocation = 0;
+  while(yLocation < canvasHeight){
+    line(0,yLocation,canvasWidth,yLocation );
+    yLocation = yLocation + ySize;
+  }
+}
+
+/////////////////////////////////////////////////////
+
+void mouseDragged() {
+
+  if(drag)
+  PopUpDrag();
+  
+  else if(iconDrag)
+  IconsDrag();
+  
+}
+
+
+void PopUpDrag(){
+  if( mouseX-dragDifx < x_drag || mouseX-dragDifx+popUpX > x_drag + drag_box_width || mouseY-dragDify < y_drag || mouseY-dragDify+popUpY > y_drag + drag_box_height) {
+
+      //Do nothing.
+      if(xLocation < x_drag){
+        xLocation = x_drag;
+      }
+      if( xLocation+popUpX > x_drag + drag_box_width){
+         xLocation = x_drag + drag_box_width - popUpX;
+      }
+      if( yLocation < y_drag){
+        yLocation = y_drag;
+      }
+       if(yLocation+popUpY > y_drag + drag_box_height){
+        yLocation = y_drag + drag_box_height - popUpY;
+      }
+
+
+  }
+
+
+  else if(drag) {
+
+    xLocation = mouseX-dragDifx;
+    yLocation = mouseY-dragDify;
+  }
+
+}
+
+
+void IconsDrag(){
+  if( mouseX-iconDragDifx < iconX_drag || mouseX-iconDragDifx+buttonX > iconX_drag+ iconDrag_box_width ){//|| mouseY-dragDify < iconY_drag || mouseY-dragDify+buttonY > iconY_drag + iconDrag_box_height) {
+
+      //Do nothing.
+      if(xLocation < x_drag){
+        userList.get(whichUser).buttonSet.get(iconIndex).x_Axis = int(x_drag);
+      }
+      if( xLocation+popUpX > x_drag + drag_box_width){
+         userList.get(whichUser).buttonSet.get(iconIndex).x_Axis = int(x_drag + drag_box_width - buttonX);
+      }
+      //if( yLocation < y_drag){
+      //  yLocation = y_drag;
+      //}
+      // if(yLocation+popUpY > y_drag + drag_box_height){
+      //  yLocation = y_drag + drag_box_height - popUpY;
+      //}
+
+
+  }
+
+
+  else if(iconDrag) {
+
+    userList.get(whichUser).buttonSet.get(iconIndex).x_Axis = int(mouseX-iconDragDifx);
+    //yLocation = mouseY-dragDify;
+  }
+
+}
+
+
+void mouseReleased() {
+    drag = false;
+    iconDrag = false;
+
+}
+
+void mouseClicked() {
+  if(stage == 3){
+    UserScreen_MouseClicked();
+    return;
+  }
+
+}
+
+//Mouse handlers
+void mousePressed() {
+  
+  //Start Screen to Profile Selection Screen
+  if(stage == 0){
+    stage = 1;
+    return;
+  }
+  
+  //Profile Selection Screen to Pin
+  if(stage == 1){
+    profileSelect_MousePressed();
+    return;
+  }
+  
+  // Check if pin is correct or not 
+  // If pin is correct go to display Screen
+  // else go to incorrect Screen
+  // image button has it own mousePressed 
+  // remove this if statement later
+  if(stage == 2){
+    //stage = 3;
+    
+    return;
+  }
+  
+  if(stage == 3){
+    UserScreen_MousePressed();
+    return;
+  }
+
+  
+  
+}
+
+void profileSelect_MousePressed(){
+  Button temp;
+  
+  //ellipse((index+66+(2*(canvasWidth/100))),temp.y_Axis+15, 30, 30);
+  if(insideCircle(newUserButton.x_Axis,newUserButton.y_Axis,newUserButton.width)){
+    println("DEBUG(9): New user");
+    // new the stage for that
+    
+  }
+  
+  
+  for (int loopCounter=0; loopCounter < profile.size(); loopCounter++){
+    temp = profile.get(loopCounter);
+    if(insideBox(temp.x_Axis,temp.y_Axis,temp.width,temp.height)){
+      stage = 2;
+      return;
+    }
+  }
+  
+
+}
+void UserScreen_MouseClicked(){
+  User guest = userList.get(0);
+  
+  
+  if(insideBox(guest.hid.x_Axis,guest.hid.y_Axis,guest.hid.width,guest.hid.height)){
+    isHidden = !isHidden;
+    return;
+  }
+  if(isHidden){
+    return;
+  }
+  
+  
+  if(boxInUse && outsideBox(xLocation, yLocation, popUpX, popUpY)) {
+    println("DEBUG(3): BoxInUse: " + boxInUse + " Clicked");
+    background(255);
+    boxInUse = false;
+    if(clickOtherButton()){
+      boxInUse = true;
+      pop_up_box(xLocation, yLocation);
+    }
+    println("DEBUG(4): BoxInUse: " + boxInUse + " Delete Box");
+    println("===========");
+    return;
+      
+    
+  }
+    if(loopInsideBox() && !boxInUse){
+    println("DEBUG(1): BoxInUse: " + boxInUse + " Clicked");
+    pop_up_box(xLocation, yLocation);
+    
+    println("DEBUG(2): BoxInUse: " + boxInUse + " Created Box");
+    println("===========");
+    return;
+  }
+}
+
+void UserScreen_MousePressed(){
+
+  if(insideBox(xLocation, yLocation, popUpX, popUpY) ) {
+    drag = true;
+    originalX = xLocation;
+    originalY = yLocation;
+    dragDifx = mouseX-xLocation;
+    dragDify = mouseY-yLocation;
+  }
+  else if (loopInsideBox() ){
+    User u = userList.get(whichUser);
+    Button b = u.buttonSet.get(iconIndex);
+    int x = userList.get(whichUser).buttonSet.get(iconIndex).x_Axis;
+    
+    iconDrag = true;
+     iconDragDifx = mouseX-x;
+     //dragDify = mouseY-yLocation;
+  }
+  else {
+    drag = false;
+    iconDrag = false;
+  }
+  
+  
+  
+ 
+  
+
+}
+
+// Check if a different function button has been press
+boolean clickOtherButton(){
+  int temp = findButton();
+  if(temp != -1 && temp != functionInUse ){
+    functionInUse = temp;
+    //println("DEBUG(5): functionInUse: " + functionInUse );
+    return true;
+  } 
+  return false;
+}
+
+boolean loopInsideBox(){
+  Button temp;
+  User guest = userList.get(0);
+  for(int i = 0;i<guest.buttonSet.size();i++){
+    
+    temp = guest.buttonSet.get(i);
+    if(insideBox(temp.x_Axis,temp.y_Axis,temp.width,temp.height)){
+      functionInUse = temp.function;
+      println("Button "+ temp.function  + " Clicked" );
+      iconIndex = i;
+      return true;
+    }
+  }
+  return false;
+}
+
+// Need to be rewritten
+int findButton(){
+  Button temp;
+  User guest = userList.get(0);
+  for(int i = 0;i<guest.buttonSet.size();i++){
+    
+    temp = guest.buttonSet.get(i);
+    if(insideBox(temp.x_Axis,temp.y_Axis,temp.width,temp.height)){
+      println("Button "+ temp.function + " Clicked" );
+      return temp.function;
+    }
+  }
+  return -1;
+}
+
+//Function to check if click inside circle button
+boolean insideCircle(int x, int y,int d){
+ if( dist(mouseX,mouseY,x,y)<d/2){
+   return true;
+ }
+ return false;
+}
+
+//Function to check if mouse cursor is INSIDE the specified box
+boolean insideBox(float x, float y, int popUpX, int popUpY) {
+
+  if((mouseX >= x && mouseX <= (x+popUpX)) && ((mouseY >= y) && mouseY <= (y+popUpY)))  {
+    
+    return true;
+  }
+  else {
+    return false;
+  }
+  
+}
+
+//Function to check if mouse cursor is OUTSIDE the specified box
+boolean outsideBox(float x,float y, int popUpX, int popUpY) {
+
+   if((mouseX < x || mouseX >= (x+popUpX)) || ((mouseY < y) || mouseY > (y+popUpY))) {
+   
+     return true;
+   }
+   else {
+     return false;
+   }
+
+}
+//Function to create a new box/window
+void pop_up_box(float x, float y) {
+
+  rect(x, y, popUpX, popUpY, 7);
+  boxInUse = true;
+  
+}
+
+
+
+//Function to get current Time
+String getCurrentTime(){
+    
+  int m = minute();  // Values from 0 - 59
+  int h = hour();    // Values from 0 - 23
+  String min;
+  String hr;
+  String timeString;
+
+  if(m < 10)
+    min = "0"+str(m); 
+  else
+    min =str(m);
+  if(h%12 == 0){
+    hr = "12";
+  }
+  else{
+    hr = str(h%12);
+  }
+  if(h > 12){
+     timeString = hr +":"+ min+ "PM";
+  }
+  else{
+     timeString = hr +":"+ min+ "AM";
+  }
+  return timeString;
+  
+}
+
+
+
+//Function to find a button index base on the what the button.function
+int findButtonIndex(ArrayList<Button> blist,int fun){
+  int size = blist.size();
+
+  for(int i = 0;i<size;i++){
+    if((blist.get(i)).function == fun){
+      return i;
+    }
+  }
+  return -1;
+}
+
+
+// remove later
+int findFunctionIndex(ArrayList<Button> blist,ArrayList<Integer> funcList,int fun){
+  int size = blist.size();
+
+  for(int i = 0;i<size;i++){
+    if((funcList.get(i)) == fun){
+      return i;
+    }
+  }
+  return -1;
+}
+
+
+
+// Function to draw buttons
+void drawFunctionIcons(ArrayList<Button>blist){
+   Button temp;
+  for (int loopCounter=0; loopCounter < blist.size(); loopCounter++){
+    temp = blist.get(loopCounter);
+    rect(temp.x_Axis,temp.y_Axis,temp.width,temp.height, 10);
+  } 
+}
+
+//Function to find the Right most Button
+int findMostRight(ArrayList<Button> blist){
+  Button temp;
+  temp = blist.get(0);
+  int index = temp.x_Axis;
+  
+  for (int loopCounter=0; loopCounter < blist.size(); loopCounter++){
+    temp = blist.get(loopCounter);
+    if(index < temp.x_Axis){
+      index = temp.x_Axis;
+    }
+  } 
+  return index;
+}
+
+
+// add the button to the Profile
+void addProfileButton(ArrayList<Button> blist , int X, int Y,int f){
+  
+  if(blist.size()%2 == 1){
+   
+   Button temp; 
+   temp = new Button(0, int((canvasHeight/100)*90) ,X,Y,f);
+   blist.add(temp);
+   temp = blist.get(0);
+   temp.changeX(int((canvasWidth/100)*50.5));
+   
+   temp = blist.get(1);
+   temp.changeX(int(((canvasWidth/100)*49.5) - X));
+   int tempx = int(((canvasWidth/100)*49.5)- X);
+
+   for (int i=2; i < blist.size(); i = i+2){
+      tempx = tempx - int(X + (canvasWidth/100));
+   }
+   temp = blist.get(0);
+   temp.changeX(tempx);
+   for (int i=1; i < blist.size(); i++){
+     temp = blist.get(i);
+     temp.changeX(tempx +(i* int(X + (canvasWidth/100))));
+  
+   }
+   
+   
+ }
+ // even number of functions before add new
+ else{
+   Button temp; 
+   temp = new Button(0, int((canvasHeight/100)*90) ,X,Y,f);
+   blist.add(temp);
+
+   temp = blist.get(0);
+   temp.changeX(int((canvasWidth/100)*50)-(X/2));
+   int tempx = int((canvasWidth/100)*50)-(X/2);
+   
+   for (int i=1; i < blist.size(); i = i+2){
+      //temp  = buttonSet.get(i);
+      //temp2 = buttonSet.get(i+1);
+      tempx = tempx  - int(X + (canvasWidth/100));
+      
+      //temp.changeX( ((buttonSet.get(i-1)).x_Axis) - int(buttonX + (canvasWidth/100)) );
+      //temp2.changeX( ((buttonSet.get(i-1)).x_Axis) + int(buttonX + (canvasWidth/100)) );
+      
+   }
+   temp = blist.get(0);
+   temp.changeX(tempx);
+   for (int i=1; i < blist.size(); i++){
+     temp = blist.get(i);
+     temp.changeX(tempx +(i* int(X + (canvasWidth/100))));
+     
+     println("DEBUG 10 tempx " +i+ ": " + tempx);
+   }
+ } 
+ int index = findMostRight(profile);
+ Button temp =  profile.get(0); 
+ newUserButton = new CircleButton(int(index+66+(2*(canvasWidth/100))),temp.y_Axis+15, 30, 30);
+
+}
+
+
+
+//Classes
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // class use for icon buttons
 class Button{
@@ -170,7 +1191,38 @@ class Button{
   }
   
 }
+// Learning Processing
+// Daniel Shiffman
 
+
+class Timer {
+ 
+  int savedTime; // When Timer started
+  int totalTime; // How long Timer should last
+  
+  Timer(int tempTotalTime) {
+    totalTime = tempTotalTime;
+  }
+  
+  // Starting the timer
+  void start() {
+    // When the timer starts it stores the current time in milliseconds.
+    savedTime = millis(); 
+  }
+  
+  // The function isFinished() returns true if 5,000 ms have passed. 
+  // The work of the timer is farmed out to this method.
+  boolean isFinished() { 
+    // Check how much time has passed
+    int passedTime = millis()- savedTime;
+    if (passedTime > totalTime) {
+      return true;
+    } else {
+      return false;
+    }
+   }
+   
+ }
 //class for Pin button 
 class PinButton
 
@@ -450,13 +1502,15 @@ class User{
   int iconSizeX = 33;
   int iconSizeY = 30;
   String pin;
-  boolean isHidden;
+  
+  // Change to gobal variable instead
+  //boolean isHidden;
   
   User(String usr, String pass){
     name = usr;
     pin = pass;
     hid = new Button(int((canvasWidth - buttonX) - ((canvasWidth/100) *2)),int((canvasHeight- buttonY) - ((canvasHeight/100) *2)),buttonX,buttonY,-1);
-    isHidden = false;
+    //isHidden = false;
     //Create the Default buttons
     ///////////////////////////////////////////////////
     
@@ -472,6 +1526,8 @@ class User{
     ///////////////////////////////////////////////////
     
   }
+ 
+ 
   
  void addButton(int f){
 
@@ -534,1017 +1590,4 @@ class User{
    }
    
   }
-}
-
-//Sounds
-/////////////////////////////////////////////////////
-
-void loadSounds(){
-  // beep soundfile shortened from http://soundbible.com/2158-Text-Message-Alert-5.html
-  
-  //Processing load sound
-  //beepSound = new SoundFile(this, "bing.mp3");
-  
-  // processing.js load sound
-  //beepSound.setAttribute("src","bing.mp3");
-}
-
-void playBeep() {
-  // play audio in processing or processing.js
-  //beepSound.play();
-}
-
-/////////////////////////////////////////////////////
-
-// Setup the image and button location for pin input
-void pinSetup()
-
-{
-
-  size(1366, 768);
-
-  background(102, 102, 102);
-  
-  // Define and create image button
-
-  PImage but0 = loadImage("Data/pin0.png");
-  
-  but0.resize(66, 30);
-  
-  PImage but1 = loadImage("Data/pin1.png");
-  
-  but1.resize(66, 30);
-
-  PImage but2 = loadImage("Data/pin2.png");
-  
-  but2.resize(66, 30);
-
-  PImage but3 = loadImage("Data/pin3.png");
-  
-  but3.resize(66, 30);
-  
-  PImage but4 = loadImage("Data/pin4.png");
-  
-  but4.resize(66, 30);
-  
-  PImage but5 = loadImage("Data/pin5.png");
-  
-  but5.resize(66, 30);
-  
-  PImage but6 = loadImage("Data/pin6.png");
-  
-  but6.resize(66, 30);
-  
-  PImage but7 = loadImage("Data/pin7.png");
-  
-  but7.resize(66, 30);
-  
-  PImage but8 = loadImage("Data/pin8.png");
-  
-  but8.resize(66, 30);
-  
-  PImage but9 = loadImage("Data/pin9.png");
-  
-  but9.resize(66, 30);
-  
-  PImage butpinBack = loadImage("Data/pinback.png");
-  
-  butpinBack.resize(66, 30);
-  
-  PImage butpinOk = loadImage("Data/pinok.png");
-  
-  butpinOk.resize(66, 30);
-  
-  PImage butpin0Changed = loadImage("Data/pin0changed.gif");
-  
-  butpin0Changed.resize(66, 30);
-  
-  PImage butpin1Changed = loadImage("Data/pin1changed.gif");
-  
-  butpin1Changed.resize(66, 30);
-  
-  PImage butpin2Changed = loadImage("Data/pin2changed.gif");
-  
-  butpin2Changed.resize(66, 30);
-  
-  PImage butpin3Changed = loadImage("Data/pin3changed.gif");
-  
-  butpin3Changed.resize(66, 30);
-  
-  PImage butpin4Changed = loadImage("Data/pin4changed.gif");
-  
-  butpin4Changed.resize(66, 30);
-  
-  PImage butpin5Changed = loadImage("Data/pin5changed.gif");
-  
-  butpin5Changed.resize(66, 30);
-  
-  PImage butpin6Changed = loadImage("Data/pin6changed.gif");
-  
-  butpin6Changed.resize(66, 30);
-  
-  PImage butpin7Changed = loadImage("Data/pin7changed.gif");
-  
-  butpin7Changed.resize(66, 30);
-  
-  PImage butpin8Changed = loadImage("Data/pin8changed.gif");
-  
-  butpin8Changed.resize(66, 30);
-  
-  PImage butpin9Changed = loadImage("Data/pin9changed.gif");
-  
-  butpin9Changed.resize(66, 30);
-  
-  PImage butpinbackChanged = loadImage("Data/pinbackchanged.gif");
-  
-  butpinbackChanged.resize(66, 30);
-  
-  PImage butpinokChanged = loadImage("Data/pinokchanged.gif");
-  
-  butpinokChanged.resize(66, 30);
-  
-  int x0 = (int)canvasWidth/3 + buttonSize/2+158;
-  
-  int x = (int)canvasWidth/3 + buttonSize/2+78;
-  
-  int x2 = (int)canvasWidth/3 + buttonSize/2+158;
-
-  int x3 = (int)canvasWidth/3 + buttonSize/2+238;
-  
-  int x4 = (int)canvasWidth/3 + buttonSize/2+78;
-  
-  int x5 = (int)canvasWidth/3 + buttonSize/2+158;
-  
-  int x6 = (int)canvasWidth/3 + buttonSize/2+238;
-  
-  int x7 = (int)canvasWidth/3 + buttonSize/2+78;
-  
-  int x8 = (int)canvasWidth/3 + buttonSize/2+158;
-  
-  int x9 = (int)canvasWidth/3 + buttonSize/2+238;
-  
-  int x10 = (int)canvasWidth/3 + buttonSize/2+78;
-  
-  int x11 = (int)canvasWidth/3 + buttonSize/2+238;
-  
-  int y0 = (int)canvasHeight/4+buttonSize+200;
-  
-  int y = (int)canvasHeight/4+buttonSize+80;
-  
-  int y2 = (int)canvasHeight/4+buttonSize+80;
-  
-  int y3 = (int)canvasHeight/4+buttonSize+80;
-  
-  int y4 = (int)canvasHeight/4+buttonSize+120;
-  
-  int y5 = (int)canvasHeight/4+buttonSize+120;
-  
-  int y6 = (int)canvasHeight/4+buttonSize+120;
-  
-  int y7 = (int)canvasHeight/4+buttonSize+160;
-  
-  int y8 = (int)canvasHeight/4+buttonSize+160;
-  
-  int y9 = (int)canvasHeight/4+buttonSize+160;
-  
-  int y10 = (int)canvasHeight/4+buttonSize+200;
-  
-  int y11 = (int)canvasHeight/4+buttonSize+200;
-
-  int w0 = 66;
-  
-  int w = 66;
-
-  int w2 = 66;
-  
-  int w3 = 66;
-  
-  int w4 = 66;
-  
-  int w5 = 66;
-  
-  int w6 = 66;
-  
-  int w7 = 66;
-  
-  int w8 = 66;
-  
-  int w9 = 66;
-  
-  int w10 = 66;
-  
-  int w11 = 66;
-
-  int h0 = 30;
-  
-  int h =  30;
-
-  int h2 = 30;
-  
-  int h3 = 30;
-  
-  int h4 = 30;
-  
-  int h5 = 30;
-  
-  int h6 = 30;
-  
-  int h7 = 30;
-  
-  int h8 = 30;
-  
-  int h9 = 30;
-  
-  int h10 = 30;
-  
-  int h11 = 30;
-  
-  button0 = new ImageButtons(x0, y0, w0, h0, but0, but0, butpin0Changed, "0");
-  button1 = new ImageButtons(x, y, w, h, but1, but1, butpin1Changed, "1");
-  button2 = new ImageButtons(x2, y2, w2, h2, but2, but2, butpin2Changed, "2");
-  button3 = new ImageButtons(x3, y3, w3, h3, but3, but3, butpin3Changed, "3");
-  button4 = new ImageButtons(x4, y4, w4, h4, but4, but4, butpin4Changed, "4");
-  button5 = new ImageButtons(x5, y5, w5, h5, but5, but5, butpin5Changed, "5");
-  button6 = new ImageButtons(x6, y6, w6, h6, but6, but6, butpin6Changed, "6");
-  button7 = new ImageButtons(x7, y7, w7, h7, but7, but7, butpin7Changed, "7");
-  button8 = new ImageButtons(x8, y8, w8, h8, but8, but8, butpin8Changed, "8");
-  button9 = new ImageButtons(x9, y9, w9, h9, but9, but9, butpin9Changed, "9");
-  buttonpinBack = new ImageButtons(x10, y10, w10, h10, butpinBack, butpinBack, butpinbackChanged, "back");
-  buttonpinOk = new ImageButtons(x11, y11, w11, h11, butpinOk, butpinOk, butpinokChanged, "ok");
-  f = createFont("Arial",16,true);
-  textSize(20);
-  fill(102);
-  rect((int)canvasWidth/4 + 300,(int)canvasHeight/3,95,40);
-  fill(0);
-  text("Please Enter Pin:", (int)canvasWidth/4 + 265, (int)canvasHeight/3 - 20);
- 
-}
-
-
-
-
-
-void setup() {
-  // set the canvas size
-  
-  // Use for HTML(processing.js) and DEMO
-  //size(canvasWidth,canvasHeight);
-  
-  //Use for processing and testing 
-  size( 1366 ,768);
-  
-  //Old code before creating a User class
-  ////////////////////////////////////////////////////////////////////////////
-  ////setting button
-  //Button temp = new Button(int((canvasWidth/100)*49.5 - buttonX), int((canvasHeight/100)*90) ,buttonX,buttonY,0);
-  //buttons.add(temp);
-  //functionActive.add(temp.function);
-  ////function button
-  //temp = new Button(int((canvasWidth/100)*50.5), int((canvasHeight/100)*90) ,buttonX,buttonY,1);
-  //buttons.add(temp);
-  //functionActive.add(temp.function);
-  
-  //println("Debug pre" + functionActive.get(0));
-  
-  //addButton(2,buttons,functionActive,buttonX,buttonY);
-  //addButton(3,buttons,functionActive,buttonX,buttonY);
-  
-  ////Collections.sort(functionActive);
-  //for (Button item : buttons) {
-  //  println(item.function);
-  //}
-  
-  //fixOrderofButton(buttons,functionActive);
-  
-  ////////////////////////////////////////////////////////////////////////////////////
-  // grab an image to use later
-  // as with sounds Processing likes files in the data directory, Processing.js outside that directory
-  //stroke(0);
-  //rect(0, 0, 683, 384);
-  //bgroundimg = loadImage("silver.jpg", "jpg");
-  //bgroundimg.loadPixels();
-  //bgroundimg.resize(683, 384);
-  //img = loadImage("sketch2.gif", "gif");
-  //img.loadPixels();
-  
-  
-  //f = createFont("Arial",24,true);
-  //background(255);
-  //loadSounds();
-  //stroke(126);
-
-  
-  ////////////////////////////////////
-  
-  
-  //fixOrderofButton(guest.buttonSet,guest.usrFunctionActive);
-  User guest = new User("guest","0000");
-  userList.add(guest);
-  userList.get(0).addButton(4);
-  //guest.addButton(5);
-  f = createFont("Arial",24,true);
-  background(255);
-  loadSounds();
-  stroke(126);
-  
-  
-  //Profile Setup
-  //////////////////////////////////////////////////
-  
-  Button temp = new Button(int((canvasWidth/100)*49.5 - buttonX), int((canvasHeight/100)*90) ,66,30,0);
-  profile.add(temp);
-  addButton(profile,66,30,1);
-  int index = findMostRight(profile);
-  newUserButton = new CircleButton(int(index+66+(2*(canvasWidth/100))),temp.y_Axis+15, 30, 30);
-  
-  
-  //addButton(profile,66,30,-2);
-  //////////////////////////////////////////////////
-  pinSetup();
-}
-
-/////////////////////////////////////////////////////
-
-void draw() {
-  if(stage == 0){
-    startDraw();
-  }
-  else if(stage == 1){
-    profileDraw();
-  }
-  else if(stage == 2){
-    pinDraw();
-  }
-  else if(stage == 3){
-    guestDraw();
-  }
-  else if(stage == 4){
-    //change to genric displayDraw 
-    guestDraw();
-  }
-
-}
-// Draw the pin on to the canvas
-void pinDraw()
-
-{
-  String timeString;
-
-  background(255); 
-  stroke(126);
-  //comment out drawGrid if you dont want to see the grid
-  drawGrid();
-  noStroke();
-  
-  
-  // draw the active button in a different color
-  fill(127,127,0);
-
-  textFont(f);
-  textSize(36);
-  fill(127,127,127);
-  textAlign(CENTER);
-  
-  timeString = getCurrentTime();
-  text(timeString, (canvasWidth/100)*5 , 50);
-  fill(0);
-  for(int i = 0;i<pinFlag ;i++){
-    
-    text("*",(int)canvasWidth/4 + 315 + pinSpace - (15 * i), (int)canvasHeight/3 + 45);
-   
-  }
-  
-  button0.update();
-  
-  button1.update();
-  
-  button2.update();
-  
-  button3.update();
-  
-  button4.update();
-  
-  button5.update();
-  
-  button6.update();
-  
-  button7.update();
-  
-  button8.update();
-  
-  button9.update();
-  
-  buttonpinBack.update();
-  
-  buttonpinOk.update();
-  
-  button0.display();
-
-  button1.display();
-  
-  button2.display();
-  
-  button3.display();
-  
-  button4.display();
-  
-  button5.display();
-  
-  button6.display();
-  
-  button7.display();
-  
-  button8.display();
-  
-  button9.display();
-  
-  buttonpinBack.display();
-  
-  buttonpinOk.display();
-  
-  fill(127,127,127);
-  Button temp;
-  for (int loopCounter=0; loopCounter < profile.size(); loopCounter++){
-    temp = profile.get(loopCounter);
-    rect(temp.x_Axis,temp.y_Axis,temp.width,temp.height, 10);
-  } 
-  temp = profile.get(profile.size()-1);
-  
-   
-  ellipse(newUserButton.x_Axis,newUserButton.y_Axis,newUserButton.width, newUserButton.height);
-  
-  
-}
-
-
-
-void startDraw(){
-  String timeString;
-
-  background(255); 
-  stroke(126);
-  //comment out drawGrid if you dont want to see the grid
-  drawGrid();
-  noStroke();
-  
-  
-  // draw the active button in a different color
-  fill(127,127,0);
-
-  textFont(f);
-  textSize(36);
-  fill(127,127,127);
-  textAlign(CENTER);
-  
-  timeString = getCurrentTime();
-  text(timeString, (canvasWidth/100)*5 , 50);
-  
-  text("Touch Screen to Start", (canvasWidth/100)*50 , (canvasHeight/100)*90);
-
-}
-
-
-void profileDraw(){
-  String timeString;
-
-  background(255); 
-  stroke(126);
-  //comment out drawGrid if you dont want to see the grid
-  drawGrid();
-  noStroke();
-  
-  
-  // draw the active button in a different color
-  fill(127,127,0);
-
-  textFont(f);
-  textSize(36);
-  fill(127,127,127);
-  textAlign(CENTER);
-  
-  timeString = getCurrentTime();
-  text(timeString, (canvasWidth/100)*5 , 50);
-  
-  //add new user
-  Button temp;
-  for (int loopCounter=0; loopCounter < profile.size(); loopCounter++){
-    temp = profile.get(loopCounter);
-    rect(temp.x_Axis,temp.y_Axis,temp.width,temp.height, 10);
-  } 
-  temp = profile.get(profile.size()-1);
-  
-   
-  ellipse(newUserButton.x_Axis,newUserButton.y_Axis,newUserButton.width, newUserButton.height);
-  
-}
-// Draw the login
-void loginDraw(){
-  String timeString;
-
-  background(255); 
-  stroke(126);
-  //comment out drawGrid if you dont want to see the grid
-  drawGrid();
-  noStroke();
-  
-  
-  // draw the active button in a different color
-  fill(127,127,0);
-  
-  
-
-  textFont(f);
-  textSize(36);
-  fill(127,127,127);
-  textAlign(CENTER);
-  
-  timeString = getCurrentTime();
-  text(timeString, (canvasWidth/100)*5 , 50);
-}
-
-void guestDraw(){
-  String timeString;
-  User guest = userList.get(0);
-  background(255); 
-  stroke(126);
-  //comment out drawGrid if you dont want to see the grid
-  drawGrid();
-  noStroke();
-  
-
- 
-  if(guest.isHidden){
-    textFont(f);
-    textSize(36);
-    fill(127,127,127);
-    textAlign(CENTER);
-  
-    timeString = getCurrentTime();
-    text(timeString, (canvasWidth/100)*5 , 50);
-    rect(guest.hid.x_Axis,guest.hid.y_Axis,guest.hid.width,guest.hid.height, 10);
-    return;
-  }
- 
-  fill(127,127,127);
-  Button temp;
-  for (int loopCounter=0; loopCounter < guest.buttonSet.size(); loopCounter++){
-    temp = guest.buttonSet.get(loopCounter);
-    rect(temp.x_Axis,temp.y_Axis,temp.width,temp.height, 10);
-  } 
-  rect(guest.hid.x_Axis,guest.hid.y_Axis,guest.hid.width,guest.hid.height, 10);
-  // need to change to so that it popup the correct function
-  if(boxInUse == true){
-    
-    if(drag) {
-      fill(192,192,192);
-      rect(x_drag, y_drag, drag_box_width, drag_box_height, 10);
-    }
-   
-    fill(127,127,127);
-    pop_up_box(xLocation, yLocation);
-  }
-  // draw the active button in a different color
-  fill(127,127,0);
-
-  
-
-  textFont(f);
-  textSize(36);
-  fill(127,127,127);
-  textAlign(CENTER);
-  
-  timeString = getCurrentTime();
-  text(timeString, (canvasWidth/100)*5 , 50);
-
-
-}
-
-// Draw a grid 
-void drawGrid(){
-  int xLocation = 0;
-  while(xLocation < canvasWidth){
-    line(xLocation,0,xLocation,canvasHeight );
-    xLocation = xLocation + int(canvasWidth/29);
-  }
-  int yLocation = 0;
-  while(yLocation < canvasHeight){
-    line(0,yLocation,canvasWidth,yLocation );
-    yLocation = yLocation + int(canvasWidth/29);
-  }
-}
-// Draw Custom grid
-void drawGrid(int xSize,int ySize){
-  int xLocation = 0;
-  while(xLocation < canvasWidth){
-    line(xLocation,0,xLocation,canvasHeight );
-    xLocation = xLocation + xSize;
-  }
-  int yLocation = 0;
-  while(yLocation < canvasHeight){
-    line(0,yLocation,canvasWidth,yLocation );
-    yLocation = yLocation + ySize;
-  }
-}
-
-/////////////////////////////////////////////////////
-
-void mouseDragged() {
-
-  if( mouseX-dragDifx < x_drag || mouseX-dragDifx+popUpX > x_drag + drag_box_width || mouseY-dragDify < y_drag || mouseY-dragDify+popUpY > y_drag + drag_box_height) {
-
-      //Do nothing.
-      if(xLocation < x_drag){
-        xLocation = x_drag;
-      }
-      if( xLocation+popUpX > x_drag + drag_box_width){
-         xLocation = x_drag + drag_box_width - popUpX;
-      }
-      if( yLocation < y_drag){
-        yLocation = y_drag;
-      }
-       if(yLocation+popUpY > y_drag + drag_box_height){
-        yLocation = y_drag + drag_box_height - popUpY;
-      }
-
-
-  }
-
-
-  else if(drag) {
-
-    xLocation = mouseX-dragDifx;
-    yLocation = mouseY-dragDify;
-  }
-
-
-  
-}
-
-void mouseReleased() {
-    drag = false;
-
-
-}
-
-//Mouse handlers
-void mousePressed() {
-  
-  //Start Screen to Profile Selection Screen
-  if(stage == 0){
-    stage = 1;
-    return;
-  }
-  
-  //Profile Selection Screen to Pin
-  if(stage == 1){
-    profileSelect_MousePressed();
-    return;
-  }
-  
-  // Check if pin is correct or not 
-  // If pin is correct go to display Screen
-  // else go to incorrect Screen
-  // image button has it own mousePressed 
-  // remove this if statement later
-  if(stage == 2){
-    //stage = 3;
-    
-    return;
-  }
-  
-  if(stage == 3){
-    guestScreen_MousePressed();
-    return;
-  }
-
-  
-  
-}
-void profileSelect_MousePressed(){
-  Button temp;
-  
-  //ellipse((index+66+(2*(canvasWidth/100))),temp.y_Axis+15, 30, 30);
-  if(insideCircle(newUserButton.x_Axis,newUserButton.y_Axis,newUserButton.width)){
-    println("DEBUG(9): New user");
-    // new the stage for that
-    
-  }
-  
-  
-  for (int loopCounter=0; loopCounter < profile.size(); loopCounter++){
-    temp = profile.get(loopCounter);
-    if(insideBox(temp.x_Axis,temp.y_Axis,temp.width,temp.height)){
-      stage = 2;
-      return;
-    }
-  }
-  
-
-}
-
-void guestScreen_MousePressed(){
-  User guest = userList.get(0);
-  if(insideBox(guest.hid.x_Axis,guest.hid.y_Axis,guest.hid.width,guest.hid.height)){
-    guest.isHidden = !guest.isHidden;
-    return;
-  }
-  
-  if(insideBox(xLocation, yLocation, popUpX, popUpY)) {
-    drag = true;
-    originalX = xLocation;
-    originalY = yLocation;
-  }
-  else {
-    drag = false;
-  }
-  
-  dragDifx = mouseX-xLocation;
-  dragDify = mouseY-yLocation;
-  
-  if(boxInUse && outsideBox(xLocation, yLocation, popUpX, popUpY)) {
-    println("DEBUG(3): BoxInUse: " + boxInUse + " Clicked");
-    background(255);
-    boxInUse = false;
-    if(clickOtherButton()){
-      boxInUse = true;
-      pop_up_box(xLocation, yLocation);
-    }
-    println("DEBUG(4): BoxInUse: " + boxInUse + " Delete Box");
-    println("===========");
-    return;
-      
-    
-  }
-    if(loopInsideBox() && !boxInUse){
-    println("DEBUG(1): BoxInUse: " + boxInUse + " Clicked");
-    pop_up_box(xLocation, yLocation);
-    
-    println("DEBUG(2): BoxInUse: " + boxInUse + " Created Box");
-    println("===========");
-    return;
-  }
-
-}
-
-
-boolean clickOtherButton(){
-  int temp = findButton();
-  if(temp != -1 && temp != functionInUse ){
-    functionInUse = temp;
-    //println("DEBUG(5): functionInUse: " + functionInUse );
-    return true;
-  } 
-  return false;
-}
-
-boolean loopInsideBox(){
-  Button temp;
-  User guest = userList.get(0);
-  for(int i = 0;i<guest.buttonSet.size();i++){
-    
-    temp = guest.buttonSet.get(i);
-    if(insideBox(temp.x_Axis,temp.y_Axis,temp.width,temp.height)){
-      functionInUse = temp.function;
-      println("Button "+ temp.function  + " Clicked" );
-      return true;
-    }
-  }
-  return false;
-}
-
-int findButton(){
-  Button temp;
-  User guest = userList.get(0);
-  for(int i = 0;i<guest.buttonSet.size();i++){
-    
-    temp = guest.buttonSet.get(i);
-    if(insideBox(temp.x_Axis,temp.y_Axis,temp.width,temp.height)){
-      println("Button "+ temp.function + " Clicked" );
-      return temp.function;
-    }
-  }
-  return -1;
-}
-boolean insideCircle(int x, int y,int d){
- if( dist(mouseX,mouseY,x,y)<d/2){
-   return true;
- }
- return false;
-}
-
-//Function to check if mouse cursor is INSIDE the specified box
-boolean insideBox(float x, float y, int popUpX, int popUpY) {
-
-  if((mouseX >= x && mouseX <= (x+popUpX)) && ((mouseY >= y) && mouseY <= (y+popUpY)))  {
-    
-    return true;
-  }
-  else {
-    return false;
-  }
-  
-}
-
-//Function to check if mouse cursor is OUTSIDE the specified box
-boolean outsideBox(float x,float y, int popUpX, int popUpY) {
-
-   if((mouseX < x || mouseX >= (x+popUpX)) || ((mouseY < y) || mouseY > (y+popUpY))) {
-   
-     return true;
-   }
-   else {
-     return false;
-   }
-
-}
-//Function to create a new box/window
-void pop_up_box(float x, float y) {
-
-  rect(x, y, popUpX, popUpY, 7);
-  boxInUse = true;
-  
-}
-
-
-
-//Function to get current Time
-String getCurrentTime(){
-    
-  int m = minute();  // Values from 0 - 59
-  int h = hour();    // Values from 0 - 23
-  String min;
-  String hr;
-  String timeString;
-
-  if(m < 10)
-    min = "0"+str(m); 
-  else
-    min =str(m);
-  if(h%12 == 0){
-    hr = "12";
-  }
-  else{
-    hr = str(h%12);
-  }
-  if(h > 12){
-     timeString = hr +":"+ min+ "PM";
-  }
-  else{
-     timeString = hr +":"+ min+ "AM";
-  }
-  return timeString;
-  
-}
-void fixOrderofButton(ArrayList<Button> blist,ArrayList<Integer> funcList){
-  int size = funcList.size();
-
-  for (Button item : blist) {
-    println("Debug(8) "+ item.function);
-  }
-  fixedLocation(blist,funcList);
-  for(int i = 0;i<size;i++){
-    if((funcList.get(i) != (blist.get(i)).function)){
-      int index = findButtonIndex(blist,funcList.get(i));
-      if(index != -1){
-        Button temp = blist.get(index);
-        Button temp2 = blist.get(i);
-        int holder = temp.function;
-        
-        temp.function = temp2.function;
-        temp2.function = holder;
-        
-      }
-    }
-  }
-}
-
-int findButtonIndex(ArrayList<Button> blist,int fun){
-  int size = blist.size();
-
-  for(int i = 0;i<size;i++){
-    if((blist.get(i)).function == fun){
-      return i;
-    }
-  }
-  return -1;
-}
-
-int findFunctionIndex(ArrayList<Button> blist,ArrayList<Integer> funcList,int fun){
-  int size = blist.size();
-
-  for(int i = 0;i<size;i++){
-    if((funcList.get(i)) == fun){
-      return i;
-    }
-  }
-  return -1;
-}
-
-void fixedLocation(ArrayList<Button> blist,ArrayList<Integer> funcList){
-  int setting = findFunctionIndex(blist,funcList,0);
-  int menu = findFunctionIndex(blist,funcList,1);
-  
-  buttonSwap(blist,setting,blist.size()-1);
-  buttonSwap(blist,menu,blist.size()-2);
-  for (Button item : blist) {
-    println("Debug(7) "+ item.function);
-  }
-  
-}
-
-void buttonSwap(ArrayList<Button> blist,int index1 , int index2){
-  int temp = blist.get(index1).function;
-  int temp2 = blist.get(index2).function;
-  int tempX = blist.get(index1).x_Axis;
-  int tempX2 =  blist.get(index2).x_Axis;
-  int tempY = blist.get(index1).y_Axis;
-  int tempY2 = blist.get(index2).y_Axis;
-  
-  blist.get(index1).changeFunction(temp2);
-  blist.get(index1).changeLocation(tempX2,tempY2);
-  
-  blist.get(index2).changeFunction(temp);
-  blist.get(index2).changeLocation(tempX,tempY);
-  
-  
-}
-void drawFunctionIcons(ArrayList<Button>blist){
-   Button temp;
-  for (int loopCounter=0; loopCounter < blist.size(); loopCounter++){
-    temp = blist.get(loopCounter);
-    rect(temp.x_Axis,temp.y_Axis,temp.width,temp.height, 10);
-  } 
-}
-
-int findMostRight(ArrayList<Button> blist){
-  Button temp;
-  temp = blist.get(0);
-  int index = temp.x_Axis;
-  
-  for (int loopCounter=0; loopCounter < blist.size(); loopCounter++){
-    temp = blist.get(loopCounter);
-    if(index < temp.x_Axis){
-      index = temp.x_Axis;
-    }
-  } 
-  return index;
-}
-
-
-
-void addButton(ArrayList<Button> blist , int X, int Y,int f){
-  
-  if(blist.size()%2 == 1){
-   
-   Button temp; 
-   temp = new Button(0, int((canvasHeight/100)*90) ,X,Y,f);
-   blist.add(temp);
-   temp = blist.get(0);
-   temp.changeX(int((canvasWidth/100)*50.5));
-   
-   temp = blist.get(1);
-   temp.changeX(int(((canvasWidth/100)*49.5) - X));
-   int tempx = int(((canvasWidth/100)*49.5)- X);
-
-   for (int i=2; i < blist.size(); i = i+2){
-      tempx = tempx - int(X + (canvasWidth/100));
-   }
-   temp = blist.get(0);
-   temp.changeX(tempx);
-   for (int i=1; i < blist.size(); i++){
-     temp = blist.get(i);
-     temp.changeX(tempx +(i* int(X + (canvasWidth/100))));
-  
-   }
-   
-   
- }
- // even number of functions before add new
- else{
-   Button temp; 
-   temp = new Button(0, int((canvasHeight/100)*90) ,buttonX,buttonY,f);
-   blist.add(temp);
-
-   temp = blist.get(0);
-   temp.changeX(int((canvasWidth/100)*50)-(buttonX/2));
-   int tempx = int((canvasWidth/100)*50)-(buttonX/2);
-   
-   for (int i=1; i < blist.size(); i = i+2){
-      //temp  = buttonSet.get(i);
-      //temp2 = buttonSet.get(i+1);
-      tempx = tempx  - int(buttonX + (canvasWidth/100));
-      
-      //temp.changeX( ((buttonSet.get(i-1)).x_Axis) - int(buttonX + (canvasWidth/100)) );
-      //temp2.changeX( ((buttonSet.get(i-1)).x_Axis) + int(buttonX + (canvasWidth/100)) );
-      
-   }
-   temp = blist.get(0);
-   temp.changeX(tempx);
-   for (int i=1; i < blist.size(); i++){
-     temp = blist.get(i);
-     temp.changeX(tempx +(i* int(buttonX + (canvasWidth/100))));
-     
-     println("DEBUG 10 tempx " +i+ ": " + tempx);
-   }
- } 
 }

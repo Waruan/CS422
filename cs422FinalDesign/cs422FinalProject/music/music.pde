@@ -140,7 +140,7 @@ class HScrollbar
 
     }
 
-    rect(spos, ypos, sheight, sheight);
+    ellipse(spos, ypos+sheight/2, sheight, sheight);
     //println(spos);
   }
 
@@ -181,8 +181,11 @@ int col=0;
 ArrayList<String> songNames = new ArrayList<String>();
 int current = 0;
 
+float canvasWidth = 1366;
+float canvasHeight = 768;
+
 void setup(){
-  size(300,300);
+  size(canvasWidth,canvasHeight);
   noStroke(); 
   println(width);
   String temp  = "snow";
@@ -210,9 +213,17 @@ void draw(){
   background(220);
   //constrain the R value between 0 and 255
   fill(constrain(col,0,255),0,0);
-  ellipse(width/2,height/2,150,150);
+  
+  //play
+  rect(width/2,height/,30,33);
+  
+  //forward
   ellipse(width-30,height-30,30,30);
+  
+  //back
   ellipse(30,height-30,30,30);
+  
+  
   //constrain the audio level between 0 and 1
   audio.volume=constrain((hs1.spos/(hs1.swidth-10)),0,1);
   //fade the volume and color out at the same rate

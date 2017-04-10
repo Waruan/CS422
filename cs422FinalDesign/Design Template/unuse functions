@@ -1,0 +1,36 @@
+void fixOrderofButton(ArrayList<Button> blist,ArrayList<Integer> funcList){
+  int size = funcList.size();
+
+  for (Button item : blist) {
+    println("Debug(8) "+ item.function);
+  }
+  fixedLocation(blist,funcList);
+  for(int i = 0;i<size;i++){
+    if((funcList.get(i) != (blist.get(i)).function)){
+      int index = findButtonIndex(blist,funcList.get(i));
+      if(index != -1){
+        Button temp = blist.get(index);
+        Button temp2 = blist.get(i);
+        int holder = temp.function;
+        
+        temp.function = temp2.function;
+        temp2.function = holder;
+        
+      }
+    }
+  }
+}
+
+
+void fixedLocation(ArrayList<Button> blist,ArrayList<Integer> funcList){
+  int setting = findFunctionIndex(blist,funcList,0);
+  int menu = findFunctionIndex(blist,funcList,1);
+  
+  buttonSwap(blist,setting,blist.size()-1);
+  buttonSwap(blist,menu,blist.size()-2);
+  for (Button item : blist) {
+    println("Debug(7) "+ item.function);
+  }
+  
+}
+
