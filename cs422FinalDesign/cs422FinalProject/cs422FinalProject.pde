@@ -727,7 +727,7 @@ void drawGrid(int xSize,int ySize){
 
 void mouseDragged() {
 
-  if(drag)
+  if(drag && isHidden == false)
   PopUpDrag();
   
   else if(iconDrag)
