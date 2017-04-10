@@ -215,7 +215,7 @@ void draw(){
   fill(constrain(col,0,255),0,0);
   
   //play
-  rect(width/2,height/,30,33);
+  rect(width/2,height/2,30,33);
   
   //forward
   ellipse(width-30,height-30,30,30);
