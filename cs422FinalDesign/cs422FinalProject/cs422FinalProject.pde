@@ -33,7 +33,7 @@ int buttonY = 30;
 //2 = login 
 //3 = Exsitng User display
 //4 = guest User display
-int stage = 3;
+int stage = 0;
 
 // evl monitor size
 float canvasWidth = 2732;
@@ -823,11 +823,11 @@ void IconsDrag(){
 }
 
 
-void mouseReleased() {
-    drag = false;
-    iconDrag = false;
+//void mouseReleased() {
+//    drag = false;
+//    iconDrag = false;
 
-}
+//}
 
 void mouseClicked() {
   if(stage == 3){
@@ -838,7 +838,7 @@ void mouseClicked() {
 }
 
 //Mouse handlers
-void mousePressed() {
+void mouseReleased() {
   
   //Start Screen to Profile Selection Screen
   if(stage == 0){
