@@ -1274,9 +1274,9 @@ class PinButton
 
   
   
-  void mousePressed() 
+  void mouseReleased() 
   {
-    if(isOver && mousePressed) {
+    if(isOver) {
       
       pressed = true;
 
@@ -1356,7 +1356,7 @@ class ImageButtons extends PinButton
 
     over();
     
-    mousePressed();
+    mouseReleased();
     
     if(pressed) {
      
