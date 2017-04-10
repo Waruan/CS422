@@ -33,7 +33,7 @@ int buttonY = 30;
 //2 = login 
 //3 = Exsitng User display
 //4 = guest User display
-int stage = 0;
+int stage = 3;
 
 // evl monitor size
 //float canvasWidth = 2732;
@@ -47,6 +47,7 @@ int currentTime;
 
 PFont f;
 
+Popup currentPopup;
 
 //by default 0 is guest user
 
@@ -135,6 +136,10 @@ float yLocation = int((canvasHeight/100)*40);
 //Size of popup or popups
 int popUpX = int((canvasWidth/100)*20);
 int popUpY = int((canvasHeight/100)*20);
+
+//Size for 9gag display
+int gagWidth = int((canvasWidth/100)*20);
+int gagHeight = int((canvasHeight/100)*40);
 
 // Old code before creating user class
 /////////////////////////////////////////////////////////////////////////
@@ -458,6 +463,7 @@ void draw() {
   }
   else if(stage == 3){
     userScreenDraw(userList.get(whichUser));
+    
   }
   else if(stage == 4){
     //change to genric displayDraw 
@@ -665,14 +671,14 @@ void userScreenDraw(User current){
   
   // need to change to so that it popup the correct function
   if(boxInUse == true){
-    
+    println("Inside boxInUse True area");
     if(drag) {
       fill(192,192,192);
       rect(x_drag, y_drag, drag_box_width, drag_box_height, 10);
     }
-   
-    fill(127,127,127);
-    pop_up_box(xLocation, yLocation);
+    image(currentPopup.img, currentPopup.x_Axis, currentPopup.y_Axis, gagWidth, gagHeight);
+    
+    //pop_up_box(xLocation, yLocation);
   }
   // draw the active button in a different color
   fill(127,127,0);
@@ -731,22 +737,46 @@ void mouseDragged() {
 
 
 void PopUpDrag(){
+/*
   if( mouseX-dragDifx < x_drag || mouseX-dragDifx+popUpX > x_drag + drag_box_width || mouseY-dragDify < y_drag || mouseY-dragDify+popUpY > y_drag + drag_box_height) {
 
       //Do nothing.
       if(xLocation < x_drag){
         xLocation = x_drag;
+        currentPopup.x_Axis = int(xLocation);
       }
       if( xLocation+popUpX > x_drag + drag_box_width){
          xLocation = x_drag + drag_box_width - popUpX;
+         currentPopup.x_Axis = int(xLocation);
       }
       if( yLocation < y_drag){
         yLocation = y_drag;
+        currentPopup.y_Axis = int(yLocation);
       }
        if(yLocation+popUpY > y_drag + drag_box_height){
         yLocation = y_drag + drag_box_height - popUpY;
+        currentPopup.y_Axis = int(yLocation);
       }
+*/
+  if( mouseX-dragDifx < x_drag || mouseX-dragDifx+currentPopup.width > x_drag + drag_box_width || mouseY-dragDify < y_drag || mouseY-dragDify+currentPopup.height > y_drag + drag_box_height) {
 
+      //Do nothing.
+      if(xLocation < x_drag){
+        xLocation = x_drag;
+        currentPopup.x_Axis = int(xLocation);
+      }
+      if( xLocation+currentPopup.width > x_drag + drag_box_width){
+         xLocation = x_drag + drag_box_width - currentPopup.width;
+         currentPopup.x_Axis = int(xLocation);
+      }
+      if( yLocation < y_drag){
+        yLocation = y_drag;
+        currentPopup.y_Axis = int(yLocation);
+      }
+       if(yLocation+currentPopup.height > y_drag + drag_box_height){
+        yLocation = y_drag + drag_box_height - currentPopup.height;
+        currentPopup.y_Axis = int(yLocation);
+      }
 
   }
 
@@ -755,6 +785,9 @@ void PopUpDrag(){
 
     xLocation = mouseX-dragDifx;
     yLocation = mouseY-dragDify;
+    
+    currentPopup.x_Axis = int(xLocation);
+    currentPopup.y_Axis = int(yLocation);
   }
 
 }
@@ -874,46 +907,43 @@ void UserScreen_MouseClicked(){
   
   
   if(boxInUse && outsideBox(xLocation, yLocation, popUpX, popUpY)) {
-    println("DEBUG(3): BoxInUse: " + boxInUse + " Clicked");
+    println("DEBUG(1)");
     background(255);
     boxInUse = false;
     if(clickOtherButton()){
-      boxInUse = true;
-      pop_up_box(xLocation, yLocation);
+      boxInUse = true;   
+      //pop_up_box(xLocation, yLocation);
     }
-    println("DEBUG(4): BoxInUse: " + boxInUse + " Delete Box");
-    println("===========");
     return;
       
     
   }
     if(loopInsideBox() && !boxInUse){
-    println("DEBUG(1): BoxInUse: " + boxInUse + " Clicked");
-    pop_up_box(xLocation, yLocation);
-    
-    println("DEBUG(2): BoxInUse: " + boxInUse + " Created Box");
-    println("===========");
+    //pop_up_box(xLocation, yLocation);
+    currentPopup = new Popup("Data/9gag_desktop.png", int(xLocation), int(yLocation), int(gagWidth), int(gagHeight));
+    boxInUse = true;
+    println("LINE 925");
     return;
   }
 }
 
 void UserScreen_MousePressed(){
 
-  if(insideBox(xLocation, yLocation, popUpX, popUpY) ) {
-    drag = true;
-    originalX = xLocation;
-    originalY = yLocation;
-    dragDifx = mouseX-xLocation;
-    dragDify = mouseY-yLocation;
-  }
-  else if (loopInsideBox() ){
+  if (loopInsideBox() ){
     User u = userList.get(whichUser);
     Button b = u.buttonSet.get(iconIndex);
     int x = userList.get(whichUser).buttonSet.get(iconIndex).x_Axis;
     
     iconDrag = true;
-     iconDragDifx = mouseX-x;
+    iconDragDifx = mouseX-x;
      //dragDify = mouseY-yLocation;
+  }
+  else if(insideBox(xLocation, yLocation, currentPopup.width, currentPopup.height) ) {
+    drag = true;
+    originalX = xLocation;
+    originalY = yLocation;
+    dragDifx = mouseX-xLocation;
+    dragDify = mouseY-yLocation;
   }
   else {
     drag = false;
@@ -1468,6 +1498,16 @@ class Popup{
   // save the location of the function where it clickable
   ArrayList<Button> clickable = new ArrayList<Button>();
   
+  Popup(String file, int x, int y, int w, int h) {
+    x_Axis = x;
+    y_Axis = y;
+    width = w;
+    height = h;
+    
+    img = loadImage(file);
+    
+  }
+/*  
   Popup(int x, int y , int w , int h, int f){
     x_Axis = x;
     y_Axis = y;
@@ -1477,7 +1517,7 @@ class Popup{
     //1 for setting
     function = f;
   }
-  
+*/
   void PopupAddClickable(int x, int y , int w , int h, int f){
     // x and y is the location with respect to the popup
     Button temp = new Button(x_Axis + x,y_Axis + y,w,h,f);
