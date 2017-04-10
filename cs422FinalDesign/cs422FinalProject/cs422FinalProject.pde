@@ -100,6 +100,11 @@ int iconIndex;
 float iconDragDifx;
 float iconDragDify;
 
+int selectedIconX_axis;
+int selectedIconY_axis;
+
+int draggingIndex;
+
 /////////////////////////////////////////////////////////////////////////////////
 //Variable relate to Pin
 //////////////////////////////////////////////////////////////////////////////////////
@@ -422,7 +427,7 @@ void setup() {
 
   
   //fixOrderofButton(guest.buttonSet,guest.usrFunctionActive);
-  
+  currentPopup = new Popup("Data/9gag_desktop.png", int(xLocation), int(yLocation), int(gagWidth), int(gagHeight));
   
   User guest = new User("guest","0000");
   userList.add(guest);
@@ -634,7 +639,7 @@ void userScreenDraw(User current){
   background(255); 
   stroke(126);
   //comment out drawGrid if you dont want to see the grid
-  //drawGrid();
+  drawGrid();
   noStroke();
   
 
@@ -655,7 +660,7 @@ void userScreenDraw(User current){
   Button temp;
   if(iconDrag) {
       fill(192,192,192);
-      rect(iconX_drag, iconY_drag, iconDrag_box_width,iconDrag_box_height -500, 10);
+      //rect(iconX_drag, iconY_drag, iconDrag_box_width,iconDrag_box_height -500, 10);
   }
   fill(127,127,127);
   for (int loopCounter=0; loopCounter < current.buttonSet.size(); loopCounter++){
@@ -672,7 +677,7 @@ void userScreenDraw(User current){
   
   // need to change to so that it popup the correct function
   if(boxInUse == true){
-    println("Inside boxInUse True area");
+    //println("Inside boxInUse True area");
     if(drag) {
       fill(192,192,192);
       rect(x_drag, y_drag, drag_box_width, drag_box_height, 10);
@@ -744,14 +749,22 @@ void mouseDragged() {
   }
   
   if(iconDrag == false && isHidden == false){
-    loopInsideBox() ;
+     loopInsideBox() ;
      int x = userList.get(whichUser).buttonSet.get(iconIndex).x_Axis;
+     draggingIndex = iconIndex;
      iconDragDifx = mouseX-x;
+     selectedIconX_axis = x;
+
+     //println("DEBUG 2: " + iconIndex + "selected: " + selectedIconX_axis);
+     
   }
   
 
   
-  if(loopInsideBox() && isHidden ==false  ){
+  if(loopInsideBoxWithoutSet() && isHidden ==false  ){
+    
+    swap(userList.get(whichUser).buttonSet.get(draggingIndex));
+    
     iconDrag = true;
     drag = false;
     IconsDrag();
@@ -759,11 +772,39 @@ void mouseDragged() {
   }
 
   
-  //else if(iconDrag)
-  //IconsDrag();
+}
+void swap(Button current){
+  
+  int tempx;
+  ArrayList<Button> blist = userList.get(whichUser).buttonSet;
+  int len = blist.size();
+  for(int i = 0 ;i<len;i++){
+    // right only
+    if(current.x_Axis+ buttonX > blist.get(i).x_Axis && current.x_Axis+buttonX < blist.get(i).x_Axis + buttonX){
+      
+     
+      tempx = blist.get(i).x_Axis;
+      println("DEBUG 0: " + draggingIndex + " selected: " + selectedIconX_axis + " new Selected" +  tempx );
+      
+      
+      blist.get(i).x_Axis = selectedIconX_axis;
+      selectedIconX_axis = tempx;
+      
+      
+      return;
+    }
+    //else if(current.x_Axis < blist.get(i).x_Axis + buttonX && current.x_Axis > blist.get(i).x_Axis ){
+    //  tempx = blist.get(i).x_Axis;
+    //  blist.get(i).x_Axis = selectedIconX_axis;
+    //  selectedIconX_axis = tempx;
+    //  println("DEBUG 1");
+    //  return;
+      
+    //}
+  }
+  
   
 }
-
 
 void PopUpDrag(){
 /*
@@ -906,7 +947,7 @@ void profileSelect_MouseReleased(){
   
   //ellipse((index+66+(2*(canvasWidth/100))),temp.y_Axis+15, 30, 30);
   if(insideCircle(newUserButton.x_Axis,newUserButton.y_Axis,newUserButton.width)){
-    println("DEBUG(9): New user");
+    //println("DEBUG(9): New user");
     // new the stage for that
     
   }
@@ -927,8 +968,7 @@ void UserScreen_MouseReleased(){
   
   
   User guest = userList.get(0);
-  drag = false;
-  iconDrag = false;
+
   
   if(insideBox(guest.hid.x_Axis,guest.hid.y_Axis,guest.hid.width,guest.hid.height)){
     isHidden = !isHidden;
@@ -939,10 +979,13 @@ void UserScreen_MouseReleased(){
 
     return;
   }
-  
-  
+  if(iconDrag){
+      userList.get(whichUser).buttonSet.get(iconIndex).x_Axis = selectedIconX_axis;
+  } 
+  drag = false;
+  iconDrag = false;
   if(boxInUse && outsideBox(xLocation, yLocation, currentPopup.width, currentPopup.height)) {
-    println("DEBUG(1)");
+    //println("DEBUG(1)");
     background(255);
     boxInUse = false;
     if(clickOtherButton()){
@@ -958,19 +1001,20 @@ void UserScreen_MouseReleased(){
     //pop_up_box(xLocation, yLocation);
     currentPopup = new Popup("Data/9gag_desktop.png", int(xLocation), int(yLocation), int(gagWidth), int(gagHeight));
     boxInUse = true;
-    println("LINE 925");
-
+    //println("LINE 925");
+    //println("DEBUG 0");
     return;
   }
-  
+
   if (loopInsideBox() ){
     User u = userList.get(whichUser);
     Button b = u.buttonSet.get(iconIndex);
     int x = userList.get(whichUser).buttonSet.get(iconIndex).x_Axis;
-    
+    //println("DEBUG 1");
     //iconDrag = true;
     iconDragDifx = mouseX-x;
      //dragDify = mouseY-yLocation;
+    
   }
   else if(insideBox(xLocation, yLocation, currentPopup.width, currentPopup.height) ) {
     //drag = true;
@@ -978,10 +1022,12 @@ void UserScreen_MouseReleased(){
     originalY = yLocation;
     dragDifx = mouseX-xLocation;
     dragDify = mouseY-yLocation;
+    println("DEBUG 2");
   }
   else {
     drag = false;
     iconDrag = false;
+    
   }
   
   
@@ -1002,6 +1048,7 @@ boolean clickOtherButton(){
   return false;
 }
 
+//loop through icon button and set the index
 boolean loopInsideBox(){
   Button temp;
   User guest = userList.get(0);
@@ -1018,6 +1065,22 @@ boolean loopInsideBox(){
   return false;
 }
 
+//loop through icon button and dont set the index
+boolean loopInsideBoxWithoutSet(){
+  Button temp;
+  User guest = userList.get(0);
+  for(int i = 0;i<guest.buttonSet.size();i++){
+    
+    temp = guest.buttonSet.get(i);
+    if(insideBox(temp.x_Axis,temp.y_Axis,temp.width,temp.height)){
+      return true;
+    }
+  }
+  return false;
+}
+
+
+
 // Need to be rewritten
 int findButton(){
   Button temp;
@@ -1026,7 +1089,7 @@ int findButton(){
     
     temp = guest.buttonSet.get(i);
     if(insideBox(temp.x_Axis,temp.y_Axis,temp.width,temp.height)){
-      println("Button "+ temp.function + " Clicked" );
+      //println("Button "+ temp.function + " Clicked" );
       return temp.function;
     }
   }
@@ -1212,7 +1275,7 @@ void addProfileButton(ArrayList<Button> blist , int X, int Y,int f){
      temp = blist.get(i);
      temp.changeX(tempx +(i* int(X + (canvasWidth/100))));
      
-     println("DEBUG 10 tempx " +i+ ": " + tempx);
+     //println("DEBUG 10 tempx " +i+ ": " + tempx);
    }
  } 
  int index = findMostRight(profile);
@@ -1407,13 +1470,13 @@ class ImageButtons extends PinButton
         if(number == "back" && pinFlag > 0){  
           pinFlag = pinFlag-1;
           pin = pin.substring (  0, pin.length()-1 );
-          println(pin);  //Testing purpose
+          //println(pin);  //Testing purpose
           pinRep = pinRep.substring( 0, pinRep.length()-1 );
           pinSpace = pinSpace - 15;
           textSize(40);
           fill(255);
           //text("*", (int)canvasWidth/4 + 315 + pinSpace, (int)canvasHeight/3 + 45);
-          println(pinRep);    //Testing purpose
+          //println(pinRep);    //Testing purpose
         }
         
         else if(pinFlag < 4 && number != "back" && number!= "ok"){                 
@@ -1423,7 +1486,7 @@ class ImageButtons extends PinButton
           //text("*",(int)canvasWidth/4 + 315 + pinSpace, (int)canvasHeight/3 + 45);
           pinSpace = pinSpace + 15;
           pin = pin + number;
-          println(pin);  //Testing purpose
+          //println(pin);  //Testing purpose
           pinFlag = pinFlag+1;
         }
         
@@ -1641,8 +1704,8 @@ class User{
      buttonSet.add(temp);
      usrFunctionActive.add(temp.function);
      temp = buttonSet.get(0);
-     temp.changeX(int((canvasWidth/100)*50)-(buttonX/2));
-     int tempx = int((canvasWidth/100)*50)-(buttonX/2);
+     temp.changeX(int((canvasWidth/100)*49.9)-(buttonX/2));
+     int tempx = int((canvasWidth/100)*49.9)-(buttonX/2);
      
      for (int i=1; i < buttonSet.size(); i = i+2){
         //temp  = buttonSet.get(i);
