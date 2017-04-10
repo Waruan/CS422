@@ -23,19 +23,19 @@ boolean isPressed = false;
 PFont f;
 
 // evl monitor size
-//float canvasWidth = 2732;
-//float canvasHeight = 1536;
+float canvasWidth = 2732;
+float canvasHeight = 1536;
 
 // scale down for home monitors
-float canvasWidth = 1366;
-float canvasHeight = 768;
+//float canvasWidth = 1366;
+//float canvasHeight = 768;
 
 
 void setup()
 
 {
 
-  size(1366, 768);
+  size(2732, 1536);
 
   background(102, 102, 102);
   
@@ -137,53 +137,53 @@ void setup()
   
   butpinokChanged.resize(66, 30);
   
-  int x0 = (int)canvasWidth/3 + buttonSize/2+158;
+  int x0 = (int)canvasWidth/2 - 100;
   
-  int x = (int)canvasWidth/3 + buttonSize/2+78;
+  int x = (int)canvasWidth/2 - 180;
   
-  int x2 = (int)canvasWidth/3 + buttonSize/2+158;
+  int x2 = (int)canvasWidth/2 - 100;
 
-  int x3 = (int)canvasWidth/3 + buttonSize/2+238;
+  int x3 = (int)canvasWidth/2 - 20;
   
-  int x4 = (int)canvasWidth/3 + buttonSize/2+78;
+  int x4 = (int)canvasWidth/2 - 180;
   
-  int x5 = (int)canvasWidth/3 + buttonSize/2+158;
+  int x5 = (int)canvasWidth/2 - 100;
   
-  int x6 = (int)canvasWidth/3 + buttonSize/2+238;
+  int x6 = (int)canvasWidth/2 - 20;
   
-  int x7 = (int)canvasWidth/3 + buttonSize/2+78;
+  int x7 = (int)canvasWidth/2 - 180;
   
-  int x8 = (int)canvasWidth/3 + buttonSize/2+158;
+  int x8 = (int)canvasWidth/2 - 100;
   
-  int x9 = (int)canvasWidth/3 + buttonSize/2+238;
+  int x9 = (int)canvasWidth/2 - 20;
   
-  int x10 = (int)canvasWidth/3 + buttonSize/2+78;
+  int x10 = (int)canvasWidth/2 - 180;
   
-  int x11 = (int)canvasWidth/3 + buttonSize/2+238;
+  int x11 = (int)canvasWidth/2 - 20;
   
-  int y0 = (int)canvasHeight/4+buttonSize+200;
+  int y0 = (int)canvasHeight/2 + 520;
   
-  int y = (int)canvasHeight/4+buttonSize+80;
+  int y = (int)canvasHeight/2 + 400;
   
-  int y2 = (int)canvasHeight/4+buttonSize+80;
+  int y2 = (int)canvasHeight/2 + 400;
   
-  int y3 = (int)canvasHeight/4+buttonSize+80;
+  int y3 = (int)canvasHeight/2 + 400;
   
-  int y4 = (int)canvasHeight/4+buttonSize+120;
+  int y4 = (int)canvasHeight/2 + 440;
   
-  int y5 = (int)canvasHeight/4+buttonSize+120;
+  int y5 = (int)canvasHeight/2 + 440;
   
-  int y6 = (int)canvasHeight/4+buttonSize+120;
+  int y6 = (int)canvasHeight/2 + 440;
   
-  int y7 = (int)canvasHeight/4+buttonSize+160;
+  int y7 = (int)canvasHeight/2 + 480;
   
-  int y8 = (int)canvasHeight/4+buttonSize+160;
+  int y8 = (int)canvasHeight/2 + 480;
   
-  int y9 = (int)canvasHeight/4+buttonSize+160;
+  int y9 = (int)canvasHeight/2 + 480;
   
-  int y10 = (int)canvasHeight/4+buttonSize+200;
+  int y10 = (int)canvasHeight/2 + 520;
   
-  int y11 = (int)canvasHeight/4+buttonSize+200;
+  int y11 = (int)canvasHeight/2 + 520;
 
   int w0 = 66;
   
@@ -248,9 +248,9 @@ void setup()
   f = createFont("Arial",16,true);
   textSize(20);
   fill(102);
-  rect((int)canvasWidth/4 + 300,(int)canvasHeight/3,95,40);
+  rect((int)canvasWidth/2 - 115,(int)canvasHeight/2 + 320,95,40);
   fill(0);
-  text("Please Enter Pin:", (int)canvasWidth/4 + 265, (int)canvasHeight/3 - 20);
+  text("Please Enter Pin:", (int)canvasWidth/2 - 140, (int)canvasHeight/2 + 280);
  
 }
 
@@ -435,7 +435,8 @@ class ImageButtons extends Button
         pinSpace = pinSpace - 15;
         textSize(40);
         fill(102);
-        text("*", (int)canvasWidth/4 + 315 + pinSpace, (int)canvasHeight/3 + 45);
+        text("*", (int)canvasWidth/2 - 100 + pinSpace, (int)canvasHeight/2 + 360);
+        //(int)canvasWidth/2 % 2 + 630,(int)canvasHeight/3 - 25
         println(pinRep);    //Testing purpose
       }
       else if(pinFlag < 4 && number != "back" && number!= "ok")
@@ -443,7 +444,7 @@ class ImageButtons extends Button
         fill(0);
         pinRep = pinRep + "*";
         textSize(40);
-        text("*",(int)canvasWidth/4 + 315 + pinSpace, (int)canvasHeight/3 + 45);
+        text("*",(int)canvasWidth/2 - 100 + pinSpace,(int)canvasHeight/2 + 360);
         pinSpace = pinSpace + 15;
         pin = pin + number;
         println(pin);  //Testing purpose
@@ -462,7 +463,7 @@ class ImageButtons extends Button
         pinSpace = 0;
         for(int i = 0; i < 4; i++)
         {
-        text("*",(int)canvasWidth/4 + 315 + pinSpace,(int)canvasHeight/3 + 45);
+        text("*",(int)canvasWidth/2 - 100 + pinSpace, (int)canvasHeight/2 + 360);
         pinSpace = pinSpace+15;
         }
         pin = "";
