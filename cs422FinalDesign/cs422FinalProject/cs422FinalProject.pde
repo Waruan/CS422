@@ -33,7 +33,7 @@ int buttonY = 30;
 //2 = login 
 //3 = Exsitng User display
 //4 = guest User display
-int stage = 0;
+int stage = 3;
 
 // evl monitor size
 float canvasWidth = 2732;
@@ -90,11 +90,11 @@ Timer timer = new Timer(2000);
 /////////////////////////////////////////////////////////////////////////////////
 
 boolean iconDrag = false;
-float iconX_drag = (canvasWidth/29)*3;
-float iconY_drag = (canvasHeight/29)*20;
+float iconX_drag = (canvasWidth/29)*2;
+float iconY_drag = (canvasHeight/29)*20 + 300;
 
 float iconDrag_box_width = canvasWidth - ((canvasWidth/29)*4);
-float iconDrag_box_height = canvasHeight - ((canvasHeight/29)*2);
+float iconDrag_box_height = canvasHeight - ((canvasHeight/29)*18);
 int iconIndex;
 
 float iconDragDifx;
@@ -462,6 +462,7 @@ void draw() {
     pinDraw();
   }
   else if(stage == 3){
+    
     userScreenDraw(userList.get(whichUser));
     
   }
@@ -573,7 +574,7 @@ void startDraw(){
   background(255); 
   stroke(126);
   //comment out drawGrid if you dont want to see the grid
-  drawGrid();
+  //drawGrid();
   noStroke();
   
   
@@ -633,7 +634,7 @@ void userScreenDraw(User current){
   background(255); 
   stroke(126);
   //comment out drawGrid if you dont want to see the grid
-  drawGrid();
+  //drawGrid();
   noStroke();
   
 
@@ -654,7 +655,7 @@ void userScreenDraw(User current){
   Button temp;
   if(iconDrag) {
       fill(192,192,192);
-      rect(iconX_drag, iconY_drag, iconDrag_box_width,iconDrag_box_height, 10);
+      rect(iconX_drag, iconY_drag, iconDrag_box_width,iconDrag_box_height -500, 10);
   }
   fill(127,127,127);
   for (int loopCounter=0; loopCounter < current.buttonSet.size(); loopCounter++){
@@ -727,11 +728,39 @@ void drawGrid(int xSize,int ySize){
 
 void mouseDragged() {
 
-  if(drag && isHidden == false)
-  PopUpDrag();
+  if(drag == false && isHidden == false){
+     originalX = xLocation;
+    originalY = yLocation;
+    dragDifx = mouseX-xLocation;
+    dragDify = mouseY-yLocation;
+  }
   
-  else if(iconDrag)
-  IconsDrag();
+  
+  if(insideBox(xLocation, yLocation, currentPopup.width, currentPopup.height )&& isHidden ==false ){
+    drag = true;
+    PopUpDrag();
+    iconDrag = false;
+    return;
+  }
+  
+  if(iconDrag == false && isHidden == false){
+    loopInsideBox() ;
+     int x = userList.get(whichUser).buttonSet.get(iconIndex).x_Axis;
+     iconDragDifx = mouseX-x;
+  }
+  
+
+  
+  if(loopInsideBox() && isHidden ==false  ){
+    iconDrag = true;
+    drag = false;
+    IconsDrag();
+    return;
+  }
+
+  
+  //else if(iconDrag)
+  //IconsDrag();
   
 }
 
@@ -824,22 +853,20 @@ void IconsDrag(){
 
 
 //void mouseReleased() {
-//    drag = false;
-//    iconDrag = false;
 
 //}
 
-void mouseClicked() {
-  if(stage == 3){
-    UserScreen_MouseClicked();
-    return;
-  }
+//void mouseClicked() {
+//  if(stage == 3){
+//    UserScreen_MouseClicked();
+//    return;
+//  }
 
-}
+//}
 
 //Mouse handlers
 void mouseReleased() {
-  
+      
   //Start Screen to Profile Selection Screen
   if(stage == 0){
     stage = 1;
@@ -848,7 +875,9 @@ void mouseReleased() {
   
   //Profile Selection Screen to Pin
   if(stage == 1){
-    profileSelect_MousePressed();
+    profileSelect_MouseReleased();
+    drag = false;
+    iconDrag = false;
     return;
   }
   
@@ -864,7 +893,7 @@ void mouseReleased() {
   }
   
   if(stage == 3){
-    UserScreen_MousePressed();
+    UserScreen_MouseReleased();
     return;
   }
 
@@ -872,7 +901,7 @@ void mouseReleased() {
   
 }
 
-void profileSelect_MousePressed(){
+void profileSelect_MouseReleased(){
   Button temp;
   
   //ellipse((index+66+(2*(canvasWidth/100))),temp.y_Axis+15, 30, 30);
@@ -893,15 +922,21 @@ void profileSelect_MousePressed(){
   
 
 }
-void UserScreen_MouseClicked(){
-  User guest = userList.get(0);
+
+void UserScreen_MouseReleased(){
   
+  
+  User guest = userList.get(0);
+  drag = false;
+  iconDrag = false;
   
   if(insideBox(guest.hid.x_Axis,guest.hid.y_Axis,guest.hid.width,guest.hid.height)){
     isHidden = !isHidden;
+
     return;
   }
   if(isHidden){
+
     return;
   }
   
@@ -914,6 +949,7 @@ void UserScreen_MouseClicked(){
       boxInUse = true;   
       //pop_up_box(xLocation, yLocation);
     }
+
     return;
       
     
@@ -923,23 +959,21 @@ void UserScreen_MouseClicked(){
     currentPopup = new Popup("Data/9gag_desktop.png", int(xLocation), int(yLocation), int(gagWidth), int(gagHeight));
     boxInUse = true;
     println("LINE 925");
+
     return;
   }
-}
-
-void UserScreen_MousePressed(){
-
+  
   if (loopInsideBox() ){
     User u = userList.get(whichUser);
     Button b = u.buttonSet.get(iconIndex);
     int x = userList.get(whichUser).buttonSet.get(iconIndex).x_Axis;
     
-    iconDrag = true;
+    //iconDrag = true;
     iconDragDifx = mouseX-x;
      //dragDify = mouseY-yLocation;
   }
   else if(insideBox(xLocation, yLocation, currentPopup.width, currentPopup.height) ) {
-    drag = true;
+    //drag = true;
     originalX = xLocation;
     originalY = yLocation;
     dragDifx = mouseX-xLocation;
