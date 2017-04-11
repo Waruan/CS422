@@ -247,7 +247,7 @@ void setup()
   buttonpinOk = new ImageButtons(x11, y11, w11, h11, butpinOk, butpinOk, butpinokChanged, "ok");
   f = createFont("Arial",16,true);
   textSize(20);
-  fill(102);
+  //fill(102);
   rect((int)canvasWidth/2 - 115,(int)canvasHeight/2 + 320,95,40);
   fill(0);
   text("Please Enter Pin:", (int)canvasWidth/2 - 140, (int)canvasHeight/2 + 280);

@@ -33,15 +33,15 @@ int buttonY = 30;
 //2 = login 
 //3 = Exsitng User display
 //4 = guest User display
-int stage = 3;
+int stage = 2;
 
 // evl monitor size
-//float canvasWidth = 2732;
-//float canvasHeight = 1536;
+float canvasWidth;
+float canvasHeight;
 
 // scale down for home monitors
-float canvasWidth = 1366;
-float canvasHeight = 768;
+//float canvasWidth ;
+//float canvasHeight;
 
 int currentTime;
 
@@ -91,10 +91,10 @@ Timer timer = new Timer(2000);
 
 boolean iconDrag = false;
 float iconX_drag = (canvasWidth/29)*2;
-float iconY_drag = (canvasHeight/29)*20 + 300;
+float iconY_drag = (canvasHeight/29)*25.5;
 
 float iconDrag_box_width = canvasWidth - ((canvasWidth/29)*4);
-float iconDrag_box_height = canvasHeight - ((canvasHeight/29)*18);
+float iconDrag_box_height = canvasHeight - ((canvasHeight/29)*26.5);
 int iconIndex;
 
 float iconDragDifx;
@@ -120,7 +120,8 @@ ImageButtons button8;
 ImageButtons button9;
 ImageButtons buttonpinBack;
 ImageButtons buttonpinOk;
-int buttonSize = 90;
+int buttonXSize = 66;
+int buttonYSize = 30;
 int pinFlag = 0;  //A flag that you keep to track how many buttons are pressed.
 int pinSpace = 0; //The space of the stars when they are printed
 String pin = ""; //Keeps track of the pins and stores them
@@ -299,53 +300,53 @@ void pinSetup()
   
   butpinokChanged.resize(66, 30);
   
-  int x0 = (int)canvasWidth/3 + buttonSize/2+158;
+  int x0 = int(((canvasWidth/100)*50));
   
-  int x = (int)canvasWidth/3 + buttonSize/2+78;
+  int x = int(((canvasWidth/100)*51) - buttonXSize - (canvasWidth/100)*1.5);
   
-  int x2 = (int)canvasWidth/3 + buttonSize/2+158;
-
-  int x3 = (int)canvasWidth/3 + buttonSize/2+238;
+  int x2 = int(((canvasWidth/100)*50));
   
-  int x4 = (int)canvasWidth/3 + buttonSize/2+78;
+  int x3 = int( ((canvasWidth/100)*49) + buttonXSize +  (canvasWidth/100)*1.5) ;
   
-  int x5 = (int)canvasWidth/3 + buttonSize/2+158;
+  int x4 = int(((canvasWidth/100)*51) - buttonXSize - (canvasWidth/100)*1.5);
   
-  int x6 = (int)canvasWidth/3 + buttonSize/2+238;
+  int x5 = int(((canvasWidth/100)*50));
   
-  int x7 = (int)canvasWidth/3 + buttonSize/2+78;
+  int x6 = int( ((canvasWidth/100)*49) + buttonXSize +  (canvasWidth/100)*1.5) ;
   
-  int x8 = (int)canvasWidth/3 + buttonSize/2+158;
+  int x7 = int(((canvasWidth/100)*51) - buttonXSize - (canvasWidth/100)*1.5);
   
-  int x9 = (int)canvasWidth/3 + buttonSize/2+238;
+  int x8 = int(((canvasWidth/100)*50));
   
-  int x10 = (int)canvasWidth/3 + buttonSize/2+78;
+  int x9 = int( ((canvasWidth/100)*49) + buttonXSize +  (canvasWidth/100)*1.5) ;
   
-  int x11 = (int)canvasWidth/3 + buttonSize/2+238;
+  int x10 = int(((canvasWidth/100)*51) - buttonXSize - (canvasWidth/100)*1.5);
+ 
+  int x11 = int( ((canvasWidth/100)*49) + buttonXSize +  (canvasWidth/100)*1.5) ;
   
-  int y0 = (int)canvasHeight/4+buttonSize+200;
   
-  int y = (int)canvasHeight/4+buttonSize+80;
+  int y0 = int(((canvasHeight/100)*59)+ buttonYSize*1.5 );
   
-  int y2 = (int)canvasHeight/4+buttonSize+80;
+  int y = int(((canvasHeight/100)*50));
   
-  int y3 = (int)canvasHeight/4+buttonSize+80;
+  int y2 = int(((canvasHeight/100)*50));
+  int y3 = int(((canvasHeight/100)*50));
   
-  int y4 = (int)canvasHeight/4+buttonSize+120;
+  int y4 = int(((canvasHeight/100)*53)+ buttonYSize*.5 );
   
-  int y5 = (int)canvasHeight/4+buttonSize+120;
+  int y5 = int(((canvasHeight/100)*53)+ buttonYSize*.5);
   
-  int y6 = (int)canvasHeight/4+buttonSize+120;
+  int y6 = int(((canvasHeight/100)*53) + buttonYSize*.5 );
   
-  int y7 = (int)canvasHeight/4+buttonSize+160;
+  int y7 = int(((canvasHeight/100)*56)+ buttonYSize*1 );
   
-  int y8 = (int)canvasHeight/4+buttonSize+160;
+  int y8 = int(((canvasHeight/100)*56)+ buttonYSize*1);
   
-  int y9 = (int)canvasHeight/4+buttonSize+160;
+  int y9 = int(((canvasHeight/100)*56)+ buttonYSize*1 );
   
-  int y10 = (int)canvasHeight/4+buttonSize+200;
+  int y10 = int(((canvasHeight/100)*59)+ buttonYSize*1.5 );
   
-  int y11 = (int)canvasHeight/4+buttonSize+200;
+  int y11 = int(((canvasHeight/100)*59)+ buttonYSize*1.5 );
 
   int w0 = 66;
  
@@ -421,9 +422,15 @@ void pinSetup()
 
 
 void setup() {
-  
+  // evl monitor size
+  //canvasWidth = 2732;
+ //canvasHeight = 1536;
+
+// scale down for home monitors
+ canvasWidth = 1366;
+ canvasHeight = 768;
   //size(canvasWidth, canvasHeight);
-  size( 1366 ,768);
+ size( 1366 ,768);
 
   
   //fixOrderofButton(guest.buttonSet,guest.usrFunctionActive);
@@ -502,7 +509,8 @@ void pinDraw()
   fill(0);
   for(int i = 0;i<pinFlag ;i++){
     
-    text("*",(int)canvasWidth/4 + 315 + pinSpace - (15 * i), (int)canvasHeight/3 + 45);
+
+    text("*",int(((canvasWidth/100)*50  + pinSpace - (15 * i))), int((canvasHeight/100)*49));
    
   }
   
@@ -556,8 +564,10 @@ void pinDraw()
   
   fill(127,127,127);
   
-   text("Enter Pin ", (canvasWidth/100)*50 , (canvasHeight/100)*40);
-  
+  text("Enter Pin ", (canvasWidth/100)*51 , (canvasHeight/100)*46);
+  fill(255);
+  //rect((int)canvasWidth/2 - 115,(int)canvasHeight/2 + 320,95,40);
+    fill(127,127,127);
   Button temp;
   for (int loopCounter=0; loopCounter < profile.size(); loopCounter++){
     temp = profile.get(loopCounter);
@@ -660,7 +670,7 @@ void userScreenDraw(User current){
   Button temp;
   if(iconDrag) {
       fill(192,192,192);
-      //rect(iconX_drag, iconY_drag, iconDrag_box_width,iconDrag_box_height -500, 10);
+      rect(iconX_drag, iconY_drag, iconDrag_box_width,iconDrag_box_height, 10);
   }
   fill(127,127,127);
   for (int loopCounter=0; loopCounter < current.buttonSet.size(); loopCounter++){
@@ -758,7 +768,7 @@ void mouseDragged() {
      //println("DEBUG 2: " + iconIndex + "selected: " + selectedIconX_axis);
      
   }
-  
+   
 
   
   if(loopInsideBoxWithoutSet() && isHidden ==false  ){
@@ -1231,7 +1241,7 @@ void addProfileButton(ArrayList<Button> blist , int X, int Y,int f){
    temp = new Button(0, int((canvasHeight/100)*90) ,X,Y,f);
    blist.add(temp);
    temp = blist.get(0);
-   temp.changeX(int((canvasWidth/100)*50.5));
+   temp.changeX(int((canvasWidth/100)*50));
    
    temp = blist.get(1);
    temp.changeX(int(((canvasWidth/100)*49.5) - X));
@@ -1257,8 +1267,8 @@ void addProfileButton(ArrayList<Button> blist , int X, int Y,int f){
    blist.add(temp);
 
    temp = blist.get(0);
-   temp.changeX(int((canvasWidth/100)*50)-(X/2));
-   int tempx = int((canvasWidth/100)*50)-(X/2);
+   temp.changeX(int((canvasWidth/100)*52.5)-(X/2));
+   int tempx = int((canvasWidth/100)*52.5)-(X/2);
    
    for (int i=1; i < blist.size(); i = i+2){
       //temp  = buttonSet.get(i);
@@ -1679,8 +1689,10 @@ class User{
      temp = buttonSet.get(0);
      temp.changeX(int((canvasWidth/100)*50.5));
      
+     
      temp = buttonSet.get(1);
      temp.changeX(int(((canvasWidth/100)*49.5) - buttonX));
+     
      int tempx = int(((canvasWidth/100)*49.5)- buttonX);
   
      for (int i=2; i < buttonSet.size(); i = i+2){
