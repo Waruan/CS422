@@ -42,12 +42,12 @@ int stage = 3;
 //float canvasHeight;
 
 // evl monitor size
-// canvasWidth = 2732;
-//float canvasHeight = 1536;
+float canvasWidth = 2732;
+float canvasHeight = 1536;
 
 // scale down for home monitors
-float canvasWidth = 1366;
-float canvasHeight = 768;
+//float canvasWidth = 1366;
+//float canvasHeight = 768;
 
 int currentTime;
 
@@ -437,8 +437,8 @@ void pinSetup()
 
 void setup() {
 
-  //size(canvasWidth, canvasHeight);
- size( 1366 ,768);
+  size(canvasWidth, canvasHeight);
+ //size( 1366 ,768);
 
   
   //fixOrderofButton(guest.buttonSet,guest.usrFunctionActive);
