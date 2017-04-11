@@ -33,7 +33,7 @@ int buttonY = 30;
 //2 = login 
 //3 = Exsitng User display
 //4 = guest User display
-int stage = 3;
+int stage =0;
 
 
 
