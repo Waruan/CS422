@@ -33,7 +33,10 @@ int buttonY = 30;
 //2 = login 
 //3 = Exsitng User display
 //4 = guest User display
+
 int stage = 0;
+
+
 
 
 
@@ -42,7 +45,7 @@ int stage = 0;
 //float canvasHeight;
 
 // evl monitor size
-// canvasWidth = 2732;
+//float canvasWidth = 2732;
 //float canvasHeight = 1536;
 
 // scale down for home monitors
@@ -158,6 +161,20 @@ int popUpY = int((canvasHeight/100)*20);
 //Size for 9gag display
 int gagWidth = int((canvasWidth/100)*20);
 int gagHeight = int((canvasHeight/100)*40);
+
+//Size for Health display
+int healthWidth = int((canvasWidth/100)*50);
+int healthHeight = int((canvasHeight/100)*40);
+
+int xtest = int((xLocation/100)*125);
+int ytest = int((yLocation/100)*180);
+
+int width_test = int((healthWidth/100)*20);
+int height_test = int((healthHeight/100)*15);
+
+//Size for Weather display
+int weatherWidth = int((canvasWidth/100)*50);
+int weatherHeight = int((canvasHeight/100)*40);
 
 // Old code before creating user class
 /////////////////////////////////////////////////////////////////////////
@@ -444,8 +461,31 @@ void setup() {
   
   //fixOrderofButton(guest.buttonSet,guest.usrFunctionActive);
   currentPopup = new Popup("Data/9gag_desktop.png", int(xLocation), int(yLocation), int(gagWidth), int(gagHeight));
+
+  User guest = new User("guest","0000");
+  userList.add(guest);
   
+  /*
+  Functions:
+    3 = 9gag
+    31= 9gag next
+    
+    4 = health
+    41 = health_sleep
+    42 = health_steps
+    43 = health_weight
+    
+    5 = weather
+    51 = weather_today
+    52 = weather_hourly
+    53 = weather_weekly
+    54 = weather_map
+  */
   
+  userList.get(0).addButton(3);
+  userList.get(0).addButton(4);
+  userList.get(0).addButton(5);
+
   f = createFont("Arial",24,true);
   background(255);
   loadSounds();
@@ -459,10 +499,7 @@ void setup() {
   profile.add(temp);
   numberOfUser++;
   
-  User guest = new User("guest","0000");
-  userList.add(guest);
-  userList.get(0).addButton(4);
-  
+
   //addProfileButton(profile,66,30,1);
   int index = findMostRight(profile);
   newUserButton = new CircleButton(int(index+66+(2*(canvasWidth/100))),temp.y_Axis+15, 30, 30);
@@ -701,6 +738,34 @@ void profileDraw(){
   
 }
 
+void checkButtonFunction(Button current) {
+  
+  if(current.function == 3) { //9Gag Icon
+    println("Button 3");
+    currentPopup = new Popup("Data/9gag_desktop.png", int(xLocation), int(yLocation), int(gagWidth), int(gagHeight));
+
+  }
+  else if(current.function == 4) {
+    println("Button 4");
+    currentPopup = new Popup("Data/Health_Template.png", int(xLocation), int(yLocation), int(healthWidth), int(healthHeight));
+    currentPopup.PopupAddClickable(xtest, ytest, width_test, height_test, 41);
+    
+    /*  int x_Axis;
+  int y_Axis;
+  int width;
+  int height;
+  int function;*/
+    
+  }
+  else if(current.function == 5) {
+    currentPopup = new Popup("Data/Weather_Template.png", int(xLocation), int(yLocation), int(weatherWidth), int(weatherHeight));
+  }
+  else {
+    currentPopup = new Popup("Data/pin3.png", int(xLocation), int(yLocation), int(gagWidth), int(gagHeight));
+  }
+
+}
+
 //Draw the User Screen 
 void userScreenDraw(User current){
   String timeString;
@@ -751,8 +816,12 @@ void userScreenDraw(User current){
       fill(192,192,192);
       rect(x_drag, y_drag, drag_box_width, drag_box_height, 10);
     }
-    image(currentPopup.img, currentPopup.x_Axis, currentPopup.y_Axis, gagWidth, gagHeight);
+    image(currentPopup.img, currentPopup.x_Axis, currentPopup.y_Axis, currentPopup.width, currentPopup.height);
+    //Button test = currentPopup.clickable.get(0);
     
+   // println(test.x_Axis);
+    //rect(test.x_Axis, test.y_Axis, test.width, test.height);
+    //rect(xtest, ytest, width_test, height_test);
     //pop_up_box(xLocation, yLocation);
   }
   // draw the active button in a different color
@@ -889,6 +958,19 @@ void swap(Button current){
   
 }
 
+void updateClickableBoxes(int f) {
+  
+  if(f == 4) {
+       xtest = int((xLocation/100)*125);
+       ytest = int((yLocation/100)*180);
+      
+       width_test = int((healthWidth/100)*20);
+       height_test = int((healthHeight/100)*15);
+
+  }
+  
+}
+
 void PopUpDrag(){
 /*
   if( mouseX-dragDifx < x_drag || mouseX-dragDifx+popUpX > x_drag + drag_box_width || mouseY-dragDify < y_drag || mouseY-dragDify+popUpY > y_drag + drag_box_height) {
@@ -930,6 +1012,7 @@ void PopUpDrag(){
         yLocation = y_drag + drag_box_height - currentPopup.height;
         currentPopup.y_Axis = int(yLocation);
       }
+      updateClickableBoxes(4);
 
   }
 
@@ -1109,8 +1192,13 @@ void UserScreen_MouseReleased(){
   }
     if((loopInsideBox() || iconDrag== true)  && !boxInUse){
     //pop_up_box(xLocation, yLocation);
-    currentPopup = new Popup("Data/9gag_desktop.png", int(xLocation), int(yLocation), int(gagWidth), int(gagHeight));
-    println("DEBUG 2 " + functionInUse);
+
+    User u = userList.get(whichUser);
+    Button currentButton = u.buttonSet.get(iconIndex);
+    checkButtonFunction(currentButton);
+    
+    //currentPopup = new Popup("Data/9gag_desktop.png", int(xLocation), int(yLocation), int(gagWidth), int(gagHeight));
+
     boxInUse = true;
     //println("LINE 925");
     println("DEBUG 25");
