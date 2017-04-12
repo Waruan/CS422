@@ -19,6 +19,9 @@ SoundFile beepSound;
 // sounds are also a bit slowerer to start up in Processing.js
 
 
+
+
+
 //Variable for general infomation
 ////////////////////////////////////////////////////////////
 
@@ -35,10 +38,6 @@ int buttonY = 30;
 //4 = guest User display
 
 int stage = 0;
-
-
-
-
 
 // scale down for home monitors
 //float canvasWidth ;
@@ -63,6 +62,37 @@ Popup currentPopup;
 int whichUser = -1;
 int numberOfUser = 0;
 //////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////////////////
+//Variable relate to Pin
+//////////////////////////////////////////////////////////////////////////////////////
+ImageButtons button0;
+ImageButtons button1;
+ImageButtons button2;
+ImageButtons button3;
+ImageButtons button4;
+ImageButtons button5;
+ImageButtons button6;
+ImageButtons button7;
+ImageButtons button8;
+ImageButtons button9;
+ImageButtons buttonpinBack;
+ImageButtons buttonpinOk;
+int buttonXSize = 66;
+int buttonYSize = 30;
+int pinFlag = 0;  //A flag that you keep to track how many buttons are pressed.
+int pinSpace = 0; //The space of the stars when they are printed
+String pin = ""; //Keeps track of the pins and stores them
+String comfirmPin;
+String pinRep = ""; //Represents the stars in the pin and how many there are by storing the number
+boolean isPressed = false;
+boolean userSelected = false; // If a user is select to enter Pin set to true
+boolean isPinPressed = false;
+boolean wrongPin = false;
+boolean wrongConfirmPin = false;
+int stage4Part = 1;
+/////////////////////////////////////////////////////////////////////////////////////////////
+
 
 
 //Variable relate to dragging of popup
@@ -115,35 +145,7 @@ int selectedIconY_axis;
 
 int draggingIndex;
 
-/////////////////////////////////////////////////////////////////////////////////
-//Variable relate to Pin
-//////////////////////////////////////////////////////////////////////////////////////
-ImageButtons button0;
-ImageButtons button1;
-ImageButtons button2;
-ImageButtons button3;
-ImageButtons button4;
-ImageButtons button5;
-ImageButtons button6;
-ImageButtons button7;
-ImageButtons button8;
-ImageButtons button9;
-ImageButtons buttonpinBack;
-ImageButtons buttonpinOk;
-int buttonXSize = 66;
-int buttonYSize = 30;
-int pinFlag = 0;  //A flag that you keep to track how many buttons are pressed.
-int pinSpace = 0; //The space of the stars when they are printed
-String pin = ""; //Keeps track of the pins and stores them
-String comfirmPin;
-String pinRep = ""; //Represents the stars in the pin and how many there are by storing the number
-boolean isPressed = false;
-boolean userSelected = false; // If a user is select to enter Pin set to true
-boolean isPinPressed = false;
-boolean wrongPin = false;
-boolean wrongConfirmPin = false;
-int stage4Part = 1;
-/////////////////////////////////////////////////////////////////////////////////////////////
+
 
 
 // placeholder for future image
@@ -1182,7 +1184,9 @@ void UserScreen_MouseReleased(){
     boxInUse = false;
     if(clickOtherButton()){
       boxInUse = true;   
-      //pop_up_box(xLocation, yLocation);
+      User u = userList.get(whichUser);
+      Button currentButton = u.buttonSet.get(iconIndex);
+      checkButtonFunction(currentButton);
     }
     drag = false;
     iconDrag = false;
