@@ -33,7 +33,7 @@ int buttonY = 30;
 //2 = login 
 //3 = Exsitng User display
 //4 = guest User display
-int stage =0;
+int stage =3;
 
 
 
@@ -42,12 +42,12 @@ int stage =0;
 //float canvasHeight;
 
 // evl monitor size
-float canvasWidth = 2732;
-float canvasHeight = 1536;
+//float canvasWidth = 2732;
+//float canvasHeight = 1536;
 
 // scale down for home monitors
-//float canvasWidth = 1366;
-//float canvasHeight = 768;
+float canvasWidth = 1366;
+float canvasHeight = 768;
 
 int currentTime;
 
@@ -156,6 +156,12 @@ int gagHeight = int((canvasHeight/100)*40);
 //Size for Health display
 int healthWidth = int((canvasWidth/100)*50);
 int healthHeight = int((canvasHeight/100)*40);
+
+int xtest = int((xLocation/100)*125);
+int ytest = int((yLocation/100)*180);
+
+int width_test = int((healthWidth/100)*20);
+int height_test = int((healthHeight/100)*15);
 
 //Size for Weather display
 int weatherWidth = int((canvasWidth/100)*50);
@@ -437,8 +443,8 @@ void pinSetup()
 
 void setup() {
 
-  size(canvasWidth, canvasHeight);
- //size( 1366 ,768);
+  //size(canvasWidth, canvasHeight);
+ size( 1366 ,768);
 
   
   //fixOrderofButton(guest.buttonSet,guest.usrFunctionActive);
@@ -676,17 +682,19 @@ void checkButtonFunction(Button current) {
   if(current.function == 3) { //9Gag Icon
     println("Button 3");
     currentPopup = new Popup("Data/9gag_desktop.png", int(xLocation), int(yLocation), int(gagWidth), int(gagHeight));
-    //rect(
-    
-    //currentPopup.PopupAddClickable(
-    /*int gagWidth = int((canvasWidth/100)*20);
-int gagHeight = int((canvasHeight/100)*40);*/
-    
-    //void PopupAddClickable(int x, int y , int w , int h, int f){
+
   }
   else if(current.function == 4) {
     println("Button 4");
     currentPopup = new Popup("Data/Health_Template.png", int(xLocation), int(yLocation), int(healthWidth), int(healthHeight));
+    currentPopup.PopupAddClickable(xtest, ytest, width_test, height_test, 41);
+    
+    /*  int x_Axis;
+  int y_Axis;
+  int width;
+  int height;
+  int function;*/
+    
   }
   else if(current.function == 5) {
     currentPopup = new Popup("Data/Weather_Template.png", int(xLocation), int(yLocation), int(weatherWidth), int(weatherHeight));
@@ -747,7 +755,11 @@ void userScreenDraw(User current){
       rect(x_drag, y_drag, drag_box_width, drag_box_height, 10);
     }
     image(currentPopup.img, currentPopup.x_Axis, currentPopup.y_Axis, currentPopup.width, currentPopup.height);
+    //Button test = currentPopup.clickable.get(0);
     
+   // println(test.x_Axis);
+    //rect(test.x_Axis, test.y_Axis, test.width, test.height);
+    //rect(xtest, ytest, width_test, height_test);
     //pop_up_box(xLocation, yLocation);
   }
   // draw the active button in a different color
@@ -870,6 +882,19 @@ void swap(Button current){
   
 }
 
+void updateClickableBoxes(int f) {
+  
+  if(f == 4) {
+       xtest = int((xLocation/100)*125);
+       ytest = int((yLocation/100)*180);
+      
+       width_test = int((healthWidth/100)*20);
+       height_test = int((healthHeight/100)*15);
+
+  }
+  
+}
+
 void PopUpDrag(){
 /*
   if( mouseX-dragDifx < x_drag || mouseX-dragDifx+popUpX > x_drag + drag_box_width || mouseY-dragDify < y_drag || mouseY-dragDify+popUpY > y_drag + drag_box_height) {
@@ -911,6 +936,7 @@ void PopUpDrag(){
         yLocation = y_drag + drag_box_height - currentPopup.height;
         currentPopup.y_Axis = int(yLocation);
       }
+      updateClickableBoxes(4);
 
   }
 
