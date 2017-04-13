@@ -152,13 +152,21 @@ int draggingIndex;
 PImage img;
 PImage bgroundimg;
 
+//Globals for image popup icons/locations
+////////////////////////////////////////////////////////////////
 
-float xLocation = int((canvasWidth/100)*40);
-float yLocation = int((canvasHeight/100)*40); 
+ArrayList<Popup> popups = new ArrayList<Popup>();
 
 //Size of popup or popups
 int popUpX = int((canvasWidth/100)*20);
 int popUpY = int((canvasHeight/100)*20);
+
+//Image x and y locations
+float xLocation = int((canvasWidth/100)*40);
+float yLocation = int((canvasHeight/100)*40); 
+
+int permXLocation = int((canvasWidth/100)*40);
+int permYLocation = int((canvasHeight/100)*40);
 
 //Size for 9gag display
 int gagWidth = int((canvasWidth/100)*20);
@@ -168,15 +176,18 @@ int gagHeight = int((canvasHeight/100)*40);
 int healthWidth = int((canvasWidth/100)*50);
 int healthHeight = int((canvasHeight/100)*40);
 
+//Size for Weather display
+int weatherWidth = int((canvasWidth/100)*50);
+int weatherHeight = int((canvasHeight/100)*40);
+
+//Test variables for box within images
 int xtest = int((xLocation/100)*125);
 int ytest = int((yLocation/100)*180);
 
 int width_test = int((healthWidth/100)*20);
 int height_test = int((healthHeight/100)*15);
 
-//Size for Weather display
-int weatherWidth = int((canvasWidth/100)*50);
-int weatherHeight = int((canvasHeight/100)*40);
+
 
 // Old code before creating user class
 /////////////////////////////////////////////////////////////////////////
@@ -460,9 +471,9 @@ void setup() {
   //size(canvasWidth, canvasHeight);
  size( 1366 ,768);
 
-  
+  initPopups();
   //fixOrderofButton(guest.buttonSet,guest.usrFunctionActive);
-  currentPopup = new Popup("Data/9gag_desktop.png", int(xLocation), int(yLocation), int(gagWidth), int(gagHeight));
+  currentPopup = new Popup("Data/9gag_desktop.png", int(xLocation), int(yLocation), int(gagWidth), int(gagHeight), 3);
 
   User guest = new User("guest","0000");
   userList.add(guest);
@@ -484,10 +495,13 @@ void setup() {
     54 = weather_map
   */
   
-  userList.get(0).addButton(3);
-  userList.get(0).addButton(4);
-  userList.get(0).addButton(5);
-
+  userList.get(0).addButton("Data/9gag_icon.png",2); //9gag
+  userList.get(0).addButton("Data/health_icon.png",3); //health
+  userList.get(0).addButton("Data/weather_icon.png",4); //weather
+  userList.get(0).addButton("Data/news_icon.png",5); //article
+  userList.get(0).addButton("Data/facebook_icon.png",6); //facebook
+  userList.get(0).addButton("Data/twitter_icon.png", 7);
+  
   f = createFont("Arial",24,true);
   background(255);
   loadSounds();
@@ -740,31 +754,99 @@ void profileDraw(){
   
 }
 
-void checkButtonFunction(Button current) {
+void initPopups() {
+  println("Init Popup function");
+  Popup temp = new Popup("Data/settings_icon.png", permXLocation, permYLocation, int(gagWidth), int(gagHeight), 0);
+  popups.add(temp);
   
-  if(current.function == 3) { //9Gag Icon
-    println("Button 3");
-    currentPopup = new Popup("Data/9gag_desktop.png", int(xLocation), int(yLocation), int(gagWidth), int(gagHeight));
+  temp = new Popup("Data/settings_icon.png", permXLocation, permYLocation, int(gagWidth), int(gagHeight), 1);
+  popups.add(temp);
+  
+  temp = new Popup("Data/9gag_desktop.png", permXLocation, permYLocation, int(gagWidth), int(gagHeight), 2);
+  popups.add(temp);
+  
+  temp = new Popup("Data/Health_Template.png", permXLocation, permYLocation, int(healthWidth), int(healthHeight), 3);
+  popups.add(temp);
+  
+  temp = new Popup("Data/Weather_Template.png", permXLocation, permYLocation, int(weatherWidth), int(weatherHeight), 4);
+  popups.add(temp);
+  
+  temp = new Popup("Data/Article_Template.png", permXLocation, permYLocation, int(gagWidth), int(gagHeight), 5);
+  popups.add(temp);
+  
+  temp = new Popup("Data/Facebook.png", permXLocation, permYLocation, int(gagWidth), int(gagHeight), 6);
+  popups.add(temp);
+  
+  temp = new Popup("Data/Twiter.png", permXLocation, permYLocation, int(gagWidth), int(gagHeight), 7);
+  popups.add(temp);
+  
+}
 
+void updateXYLocation(Popup current) {
+    current.x_Axis = int(xLocation);
+    current.y_Axis = int(yLocation);
+}
+
+boolean checkLocationChanged(Popup current) {
+  if(current.x_Axis != permXLocation || current.y_Axis != permYLocation) {
+    return true;
+  
   }
-  else if(current.function == 4) {
-    println("Button 4");
-    currentPopup = new Popup("Data/Health_Template.png", int(xLocation), int(yLocation), int(healthWidth), int(healthHeight));
-    currentPopup.PopupAddClickable(xtest, ytest, width_test, height_test, 41);
-    
-    /*  int x_Axis;
-  int y_Axis;
-  int width;
-  int height;
-  int function;*/
-    
+  else
+    return false;
+
+}
+
+//ISSUES LAST KNOWN POSITION IS NOT SAVING...
+void getCurrentButtonPopup(Button current) {
+  
+  int currentPopupID = current.function;
+  
+  //Settings
+  if(currentPopupID == 0) {
+    currentPopup = popups.get(0);
+  //  if(checkLocationChanged(currentPopup)) {
+  //    updateXYLocation(currentPopup);
+  //  }
+    updateXYLocation(currentPopup);
   }
-  else if(current.function == 5) {
-    currentPopup = new Popup("Data/Weather_Template.png", int(xLocation), int(yLocation), int(weatherWidth), int(weatherHeight));
+  //Menu
+  else if(currentPopupID == 1) { 
+    currentPopup = popups.get(1);
+    updateXYLocation(currentPopup);
   }
-  else {
-    currentPopup = new Popup("Data/pin3.png", int(xLocation), int(yLocation), int(gagWidth), int(gagHeight));
+  //9Gag
+  else if(currentPopupID == 2) { 
+    currentPopup = popups.get(2);
+    updateXYLocation(currentPopup);
   }
+  //Health
+  else if(currentPopupID == 3) { 
+    currentPopup = popups.get(3);
+    updateXYLocation(currentPopup);
+  }
+  //Weather
+  else if(currentPopupID == 4) {
+    currentPopup = popups.get(4);
+    updateXYLocation(currentPopup);
+  }
+  //Article
+  else if(currentPopupID == 5) {
+    currentPopup = popups.get(5);
+    updateXYLocation(currentPopup);
+  }
+  //Facebook
+  else if(currentPopupID == 6) {
+    currentPopup = popups.get(6);
+    updateXYLocation(currentPopup);
+  }
+  //Twitter
+  else if(currentPopupID == 7) {
+    currentPopup = popups.get(7);
+    updateXYLocation(currentPopup);
+  }
+  
+
 
 }
 
@@ -802,10 +884,12 @@ void userScreenDraw(User current){
   for (int loopCounter=0; loopCounter < current.buttonSet.size(); loopCounter++){
     temp = current.buttonSet.get(loopCounter);
     if(loopCounter == iconIndex && iconDrag){
-      rect(temp.x_Axis,temp.y_Axis,temp.width,temp.height, 10);
+      image(temp.img, temp.x_Axis, temp.y_Axis, temp.width, temp.height);
+      //rect(temp.x_Axis,temp.y_Axis,temp.width,temp.height, 10);
     }
     else{
-      rect(temp.x_Axis,temp.y_Axis,temp.width,temp.height, 10);
+      //rect(temp.x_Axis,temp.y_Axis,temp.width,temp.height, 10);
+      image(temp.img, temp.x_Axis, temp.y_Axis, temp.width, temp.height);
     }
   } 
   rect(current.hid.x_Axis,current.hid.y_Axis,current.hid.width,current.hid.height, 10);
@@ -1014,7 +1098,7 @@ void PopUpDrag(){
         yLocation = y_drag + drag_box_height - currentPopup.height;
         currentPopup.y_Axis = int(yLocation);
       }
-      updateClickableBoxes(4);
+      //updateClickableBoxes(4);
 
   }
 
@@ -1185,8 +1269,8 @@ void UserScreen_MouseReleased(){
     if(clickOtherButton()){
       boxInUse = true;   
       User u = userList.get(whichUser);
-      Button currentButton = u.buttonSet.get(iconIndex);
-      checkButtonFunction(currentButton);
+      Button currentButton = u.buttonSet.get(iconIndex);      
+      getCurrentButtonPopup(currentButton);
     }
     drag = false;
     iconDrag = false;
@@ -1199,8 +1283,9 @@ void UserScreen_MouseReleased(){
 
     User u = userList.get(whichUser);
     Button currentButton = u.buttonSet.get(iconIndex);
-    checkButtonFunction(currentButton);
     
+    //checkButtonFunction(currentButton);
+    getCurrentButtonPopup(currentButton);
     //currentPopup = new Popup("Data/9gag_desktop.png", int(xLocation), int(yLocation), int(gagWidth), int(gagHeight));
 
     boxInUse = true;
@@ -1555,6 +1640,18 @@ class Button{
   int width;
   int height;
   int function;
+  PImage img; 
+  Button(String file, int x, int y,int w,int h, int f){
+    img = loadImage(file);
+    x_Axis = x;
+    y_Axis = y;
+    width = w;
+    height = h;
+    //0 for function menu
+    //1 for setting
+    function = f;
+  }
+  
   Button(int x, int y,int w,int h, int f){
     x_Axis = x;
     y_Axis = y;
@@ -1891,11 +1988,13 @@ class Popup{
   // save the location of the function where it clickable
   ArrayList<Button> clickable = new ArrayList<Button>();
   
-  Popup(String file, int x, int y, int w, int h) {
+  Popup(String file, int x, int y, int w, int h, int f) {
     x_Axis = x;
     y_Axis = y;
     width = w;
     height = h;
+    
+    function = f;
     
     img = loadImage(file);
     
@@ -1913,8 +2012,8 @@ class Popup{
 */
   void PopupAddClickable(int x, int y , int w , int h, int f){
     // x and y is the location with respect to the popup
-    Button temp = new Button(x_Axis + x,y_Axis + y,w,h,f);
-    clickable.add(temp);
+    //Button temp = new Button(x_Axis + x,y_Axis + y,w,h,f);
+    //clickable.add(temp);
    
   }
 }
@@ -1942,16 +2041,17 @@ class User{
   User(String usr, String pass){
     name = usr;
     pin = pass;
-    hid = new Button(int((canvasWidth - buttonX) - ((canvasWidth/100) *2)),int((canvasHeight- buttonY) - ((canvasHeight/100) *2)),buttonX,buttonY,-1);
+    hid = new Button("Data/hide_icon.png", int((canvasWidth - buttonX) - ((canvasWidth/100) *2)),int((canvasHeight- buttonY) - ((canvasHeight/100) *2)),buttonX,buttonY,-1);
     //isHidden = false;
     //Create the Default buttons
     ///////////////////////////////////////////////////
     
     //setting button
-    Button temp = new Button(int((canvasWidth/100)*49.5 - buttonX), int((canvasHeight/100)*90) ,iconSizeX,iconSizeY,0);
+    Button temp = new Button("Data/settings_icon.png", int((canvasWidth/100)*49.5 - buttonX), int((canvasHeight/100)*90) ,iconSizeX,iconSizeY,0);
     buttonSet.add(temp);
-    //function button
-    temp = new Button(int((canvasWidth/100)*50.5), int((canvasHeight/100)*90) ,iconSizeX,iconSizeY,1);
+    
+    //Menu button
+    temp = new Button("Data/menu_icon.png", int((canvasWidth/100)*50.5), int((canvasHeight/100)*90) ,iconSizeX,iconSizeY,1);
     buttonSet.add(temp);
     
     ///////////////////////////////////////////////////
@@ -1960,14 +2060,14 @@ class User{
  
  
   
- void addButton(int f){
+ void addButton(String file, int f){
 
    // odd number of functions before add new
    if(buttonSet.size()%2 == 1){
      
      Button temp; 
      Button temp2; 
-     temp = new Button(0, int((canvasHeight/100)*90) ,buttonX,buttonY,f);
+     temp = new Button(file, 0, int((canvasHeight/100)*90) ,buttonX,buttonY,f);
      buttonSet.add(temp);
      temp = buttonSet.get(0);
      temp.changeX(int((canvasWidth/100)*50.5));
@@ -1995,7 +2095,7 @@ class User{
    else{
      Button temp; 
      Button temp2; 
-     temp = new Button(0, int((canvasHeight/100)*90) ,buttonX,buttonY,f);
+     temp = new Button(file, 0, int((canvasHeight/100)*90) ,buttonX,buttonY,f);
      buttonSet.add(temp);
      temp = buttonSet.get(0);
      temp.changeX(int((canvasWidth/100)*49.9)-(buttonX/2));
