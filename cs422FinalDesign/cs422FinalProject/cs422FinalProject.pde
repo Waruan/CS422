@@ -45,12 +45,12 @@ int stage = 0;
 //float canvasHeight;
 
 // evl monitor size
-//float canvasWidth = 2732;
-//float canvasHeight = 1536;
+float canvasWidth = 2732;
+float canvasHeight = 1536;
 
 // scale down for home monitors
-float canvasWidth = 1366;
-float canvasHeight = 768;
+//float canvasWidth = 1366;
+//float canvasHeight = 768;
 
 int currentTime;
 
@@ -98,7 +98,12 @@ ImageKeyButtons buttonLowZ;
 ImageKeyButtons buttonBack;
 ImageKeyButtons buttonGo;
 ImageKeyButtons buttonSpace;
-
+ImageKeyButtons buttonApostrophe;
+ImageKeyButtons buttonComma;
+ImageKeyButtons buttonCom;
+ImageKeyButtons buttonPeriod;
+ImageKeyButtons buttonQuestionMark;
+ImageKeyButtons buttonSlash;
 
 int keyButtonSize = 90;
 int keyFlag = 0;  //A flag that you keep to track how many buttons are pressed.
@@ -107,8 +112,8 @@ String keyTracker = ""; //Keeps track of the pins and stores them
 String keyRep = ""; //Represents the stars in the pin and how many there are by storing the number
 String eraseKey = "";
 boolean isKeyPressed = false;
-boolean iskeybaord = true; // use for stage 4
-
+boolean iskeyboard = true; // use for stage 4
+String inputName = "";
 //////////////////////////////////////////////////////////////////
 
 
@@ -416,7 +421,6 @@ void pinSetup()
   int x11 = int( ((canvasWidth/100)*49) + buttonXSize +  (canvasWidth/100)*1.5) ;
   
   
-  int y0 = int(((canvasHeight/100)*59)+ buttonYSize*1.5 );
 
   
   int y = int(((canvasHeight/100)*50));
@@ -424,22 +428,24 @@ void pinSetup()
   int y2 = int(((canvasHeight/100)*50));
   int y3 = int(((canvasHeight/100)*50));
   
-  int y4 = int(((canvasHeight/100)*53)+ buttonYSize*.5 );
+  int y4 = y + int(buttonYSize*1.3);
   
-  int y5 = int(((canvasHeight/100)*53)+ buttonYSize*.5);
+  int y5 = y + int(buttonYSize*1.3);
   
-  int y6 = int(((canvasHeight/100)*53) + buttonYSize*.5 );
+  int y6 = y + int(buttonYSize*1.3);
   
-  int y7 = int(((canvasHeight/100)*56)+ buttonYSize*1 );
+  int y7 = y + int(buttonYSize*2.6);
   
-  int y8 = int(((canvasHeight/100)*56)+ buttonYSize*1);
+  int y8 = y + int(buttonYSize*2.6);
   
-  int y9 = int(((canvasHeight/100)*56)+ buttonYSize*1 );
+  int y9 = y + int(buttonYSize*2.6);
   
-  int y10 = int(((canvasHeight/100)*59)+ buttonYSize*1.5 );
+  int y0 = y + int(buttonYSize*3.9);
   
-  int y11 = int(((canvasHeight/100)*59)+ buttonYSize*1.5 );
+  int y10 = y + int(buttonYSize*3.9);
   
+  int y11 = y + int(buttonYSize*3.9);
+   
   
 
   int w0 = 66;
@@ -502,12 +508,7 @@ void pinSetup()
   button9 = new ImageButtons(x9, y9, w9, h9, but9, but9, butpin9Changed, "9");
   buttonpinBack = new ImageButtons(x10, y10, w10, h10, butpinBack, butpinBack, butpinbackChanged, "back");
   buttonpinOk = new ImageButtons(x11, y11, w11, h11, butpinOk, butpinOk, butpinokChanged, "ok");
-  f = createFont("Arial",16,true);
-  textSize(20);
-  fill(102);
-  rect((int)canvasWidth/4 + 300,(int)canvasHeight/3,95,40);
-  fill(0);
-  text("Please Enter Pin:", (int)canvasWidth/4 + 265, (int)canvasHeight/3 - 20);
+
  
 }
 
@@ -519,6 +520,7 @@ void keyBoardSetup()
   
   // Define and create image button
 
+  
   PImage butA = loadImage("Data/a.png");
   
   butA.resize(40, 40);
@@ -549,91 +551,255 @@ void keyBoardSetup()
   
   PImage butH = loadImage("Data/h.png");
   
-  butH.resize(30, 30);
+  butH.resize(40, 40);
   
   PImage butI = loadImage("Data/i.png");
   
-  butI.resize(30, 30);
+  butI.resize(40, 40);
   
   PImage butJ = loadImage("Data/j.png");
   
-  butJ.resize(30, 30);
+  butJ.resize(40, 40);
   
   PImage butK = loadImage("Data/k.png");
   
-  butK.resize(30, 30);
+  butK.resize(40, 40);
   
   PImage butL = loadImage("Data/l.png");
   
-  butL.resize(30, 30);
+  butL.resize(40, 40);
   
   PImage butM = loadImage("Data/m.png");
   
-  butM.resize(30, 30);
+  butM.resize(40, 40);
   
   PImage butN = loadImage("Data/n.png");
   
-  butN.resize(30, 30);
+  butN.resize(40, 40);
   
   PImage butO = loadImage("Data/o.png");
   
-  butO.resize(30, 30);
+  butO.resize(40, 40);
   
   PImage butP = loadImage("Data/p.png");
   
-  butP.resize(30, 30);
+  butP.resize(40, 40);
   
   PImage butQ = loadImage("Data/q.png");
   
-  butQ.resize(30, 30);
+  butQ.resize(40, 40);
   
   PImage butR = loadImage("Data/r.png");
   
-  butR.resize(30, 30);
+  butR.resize(40, 40);
   
   PImage butS = loadImage("Data/s.png");
   
-  butS.resize(30, 30);
+  butS.resize(40, 40);
   
   PImage butT = loadImage("Data/t.png");
   
-  butT.resize(30, 30);
+  butT.resize(40, 40);
   
   PImage butU = loadImage("Data/u.png");
   
-  butU.resize(30, 30);
+  butU.resize(40, 40);
   
   PImage butV = loadImage("Data/v.png");
   
-  butV.resize(30, 30);
+  butV.resize(40, 40);
   
   PImage butW = loadImage("Data/w.png");
   
-  butW.resize(30, 30);
+  butW.resize(40, 40);
   
   PImage butX = loadImage("Data/x.png");
   
-  butX.resize(30, 30);
+  butX.resize(40, 40);
   
   PImage butY = loadImage("Data/y.png");
   
-  butY.resize(30, 30);
+  butY.resize(40, 40);
   
   PImage butZ = loadImage("Data/z.png");
   
-  butZ.resize(30, 30);
+  butZ.resize(40, 40);
   
   PImage butBack = loadImage("Data/back.png");
   
-  butBack.resize(80, 30);
+  butBack.resize(80, 40);
   
   PImage butGo = loadImage("Data/go.png");
   
-  butGo.resize(80, 30);
+  butGo.resize(80, 40);
   
   PImage butSpace = loadImage("Data/space.png");
   
-  butSpace.resize(80, 30);
+  butSpace.resize(200, 40);
+  
+  PImage butApostrophe = loadImage("Data/apostrophe.png");
+  
+  butApostrophe.resize(40, 40);
+  
+  PImage butCom = loadImage("Data/com.png");
+  
+  butCom.resize(40, 40);
+  
+  PImage butComma = loadImage("Data/comma.png");
+  
+  butComma.resize(40, 40);
+  
+  PImage butPeriod = loadImage("Data/period.png");
+  
+  butPeriod.resize(40, 40);
+  
+  PImage butQuestionMark = loadImage("Data/questionMark.png");
+  
+  butQuestionMark.resize(40, 40);
+  
+  PImage butSlash = loadImage("Data/slash.png");
+  
+  butSlash.resize(40, 40);
+  
+  PImage butAChanged = loadImage("Data/aChanged.gif");
+  
+  butAChanged.resize(40, 40);
+  
+  PImage butBChanged = loadImage("Data/bChanged.gif");
+  
+  butBChanged.resize(40, 40);
+
+  PImage butCChanged = loadImage("Data/cChanged.gif");
+  
+  butCChanged.resize(40, 40);
+
+  PImage butDChanged = loadImage("Data/dChanged.gif");
+  
+  butDChanged.resize(40, 40);
+  
+  PImage butEChanged = loadImage("Data/eChanged.gif");
+  
+  butEChanged.resize(40, 40);
+  
+  PImage butFChanged = loadImage("Data/fChanged.gif");
+  
+  butFChanged.resize(40, 40);
+  
+  PImage butGChanged = loadImage("Data/gChanged.gif");
+  
+  butGChanged.resize(40, 40);
+  
+  PImage butHChanged = loadImage("Data/hChanged.gif");
+  
+  butHChanged.resize(40, 40);
+  
+  PImage butIChanged = loadImage("Data/iChanged.gif");
+  
+  butIChanged.resize(40, 40);
+  
+  PImage butJChanged = loadImage("Data/jChanged.gif");
+  
+  butJChanged.resize(40, 40);
+  
+  PImage butKChanged = loadImage("Data/kChanged.gif");
+  
+  butKChanged.resize(40, 40);
+  
+  PImage butLChanged = loadImage("Data/lChanged.gif");
+  
+  butLChanged.resize(40, 40);
+  
+  PImage butMChanged = loadImage("Data/mChanged.gif");
+  
+  butMChanged.resize(40, 40);
+  
+  PImage butNChanged = loadImage("Data/nChanged.gif");
+  
+  butNChanged.resize(40, 40);
+  
+  PImage butOChanged = loadImage("Data/oChanged.gif");
+  
+  butOChanged.resize(40, 40);
+  
+  PImage butPChanged = loadImage("Data/pChanged.gif");
+  
+  butPChanged.resize(40, 40);
+  
+  PImage butQChanged = loadImage("Data/qChanged.gif");
+  
+  butQChanged.resize(40, 40);
+  
+  PImage butRChanged = loadImage("Data/rChanged.gif");
+  
+  butRChanged.resize(40, 40);
+  
+  PImage butSChanged = loadImage("Data/sChanged.gif");
+  
+  butSChanged.resize(40, 40);
+  
+  PImage butTChanged = loadImage("Data/tChanged.gif");
+  
+  butTChanged.resize(40, 40);
+  
+  PImage butUChanged = loadImage("Data/uChanged.gif");
+  
+  butUChanged.resize(40, 40);
+  
+  PImage butVChanged = loadImage("Data/vChanged.gif");
+  
+  butVChanged.resize(40, 40);
+  
+  PImage butWChanged = loadImage("Data/wChanged.gif");
+  
+  butWChanged.resize(40, 40);
+  
+  PImage butXChanged = loadImage("Data/xChanged.gif");
+  
+  butXChanged.resize(40, 40);
+  
+  PImage butYChanged = loadImage("Data/yChanged.gif");
+  
+  butYChanged.resize(40, 40);
+  
+  PImage butZChanged = loadImage("Data/zChanged.gif");
+  
+  butZChanged.resize(40, 40);
+  
+  PImage butBackChanged = loadImage("Data/backChanged.gif");
+  
+  butBackChanged.resize(80, 40);
+  
+  PImage butGoChanged = loadImage("Data/goChanged.gif");
+  
+  butGoChanged.resize(80, 40);
+  
+  PImage butSpaceChanged = loadImage("Data/spaceChanged.gif");
+  
+  butSpaceChanged.resize(200, 40);
+  
+  PImage butApostropheChanged = loadImage("Data/apostropheChanged.gif");
+  
+  butApostropheChanged.resize(40, 40);
+  
+  PImage butComChanged = loadImage("Data/comChanged.gif");
+  
+  butComChanged.resize(40, 40);
+  
+  PImage butCommaChanged = loadImage("Data/commaChanged.gif");
+  
+  butCommaChanged.resize(40, 40);
+  
+  PImage butPeriodChanged = loadImage("Data/periodChanged.gif");
+  
+  butPeriodChanged.resize(40, 40);
+  
+  PImage butQuestionMarkChanged = loadImage("Data/questionMarkChanged.gif");
+  
+  butQuestionMarkChanged.resize(40, 40);
+  
+  PImage butSlashChanged = loadImage("Data/slashChanged.gif");
+  
+  butSlashChanged.resize(40, 40);
   
   int boardLeft1 = (int)canvasWidth/2 - 340;
   
@@ -657,13 +823,13 @@ void keyBoardSetup()
   
   int boardLeft11 = (int)canvasWidth/2 + 260;
   
-  int boardyTop = (int)canvasHeight/2 + 340;
+  int boardyTop = int((canvasHeight/100)*73.5) ;
   
-  int boardyMiddle = (int)canvasHeight/2 + 390;
+  int boardyMiddle = boardyTop + 50 ;
   
-  int boardyBottom = (int)canvasHeight/2 + 440;
+  int boardyBottom = boardyMiddle +50;
   
-  int boardyLast = (int)canvasHeight/2 + 490;
+  int boardyLast = boardyBottom + 50 ;
   
   int keyboardWidth = 40;
   
@@ -673,38 +839,45 @@ void keyBoardSetup()
   
   int keyboardHeight = 40;
   //First Row
-  buttonLowQ = new ImageKeyButtons(boardLeft1, boardyTop, keyboardWidth, keyboardHeight, butQ, butQ, butQ, "q"); //done
-  buttonLowW = new ImageKeyButtons(boardLeft2, boardyTop, keyboardWidth, keyboardHeight, butW, butW, butW, "w"); //done
-  buttonLowE = new ImageKeyButtons(boardLeft3, boardyTop, keyboardWidth, keyboardHeight, butE, butE, butE, "e");//done
-  buttonLowR = new ImageKeyButtons(boardLeft4, boardyTop, keyboardWidth, keyboardHeight, butR, butR, butR, "r"); //done
-  buttonLowT = new ImageKeyButtons(boardLeft5, boardyTop, keyboardWidth, keyboardHeight, butT, butT, butT, "t");//done
-  buttonLowY = new ImageKeyButtons(boardLeft6, boardyTop, keyboardWidth, keyboardHeight, butY, butY, butY, "y"); //done
-  buttonLowU = new ImageKeyButtons(boardLeft7, boardyTop, keyboardWidth, keyboardHeight, butU, butU, butU, "u");//done
-  buttonLowI = new ImageKeyButtons(boardLeft8, boardyTop, keyboardWidth, keyboardHeight, butI, butI, butI, "i"); //done
-  buttonLowO = new ImageKeyButtons(boardLeft9, boardyTop, keyboardWidth, keyboardHeight, butO, butO, butO, "o"); //done
-  buttonLowP = new ImageKeyButtons(boardLeft10, boardyTop, keyboardWidth, keyboardHeight, butP, butP, butP, "p"); //done
-  buttonBack = new ImageKeyButtons(boardLeft11, boardyTop, backWidth, keyboardHeight, butBack, butBack, butBack, "back");
+  buttonLowQ = new ImageKeyButtons(boardLeft1, boardyTop, keyboardWidth, keyboardHeight, butQ, butQ, butQChanged, "q"); //done
+  buttonLowW = new ImageKeyButtons(boardLeft2, boardyTop, keyboardWidth, keyboardHeight, butW, butW, butWChanged, "w"); //done
+  buttonLowE = new ImageKeyButtons(boardLeft3, boardyTop, keyboardWidth, keyboardHeight, butE, butE, butEChanged, "e");//done
+  buttonLowR = new ImageKeyButtons(boardLeft4, boardyTop, keyboardWidth, keyboardHeight, butR, butR, butRChanged, "r"); //done
+  buttonLowT = new ImageKeyButtons(boardLeft5, boardyTop, keyboardWidth, keyboardHeight, butT, butT, butTChanged, "t");//done
+  buttonLowY = new ImageKeyButtons(boardLeft6, boardyTop, keyboardWidth, keyboardHeight, butY, butY, butYChanged, "y"); //done
+  buttonLowU = new ImageKeyButtons(boardLeft7, boardyTop, keyboardWidth, keyboardHeight, butU, butU, butUChanged, "u");//done
+  buttonLowI = new ImageKeyButtons(boardLeft8, boardyTop, keyboardWidth, keyboardHeight, butI, butI, butIChanged, "i"); //done
+  buttonLowO = new ImageKeyButtons(boardLeft9, boardyTop, keyboardWidth, keyboardHeight, butO, butO, butOChanged, "o"); //done
+  buttonLowP = new ImageKeyButtons(boardLeft10, boardyTop, keyboardWidth, keyboardHeight, butP, butP, butPChanged, "p"); //done
+  buttonBack = new ImageKeyButtons(boardLeft11, boardyTop, backWidth, keyboardHeight, butBack, butBack, butBackChanged, "back");
   //Second Row
-  buttonLowA = new ImageKeyButtons(boardLeft1+10, boardyMiddle, keyboardWidth, keyboardHeight, butA, butA, butA, "a");//done
-  buttonLowS = new ImageKeyButtons(boardLeft2+10, boardyMiddle, keyboardWidth, keyboardHeight, butS, butS, butS, "s");//done
-  buttonLowD = new ImageKeyButtons(boardLeft3+10, boardyMiddle, keyboardWidth, keyboardHeight, butD, butD, butD, "d");//done
-  buttonLowF = new ImageKeyButtons(boardLeft4+10, boardyMiddle, keyboardWidth, keyboardHeight, butF, butF, butF, "f");//done
-  buttonLowG = new ImageKeyButtons(boardLeft5+10, boardyMiddle, keyboardWidth, keyboardHeight, butG, butG, butG, "g");//done
-  buttonLowH = new ImageKeyButtons(boardLeft6+10, boardyMiddle, keyboardWidth, keyboardHeight, butH, butH, butH, "h");//done
-  buttonLowJ = new ImageKeyButtons(boardLeft7+10, boardyMiddle, keyboardWidth, keyboardHeight, butJ, butJ, butJ, "j");//done
-  buttonLowK = new ImageKeyButtons(boardLeft8+10, boardyMiddle, keyboardWidth, keyboardHeight, butK, butK, butK, "k");//done
-  buttonLowL = new ImageKeyButtons(boardLeft9+10, boardyMiddle, keyboardWidth, keyboardHeight, butL, butL, butL, "l");//done
-  buttonGo = new ImageKeyButtons(boardLeft10+10, boardyMiddle, backWidth, keyboardHeight, butGo, butGo, butGo, "go");
+  buttonLowA = new ImageKeyButtons(boardLeft1+10, boardyMiddle, keyboardWidth, keyboardHeight, butA, butA, butAChanged, "a");//done
+  buttonLowS = new ImageKeyButtons(boardLeft2+10, boardyMiddle, keyboardWidth, keyboardHeight, butS, butS, butSChanged, "s");//done
+  buttonLowD = new ImageKeyButtons(boardLeft3+10, boardyMiddle, keyboardWidth, keyboardHeight, butD, butD, butDChanged, "d");//done
+  buttonLowF = new ImageKeyButtons(boardLeft4+10, boardyMiddle, keyboardWidth, keyboardHeight, butF, butF, butFChanged, "f");//done
+  buttonLowG = new ImageKeyButtons(boardLeft5+10, boardyMiddle, keyboardWidth, keyboardHeight, butG, butG, butGChanged, "g");//done
+  buttonLowH = new ImageKeyButtons(boardLeft6+10, boardyMiddle, keyboardWidth, keyboardHeight, butH, butH, butHChanged, "h");//done
+  buttonLowJ = new ImageKeyButtons(boardLeft7+10, boardyMiddle, keyboardWidth, keyboardHeight, butJ, butJ, butJChanged, "j");//done
+  buttonLowK = new ImageKeyButtons(boardLeft8+10, boardyMiddle, keyboardWidth, keyboardHeight, butK, butK, butKChanged, "k");//done
+  buttonLowL = new ImageKeyButtons(boardLeft9+10, boardyMiddle, keyboardWidth, keyboardHeight, butL, butL, butLChanged, "l");//done
+  buttonApostrophe = new ImageKeyButtons(boardLeft10+10, boardyMiddle, keyboardWidth, keyboardHeight, butApostrophe, butApostrophe, butApostropheChanged, "'");//done
+  buttonGo = new ImageKeyButtons(boardLeft11+10, boardyMiddle, backWidth, keyboardHeight, butGo, butGo, butGo, "go");//done
   //Third Row
-  buttonLowZ = new ImageKeyButtons(boardLeft1, boardyBottom, keyboardWidth, keyboardHeight, butZ, butZ, butZ, "z");
-  buttonLowX = new ImageKeyButtons(boardLeft2, boardyBottom, keyboardWidth, keyboardHeight, butX, butX, butX, "x");
-  buttonLowC = new ImageKeyButtons(boardLeft3, boardyBottom, keyboardWidth, keyboardHeight, butC, butC, butC, "c");
-  buttonLowV = new ImageKeyButtons(boardLeft4, boardyBottom, keyboardWidth, keyboardHeight, butV, butV, butV, "v"); //done
-  buttonLowB = new ImageKeyButtons(boardLeft5, boardyBottom, keyboardWidth, keyboardHeight, butB, butB, butB, "b");
-  buttonLowN = new ImageKeyButtons(boardLeft6, boardyBottom, keyboardWidth, keyboardHeight, butN, butN, butN, "n");//done
-  buttonLowM = new ImageKeyButtons(boardLeft7, boardyBottom, keyboardWidth, keyboardHeight, butM, butM, butM, "m");//done
+  buttonLowZ = new ImageKeyButtons(boardLeft1, boardyBottom, keyboardWidth, keyboardHeight, butZ, butZ, butZChanged, "z");
+  buttonLowX = new ImageKeyButtons(boardLeft2, boardyBottom, keyboardWidth, keyboardHeight, butX, butX, butXChanged, "x");
+  buttonLowC = new ImageKeyButtons(boardLeft3, boardyBottom, keyboardWidth, keyboardHeight, butC, butC, butCChanged, "c");
+  buttonLowV = new ImageKeyButtons(boardLeft4, boardyBottom, keyboardWidth, keyboardHeight, butV, butV, butVChanged, "v"); //done
+  buttonLowB = new ImageKeyButtons(boardLeft5, boardyBottom, keyboardWidth, keyboardHeight, butB, butB, butBChanged, "b");
+  buttonLowN = new ImageKeyButtons(boardLeft6, boardyBottom, keyboardWidth, keyboardHeight, butN, butN, butNChanged, "n");//done
+  buttonLowM = new ImageKeyButtons(boardLeft7, boardyBottom, keyboardWidth, keyboardHeight, butM, butM, butMChanged, "m");//done
+  buttonComma = new ImageKeyButtons(boardLeft8, boardyBottom, keyboardWidth, keyboardHeight, butComma, butComma, butCommaChanged, ",");//done
+  buttonPeriod = new ImageKeyButtons(boardLeft9, boardyBottom, keyboardWidth, keyboardHeight, butPeriod, butPeriod, butPeriodChanged, ".");//done
+  buttonQuestionMark = new ImageKeyButtons(boardLeft10, boardyBottom, keyboardWidth, keyboardHeight, butQuestionMark, butQuestionMark, butQuestionMarkChanged, "?");//done
+  //Fourth Row
+  buttonSlash = new ImageKeyButtons(boardLeft3, boardyLast, keyboardWidth, keyboardHeight, butSlash, butSlash, butSlashChanged, "/");//done
+  buttonSpace = new ImageKeyButtons(boardLeft4, boardyLast, spaceBarWidth, keyboardHeight, butSpace, butSpace, butSpaceChanged, " ");
+  buttonCom = new ImageKeyButtons(boardLeft8 - 15, boardyLast, keyboardWidth, keyboardHeight, butCom, butCom, butComChanged, ".com");//done
   
-  buttonSpace = new ImageKeyButtons(boardLeft4, boardyLast, spaceBarWidth, keyboardHeight, butSpace, butSpace, butSpace, " ");
   
 
 }
@@ -714,8 +887,8 @@ void keyBoardSetup()
 
 void setup() {
 
-  //size(canvasWidth, canvasHeight);
- size( 1366 ,768);
+ size(canvasWidth, canvasHeight);
+ //size( 1366 ,768);
 
   initPopups();
   //fixOrderofButton(guest.buttonSet,guest.usrFunctionActive);
@@ -798,12 +971,12 @@ void draw() {
     
   }
   else if(stage == 4){
-    //if(iskeybaord == true){
-   //   createNewUserKeyBoardDraw();
-    //}
-   // else{
+   if(iskeyboard == true){
+      createNewUserKeyBoardDraw();
+   }
+   else{
       createNewUserPinDraw();
-   // }  
+   }  
   }
 
 }
@@ -913,10 +1086,14 @@ void keyBoardDraw()
   drawGrid();
   noStroke();
   
-
-  drawTimeDate();
   
-  text(keyTracker,int(((canvasWidth/100)*50)), int((canvasHeight/100)*49));
+  drawTimeDate();
+  if(stage == 4){
+    
+  
+    text(keyTracker, (int)canvasWidth/2 + 20,  int((canvasHeight/100)*70));
+  }
+
   
   buttonLowA.update();
   
@@ -1501,10 +1678,20 @@ void mouseReleased() {
   else if(stage == 4){
     
    if(profileSelect_MouseReleased() == false){
-    if(outsidePinArea() == true){
-      resetPinInfo();
-      whichUser = -1;
-      stage = 1;
+    if(iskeyboard == false){
+       if(outsidePinArea() == true){
+        resetInfo();
+        whichUser = -1;
+        stage = 1;
+      }
+    }
+    else if(iskeyboard){
+      if(outsideKeyboard()){
+         resetInfo();
+         whichUser = -1;
+         stage = 1;
+      }
+    
     }
    }
   }
@@ -1520,7 +1707,7 @@ boolean profileSelect_MouseReleased(){
   if(insideCircle(newUserButton.x_Axis,newUserButton.y_Axis,newUserButton.width)){
     stage = 4;
     whichUser=-1;
-    resetPinInfo();
+    resetInfo();
     userSelected = false;
     return true;
   }
@@ -1531,7 +1718,7 @@ boolean profileSelect_MouseReleased(){
     if(insideBox(temp.x_Axis,temp.y_Axis,temp.width,temp.height) && whichUser != loopCounter){
       userSelected = true;
       whichUser = loopCounter;
-      resetPinInfo();
+      resetInfo();
       stage = 2;
       return true;
     }
@@ -1777,7 +1964,28 @@ boolean outsidePinArea(){
    
 }
 
-void resetPinInfo(){
+boolean outsideKeyboard(){
+    
+    int x = (int)canvasWidth/2 - 340;
+    
+    int xEnd = (int)canvasWidth/2 + 260 + 80 ;
+    
+    int y = int((canvasHeight/100)*73.5);
+    
+    int yEnd = y + 150 ;
+    
+    
+  if((mouseX < x || mouseX >= (xEnd)) || ((mouseY < y) || mouseY > (yEnd))) {
+   
+     return true;
+   }
+   else {
+     return false;
+   }
+   
+}
+
+void resetInfo(){
   pinFlag = 0;  //A flag that you keep to track how many buttons are pressed.
   pinSpace = 0; //The space of the stars when they are printed
   pin = ""; //Keeps track of the pins and stores them
@@ -1789,6 +1997,13 @@ void resetPinInfo(){
   wrongPin = false;
   wrongConfirmPin = false;
   stage4Part = 1;
+  iskeyboard = true;
+  inputName = "";
+  keyFlag = 0;
+  keyTracker = "";
+  keyRep = "";
+  keySpace = 0;
+
 }
 
 //Function to get current Time
@@ -2183,9 +2398,11 @@ class ImageButtons extends PinButton
             if(compareComfirmPin(pin)){
             
               addProfileButton(profile,66,30,numberOfUser);
-              User temp = new User(numberOfUser+"PlaceHolder",pin);
+              User temp = new User(inputName,pin);
               userList.add(temp);
               stage = 1;
+              iskeyboard = true;
+              inputName = "";
               numberOfUser++;
             }
             else{
@@ -2528,14 +2745,14 @@ class ImageKeyButtons extends PinButton
     if(pressed) {
      
       currentimage = down;
-      isKeyPressed = true;
+      isPressed = true;
 
     } else if (isOver){
      
       currentimage = roll;
-      if(isKeyPressed == true)
+      if(isPressed == true)
       {
-      isKeyPressed = false; 
+      isPressed = false; 
       if(number == "back" && keyFlag > 0)
       {  
         if(keyFlag > 1) //Do it before drawing the value as you want to draw out the value from -1
@@ -2552,9 +2769,9 @@ class ImageKeyButtons extends PinButton
         }
         //keySpace = keySpace - 20;
         keySpace = keySpace - (int)textWidth(eraseKey);
-        textSize(30);
-        fill(102);
-        text(eraseKey,(int)canvasWidth/2 - 200 + keySpace, (int)canvasHeight/2 + 310);
+        //textSize(30);
+        //fill(102);
+        //text(eraseKey,(int)canvasWidth/2 - 200 + keySpace, (int)canvasHeight/2 + 310);
         keyFlag = keyFlag-1;
         //if(keyFlag > 1) //Do it before drawing the value as you want to draw out the value from -1
         //{
@@ -2574,12 +2791,12 @@ class ImageKeyButtons extends PinButton
         //println(keyRep);    //Testing purpose
         //keyFlag = keyFlag-1;
       }
-      else if(keyFlag < 20 && number != "back" && number != "go" && number != " ")
+      else if(keyFlag < 20 && number != "back" && number != "go" && number != " " && number != ".com")
       {                 
-        fill(0);
+        //fill(0);
         keyRep = keyRep + number;
-        textSize(30);
-        text(number,(int)canvasWidth/2 - 200 + keySpace,(int)canvasHeight/2 + 310);
+        //textSize(30);
+        //text(number,(int)canvasWidth/2 - 200 + keySpace,(int)canvasHeight/2 + 310);
         //keySpace = keySpace + 20;
         keySpace = keySpace + (int)textWidth(number);
         keyTracker = keyTracker + number;
@@ -2600,30 +2817,22 @@ class ImageKeyButtons extends PinButton
       if(number == "go" && keyFlag > 0)
       {
         //showMessageDialog(null, "keyTracker successfully added", "Info", INFORMATION_MESSAGE);
-        for(int i = keyFlag; i >= 1; i--)
-        {
-        if(i > 1) //Do it before drawing the value as you want to draw out the value from -1
-        {
-        eraseKey = keyTracker.substring (keyTracker.length()-1, keyTracker.length());
-        keyTracker = keyTracker.substring(0, keyTracker.length() - 1);
-        //keyRep = keyRep.substring(0, keyRep.length()-1);
-        //println(eraseKey);
+        if(stage == 4){ 
+          if(keyFlag < 1){
+          
+          
+          }
+          
+          else{
+            inputName  = keyTracker;
+         
+            keyFlag = 0;
+            keyTracker = "";
+            keyRep = "";
+            keySpace = 0;
+            iskeyboard = false;
+          }
         }
-        if(i == 1) //Have to do it afterwards because theres only 1 value you're overwriting then you erase
-        {
-        eraseKey = keyTracker.substring (0, keyTracker.length());
-        keyTracker = keyTracker.substring(0, keyRep.length());
-        }
-        //keySpace = keySpace - 20;
-        keySpace = keySpace - (int)textWidth(eraseKey);
-        textSize(30);
-        fill(102);
-        text(eraseKey,(int)canvasWidth/2 - 200 + keySpace, (int)canvasHeight/2 + 310);
-        }
-        keyFlag = 0;
-        keyTracker = "";
-        keyRep = "";
-        keySpace = 0;
       }
       }
     } else {
