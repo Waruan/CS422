@@ -45,12 +45,12 @@ int stage = 0;
 //float canvasHeight;
 
 // evl monitor size
-float canvasWidth = 2732;
-float canvasHeight = 1536;
+//float canvasWidth = 2732;
+//float canvasHeight = 1536;
 
 // scale down for home monitors
-//float canvasWidth = 1366;
-//float canvasHeight = 768;
+float canvasWidth = 1366;
+float canvasHeight = 768;
 
 int currentTime;
 
@@ -714,8 +714,8 @@ void keyBoardSetup()
 
 void setup() {
 
-  size(canvasWidth, canvasHeight);
- //size( 1366 ,768);
+  //size(canvasWidth, canvasHeight);
+ size( 1366 ,768);
 
   initPopups();
   //fixOrderofButton(guest.buttonSet,guest.usrFunctionActive);
@@ -1285,6 +1285,8 @@ void mouseDragged() {
   
   if(iconDrag == false && isHidden == false){
      dragLoopInsideBox() ;
+     println("DEBUG whichuser " + whichUser);
+     println("DEBUG iconIndex" + iconIndex);
      int x = userList.get(whichUser).buttonSet.get(iconIndex).x_Axis;
      draggingIndex = iconIndex;
      iconDragDifx = mouseX-x;
@@ -1571,8 +1573,8 @@ void UserScreen_MouseReleased(){
     boxInUse = false;
     if(clickOtherButton()){
       boxInUse = true;   
-      User u = userList.get(whichUser);
-      Button currentButton = u.buttonSet.get(iconIndex);      
+      //User u = userList.get(whichUser);
+      //Button currentButton = u.buttonSet.get(iconIndex);      
       getCurrentButtonPopup(functionInUse);
 
     }
@@ -1585,8 +1587,8 @@ void UserScreen_MouseReleased(){
     if((loopInsideBox() || iconDrag== true)  && !boxInUse){
     //pop_up_box(xLocation, yLocation);
 
-    User u = userList.get(whichUser);
-    Button currentButton = u.buttonSet.get(iconIndex);
+    //User u = userList.get(whichUser);
+    //Button currentButton = u.buttonSet.get(iconIndex);
     
     //checkButtonFunction(currentButton);
     getCurrentButtonPopup(functionInUse);
@@ -1650,7 +1652,7 @@ boolean clickOtherButton(){
 //loop through icon button and set the index
 boolean loopInsideBox(){
   Button temp;
-  User guest = userList.get(0);
+  User guest = userList.get(whichUser);
   for(int i = 0;i<guest.buttonSet.size();i++){
     
     temp = guest.buttonSet.get(i);
@@ -1666,7 +1668,7 @@ boolean loopInsideBox(){
 
 boolean dragLoopInsideBox(){
   Button temp;
-  User guest = userList.get(0);
+  User guest = userList.get(whichUser);
   for(int i = 0;i<guest.buttonSet.size();i++){
     
     temp = guest.buttonSet.get(i);
@@ -1684,7 +1686,7 @@ boolean dragLoopInsideBox(){
 //loop through icon button and dont set the index
 boolean loopInsideBoxWithoutSet(){
   Button temp;
-  User guest = userList.get(0);
+  User guest = userList.get(whichUser);
   for(int i = 0;i<guest.buttonSet.size();i++){
     
     temp = guest.buttonSet.get(i);
@@ -2579,7 +2581,7 @@ class ImageKeyButtons extends PinButton
         textSize(30);
         text(number,(int)canvasWidth/2 - 200 + keySpace,(int)canvasHeight/2 + 310);
         //keySpace = keySpace + 20;
-        keySpace = keySpace + (int)textWidth(number);export
+        keySpace = keySpace + (int)textWidth(number);
         keyTracker = keyTracker + number;
         println(keyTracker);  //Testing purpose
         keyFlag = keyFlag+1;
