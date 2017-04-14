@@ -31,7 +31,13 @@ ImageButtons buttonLowZ;
 ImageButtons buttonBack;
 ImageButtons buttonGo;
 ImageButtons buttonSpace;
-int keyButtonSize = 90;
+ImageButtons buttonApostrophe;
+ImageButtons buttonComma;
+ImageButtons buttonCom;
+ImageButtons buttonPeriod;
+ImageButtons buttonQuestionMark;
+ImageButtons buttonSlash;
+int buttonSize = 90;
 int keyFlag = 0;  //A flag that you keep to track how many buttons are pressed.
 int keySpace = 0; //The space of the stars when they are printed
 String keyTracker = ""; //Keeps track of the pins and stores them
@@ -54,7 +60,9 @@ void setup()
 {
 
   size(2732, 1536);
-
+  
+  //size(1366, 768);
+  
   background(102, 102, 102);
   
   // Define and create image button
@@ -89,91 +97,255 @@ void setup()
   
   PImage butH = loadImage("Data/h.png");
   
-  butH.resize(30, 30);
+  butH.resize(40, 40);
   
   PImage butI = loadImage("Data/i.png");
   
-  butI.resize(30, 30);
+  butI.resize(40, 40);
   
   PImage butJ = loadImage("Data/j.png");
   
-  butJ.resize(30, 30);
+  butJ.resize(40, 40);
   
   PImage butK = loadImage("Data/k.png");
   
-  butK.resize(30, 30);
+  butK.resize(40, 40);
   
   PImage butL = loadImage("Data/l.png");
   
-  butL.resize(30, 30);
+  butL.resize(40, 40);
   
   PImage butM = loadImage("Data/m.png");
   
-  butM.resize(30, 30);
+  butM.resize(40, 40);
   
   PImage butN = loadImage("Data/n.png");
   
-  butN.resize(30, 30);
+  butN.resize(40, 40);
   
   PImage butO = loadImage("Data/o.png");
   
-  butO.resize(30, 30);
+  butO.resize(40, 40);
   
   PImage butP = loadImage("Data/p.png");
   
-  butP.resize(30, 30);
+  butP.resize(40, 40);
   
   PImage butQ = loadImage("Data/q.png");
   
-  butQ.resize(30, 30);
+  butQ.resize(40, 40);
   
   PImage butR = loadImage("Data/r.png");
   
-  butR.resize(30, 30);
+  butR.resize(40, 40);
   
   PImage butS = loadImage("Data/s.png");
   
-  butS.resize(30, 30);
+  butS.resize(40, 40);
   
   PImage butT = loadImage("Data/t.png");
   
-  butT.resize(30, 30);
+  butT.resize(40, 40);
   
   PImage butU = loadImage("Data/u.png");
   
-  butU.resize(30, 30);
+  butU.resize(40, 40);
   
   PImage butV = loadImage("Data/v.png");
   
-  butV.resize(30, 30);
+  butV.resize(40, 40);
   
   PImage butW = loadImage("Data/w.png");
   
-  butW.resize(30, 30);
+  butW.resize(40, 40);
   
   PImage butX = loadImage("Data/x.png");
   
-  butX.resize(30, 30);
+  butX.resize(40, 40);
   
   PImage butY = loadImage("Data/y.png");
   
-  butY.resize(30, 30);
+  butY.resize(40, 40);
   
   PImage butZ = loadImage("Data/z.png");
   
-  butZ.resize(30, 30);
+  butZ.resize(40, 40);
   
   PImage butBack = loadImage("Data/back.png");
   
-  butBack.resize(80, 30);
+  butBack.resize(80, 40);
   
   PImage butGo = loadImage("Data/go.png");
   
-  butGo.resize(80, 30);
+  butGo.resize(80, 40);
   
   PImage butSpace = loadImage("Data/space.png");
   
-  butSpace.resize(80, 30);
+  butSpace.resize(200, 40);
+  
+  PImage butApostrophe = loadImage("Data/apostrophe.png");
+  
+  butApostrophe.resize(40, 40);
+  
+  PImage butCom = loadImage("Data/com.png");
+  
+  butCom.resize(40, 40);
+  
+  PImage butComma = loadImage("Data/comma.png");
+  
+  butComma.resize(40, 40);
+  
+  PImage butPeriod = loadImage("Data/period.png");
+  
+  butPeriod.resize(40, 40);
+  
+  PImage butQuestionMark = loadImage("Data/questionMark.png");
+  
+  butQuestionMark.resize(40, 40);
+  
+  PImage butSlash = loadImage("Data/slash.png");
+  
+  butSlash.resize(40, 40);
+  
+  PImage butAChanged = loadImage("Data/aChanged.gif");
+  
+  butAChanged.resize(40, 40);
+  
+  PImage butBChanged = loadImage("Data/bChanged.gif");
+  
+  butBChanged.resize(40, 40);
+
+  PImage butCChanged = loadImage("Data/cChanged.gif");
+  
+  butCChanged.resize(40, 40);
+
+  PImage butDChanged = loadImage("Data/dChanged.gif");
+  
+  butDChanged.resize(40, 40);
+  
+  PImage butEChanged = loadImage("Data/eChanged.gif");
+  
+  butEChanged.resize(40, 40);
+  
+  PImage butFChanged = loadImage("Data/fChanged.gif");
+  
+  butFChanged.resize(40, 40);
+  
+  PImage butGChanged = loadImage("Data/gChanged.gif");
+  
+  butGChanged.resize(40, 40);
+  
+  PImage butHChanged = loadImage("Data/hChanged.gif");
+  
+  butHChanged.resize(40, 40);
+  
+  PImage butIChanged = loadImage("Data/iChanged.gif");
+  
+  butIChanged.resize(40, 40);
+  
+  PImage butJChanged = loadImage("Data/jChanged.gif");
+  
+  butJChanged.resize(40, 40);
+  
+  PImage butKChanged = loadImage("Data/kChanged.gif");
+  
+  butKChanged.resize(40, 40);
+  
+  PImage butLChanged = loadImage("Data/lChanged.gif");
+  
+  butLChanged.resize(40, 40);
+  
+  PImage butMChanged = loadImage("Data/mChanged.gif");
+  
+  butMChanged.resize(40, 40);
+  
+  PImage butNChanged = loadImage("Data/nChanged.gif");
+  
+  butNChanged.resize(40, 40);
+  
+  PImage butOChanged = loadImage("Data/oChanged.gif");
+  
+  butOChanged.resize(40, 40);
+  
+  PImage butPChanged = loadImage("Data/pChanged.gif");
+  
+  butPChanged.resize(40, 40);
+  
+  PImage butQChanged = loadImage("Data/qChanged.gif");
+  
+  butQChanged.resize(40, 40);
+  
+  PImage butRChanged = loadImage("Data/rChanged.gif");
+  
+  butRChanged.resize(40, 40);
+  
+  PImage butSChanged = loadImage("Data/sChanged.gif");
+  
+  butSChanged.resize(40, 40);
+  
+  PImage butTChanged = loadImage("Data/tChanged.gif");
+  
+  butTChanged.resize(40, 40);
+  
+  PImage butUChanged = loadImage("Data/uChanged.gif");
+  
+  butUChanged.resize(40, 40);
+  
+  PImage butVChanged = loadImage("Data/vChanged.gif");
+  
+  butVChanged.resize(40, 40);
+  
+  PImage butWChanged = loadImage("Data/wChanged.gif");
+  
+  butWChanged.resize(40, 40);
+  
+  PImage butXChanged = loadImage("Data/xChanged.gif");
+  
+  butXChanged.resize(40, 40);
+  
+  PImage butYChanged = loadImage("Data/yChanged.gif");
+  
+  butYChanged.resize(40, 40);
+  
+  PImage butZChanged = loadImage("Data/zChanged.gif");
+  
+  butZChanged.resize(40, 40);
+  
+  PImage butBackChanged = loadImage("Data/backChanged.gif");
+  
+  butBackChanged.resize(80, 40);
+  
+  PImage butGoChanged = loadImage("Data/goChanged.gif");
+  
+  butGoChanged.resize(80, 40);
+  
+  PImage butSpaceChanged = loadImage("Data/spaceChanged.gif");
+  
+  butSpaceChanged.resize(200, 40);
+  
+  PImage butApostropheChanged = loadImage("Data/apostropheChanged.gif");
+  
+  butApostropheChanged.resize(40, 40);
+  
+  PImage butComChanged = loadImage("Data/comChanged.gif");
+  
+  butComChanged.resize(40, 40);
+  
+  PImage butCommaChanged = loadImage("Data/commaChanged.gif");
+  
+  butCommaChanged.resize(40, 40);
+  
+  PImage butPeriodChanged = loadImage("Data/periodChanged.gif");
+  
+  butPeriodChanged.resize(40, 40);
+  
+  PImage butQuestionMarkChanged = loadImage("Data/questionMarkChanged.gif");
+  
+  butQuestionMarkChanged.resize(40, 40);
+  
+  PImage butSlashChanged = loadImage("Data/slashChanged.gif");
+  
+  butSlashChanged.resize(40, 40);
   
   int boardLeft1 = (int)canvasWidth/2 - 340;
   
@@ -213,38 +385,44 @@ void setup()
   
   int keyboardHeight = 40;
   //First Row
-  buttonLowQ = new ImageButtons(boardLeft1, boardyTop, keyboardWidth, keyboardHeight, butQ, butQ, butQ, "q"); //done
-  buttonLowW = new ImageButtons(boardLeft2, boardyTop, keyboardWidth, keyboardHeight, butW, butW, butW, "w"); //done
-  buttonLowE = new ImageButtons(boardLeft3, boardyTop, keyboardWidth, keyboardHeight, butE, butE, butE, "e");//done
-  buttonLowR = new ImageButtons(boardLeft4, boardyTop, keyboardWidth, keyboardHeight, butR, butR, butR, "r"); //done
-  buttonLowT = new ImageButtons(boardLeft5, boardyTop, keyboardWidth, keyboardHeight, butT, butT, butT, "t");//done
-  buttonLowY = new ImageButtons(boardLeft6, boardyTop, keyboardWidth, keyboardHeight, butY, butY, butY, "y"); //done
-  buttonLowU = new ImageButtons(boardLeft7, boardyTop, keyboardWidth, keyboardHeight, butU, butU, butU, "u");//done
-  buttonLowI = new ImageButtons(boardLeft8, boardyTop, keyboardWidth, keyboardHeight, butI, butI, butI, "i"); //done
-  buttonLowO = new ImageButtons(boardLeft9, boardyTop, keyboardWidth, keyboardHeight, butO, butO, butO, "o"); //done
-  buttonLowP = new ImageButtons(boardLeft10, boardyTop, keyboardWidth, keyboardHeight, butP, butP, butP, "p"); //done
-  buttonBack = new ImageButtons(boardLeft11, boardyTop, backWidth, keyboardHeight, butBack, butBack, butBack, "back");
+  buttonLowQ = new ImageButtons(boardLeft1, boardyTop, keyboardWidth, keyboardHeight, butQ, butQ, butQChanged, "q"); //done
+  buttonLowW = new ImageButtons(boardLeft2, boardyTop, keyboardWidth, keyboardHeight, butW, butW, butWChanged, "w"); //done
+  buttonLowE = new ImageButtons(boardLeft3, boardyTop, keyboardWidth, keyboardHeight, butE, butE, butEChanged, "e");//done
+  buttonLowR = new ImageButtons(boardLeft4, boardyTop, keyboardWidth, keyboardHeight, butR, butR, butRChanged, "r"); //done
+  buttonLowT = new ImageButtons(boardLeft5, boardyTop, keyboardWidth, keyboardHeight, butT, butT, butTChanged, "t");//done
+  buttonLowY = new ImageButtons(boardLeft6, boardyTop, keyboardWidth, keyboardHeight, butY, butY, butYChanged, "y"); //done
+  buttonLowU = new ImageButtons(boardLeft7, boardyTop, keyboardWidth, keyboardHeight, butU, butU, butUChanged, "u");//done
+  buttonLowI = new ImageButtons(boardLeft8, boardyTop, keyboardWidth, keyboardHeight, butI, butI, butIChanged, "i"); //done
+  buttonLowO = new ImageButtons(boardLeft9, boardyTop, keyboardWidth, keyboardHeight, butO, butO, butOChanged, "o"); //done
+  buttonLowP = new ImageButtons(boardLeft10, boardyTop, keyboardWidth, keyboardHeight, butP, butP, butPChanged, "p"); //done
+  buttonBack = new ImageButtons(boardLeft11, boardyTop, backWidth, keyboardHeight, butBack, butBack, butBackChanged, "back");
   //Second Row
-  buttonLowA = new ImageButtons(boardLeft1+10, boardyMiddle, keyboardWidth, keyboardHeight, butA, butA, butA, "a");//done
-  buttonLowS = new ImageButtons(boardLeft2+10, boardyMiddle, keyboardWidth, keyboardHeight, butS, butS, butS, "s");//done
-  buttonLowD = new ImageButtons(boardLeft3+10, boardyMiddle, keyboardWidth, keyboardHeight, butD, butD, butD, "d");//done
-  buttonLowF = new ImageButtons(boardLeft4+10, boardyMiddle, keyboardWidth, keyboardHeight, butF, butF, butF, "f");//done
-  buttonLowG = new ImageButtons(boardLeft5+10, boardyMiddle, keyboardWidth, keyboardHeight, butG, butG, butG, "g");//done
-  buttonLowH = new ImageButtons(boardLeft6+10, boardyMiddle, keyboardWidth, keyboardHeight, butH, butH, butH, "h");//done
-  buttonLowJ = new ImageButtons(boardLeft7+10, boardyMiddle, keyboardWidth, keyboardHeight, butJ, butJ, butJ, "j");//done
-  buttonLowK = new ImageButtons(boardLeft8+10, boardyMiddle, keyboardWidth, keyboardHeight, butK, butK, butK, "k");//done
-  buttonLowL = new ImageButtons(boardLeft9+10, boardyMiddle, keyboardWidth, keyboardHeight, butL, butL, butL, "l");//done
-  buttonGo = new ImageButtons(boardLeft10+10, boardyMiddle, backWidth, keyboardHeight, butGo, butGo, butGo, "go");
+  buttonLowA = new ImageButtons(boardLeft1+10, boardyMiddle, keyboardWidth, keyboardHeight, butA, butA, butAChanged, "a");//done
+  buttonLowS = new ImageButtons(boardLeft2+10, boardyMiddle, keyboardWidth, keyboardHeight, butS, butS, butSChanged, "s");//done
+  buttonLowD = new ImageButtons(boardLeft3+10, boardyMiddle, keyboardWidth, keyboardHeight, butD, butD, butDChanged, "d");//done
+  buttonLowF = new ImageButtons(boardLeft4+10, boardyMiddle, keyboardWidth, keyboardHeight, butF, butF, butFChanged, "f");//done
+  buttonLowG = new ImageButtons(boardLeft5+10, boardyMiddle, keyboardWidth, keyboardHeight, butG, butG, butGChanged, "g");//done
+  buttonLowH = new ImageButtons(boardLeft6+10, boardyMiddle, keyboardWidth, keyboardHeight, butH, butH, butHChanged, "h");//done
+  buttonLowJ = new ImageButtons(boardLeft7+10, boardyMiddle, keyboardWidth, keyboardHeight, butJ, butJ, butJChanged, "j");//done
+  buttonLowK = new ImageButtons(boardLeft8+10, boardyMiddle, keyboardWidth, keyboardHeight, butK, butK, butKChanged, "k");//done
+  buttonLowL = new ImageButtons(boardLeft9+10, boardyMiddle, keyboardWidth, keyboardHeight, butL, butL, butLChanged, "l");//done
+  buttonApostrophe = new ImageButtons(boardLeft10+10, boardyMiddle, keyboardWidth, keyboardHeight, butApostrophe, butApostrophe, butApostropheChanged, "'");//done
+  buttonGo = new ImageButtons(boardLeft11+10, boardyMiddle, backWidth, keyboardHeight, butGo, butGo, butGo, "go");//done
   //Third Row
-  buttonLowZ = new ImageButtons(boardLeft1, boardyBottom, keyboardWidth, keyboardHeight, butZ, butZ, butZ, "z");
-  buttonLowX = new ImageButtons(boardLeft2, boardyBottom, keyboardWidth, keyboardHeight, butX, butX, butX, "x");
-  buttonLowC = new ImageButtons(boardLeft3, boardyBottom, keyboardWidth, keyboardHeight, butC, butC, butC, "c");
-  buttonLowV = new ImageButtons(boardLeft4, boardyBottom, keyboardWidth, keyboardHeight, butV, butV, butV, "v"); //done
-  buttonLowB = new ImageButtons(boardLeft5, boardyBottom, keyboardWidth, keyboardHeight, butB, butB, butB, "b");
-  buttonLowN = new ImageButtons(boardLeft6, boardyBottom, keyboardWidth, keyboardHeight, butN, butN, butN, "n");//done
-  buttonLowM = new ImageButtons(boardLeft7, boardyBottom, keyboardWidth, keyboardHeight, butM, butM, butM, "m");//done
-  
-  buttonSpace = new ImageButtons(boardLeft4, boardyLast, spaceBarWidth, keyboardHeight, butSpace, butSpace, butSpace, " ");
+  buttonLowZ = new ImageButtons(boardLeft1, boardyBottom, keyboardWidth, keyboardHeight, butZ, butZ, butZChanged, "z");
+  buttonLowX = new ImageButtons(boardLeft2, boardyBottom, keyboardWidth, keyboardHeight, butX, butX, butXChanged, "x");
+  buttonLowC = new ImageButtons(boardLeft3, boardyBottom, keyboardWidth, keyboardHeight, butC, butC, butCChanged, "c");
+  buttonLowV = new ImageButtons(boardLeft4, boardyBottom, keyboardWidth, keyboardHeight, butV, butV, butVChanged, "v"); //done
+  buttonLowB = new ImageButtons(boardLeft5, boardyBottom, keyboardWidth, keyboardHeight, butB, butB, butBChanged, "b");
+  buttonLowN = new ImageButtons(boardLeft6, boardyBottom, keyboardWidth, keyboardHeight, butN, butN, butNChanged, "n");//done
+  buttonLowM = new ImageButtons(boardLeft7, boardyBottom, keyboardWidth, keyboardHeight, butM, butM, butMChanged, "m");//done
+  buttonComma = new ImageButtons(boardLeft8, boardyBottom, keyboardWidth, keyboardHeight, butComma, butComma, butCommaChanged, ",");//done
+  buttonPeriod = new ImageButtons(boardLeft9, boardyBottom, keyboardWidth, keyboardHeight, butPeriod, butPeriod, butPeriodChanged, ".");//done
+  buttonQuestionMark = new ImageButtons(boardLeft10, boardyBottom, keyboardWidth, keyboardHeight, butQuestionMark, butQuestionMark, butQuestionMarkChanged, "?");//done
+  //Fourth Row
+  buttonSlash = new ImageButtons(boardLeft3, boardyLast, keyboardWidth, keyboardHeight, butSlash, butSlash, butSlashChanged, "/");//done
+  buttonSpace = new ImageButtons(boardLeft4, boardyLast, spaceBarWidth, keyboardHeight, butSpace, butSpace, butSpaceChanged, " ");
+  buttonCom = new ImageButtons(boardLeft8 - 15, boardyLast, keyboardWidth, keyboardHeight, butCom, butCom, butComChanged, ".com");//done
   
   f = createFont("Arial",16,true);
   textSize(20);
@@ -317,6 +495,18 @@ void draw()
   
   buttonGo.update();
   
+  buttonApostrophe.update();
+  
+  buttonCom.update();
+  
+  buttonComma.update();
+  
+  buttonPeriod.update();
+  
+  buttonQuestionMark.update();
+  
+  buttonSlash.update();
+  
   buttonLowA.display();
 
   buttonLowB.display();
@@ -374,6 +564,18 @@ void draw()
   buttonSpace.display();
   
   buttonGo.display();
+  
+  buttonApostrophe.display();
+  
+  buttonCom.display();
+  
+  buttonComma.display();
+  
+  buttonPeriod.display();
+  
+  buttonQuestionMark.display();
+  
+  buttonSlash.display();
 }
 
 
@@ -398,7 +600,7 @@ class Button
 
   
   
-  void mousePressed() 
+  void mouseReleased() 
   {
     if(isOver && mousePressed) {
       
@@ -480,7 +682,7 @@ class ImageButtons extends Button
 
     over();
     
-    mousePressed();
+    mouseReleased();
     
     if(pressed) {
      
@@ -531,7 +733,7 @@ class ImageButtons extends Button
         //println(keyRep);    //Testing purpose
         //keyFlag = keyFlag-1;
       }
-      else if(keyFlag < 20 && number != "back" && number != "go" && number != " ")
+      else if(keyFlag < 20 && number != "back" && number != "go" && number != " " && number != ".com")
       {                 
         fill(0);
         keyRep = keyRep + number;
