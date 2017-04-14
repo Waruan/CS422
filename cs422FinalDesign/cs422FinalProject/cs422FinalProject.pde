@@ -782,9 +782,10 @@ void initPopups() {
   
 }
 
-void updateXYLocation(Popup current) {
-    current.x_Axis = int(xLocation);
-    current.y_Axis = int(yLocation);
+void updateXYLocation(int function) {
+  
+    popups.get(function).x_Axis = int(xLocation);
+    popups.get(function).y_Axis = int(yLocation);
 }
 
 boolean checkLocationChanged(Popup current) {
@@ -798,56 +799,8 @@ boolean checkLocationChanged(Popup current) {
 }
 
 //ISSUES LAST KNOWN POSITION IS NOT SAVING...
-void getCurrentButtonPopup(Button current) {
-  
-  int currentPopupID = current.function;
-  
-  //Settings
-  if(currentPopupID == 0) {
-    currentPopup = popups.get(0);
-  //  if(checkLocationChanged(currentPopup)) {
-  //    updateXYLocation(currentPopup);
-  //  }
-    updateXYLocation(currentPopup);
-  }
-  //Menu
-  else if(currentPopupID == 1) { 
-    currentPopup = popups.get(1);
-    updateXYLocation(currentPopup);
-  }
-  //9Gag
-  else if(currentPopupID == 2) { 
-    currentPopup = popups.get(2);
-    updateXYLocation(currentPopup);
-  }
-  //Health
-  else if(currentPopupID == 3) { 
-    currentPopup = popups.get(3);
-    updateXYLocation(currentPopup);
-  }
-  //Weather
-  else if(currentPopupID == 4) {
-    currentPopup = popups.get(4);
-    updateXYLocation(currentPopup);
-  }
-  //Article
-  else if(currentPopupID == 5) {
-    currentPopup = popups.get(5);
-    updateXYLocation(currentPopup);
-  }
-  //Facebook
-  else if(currentPopupID == 6) {
-    currentPopup = popups.get(6);
-    updateXYLocation(currentPopup);
-  }
-  //Twitter
-  else if(currentPopupID == 7) {
-    currentPopup = popups.get(7);
-    updateXYLocation(currentPopup);
-  }
-  
-
-
+void getCurrentButtonPopup(int current) {
+  currentPopup = popups.get(current);
 }
 
 //Draw the User Screen 
@@ -903,6 +856,8 @@ void userScreenDraw(User current){
       rect(x_drag, y_drag, drag_box_width, drag_box_height, 10);
     }
     image(currentPopup.img, currentPopup.x_Axis, currentPopup.y_Axis, currentPopup.width, currentPopup.height);
+    rect(xtest,ytest,width_test,height_test);
+    updateClickableBoxes(currentPopup, 4);
     //Button test = currentPopup.clickable.get(0);
     
    // println(test.x_Axis);
@@ -1044,14 +999,18 @@ void swap(Button current){
   
 }
 
-void updateClickableBoxes(int f) {
+void updateClickableBoxes(Popup box, int f) {
   
   if(f == 4) {
-       xtest = int((xLocation/100)*125);
-       ytest = int((yLocation/100)*180);
+      xtest = box.x_Axis + 140;
+      ytest = box.y_Axis + 250;
+    
+       //xtest = int((xLocation/100)*125);
+       //ytest = int((yLocation/100)*180);
       
        width_test = int((healthWidth/100)*20);
        height_test = int((healthHeight/100)*15);
+       
 
   }
   
@@ -1098,7 +1057,7 @@ void PopUpDrag(){
         yLocation = y_drag + drag_box_height - currentPopup.height;
         currentPopup.y_Axis = int(yLocation);
       }
-      //updateClickableBoxes(4);
+      //updateXYLocation(currentPopup.function);
 
   }
 
@@ -1270,7 +1229,8 @@ void UserScreen_MouseReleased(){
       boxInUse = true;   
       User u = userList.get(whichUser);
       Button currentButton = u.buttonSet.get(iconIndex);      
-      getCurrentButtonPopup(currentButton);
+      getCurrentButtonPopup(currentButton.function);
+
     }
     drag = false;
     iconDrag = false;
@@ -1285,7 +1245,7 @@ void UserScreen_MouseReleased(){
     Button currentButton = u.buttonSet.get(iconIndex);
     
     //checkButtonFunction(currentButton);
-    getCurrentButtonPopup(currentButton);
+    getCurrentButtonPopup(currentButton.function);
     //currentPopup = new Popup("Data/9gag_desktop.png", int(xLocation), int(yLocation), int(gagWidth), int(gagHeight));
 
     boxInUse = true;
