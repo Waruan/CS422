@@ -116,6 +116,7 @@ float originalY;
 
 boolean drag = false;
 
+// huge gray box
 float x_drag = (canvasWidth/29)*2;
 float y_drag = (canvasHeight/29)*3;
 
@@ -853,11 +854,12 @@ void userScreenDraw(User current){
     //println("Inside boxInUse True area");
     if(drag) {
       fill(192,192,192);
+      //Fix
       rect(x_drag, y_drag, drag_box_width, drag_box_height, 10);
     }
     image(currentPopup.img, currentPopup.x_Axis, currentPopup.y_Axis, currentPopup.width, currentPopup.height);
-    rect(xtest,ytest,width_test,height_test);
-    updateClickableBoxes(currentPopup, 4);
+    //rect(xtest,ytest,width_test,height_test);
+    //updateClickableBoxes(currentPopup, 4);
     //Button test = currentPopup.clickable.get(0);
     
    // println(test.x_Axis);
@@ -927,14 +929,14 @@ void mouseDragged() {
   }
   
   if(drag == false && isHidden == false){
-     originalX = xLocation;
-    originalY = yLocation;
-    dragDifx = mouseX-xLocation;
-    dragDify = mouseY-yLocation;
+     originalX = currentPopup.x_Axis;
+    originalY = currentPopup.y_Axis;
+    dragDifx = mouseX-currentPopup.x_Axis;
+    dragDify = mouseY-currentPopup.y_Axis;
   }
   
   
-  if(insideBox(xLocation, yLocation, currentPopup.width, currentPopup.height )&& isHidden ==false ){
+  if(insideBox(currentPopup.x_Axis, currentPopup.y_Axis, currentPopup.width, currentPopup.height )&& isHidden ==false ){
     drag = true;
     PopUpDrag();
     iconDrag = false;
@@ -1175,6 +1177,8 @@ boolean profileSelect_MouseReleased(){
   //ellipse((index+66+(2*(canvasWidth/100))),temp.y_Axis+15, 30, 30);
   if(insideCircle(newUserButton.x_Axis,newUserButton.y_Axis,newUserButton.width)){
     stage = 4;
+    whichUser=-1;
+    resetPinInfo();
     userSelected = false;
     return true;
   }
@@ -1221,7 +1225,7 @@ void UserScreen_MouseReleased(){
       userList.get(whichUser).buttonSet.get(iconIndex).x_Axis = selectedIconX_axis;
   } 
 
-  if(boxInUse && outsideBox(xLocation, yLocation, currentPopup.width, currentPopup.height)) {
+  if(boxInUse && outsideBox(currentPopup.x_Axis, currentPopup.y_Axis, currentPopup.width, currentPopup.height)) {
     
     background(255);
     boxInUse = false;
@@ -1229,7 +1233,7 @@ void UserScreen_MouseReleased(){
       boxInUse = true;   
       User u = userList.get(whichUser);
       Button currentButton = u.buttonSet.get(iconIndex);      
-      getCurrentButtonPopup(currentButton.function);
+      getCurrentButtonPopup(functionInUse);
 
     }
     drag = false;
@@ -1245,7 +1249,7 @@ void UserScreen_MouseReleased(){
     Button currentButton = u.buttonSet.get(iconIndex);
     
     //checkButtonFunction(currentButton);
-    getCurrentButtonPopup(currentButton.function);
+    getCurrentButtonPopup(functionInUse);
     //currentPopup = new Popup("Data/9gag_desktop.png", int(xLocation), int(yLocation), int(gagWidth), int(gagHeight));
 
     boxInUse = true;
@@ -1269,13 +1273,15 @@ void UserScreen_MouseReleased(){
   }
   
  
-  else if(insideBox(xLocation, yLocation, currentPopup.width, currentPopup.height) ) {
+  else if(insideBox(currentPopup.x_Axis, currentPopup.y_Axis, currentPopup.width, currentPopup.height) ) {
     //drag = true;
     originalX = xLocation;
     originalY = yLocation;
     dragDifx = mouseX-xLocation;
     dragDify = mouseY-yLocation;
     println("DEBUG 2");
+    drag = false;
+    iconDrag = false;
   }
   else {
     drag = false;
@@ -1825,6 +1831,7 @@ class ImageButtons extends PinButton
         }
         //User create new user
         else if(stage == 4){
+          whichUser = -1;
           if(stage4Part == 1){
             comfirmPin = pin;
             wrongConfirmPin = false;
@@ -1834,9 +1841,10 @@ class ImageButtons extends PinButton
             if(compareComfirmPin(pin)){
             
               addProfileButton(profile,66,30,numberOfUser);
-              User temp = new User("PlaceHolder",pin);
+              User temp = new User(numberOfUser+"PlaceHolder",pin);
               userList.add(temp);
               stage = 1;
+              numberOfUser++;
             }
             else{
               wrongConfirmPin = true;
