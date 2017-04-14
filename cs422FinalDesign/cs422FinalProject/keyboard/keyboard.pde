@@ -31,7 +31,7 @@ ImageButtons buttonLowZ;
 ImageButtons buttonBack;
 ImageButtons buttonGo;
 ImageButtons buttonSpace;
-int buttonSize = 90;
+int keyButtonSize = 90;
 int keyFlag = 0;  //A flag that you keep to track how many buttons are pressed.
 int keySpace = 0; //The space of the stars when they are printed
 String keyTracker = ""; //Keeps track of the pins and stores them
