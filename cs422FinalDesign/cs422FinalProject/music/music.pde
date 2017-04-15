@@ -166,7 +166,8 @@ Audio audio = new Audio();
 
 //100 100 before resize
 HScrollbar   hs1 = new HScrollbar(0, 200, 1000, 100, 1);
-HScrollbar   hs2 = new HScrollbar(0, 200, 1000, 100, 1);
+
+HScrollbar  hs2 = new HScrollbar(0, 400-20, 1000, 10, 1);
 
 
 String fileExt;
