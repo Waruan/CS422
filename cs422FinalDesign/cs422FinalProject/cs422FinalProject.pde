@@ -1794,26 +1794,24 @@ void UserScreen_MouseReleased(){
  
   else if(insideBox(currentPopup.x_Axis, currentPopup.y_Axis, currentPopup.width, currentPopup.height) ) {
     //drag = true;
-    boolean test = false;
     for(int i = 0; i < currentPopup.clickable.size(); i++) {
     
       if(insideBox(currentPopup.clickable.get(i).x_Axis, currentPopup.clickable.get(i).y_Axis, currentPopup.clickable.get(i).width, currentPopup.clickable.get(i).height)) {
       
         println("CLICKKK FUCKER!!!  [" + currentPopup.clickable.get(i).function + "]");
-        test = true;
         break;
       }
     
     }   
-    if(!test) {
-      originalX = xLocation;
-      originalY = yLocation;
-      dragDifx = mouseX-xLocation;
-      dragDify = mouseY-yLocation;
-      println("DEBUG 2");
-      drag = false;
-      iconDrag = false;
-    }
+    
+     originalX = xLocation;
+     originalY = yLocation;
+     dragDifx = mouseX-xLocation;
+     dragDify = mouseY-yLocation;
+     println("DEBUG 2");
+     drag = false;
+     iconDrag = false;
+    
   }
   else {
     drag = false;
