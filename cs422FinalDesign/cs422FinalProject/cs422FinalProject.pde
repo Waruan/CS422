@@ -214,6 +214,9 @@ ArrayList<Popup> popups = new ArrayList<Popup>();
 //Current Popup being used
 int popup_function = 0;
 
+Button currentButton;
+
+boolean imageBox = false;
 boolean evl_on = true;
 
 //Size of popup or popups
@@ -1347,6 +1350,12 @@ void userScreenDraw(User current){
     //rect(xtest2, ytest2, width_test,height_test);
     //rect(xtest3, ytest3, width_test,height_test);
     updateClickableBoxes(currentPopup, 4);
+    
+    if(imageBox) {
+    
+       image(currentButton.img, 500,500);
+    
+    }
     //Button test = currentPopup.clickable.get(0);
     
    // println(test.x_Axis);
@@ -1532,25 +1541,27 @@ void updateClickableBoxes(Popup box, int f) {
     clickable.add(temp);
    
   }*/
+      //Sleep
       int val = 18;
       xtest = box.x_Axis + int((box.width/100)*val);
       ytest = box.y_Axis + int((box.height/100)*80);
       
+      //Step
       val+= 22;
       xtest2 = box.x_Axis + int((box.width/100)*val);
       ytest2 = box.y_Axis + int((box.height/100)*80);
       
-      val+=22;
-      
+      //Weight
+      val+=22;    
       xtest3 = box.x_Axis + int((box.width/100)*val);
       ytest3 = box.y_Axis + int((box.height/100)*80);
       
       width_test = int((healthWidth/100)*20);
       height_test = int((healthHeight/100)*15);
        
-    box.PopupAddClickable(xtest,ytest,width_test,height_test, 1);
-    box.PopupAddClickable(xtest2,ytest2,width_test,height_test, 2);
-    box.PopupAddClickable(xtest3,ytest3,width_test,height_test, 3);
+    box.PopupAddClickable("Data/Health(Sleep).png",xtest,ytest,width_test,height_test, 1);
+    box.PopupAddClickable("Data/Health(Sleep).png",xtest2,ytest2,width_test,height_test, 2);
+    box.PopupAddClickable("Data/Health(Sleep).png",xtest3,ytest3,width_test,height_test, 3);
 
   }
   
@@ -1755,6 +1766,7 @@ void UserScreen_MouseReleased(){
     
     background(255);
     boxInUse = false;
+    imageBox = false;
     if(clickOtherButton()){
       boxInUse = true;   
       //User u = userList.get(whichUser);
@@ -1794,11 +1806,14 @@ void UserScreen_MouseReleased(){
  
   else if(insideBox(currentPopup.x_Axis, currentPopup.y_Axis, currentPopup.width, currentPopup.height) ) {
     //drag = true;
+    
     for(int i = 0; i < currentPopup.clickable.size(); i++) {
     
       if(insideBox(currentPopup.clickable.get(i).x_Axis, currentPopup.clickable.get(i).y_Axis, currentPopup.clickable.get(i).width, currentPopup.clickable.get(i).height)) {
       
         println("CLICKKK FUCKER!!!  [" + currentPopup.clickable.get(i).function + "]");
+        imageBox = true;
+        currentButton = currentPopup.clickable.get(i);
         break;
       }
     
@@ -1825,6 +1840,7 @@ void UserScreen_MouseReleased(){
   
 
 }
+
 
 
 // Check if a different function button has been press
@@ -2542,6 +2558,12 @@ class Popup{
   void PopupAddClickable(int x, int y , int w , int h, int f){
     // x and y is the location with respect to the popup
     Button temp = new Button(x,y,w,h,f);
+    clickable.add(temp);
+   
+  }
+  void PopupAddClickable(String file, int x, int y , int w , int h, int f){
+    // x and y is the location with respect to the popup
+    Button temp = new Button(file, x,y,w,h,f);
     clickable.add(temp);
    
   }
