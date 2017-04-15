@@ -1273,8 +1273,14 @@ void initPopups() {
   popups.add(temp);
   
   temp = new Popup("Data/Health_Template.png", permXLocation, permYLocation, int(healthWidth), int(healthHeight), 3);
-  popups.add(temp);
   
+  
+  initLocations(temp);
+  temp.PopupAddClickable("Data/Health(Sleep).png",xtest,ytest,width_test,height_test, 1);
+  temp.PopupAddClickable("Data/Health(Steps).png",xtest2,ytest2,width_test,height_test, 2);
+  temp.PopupAddClickable("Data/Health(Weight).png",xtest3,ytest3,width_test,height_test, 3);
+  
+  popups.add(temp);
   temp = new Popup("Data/Weather_Template.png", permXLocation, permYLocation, int(weatherWidth), int(weatherHeight), 4);
   popups.add(temp);
   
@@ -1287,6 +1293,25 @@ void initPopups() {
   temp = new Popup("Data/Twiter.png", permXLocation, permYLocation, int(gagWidth), int(gagHeight), 7);
   popups.add(temp);
   
+}
+
+void initLocations(Popup currentPopup) {
+      int val = 18;
+      xtest = currentPopup.x_Axis + int((currentPopup.width/100)*val);
+      ytest = currentPopup.y_Axis + int((currentPopup.height/100)*80);
+      
+      //Step
+      val+= 22;
+      xtest2 = currentPopup.x_Axis + int((currentPopup.width/100)*val);
+      ytest2 = currentPopup.y_Axis + int((currentPopup.height/100)*80);
+      
+      //Weight
+      val+=22;    
+      xtest3 = currentPopup.x_Axis + int((currentPopup.width/100)*val);
+      ytest3 = currentPopup.y_Axis + int((currentPopup.height/100)*80);
+      
+      width_test = int((healthWidth/100)*20);
+      height_test = int((healthHeight/100)*15);
 }
 
 void updateXYLocation(int popUpFunction) {
@@ -1353,7 +1378,7 @@ void userScreenDraw(User current){
     
     if(imageBox) {
     
-       image(currentButton.img, 500,500);
+       image(currentButton.img, currentButton.x_image, currentButton.y_image);
     
     }
     //Button test = currentPopup.clickable.get(0);
@@ -1541,27 +1566,22 @@ void updateClickableBoxes(Popup box, int f) {
     clickable.add(temp);
    
   }*/
-      //Sleep
       int val = 18;
-      xtest = box.x_Axis + int((box.width/100)*val);
-      ytest = box.y_Axis + int((box.height/100)*80);
+      for(int i = 0; i < box.clickable.size(); i++) {
+        box.clickable.get(i).x_Axis = box.x_Axis + int((box.width/100)*val);
+        box.clickable.get(i).y_Axis = box.y_Axis + int((box.height/100)*80);
+        
+        box.clickable.get(i).x_image = box.x_Axis + int((box.width/100)*23);
+        box.clickable.get(i).y_image = box.y_Axis + int((box.width/100)*4);
+        
+        xtest = box.x_Axis + int((box.width/100)*val);
+        ytest = box.y_Axis + int((box.height/100)*80);
+        val+= 22;
+        
+      }
       
-      //Step
-      val+= 22;
-      xtest2 = box.x_Axis + int((box.width/100)*val);
-      ytest2 = box.y_Axis + int((box.height/100)*80);
       
-      //Weight
-      val+=22;    
-      xtest3 = box.x_Axis + int((box.width/100)*val);
-      ytest3 = box.y_Axis + int((box.height/100)*80);
-      
-      width_test = int((healthWidth/100)*20);
-      height_test = int((healthHeight/100)*15);
-       
-    box.PopupAddClickable("Data/Health(Sleep).png",xtest,ytest,width_test,height_test, 1);
-    box.PopupAddClickable("Data/Health(Sleep).png",xtest2,ytest2,width_test,height_test, 2);
-    box.PopupAddClickable("Data/Health(Sleep).png",xtest3,ytest3,width_test,height_test, 3);
+
 
   }
   
@@ -2178,6 +2198,8 @@ void addProfileButton(ArrayList<Button> blist , int X, int Y,int f){
 class Button{
   int x_Axis;
   int y_Axis;
+  int x_image;
+  int y_image;
   int width;
   int height;
   int function;
@@ -2202,7 +2224,6 @@ class Button{
     //1 for setting
     function = f;
   }
- 
   void changeFunction(int f){
     function = f;
   }
