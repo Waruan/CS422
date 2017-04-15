@@ -45,12 +45,12 @@ int stage = 0;
 //float canvasHeight;
 
 // evl monitor size
-float canvasWidth = 2732;
-float canvasHeight = 1536;
+//float canvasWidth = 2732;
+//float canvasHeight = 1536;
 
 // scale down for home monitors
-//float canvasWidth = 1366;
-//float canvasHeight = 768;
+float canvasWidth = 1366;
+float canvasHeight = 768;
 
 int currentTime;
 
@@ -887,8 +887,8 @@ void keyBoardSetup()
 
 void setup() {
 
- size(canvasWidth, canvasHeight);
- //size( 1366 ,768);
+ //size(canvasWidth, canvasHeight);
+ size( 1366 ,768);
 
   initPopups();
   //fixOrderofButton(guest.buttonSet,guest.usrFunctionActive);
@@ -1281,16 +1281,6 @@ void updateXYLocation(int popUpFunction) {
     popups.get(popUpFunction).y_Axis = int(yLocation);
 }
 
-boolean checkLocationChanged(Popup current) {
-  if(current.x_Axis != permXLocation || current.y_Axis != permYLocation) {
-    return true;
-  
-  }
-  else
-    return false;
-
-}
-
 //ISSUES LAST KNOWN POSITION IS NOT SAVING...
 void getCurrentButtonPopup(int current) {
   currentPopup = popups.get(current);
@@ -1342,8 +1332,8 @@ void userScreenDraw(User current){
       rect(x_drag, y_drag, drag_box_width, drag_box_height, 10);
     }
     image(currentPopup.img, currentPopup.x_Axis, currentPopup.y_Axis, currentPopup.width, currentPopup.height);
-    //rect(xtest,ytest,width_test,height_test);
-    //updateClickableBoxes(currentPopup, 4);
+    rect(xtest,ytest,width_test,height_test);
+    updateClickableBoxes(currentPopup, 4);
     //Button test = currentPopup.clickable.get(0);
     
    // println(test.x_Axis);
@@ -1523,11 +1513,8 @@ void swap(Button current){
 void updateClickableBoxes(Popup box, int f) {
   
   if(f == 4) {
-      xtest = box.x_Axis + 140;
-      ytest = box.y_Axis + 250;
-    
-       //xtest = int((xLocation/100)*125);
-       //ytest = int((yLocation/100)*180);
+      xtest = box.x_Axis + int((box.width/100)*20);
+      ytest = box.y_Axis + int((box.height/100)*80);;
       
        width_test = int((healthWidth/100)*20);
        height_test = int((healthHeight/100)*15);
@@ -1538,27 +1525,6 @@ void updateClickableBoxes(Popup box, int f) {
 }
 
 void PopUpDrag(){
-/*
-  if( mouseX-dragDifx < x_drag || mouseX-dragDifx+popUpX > x_drag + drag_box_width || mouseY-dragDify < y_drag || mouseY-dragDify+popUpY > y_drag + drag_box_height) {
-
-      //Do nothing.
-      if(xLocation < x_drag){
-        xLocation = x_drag;
-        currentPopup.x_Axis = int(xLocation);
-      }
-      if( xLocation+popUpX > x_drag + drag_box_width){
-         xLocation = x_drag + drag_box_width - popUpX;
-         currentPopup.x_Axis = int(xLocation);
-      }
-      if( yLocation < y_drag){
-        yLocation = y_drag;
-        currentPopup.y_Axis = int(yLocation);
-      }
-       if(yLocation+popUpY > y_drag + drag_box_height){
-        yLocation = y_drag + drag_box_height - popUpY;
-        currentPopup.y_Axis = int(yLocation);
-      }
-*/
   if( mouseX-dragDifx < x_drag || mouseX-dragDifx+currentPopup.width > x_drag + drag_box_width || mouseY-dragDify < y_drag || mouseY-dragDify+currentPopup.height > y_drag + drag_box_height) {
 
       //Do nothing.
@@ -1578,7 +1544,6 @@ void PopUpDrag(){
         yLocation = y_drag + drag_box_height - currentPopup.height;
         currentPopup.y_Axis = int(yLocation);
       }
-      //updateXYLocation(currentPopup.function);
 
   }
 
@@ -1664,7 +1629,7 @@ void mouseReleased() {
     if(profileSelect_MouseReleased() == false){
    
       if(outsidePinArea() == true){
-        resetPinInfo();
+        resetInfo();
         whichUser = -1;
         stage = 1;
       }
