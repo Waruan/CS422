@@ -212,8 +212,9 @@ PImage bgroundimg;
 ArrayList<Popup> popups = new ArrayList<Popup>();
 
 //Current Popup being used
-int popup_stage = 0;
+int popup_function = 0;
 
+boolean evl_on = true;
 
 //Size of popup or popups
 int popUpX = int((canvasWidth/100)*20);
@@ -239,11 +240,14 @@ int weatherWidth = int((canvasWidth/100)*50);
 int weatherHeight = int((canvasHeight/100)*40);
 
 //Test variables for box within images
-int xtest = int((xLocation/100)*125);
-int ytest = int((yLocation/100)*180);
+int xtest;
+int ytest;
 
 int xtest2;
 int ytest2;
+
+int xtest3;
+int ytest3;
 
 int width_test = int((healthWidth/100)*20);
 int height_test = int((healthHeight/100)*15);
@@ -1339,8 +1343,9 @@ void userScreenDraw(User current){
       rect(x_drag, y_drag, drag_box_width, drag_box_height, 10);
     }
     image(currentPopup.img, currentPopup.x_Axis, currentPopup.y_Axis, currentPopup.width, currentPopup.height);
-    rect(xtest,ytest,width_test,height_test);
-    rect(xtest2, ytest2, width_test,height_test);
+    //rect(xtest,ytest,width_test,height_test);
+    //rect(xtest2, ytest2, width_test,height_test);
+    //rect(xtest3, ytest3, width_test,height_test);
     updateClickableBoxes(currentPopup, 4);
     //Button test = currentPopup.clickable.get(0);
     
@@ -1521,16 +1526,31 @@ void swap(Button current){
 void updateClickableBoxes(Popup box, int f) {
   
   if(f == 4) {
-      xtest = box.x_Axis + int((box.width/100)*20);
+    /*void PopupAddClickable(int x, int y , int w , int h, int f){
+    // x and y is the location with respect to the popup
+    Button temp = new Button(x,y,w,h,f);
+    clickable.add(temp);
+   
+  }*/
+      int val = 18;
+      xtest = box.x_Axis + int((box.width/100)*val);
       ytest = box.y_Axis + int((box.height/100)*80);
       
-      xtest2 = box.x_Axis + int((box.width/100)*45);
+      val+= 22;
+      xtest2 = box.x_Axis + int((box.width/100)*val);
       ytest2 = box.y_Axis + int((box.height/100)*80);
       
+      val+=22;
+      
+      xtest3 = box.x_Axis + int((box.width/100)*val);
+      ytest3 = box.y_Axis + int((box.height/100)*80);
       
       width_test = int((healthWidth/100)*20);
       height_test = int((healthHeight/100)*15);
        
+    box.PopupAddClickable(xtest,ytest,width_test,height_test, 1);
+    box.PopupAddClickable(xtest2,ytest2,width_test,height_test, 2);
+    box.PopupAddClickable(xtest3,ytest3,width_test,height_test, 3);
 
   }
   
@@ -1748,18 +1768,11 @@ void UserScreen_MouseReleased(){
       
     
   }
-    if((loopInsideBox() || iconDrag== true)  && !boxInUse){
-    //pop_up_box(xLocation, yLocation);
+  if((loopInsideBox() || iconDrag== true)  && !boxInUse){
 
-    //User u = userList.get(whichUser);
-    //Button currentButton = u.buttonSet.get(iconIndex);
-    
-    //checkButtonFunction(currentButton);
     getCurrentButtonPopup(functionInUse);
-    //currentPopup = new Popup("Data/9gag_desktop.png", int(xLocation), int(yLocation), int(gagWidth), int(gagHeight));
 
     boxInUse = true;
-    //println("LINE 925");
     println("DEBUG 25");
     drag = false;
     iconDrag = false;
@@ -1781,13 +1794,26 @@ void UserScreen_MouseReleased(){
  
   else if(insideBox(currentPopup.x_Axis, currentPopup.y_Axis, currentPopup.width, currentPopup.height) ) {
     //drag = true;
-    originalX = xLocation;
-    originalY = yLocation;
-    dragDifx = mouseX-xLocation;
-    dragDify = mouseY-yLocation;
-    println("DEBUG 2");
-    drag = false;
-    iconDrag = false;
+    boolean test = false;
+    for(int i = 0; i < currentPopup.clickable.size(); i++) {
+    
+      if(insideBox(currentPopup.clickable.get(i).x_Axis, currentPopup.clickable.get(i).y_Axis, currentPopup.clickable.get(i).width, currentPopup.clickable.get(i).height)) {
+      
+        println("CLICKKK FUCKER!!!  [" + currentPopup.clickable.get(i).function + "]");
+        test = true;
+        break;
+      }
+    
+    }   
+    if(!test) {
+      originalX = xLocation;
+      originalY = yLocation;
+      dragDifx = mouseX-xLocation;
+      dragDify = mouseY-yLocation;
+      println("DEBUG 2");
+      drag = false;
+      iconDrag = false;
+    }
   }
   else {
     drag = false;
@@ -1801,6 +1827,7 @@ void UserScreen_MouseReleased(){
   
 
 }
+
 
 // Check if a different function button has been press
 boolean clickOtherButton(){
@@ -2516,8 +2543,8 @@ class Popup{
 */
   void PopupAddClickable(int x, int y , int w , int h, int f){
     // x and y is the location with respect to the popup
-    //Button temp = new Button(x_Axis + x,y_Axis + y,w,h,f);
-    //clickable.add(temp);
+    Button temp = new Button(x,y,w,h,f);
+    clickable.add(temp);
    
   }
 }
