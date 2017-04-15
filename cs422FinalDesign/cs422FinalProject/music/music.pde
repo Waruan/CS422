@@ -165,7 +165,7 @@ Audio audio = new Audio();
 // make string that will house the audio extension
 
 //100 100 before resize
-HScrollbar   hs1 = new HScrollbar(0, 20, width, 10, 1);
+HScrollbar   hs1 = new HScrollbar(0, 200, 1000, 100, 1);
 
 HScrollbar  hs2 = new HScrollbar(0, height-20, width, 10, 1);
 
@@ -226,6 +226,7 @@ void draw(){
   
   //constrain the audio level between 0 and 1
   audio.volume=constrain((hs1.spos/(hs1.swidth-10)),0,1);
+  //transparent = 255 * constrain((hs1.spos/(hs1.swidth-10)),0,1) ;
   //fade the volume and color out at the same rate
   seek = (audio.currentTime);
   //println(seek);
@@ -271,7 +272,7 @@ void mouseReleased(){
   }
   if(dist(mouseX,mouseY,30,height-30)<30/2){
     previous();
-    return;
+    return; 
   }
 }
 
