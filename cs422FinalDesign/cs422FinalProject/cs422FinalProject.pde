@@ -248,6 +248,8 @@ int weatherWidth = int((canvasWidth/100)*50);
 int weatherHeight = int((canvasHeight/100)*40);
 
 //9Gag Next and previous buttons
+int gag_stage = 1;
+
 int gag_previous_x_axis;
 int gag_previous_y_axis;
 
@@ -1307,8 +1309,10 @@ void initPopups() {
   popups.add(temp);
   
   //9Gag
-  temp = new Popup("Data/9gag_desktop.png", permXLocation, permYLocation, int(gagWidth), int(gagHeight), 2);
+  temp = new Popup("Data/9gag_pic1.png", permXLocation, permYLocation, int(gagWidth), int(gagHeight), 2);
   initLocations(temp,2);
+  temp.PopupAddClickable(gag_previous_x_axis, gag_previous_y_axis, gag_box_width, gag_box_height, 1);
+  temp.PopupAddClickable(gag_next_x_axis, gag_next_y_axis, gag_box_width, gag_box_height, 2);
   popups.add(temp);
   
   //Health Popup and clickables
@@ -1345,8 +1349,12 @@ void initPopups() {
 void initLocations(Popup currentPopup, int f) {
   
   if( f == 2) {
-    gag_next_x_axis =currentPopup.x_Axis + int((currentPopup.width/100)*18);
-    gag_next_y_axis = currentPopup.y_Axis + int((currentPopup.height/100)*80); 
+      int val = 38;
+      gag_previous_x_axis =currentPopup.x_Axis + int((currentPopup.width/100)*val);
+      gag_previous_y_axis = currentPopup.y_Axis + int((currentPopup.height/100)*95); 
+      val+=15;
+      gag_next_x_axis =currentPopup.x_Axis + int((currentPopup.width/100)*val);
+      gag_next_y_axis = currentPopup.y_Axis + int((currentPopup.height/100)*95); 
   }
   else if(f == 3) {
       int val = 18;
@@ -1443,15 +1451,14 @@ void userScreenDraw(User current){
       rect(x_drag, y_drag, drag_box_width, drag_box_height, 10);
     }
     image(currentPopup.img, currentPopup.x_Axis, currentPopup.y_Axis, currentPopup.width, currentPopup.height);
-    rect(gag_next_x_axis, gag_next_y_axis, gag_box_width, gag_box_height);
-    //rect(weather_hourly_x_axis, weather_hourly_y_axis, weather_box_width, weather_box_height);
+    //rect(gag_previous_x_axis, gag_previous_y_axis, gag_box_width, gag_box_height);
+    //rect(gag_next_x_axis, gag_next_y_axis, gag_box_width, gag_box_height);
     //rect(weather_weekly_x_axis, weather_weekly_y_axis, weather_box_width, weather_box_height);
     //rect(weather_map_x_axis, weather_map_y_axis, weather_box_width, weather_box_height);
     updateClickableBoxes(currentPopup, currentPopup.function);
     
     if(imageBox) {
-    
-       image(currentButton.img, currentButton.x_image, currentButton.y_image);
+      image(currentButton.img, currentButton.x_image, currentButton.y_image);
     
     }
     //Button test = currentPopup.clickable.get(0);
@@ -1633,8 +1640,18 @@ void swap(Button current){
 
 void updateClickableBoxes(Popup box, int f) {
   
+  if(f == 2) {
+      int val = 38;
+      for(int i = 0; i < box.clickable.size(); i++) {
+        box.clickable.get(i).x_Axis = box.x_Axis + int((box.width/100)*val);
+        box.clickable.get(i).y_Axis = box.y_Axis + int((box.height/100)*95);
+        val+= 15;   
+      }
+  
+  }
+  
   //Health Popup
-  if(f == 3) {
+  else if(f == 3) {
       int val = 18;
       for(int i = 0; i < box.clickable.size(); i++) {
         box.clickable.get(i).x_Axis = box.x_Axis + int((box.width/100)*val);
@@ -1914,15 +1931,48 @@ void UserScreen_MouseReleased(){
  
   else if(insideBox(currentPopup.x_Axis, currentPopup.y_Axis, currentPopup.width, currentPopup.height) ) {
     //drag = true;
-    
+    println("inside 1");
     for(int i = 0; i < currentPopup.clickable.size(); i++) {
-    
+      println("inside 2");
       if(insideBox(currentPopup.clickable.get(i).x_Axis, currentPopup.clickable.get(i).y_Axis, currentPopup.clickable.get(i).width, currentPopup.clickable.get(i).height)) {
-      
-        //println("CLICKKK FUCKER!!!  [" + currentPopup.clickable.get(i).function + "]");
-        imageBox = true;
-        currentButton = currentPopup.clickable.get(i);
-        break;
+        
+        println(currentPopup.function);
+        //If app is 9gag
+        if(currentPopup.function == 2) {
+          if(currentPopup.clickable.get(i).function == 1) {
+            println("Prev");
+            
+            if(gag_stage == 1) {
+              gag_stage = 1;
+            }
+            else {
+              gag_stage--;
+            }
+            
+            currentPopup.img = loadImage("Data/9gag_pic" + gag_stage + ".png");
+            break;
+          }
+          else if(currentPopup.clickable.get(i).function == 2) {
+            println("Next");
+            if(gag_stage > 2) {
+              gag_stage = 3;
+            }
+            else {
+              gag_stage++;
+            }
+            
+            currentPopup.img = loadImage("Data/9gag_pic" + gag_stage + ".png");
+            break;
+          }
+        }
+        else {
+          imageBox = true;
+          currentButton = currentPopup.clickable.get(i);
+          break;
+        
+        }
+        
+        
       }
     
     }   
