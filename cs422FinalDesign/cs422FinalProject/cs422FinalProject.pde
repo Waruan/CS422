@@ -242,20 +242,44 @@ int healthHeight = int((canvasHeight/100)*40);
 int weatherWidth = int((canvasWidth/100)*50);
 int weatherHeight = int((canvasHeight/100)*40);
 
-//Test variables for box within images
-int xtest;
-int ytest;
+//9Gag Next and previous buttons
+int gag_previous_x_axis;
+int gag_previous_y_axis;
 
-int xtest2;
-int ytest2;
+int gag_next_x_axis;
+int gag_next_y_axis;
 
-int xtest3;
-int ytest3;
+int gag_box_width = int((gagWidth/100)*13);
+int gag_box_height = int((gagWidth/100)*5);
 
-int width_test = int((healthWidth/100)*20);
-int height_test = int((healthHeight/100)*15);
+//Health boxes locations and size
+int health_sleep_x_axis;
+int health_sleep_y_axis;
 
+int health_step_x_axis;
+int health_step_y_axis;
 
+int health_weight_x_axis;
+int health_weight_y_axis;
+
+int health_box_width = int((healthWidth/100)*20);
+int health_box_height = int((healthHeight/100)*15);
+
+//Weather boxes location and size
+int weather_today_x_axis;
+int weather_today_y_axis;
+
+int weather_hourly_x_axis;
+int weather_hourly_y_axis;
+
+int weather_weekly_x_axis;
+int weather_weekly_y_axis;
+
+int weather_map_x_axis;
+int weather_map_y_axis;
+
+int weather_box_width = int((weatherWidth/100)*15);
+int weather_box_height = int((weatherHeight/100)*13);
 
 // Old code before creating user class
 /////////////////////////////////////////////////////////////////////////
@@ -1263,55 +1287,92 @@ void profileDraw(){
 
 void initPopups() {
   println("Init Popup function");
+  //Settings
   Popup temp = new Popup("Data/settings_icon.png", permXLocation, permYLocation, int(gagWidth), int(gagHeight), 0);
   popups.add(temp);
   
+  //Menu
   temp = new Popup("Data/settings_icon.png", permXLocation, permYLocation, int(gagWidth), int(gagHeight), 1);
   popups.add(temp);
   
+  //9Gag
   temp = new Popup("Data/9gag_desktop.png", permXLocation, permYLocation, int(gagWidth), int(gagHeight), 2);
+  initLocations(temp,2);
   popups.add(temp);
   
+  //Health Popup and clickables
   temp = new Popup("Data/Health_Template.png", permXLocation, permYLocation, int(healthWidth), int(healthHeight), 3);
-  
-  
-  initLocations(temp);
-  temp.PopupAddClickable("Data/Health(Sleep).png",xtest,ytest,width_test,height_test, 1);
-  temp.PopupAddClickable("Data/Health(Steps).png",xtest2,ytest2,width_test,height_test, 2);
-  temp.PopupAddClickable("Data/Health(Weight).png",xtest3,ytest3,width_test,height_test, 3);
-  
+  initLocations(temp, 3);
+  temp.PopupAddClickable("Data/Health(Sleep).png",health_sleep_x_axis, health_sleep_y_axis,health_box_width,health_box_height, 1);
+  temp.PopupAddClickable("Data/Health(Steps).png",health_step_x_axis, health_step_y_axis,health_box_width,health_box_height, 2);
+  temp.PopupAddClickable("Data/Health(Weight).png",health_weight_x_axis, health_weight_y_axis,health_box_width,health_box_height, 3);
   popups.add(temp);
+  
+  //Weather popup and clickables
   temp = new Popup("Data/Weather_Template.png", permXLocation, permYLocation, int(weatherWidth), int(weatherHeight), 4);
+  initLocations(temp, 4);
+  temp.PopupAddClickable("Data/Weather(Today).png", weather_today_x_axis, weather_today_y_axis, weather_box_width, weather_box_height, 1);
+  temp.PopupAddClickable("Data/Weather(Hourly).png", weather_hourly_x_axis, weather_hourly_y_axis, weather_box_width, weather_box_height, 2);
+  temp.PopupAddClickable("Data/Weather(Weekly).png", weather_weekly_x_axis, weather_weekly_y_axis, weather_box_width, weather_box_height, 3);
+  temp.PopupAddClickable("Data/Weather(Map).png", weather_map_x_axis, weather_map_y_axis, weather_box_width, weather_box_height, 4);
   popups.add(temp);
   
+  //Articles
   temp = new Popup("Data/Article_Template.png", permXLocation, permYLocation, int(gagWidth), int(gagHeight), 5);
   popups.add(temp);
   
+  //Facebook
   temp = new Popup("Data/Facebook.png", permXLocation, permYLocation, int(gagWidth), int(gagHeight), 6);
   popups.add(temp);
   
+  //Twitter
   temp = new Popup("Data/Twiter.png", permXLocation, permYLocation, int(gagWidth), int(gagHeight), 7);
   popups.add(temp);
   
 }
 
-void initLocations(Popup currentPopup) {
+void initLocations(Popup currentPopup, int f) {
+  
+  if( f == 2) {
+    gag_next_x_axis =currentPopup.x_Axis + int((currentPopup.width/100)*18);
+    gag_next_y_axis = currentPopup.y_Axis + int((currentPopup.height/100)*80); 
+  }
+  else if(f == 3) {
       int val = 18;
-      xtest = currentPopup.x_Axis + int((currentPopup.width/100)*val);
-      ytest = currentPopup.y_Axis + int((currentPopup.height/100)*80);
+      health_sleep_x_axis = currentPopup.x_Axis + int((currentPopup.width/100)*val);
+      health_sleep_y_axis = currentPopup.y_Axis + int((currentPopup.height/100)*80);
       
       //Step
       val+= 22;
-      xtest2 = currentPopup.x_Axis + int((currentPopup.width/100)*val);
-      ytest2 = currentPopup.y_Axis + int((currentPopup.height/100)*80);
+      health_step_x_axis = currentPopup.x_Axis + int((currentPopup.width/100)*val);
+      health_step_y_axis = currentPopup.y_Axis + int((currentPopup.height/100)*80);
       
       //Weight
       val+=22;    
-      xtest3 = currentPopup.x_Axis + int((currentPopup.width/100)*val);
-      ytest3 = currentPopup.y_Axis + int((currentPopup.height/100)*80);
+      health_weight_x_axis = currentPopup.x_Axis + int((currentPopup.width/100)*val);
+      health_weight_y_axis = currentPopup.y_Axis + int((currentPopup.height/100)*80);
       
-      width_test = int((healthWidth/100)*20);
-      height_test = int((healthHeight/100)*15);
+      health_box_width = int((healthWidth/100)*20);
+      health_box_height = int((healthHeight/100)*15);
+  }
+  else if(f == 4) {
+     int val = 18;
+     weather_today_x_axis = currentPopup.x_Axis + int((currentPopup.width/100)*val);
+     weather_today_y_axis = currentPopup.y_Axis + int((currentPopup.height/100)*80);
+     
+     val+=17;
+     weather_hourly_x_axis = currentPopup.x_Axis + int((currentPopup.width/100)*val);
+     weather_hourly_y_axis = currentPopup.y_Axis + int((currentPopup.height/100)*80);
+     
+     val+=17;
+     weather_weekly_x_axis = currentPopup.x_Axis + int((currentPopup.width/100)*val);
+     weather_weekly_y_axis = currentPopup.y_Axis + int((currentPopup.height/100)*80);
+     
+     val+=17;
+     weather_map_x_axis = currentPopup.x_Axis + int((currentPopup.width/100)*val);
+     weather_map_y_axis = currentPopup.y_Axis + int((currentPopup.height/100)*80);
+  
+  }
 }
 
 void updateXYLocation(int popUpFunction) {
@@ -1371,10 +1432,11 @@ void userScreenDraw(User current){
       rect(x_drag, y_drag, drag_box_width, drag_box_height, 10);
     }
     image(currentPopup.img, currentPopup.x_Axis, currentPopup.y_Axis, currentPopup.width, currentPopup.height);
-    //rect(xtest,ytest,width_test,height_test);
-    //rect(xtest2, ytest2, width_test,height_test);
-    //rect(xtest3, ytest3, width_test,height_test);
-    updateClickableBoxes(currentPopup, 4);
+    rect(gag_next_x_axis, gag_next_y_axis, gag_box_width, gag_box_height);
+    //rect(weather_hourly_x_axis, weather_hourly_y_axis, weather_box_width, weather_box_height);
+    //rect(weather_weekly_x_axis, weather_weekly_y_axis, weather_box_width, weather_box_height);
+    //rect(weather_map_x_axis, weather_map_y_axis, weather_box_width, weather_box_height);
+    updateClickableBoxes(currentPopup, currentPopup.function);
     
     if(imageBox) {
     
@@ -1559,13 +1621,8 @@ void swap(Button current){
 
 void updateClickableBoxes(Popup box, int f) {
   
-  if(f == 4) {
-    /*void PopupAddClickable(int x, int y , int w , int h, int f){
-    // x and y is the location with respect to the popup
-    Button temp = new Button(x,y,w,h,f);
-    clickable.add(temp);
-   
-  }*/
+  //Health Popup
+  if(f == 3) {
       int val = 18;
       for(int i = 0; i < box.clickable.size(); i++) {
         box.clickable.get(i).x_Axis = box.x_Axis + int((box.width/100)*val);
@@ -1574,15 +1631,34 @@ void updateClickableBoxes(Popup box, int f) {
         box.clickable.get(i).x_image = box.x_Axis + int((box.width/100)*23);
         box.clickable.get(i).y_image = box.y_Axis + int((box.width/100)*4);
         
-        xtest = box.x_Axis + int((box.width/100)*val);
-        ytest = box.y_Axis + int((box.height/100)*80);
-        val+= 22;
-        
+        health_box_width = box.x_Axis + int((box.width/100)*val);
+        health_box_height = box.y_Axis + int((box.height/100)*80);
+        val+= 22;   
       }
-      
-      
-
-
+  }
+  //Weather
+  else if(f == 4) {
+    int val = 18;
+    for(int i = 0; i < box.clickable.size(); i++) {
+        box.clickable.get(i).x_Axis = box.x_Axis + int((box.width/100)*val);
+        box.clickable.get(i).y_Axis = box.y_Axis + int((box.height/100)*80);
+        
+        if(box.clickable.get(i).function == 2) {
+          box.clickable.get(i).x_image = box.x_Axis + int((box.width/100)*23);
+          box.clickable.get(i).y_image = (box.y_Axis-75) + int((box.width/100)*2);
+        }
+        else if(box.clickable.get(i).function == 4) {
+          box.clickable.get(i).x_image = box.x_Axis + int((box.width/100)*23);
+          box.clickable.get(i).y_image = (box.y_Axis-10) + int((box.width/100));
+        }
+        else {
+          box.clickable.get(i).x_image = box.x_Axis + int((box.width/100)*23);
+          box.clickable.get(i).y_image = box.y_Axis + int((box.width/100));
+        }     
+        val+=17;
+      }
+  
+  
   }
   
 }
@@ -1831,7 +1907,7 @@ void UserScreen_MouseReleased(){
     
       if(insideBox(currentPopup.clickable.get(i).x_Axis, currentPopup.clickable.get(i).y_Axis, currentPopup.clickable.get(i).width, currentPopup.clickable.get(i).height)) {
       
-        println("CLICKKK FUCKER!!!  [" + currentPopup.clickable.get(i).function + "]");
+        //println("CLICKKK FUCKER!!!  [" + currentPopup.clickable.get(i).function + "]");
         imageBox = true;
         currentButton = currentPopup.clickable.get(i);
         break;
