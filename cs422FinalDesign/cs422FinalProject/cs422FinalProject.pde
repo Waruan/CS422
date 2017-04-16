@@ -251,7 +251,7 @@ PImage bgroundimg;
 ////////////////////////////////////////////////////////////////
 
 boolean inMenu = false;
-
+boolean inSetting = false;
 int menuXaxis = int((canvasWidth/100)*40);
 int menuYaxis = int((canvasHeight/100)*60);
 int menuWidth = int((canvasWidth/100)*20);
@@ -1616,6 +1616,7 @@ void userScreenDraw(User current){
   noStroke();
   drawTimeDate();
   inMenu = false;
+  inSetting = false;
   if(activeSmallMusic){
     image(miniPlayer.img, miniPlayer.x_Axis, miniPlayer.y_Axis, miniPlayer.width, miniPlayer.height);
   }
@@ -1663,6 +1664,7 @@ void userScreenDraw(User current){
   if(boxInUse == true && functionInUse != 0 && functionInUse!=1){
     //println("Inside boxInUse True area");
     inMenu = false;;
+    inSetting = false;
     if(drag) {
       fill(192,192,192);
       //Fix
@@ -1694,7 +1696,7 @@ void userScreenDraw(User current){
   else if (boxInUse == true && functionInUse != 0){
     
     inMenu = true;
-
+    inSetting = false;
     rect(menuXaxis,menuYaxis,menuWidth,menuHeight);
     
     User u = userList.get(whichUser);
@@ -1711,6 +1713,7 @@ void userScreenDraw(User current){
   //setting popup
   else if(boxInUse == true && functionInUse != 1){
     inMenu = false;
+    inSetting = true;
     ellipse(200,200,200,200);
   
   }
@@ -2193,13 +2196,14 @@ void UserScreen_MouseReleased(){
       userList.get(whichUser).buttonSet.get(iconIndex).x_Axis = selectedIconX_axis;
   } 
   
-  if(boxInUse && inMenu == true && outsideMenuArea() == true){
+  if(boxInUse && inMenu == true  && outsideMenuArea() == true){
     console.log("check ");
     
     boxInUse = false;
     imageBox = false;
     isMusic = false;
     drag = false;
+    inSetting = false;
     iconDrag = false;
     inMenu = false;
     if(clickOtherButton()){
@@ -2213,8 +2217,31 @@ void UserScreen_MouseReleased(){
     return;
   }
   
+   if(boxInUse && inSetting == true && outsideSettingArea() == true){
+    console.log("check ");
+    
+    boxInUse = false;
+    imageBox = false;
+    isMusic = false;
+    drag = false;
+    inSetting = false;
+    iconDrag = false;
+    inMenu = false;
+    if(clickOtherButton()){
+      boxInUse = true;   
+      //User u = userList.get(whichUser);
+      //Button currentButton = u.buttonSet.get(iconIndex);      
+      getCurrentButtonPopup(functionInUse);
+
+    }
+    
+    return;
+  }
+  
+  
+  
   if(boxInUse && outsideBox(currentPopup.x_Axis, currentPopup.y_Axis, currentPopup.width, currentPopup.height)) {
-    if(functionInUse == 0){
+    if(functionInUse == 0 || functionInUse == 1){
       return;
     }
     background(255);
@@ -2566,6 +2593,10 @@ boolean outsideMenuArea(){
      return false;
    }
    
+}
+
+boolean outsideSettingArea(){
+  return true;
 }
 
 boolean outsideKeyboard(){
