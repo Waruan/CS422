@@ -1,5 +1,4 @@
 
-
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 // sample simple processing / processing.js file from Andy Johnson - CS 422 - Spring 2017
 
@@ -98,7 +97,7 @@ int whichUser = -1;
 int numberOfUser = 0;
 boolean firstReleased = true;
 ArrayList<String> storeName = new ArrayList<String>();
-
+boolean inSetup = true;
 //////////////////////////////////////////////////////////////////
 
 
@@ -247,6 +246,19 @@ int draggingIndex;
 PImage img;
 PImage bgroundimg;
 
+
+//Varaiable for menu
+////////////////////////////////////////////////////////////////
+
+boolean inMenu = false;
+
+int menuXaxis = int((canvasWidth/100)*40);
+int menuYaxis = int((canvasHeight/100)*60);
+int menuWidth = int((canvasWidth/100)*20);
+int menuHeight = int((canvasWidth/100)*10);
+
+///////////////////////////////////////////////////////////////
+
 //Globals for image popup icons/locations
 ////////////////////////////////////////////////////////////////
 
@@ -393,28 +405,6 @@ boolean nameInUse = false;
 
 //////////////////////////////////////////////////////////////////////////
 
-
-
-
-//Sounds
-/////////////////////////////////////////////////////////////////////////
-
-void loadSounds(){
-  // beep soundfile shortened from http://soundbible.com/2158-Text-Message-Alert-5.html
-  
-  //Processing load sound
-  //beepSound = new SoundFile(this, "bing.mp3");
-  
-  // processing.js load sound
-  //beepSound.setAttribute("src","bing.mp3");
-}
-
-void playBeep() {
-  // play audio in processing or processing.js
-  //beepSound.play();
-}
-
-///////////////////////////////////////////////////////////////////////////
 
 
 void musicSetup(){
@@ -1075,8 +1065,21 @@ void setup() {
   */
   
   userList.get(0).addButton("Data/9gag_icon.png",2); //9gag
+ 
+  
+  ArrayList<menuButton> mBList= userList.get(0).menuSet;
+  int idx = findMenuByFunction(mBList,2);
+
+  if(idx != -1){
+    
+    mBList.get(idx).inUse = true; 
+    mBList.get(idx).currentimage = mBList.get(idx).down;
+  }
+  
   userList.get(0).addButton("Data/health_icon.png",3); //health
+
   userList.get(0).addButton("Data/weather_icon.png",4); //weather
+
   userList.get(0).addButton("Data/news_icon.png",5); //article
   userList.get(0).addButton("Data/facebook_icon.png",6); //facebook
   userList.get(0).addButton("Data/twitter_icon.png", 7); //Twiter
@@ -1084,10 +1087,10 @@ void setup() {
   
   f = createFont("Arial",24,true);
   background(255);
-  loadSounds();
+
   stroke(126);
   
-  
+  inSetup = false;
   //Profile Setup
   //////////////////////////////////////////////////
   
@@ -1606,7 +1609,7 @@ void userScreenDraw(User current){
   drawGrid();
   noStroke();
   drawTimeDate();
-  
+  inMenu = false;
   if(activeSmallMusic){
     image(miniPlayer.img, miniPlayer.x_Axis, miniPlayer.y_Axis, miniPlayer.width, miniPlayer.height);
   }
@@ -1653,6 +1656,7 @@ void userScreenDraw(User current){
   // need to change to so that it popup the correct function
   if(boxInUse == true && functionInUse != 0 && functionInUse!=1){
     //println("Inside boxInUse True area");
+    inMenu = false;;
     if(drag) {
       fill(192,192,192);
       //Fix
@@ -1680,12 +1684,27 @@ void userScreenDraw(User current){
     //rect(xtest, ytest, width_test, height_test);
     //pop_up_box(xLocation, yLocation);
   }
+  //menu popup
   else if (boxInUse == true && functionInUse != 0){
-  
-    rect(200,200,200,200);
-  }
-  else if(boxInUse == true && functionInUse != 1){
     
+    inMenu = true;
+
+    rect(menuXaxis,menuYaxis,menuWidth,menuHeight);
+    
+    User u = userList.get(whichUser);
+    ArrayList<menuButton> mBSet = u.menuSet;
+    menuButton mB;
+    for(int i = 0;i<mBSet.size();i++){
+       mB = mBSet.get(i);
+       mB.update();
+       mB.display();
+    }
+    
+    
+  }
+  //setting popup
+  else if(boxInUse == true && functionInUse != 1){
+    inMenu = false;
     ellipse(200,200,200,200);
   
   }
@@ -2078,7 +2097,10 @@ void mouseReleased() {
   }
   //General User Screen
   else if(stage == 3){
-    UserScreen_MouseReleased();
+    //rect((canvasWidth/100)*40,(canvasHeight/100)*60,(canvasWidth/100)*20,(canvasWidth/100)*10);
+
+      UserScreen_MouseReleased();
+    
   } 
   //Create new User Screen
   else if(stage == 4){
@@ -2164,9 +2186,31 @@ void UserScreen_MouseReleased(){
   if(iconDrag){
       userList.get(whichUser).buttonSet.get(iconIndex).x_Axis = selectedIconX_axis;
   } 
-
-  if(boxInUse && outsideBox(currentPopup.x_Axis, currentPopup.y_Axis, currentPopup.width, currentPopup.height)) {
+  
+  if(boxInUse && inMenu == true && outsideMenuArea() == true){
+    console.log("check ");
     
+    boxInUse = false;
+    imageBox = false;
+    isMusic = false;
+    drag = false;
+    iconDrag = false;
+    inMenu = false;
+    if(clickOtherButton()){
+      boxInUse = true;   
+      //User u = userList.get(whichUser);
+      //Button currentButton = u.buttonSet.get(iconIndex);      
+      getCurrentButtonPopup(functionInUse);
+
+    }
+    
+    return;
+  }
+  
+  if(boxInUse && outsideBox(currentPopup.x_Axis, currentPopup.y_Axis, currentPopup.width, currentPopup.height)) {
+    if(functionInUse == 0){
+      return;
+    }
     background(255);
     boxInUse = false;
     imageBox = false;
@@ -2175,6 +2219,7 @@ void UserScreen_MouseReleased(){
     if(functionInUse == 8 && fadeOut == true){
        activeSmallMusic = true;
     }
+    
     else{
        activeSmallMusic = false; 
     }
@@ -2493,6 +2538,30 @@ boolean outsidePinArea(){
    
 }
 
+boolean outsideMenuArea(){
+    
+    int x =  int(menuXaxis);
+    
+    int xEnd = int(menuXaxis + menuWidth) ;
+    
+    int y = int(menuYaxis);
+    console.log("DEBUG y " + y );
+    console.log("DEBUG mouseY " + mouseY );
+    
+    
+    int yEnd = int(menuYaxis + menuHeight);
+    
+  if((mouseX < x || mouseX >= (xEnd)) || ((mouseY < y) || mouseY > (yEnd))) {
+     console.log("true");
+     return true;
+   }
+   else {
+     console.log("false");
+     return false;
+   }
+   
+}
+
 boolean outsideKeyboard(){
     
     int x = (int)canvasWidth/2 - 340;
@@ -2724,6 +2793,33 @@ void previous(){
   
 }
 
+
+int findByFunction(ArrayList<Button> user ,int idx){
+  
+  
+  for(int i = 0; i<user.size();i++){
+    Button temp = user.get(i);
+    if(temp.function == idx){
+      return i;
+    }
+  }
+  // cant find it
+  return -1;
+}
+
+
+int findMenuByFunction(ArrayList<menuButton> user ,int idx){
+  
+  
+  for(int i = 0; i<user.size();i++){
+    menuButton temp = user.get(i);
+    if(temp.func == idx){
+      return i;
+    }
+  }
+  // cant find it
+  return -1;
+}
 
 //Classes
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3132,8 +3228,11 @@ class User{
   int buttonY;
   String name;
   ArrayList<Button> buttonSet = new ArrayList<Button>();
-  //ArrayList<Integer> usrFunctionActive = new ArrayList<Integer>();
+  ArrayList<menuButton> menuSet = new ArrayList<menuButton>();
+  
   Button hid;
+ 
+  
   
   //Saved Setting info
   ////////////////////////
@@ -3158,15 +3257,28 @@ class User{
     ///////////////////////////////////////////////////
     
     //Menu button
-    temp = new Button("Data/menu_icon.png", int((canvasWidth/100)*50.5), int((canvasHeight/100)*90) ,buttonX,buttonY,1);
+    Button temp = new Button("Data/menu_icon.png", int((canvasWidth/100)*50.5), int((canvasHeight/100)*90) ,buttonX,buttonY,1);
     buttonSet.add(temp);
     
     //setting button
-    Button temp = new Button("Data/settings_icon.png", int((canvasWidth/100)*49.5 - buttonX), int((canvasHeight/100)*90) ,buttonX,buttonX,0);
+    temp = new Button("Data/settings_icon.png", int((canvasWidth/100)*49.5 - buttonX), int((canvasHeight/100)*90) ,buttonX,buttonX,0);
     buttonSet.add(temp);
 
     
     ///////////////////////////////////////////////////
+    
+    //Menu buttons
+    //////////////////////////////////////////////////
+    //menuButton(int ix, int iy, int iw, int ih, String ibase, String idown, int f) 
+    // rect((canvasWidth/100)*40,(canvasHeight/100)*60,(canvasWidth/100)*20,(canvasWidth/100)*10);
+    menuButton menuTemp;
+    //9gag
+    menuTemp = new menuButton(menuXaxis+20,menuYaxis+20,buttonX*2,buttonY*2,"Data/9gag_icon_unselected.png","Data/9gag_icon_selected.png", 2);
+    menuSet.add(menuTemp);
+    //
+    
+    
+    //////////////////////////////////////////////////
     
   }
  
@@ -3234,14 +3346,14 @@ class User{
   }
   
   
-  void removeButton(int f){
+  void removeButton(int func){
 
    // odd number of functions before add new
    if(buttonSet.size()%2 == 1){
      
      Button temp; 
-
-     buttonSet.remove(f);
+     int idx = findByFunction(buttonSet,func);
+     buttonSet.remove(idx);
      temp = buttonSet.get(0);
      int tempx = int(((canvasWidth/100)*49.5)- buttonX);
   
@@ -3260,7 +3372,8 @@ class User{
    // even number of functions before add new
    else{
      Button temp; 
-     buttonSet.remove(f);
+     int idx = findByFunction(buttonSet,func);
+     buttonSet.remove(idx);
 
      int tempx = int((canvasWidth/100)*49.9)-(buttonX/2);
      
@@ -3645,6 +3758,133 @@ class HScrollbar
 
     return spos * ratio;
 
+  }
+
+}
+
+//class menuButton{
+//  boolean inUse = false;
+//  PImage selected;
+//  PImage unSelected;
+//  int func;
+  
+  
+//  menuButton(String unchecked, String checked,int f){
+//    selected = loadImage(checked);
+//    unSelected = loadImage(unchecked);
+//    func = f;
+//  }
+
+
+//}
+
+
+class menuButton extends PinButton 
+
+{
+
+  PImage base;
+
+  PImage roll;
+
+  PImage down;
+
+  PImage currentimage;
+  
+  int func;
+  
+  boolean inUse = false;
+
+  menuButton(int ix, int iy, int iw, int ih, String ibase, String idown, int f) 
+
+  {
+
+    x = ix;
+
+    y = iy;
+
+    w = iw;
+
+    h = ih;
+
+    base = loadImage(ibase);
+
+    down = loadImage(idown);
+
+    currentimage = base;
+    
+    func = f;
+
+  }
+
+  
+
+  void update() 
+
+  {
+
+    over();
+    
+    mouseReleased();
+    
+    if(pressed) {
+     
+      currentimage = down;
+      isPressed = true;
+
+    } 
+    else if (isOver){
+     
+      if(isPressed == true)
+      {
+        isPressed = false; 
+        inUse = !inUse;
+        if(inUse == true && inSetup == false){
+          User usr = userList.get(whichUser);
+           currentimage = down;
+          if(func == 2){
+            usr.addButton("Data/9gag_icon.png",2);
+          }
+        }
+        else if(inUse == false && inSetup == false){
+         
+          currentimage = base;
+          User usr = userList.get(whichUser);
+          usr.removeButton(func);
+          
+        }
+      }
+    } 
+
+
+  }
+
+  
+
+  void over() 
+
+  {
+    
+    if( overRect(x, y, w, h) ) {
+
+      isOver = true;
+     
+    } else {
+      
+      isOver = false;
+
+    }
+
+  }
+
+  
+
+  void display() 
+
+  {
+    //rect(x,y,w,h);  
+    image(currentimage, x, y, w, h);
+    //console.log("DEBUG 0");
   }
 
 }
