@@ -27,9 +27,10 @@ SoundFile beepSound;
 ////////////////////////////////////////////////////////////
 
 //buttons size for icons
-int buttonX = 33;
-int buttonY = 30;
-
+int gobal_buttonX = 33;
+int gobal_buttonY = 30;
+int profileButtonX = 66;
+int profileButtonY = 30;
 
 
 //0 = start screen
@@ -45,12 +46,12 @@ int stage = 0;
 //float canvasHeight;
 
 // evl monitor size
-float canvasWidth = 2732;
-float canvasHeight = 1536;
+//float canvasWidth = 2732;
+//float canvasHeight = 1536;
 
 // scale down for home monitors
-//float canvasWidth = 1366;
-//float canvasHeight = 768;
+float canvasWidth = 1366;
+float canvasHeight = 768;
 
 int currentTime;
 
@@ -184,11 +185,15 @@ Timer timer = new Timer(2000);
 /////////////////////////////////////////////////////////////////////////////
 
 boolean iconDrag = false;
-float iconX_drag = (canvasWidth/29)*2;
-float iconY_drag = (canvasHeight/29)*25.5;
 
+
+float iconX_drag = (canvasWidth/29)*2;
+
+float iconY_drag = (canvasHeight/29)*25.5;
 float iconDrag_box_width = canvasWidth - ((canvasWidth/29)*4);
+
 float iconDrag_box_height = canvasHeight - ((canvasHeight/29)*26.5);
+
 int iconIndex;
 
 float iconDragDifx;
@@ -461,10 +466,10 @@ void pinSetup()
   
 
   
-  int y = int(((canvasHeight/100)*50));
+  int y = int(((canvasHeight/100)*55));
   
-  int y2 = int(((canvasHeight/100)*50));
-  int y3 = int(((canvasHeight/100)*50));
+  int y2 = int(((canvasHeight/100)*55));
+  int y3 = int(((canvasHeight/100)*55));
   
   int y4 = y + int(buttonYSize*1.3);
   
@@ -925,14 +930,14 @@ void keyBoardSetup()
 
 void setup() {
 
- size(canvasWidth, canvasHeight);
- //size( 1366 ,768);
+ //size(canvasWidth, canvasHeight);
+ size( 1366 ,768);
 
   initPopups();
   //fixOrderofButton(guest.buttonSet,guest.usrFunctionActive);
   currentPopup = new Popup("Data/9gag_desktop.png", int(xLocation), int(yLocation), int(gagWidth), int(gagHeight), 3);
 
-  User guest = new User("guest","0000");
+  User guest = new User("guest","0000",gobal_buttonX,gobal_buttonY);
   userList.add(guest);
   
   /*
@@ -968,14 +973,12 @@ void setup() {
   //Profile Setup
   //////////////////////////////////////////////////
   
-  Button temp = new Button(int((canvasWidth/100)*49.5 - buttonX), int((canvasHeight/100)*90) ,66,30,0);
+  Button temp = new Button(int((canvasWidth/100)*49.5 - profileButtonX), int((canvasHeight/100)*90) ,profileButtonX,profileButtonY,0);
   profile.add(temp);
   numberOfUser++;
-  
 
-  //addProfileButton(profile,66,30,1);
   int index = findMostRight(profile);
-  newUserButton = new CircleButton(int(index+66+(2*(canvasWidth/100))),temp.y_Axis+15, 30, 30);
+  newUserButton = new CircleButton(int(index+profileButtonX+(2*(canvasWidth/100))),temp.y_Axis+(profileButtonY/2), profileButtonY, profileButtonY);
   
   
   
@@ -1033,7 +1036,7 @@ void pinDraw()
   for(int i = 0;i<pinFlag ;i++){
     
 
-    text("*",int(((canvasWidth/100)*50  + pinSpace - (15 * i))), int((canvasHeight/100)*49));
+    text("*",int(((canvasWidth/100)*50  + pinSpace - (15 * i))), int((canvasHeight/100)*53));
    
   }
   
@@ -1260,6 +1263,14 @@ void startDraw(){
   //comment out drawGrid if you dont want to see the grid
   //drawGrid();
   noStroke();
+  
+  //if(isEvl){
+    
+  //}
+  //else{
+  
+  //}
+   textSize(36);
   text("Touch Screen to Start ", (canvasWidth/100)*50 , (canvasHeight/100)*90);
   
   drawTimeDate();
@@ -1398,7 +1409,7 @@ void userScreenDraw(User current){
 
  
   if(isHidden){
-    
+    rect(current.hid.x_Axis,current.hid.y_Axis,current.hid.width,current.hid.height, 10);
     return;
   }
  
@@ -1476,12 +1487,13 @@ void drawTimeDate(){
   textFont(f);
   textSize(36);
   fill(127,127,127);
-  textAlign(CENTER);
+  textAlign(LEFT);
   
   timeString = getCurrentTime();
-  text(timeString, (canvasWidth/100)*5 , 50);
-  text(month() + "/" + day() + "/" + year(), (canvasWidth/100)*6 , 80);
+  text(timeString, 0 , 50);
+  text(month() + "/" + day() + "/" + year(),0 , 80);
   fill(0);
+  textAlign(CENTER);
   
 }
 
@@ -1593,7 +1605,7 @@ void swap(Button current){
   int len = blist.size();
   for(int i = 0 ;i<len;i++){
     // right only
-    if(current.x_Axis+ buttonX > blist.get(i).x_Axis && current.x_Axis+buttonX < blist.get(i).x_Axis + buttonX){
+    if(current.x_Axis+ userList.get(whichUser).buttonX > blist.get(i).x_Axis && current.x_Axis+userList.get(whichUser).buttonX < blist.get(i).x_Axis + userList.get(whichUser).buttonX){
       
      
       tempx = blist.get(i).x_Axis;
@@ -1700,14 +1712,14 @@ void PopUpDrag(){
 
 
 void IconsDrag(){
-  if( mouseX-iconDragDifx < iconX_drag || mouseX-iconDragDifx+buttonX > iconX_drag+ iconDrag_box_width ){//|| mouseY-dragDify < iconY_drag || mouseY-dragDify+buttonY > iconY_drag + iconDrag_box_height) {
+  if( mouseX-iconDragDifx < iconX_drag || mouseX-iconDragDifx+userList.get(whichUser).buttonX > iconX_drag+ iconDrag_box_width ){//|| mouseY-dragDify < iconY_drag || mouseY-dragDify+buttonY > iconY_drag + iconDrag_box_height) {
 
       //Do nothing.
       if(xLocation < x_drag){
         userList.get(whichUser).buttonSet.get(iconIndex).x_Axis = int(x_drag);
       }
       if( xLocation+popUpX > x_drag + drag_box_width){
-         userList.get(whichUser).buttonSet.get(iconIndex).x_Axis = int(x_drag + drag_box_width - buttonX);
+         userList.get(whichUser).buttonSet.get(iconIndex).x_Axis = int(x_drag + drag_box_width - userList.get(whichUser).buttonX);
       }
       //if( yLocation < y_drag){
       //  yLocation = y_drag;
@@ -1877,7 +1889,7 @@ void UserScreen_MouseReleased(){
     
   }
   if((loopInsideBox() || iconDrag== true)  && !boxInUse){
-
+    println("DEBUG loop " + functionInUse);
     getCurrentButtonPopup(functionInUse);
 
     boxInUse = true;
@@ -2064,9 +2076,9 @@ boolean outsidePinArea(){
     
     int xEnd = int( ((canvasWidth/100)*49) + 2*buttonXSize +  (canvasWidth/100)*1.5) ;
     
-    int y = int(((canvasHeight/100)*50));
+    int y = int(((canvasHeight/100)*55));
     
-    int yEnd = int(((canvasHeight/100)*59)+ buttonYSize*2.5 );
+    int yEnd = int(((canvasHeight/100)*55)+   int(buttonYSize*4.9));
     
   if((mouseX < x || mouseX >= (xEnd)) || ((mouseY < y) || mouseY > (yEnd))) {
    
@@ -2261,7 +2273,7 @@ void addProfileButton(ArrayList<Button> blist , int X, int Y,int f){
  } 
  int index = findMostRight(profile);
  Button temp =  profile.get(0); 
- newUserButton = new CircleButton(int(index+66+(2*(canvasWidth/100))),temp.y_Axis+15, 30, 30);
+ newUserButton = new CircleButton(int(index+profileButtonX+(2*(canvasWidth/100))),temp.y_Axis+(profileButtonY/2), profileButtonY, profileButtonY);
 
 }
 
@@ -2512,8 +2524,8 @@ class ImageButtons extends PinButton
           else if(stage4Part == 2){
             if(compareComfirmPin(pin)){
             
-              addProfileButton(profile,66,30,numberOfUser);
-              User temp = new User(inputName,pin);
+              addProfileButton(profile,profileButtonX,profileButtonY,numberOfUser);
+              User temp = new User(inputName,pin,gobal_buttonX,gobal_buttonY);
               userList.add(temp);
               stage = 1;
               iskeyboard = true;
@@ -2667,7 +2679,8 @@ class Popup{
 }
 
 class User{
-
+  int buttonX;
+  int buttonY;
   String name;
   ArrayList<Button> buttonSet = new ArrayList<Button>();
   //ArrayList<Integer> usrFunctionActive = new ArrayList<Integer>();
@@ -2679,14 +2692,15 @@ class User{
   
   ////////////////////////
   // some buttons
-  int iconSizeX = 33;
-  int iconSizeY = 30;
+
   String pin;
   
   // Change to gobal variable instead
   //boolean isHidden;
   
-  User(String usr, String pass){
+  User(String usr, String pass,int x, int y){
+    buttonX = x;
+    buttonY = y;
     name = usr;
     pin = pass;
     hid = new Button("Data/hide_icon.png", int((canvasWidth - buttonX) - ((canvasWidth/100) *2)),int((canvasHeight- buttonY) - ((canvasHeight/100) *2)),buttonX,buttonY,-1);
@@ -2695,11 +2709,11 @@ class User{
     ///////////////////////////////////////////////////
     
     //setting button
-    Button temp = new Button("Data/settings_icon.png", int((canvasWidth/100)*49.5 - buttonX), int((canvasHeight/100)*90) ,iconSizeX,iconSizeY,0);
+    Button temp = new Button("Data/settings_icon.png", int((canvasWidth/100)*49.5 - buttonX), int((canvasHeight/100)*90) ,buttonX,buttonX,0);
     buttonSet.add(temp);
     
     //Menu button
-    temp = new Button("Data/menu_icon.png", int((canvasWidth/100)*50.5), int((canvasHeight/100)*90) ,iconSizeX,iconSizeY,1);
+    temp = new Button("Data/menu_icon.png", int((canvasWidth/100)*50.5), int((canvasHeight/100)*90) ,buttonX,buttonY,1);
     buttonSet.add(temp);
     
     ///////////////////////////////////////////////////
