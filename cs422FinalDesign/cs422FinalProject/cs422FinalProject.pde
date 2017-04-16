@@ -63,7 +63,7 @@ Popup currentPopup;
 
 int whichUser = -1;
 int numberOfUser = 0;
-
+boolean firstReleased = true;
 ArrayList<String> storeName = new ArrayList<String>();
 
 //////////////////////////////////////////////////////////////////
@@ -1440,11 +1440,22 @@ void userScreenDraw(User current){
   for (int loopCounter=0; loopCounter < current.buttonSet.size(); loopCounter++){
     temp = current.buttonSet.get(loopCounter);
     if(loopCounter == iconIndex && iconDrag){
+      fill(148, 183, 239)
+      rect(temp.x_Axis-5,temp.y_Axis-5,temp.width+10,temp.height+10);
+      fill(127,127,127);
       image(temp.img, temp.x_Axis, temp.y_Axis, temp.width, temp.height);
       //rect(temp.x_Axis,temp.y_Axis,temp.width,temp.height, 10);
     }
+    else if(temp.function == functionInUse && boxInUse == true){
+    
+      fill(148, 183, 239);
+      rect(temp.x_Axis-5,temp.y_Axis-5,temp.width+10,temp.height+10);
+      fill(127,127,127);
+      image(temp.img, temp.x_Axis, temp.y_Axis, temp.width, temp.height);
+      
+    }
     else{
-      //rect(temp.x_Axis,temp.y_Axis,temp.width,temp.height, 10);
+      
       image(temp.img, temp.x_Axis, temp.y_Axis, temp.width, temp.height);
     }
   } 
@@ -1462,15 +1473,17 @@ void userScreenDraw(User current){
     }
     image(currentPopup.img, currentPopup.x_Axis, currentPopup.y_Axis, currentPopup.width, currentPopup.height);
     rect(gag_next_x_axis, gag_next_y_axis, gag_box_width, gag_box_height);
+    
     //rect(weather_hourly_x_axis, weather_hourly_y_axis, weather_box_width, weather_box_height);
     //rect(weather_weekly_x_axis, weather_weekly_y_axis, weather_box_width, weather_box_height);
     //rect(weather_map_x_axis, weather_map_y_axis, weather_box_width, weather_box_height);
     updateClickableBoxes(currentPopup, currentPopup.function);
     
     if(imageBox) {
-    
+        
        image(currentButton.img, currentButton.x_image, currentButton.y_image);
-    
+
+       
     }
     //Button test = currentPopup.clickable.get(0);
     
@@ -1526,7 +1539,12 @@ void drawProfileButtons(){
   for (int loopCounter=0; loopCounter < profile.size(); loopCounter++){
     temp = profile.get(loopCounter);
   
-    fill(127,127,127);
+    if(whichUser == loopCounter ){
+      fill(154, 189, 244);
+    }
+    else{
+      fill(127,127,127);
+    }
     rect(temp.x_Axis,temp.y_Axis,temp.width,temp.height, 10);
      fill(0);
      String nameHolder = userList.get(loopCounter).name;  
@@ -1539,8 +1557,8 @@ void drawProfileButtons(){
     text(nameHolder, temp.x_Axis +50 ,temp.y_Axis + 40 );
   } 
   temp = profile.get(profile.size()-1);
-  fill(127,127,127);
-   
+  
+  fill(127,127,127); 
   ellipse(newUserButton.x_Axis,newUserButton.y_Axis,newUserButton.width, newUserButton.height);
 }
 
@@ -1916,7 +1934,7 @@ void UserScreen_MouseReleased(){
   if((loopInsideBox() || iconDrag== true)  && !boxInUse){
     println("DEBUG loop " + functionInUse);
     getCurrentButtonPopup(functionInUse);
-
+    
     boxInUse = true;
     println("DEBUG 25");
     drag = false;
