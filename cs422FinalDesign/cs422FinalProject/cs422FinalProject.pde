@@ -330,11 +330,18 @@ int article4_select_y_axis;
 int article5_select_x_axis;
 int article5_select_y_axis;
 
+int article_back_x_axis;
+int article_back_y_axis;
+
+int article_back_width = int((articleWidth/100)*35);
+int article_back_height = int((articleHeight/100)*10);
+
 int article_type_width = int((articleWidth/100)*27);
 int article_type_height= int((articleHeight/100)*13);
 
 int article_select_width = int((articleWidth/100)*92);
 int article_select_height= int((articleHeight/100)*12);
+
 //Music playlist Buttons
 int playlist1_x_axis;
 int playlist1_y_axis;
@@ -1534,6 +1541,8 @@ void initPopups() {
   temp.PopupAddClickable(article1_type_x_axis, article1_type_y_axis, article_type_width, article_type_height, 6);
   temp.PopupAddClickable(article2_type_x_axis, article2_type_y_axis, article_type_width, article_type_height, 7);
   temp.PopupAddClickable(article3_type_x_axis, article3_type_y_axis, article_type_width, article_type_height, 8);
+  
+  temp.PopupAddClickable(article_back_x_axis, article_back_y_axis, article_back_width, article_back_height, 9);
   popups.add(temp);
   
   //Facebook
@@ -1563,6 +1572,7 @@ void initPopups() {
   temp.PopupAddClickable(playlist2_x_axis, playlist2_y_axis, playlist_width, playlist_height, 7);
   temp.PopupAddClickable(playlist3_x_axis, playlist3_y_axis, playlist_width, playlist_height, 8);
   temp.PopupAddClickable(playlist4_x_axis, playlist4_y_axis, playlist_width, playlist_height, 9);
+
   popups.add(temp);
     
   miniPlayer = new Popup("Data/music_small(play).png", 2500, 1200, small_music_box_width, small_music_box_height, 1);
@@ -1653,6 +1663,9 @@ void initLocations(Popup currentPopup, int f) {
     new_val+=33;
     article1_type_x_axis = currentPopup.x_Axis + int((currentPopup.width/100)*new_val);
     article1_type_y_axis = currentPopup.y_Axis + int((currentPopup.height/100)*75);
+    
+    article_back_x_axis = currentPopup.x_Axis + int((currentPopup.width/100)*33);
+    article_back_y_axis = currentPopup.y_Axis + int((currentPopup.height/100)*90);
   }
   
   else if(f == 8) {    
@@ -1772,7 +1785,7 @@ void userScreenDraw(User current){
       rect(x_drag, y_drag, drag_box_width, drag_box_height, 10);
     }
     image(currentPopup.img, currentPopup.x_Axis, currentPopup.y_Axis, currentPopup.width, currentPopup.height);
-    rect(article1_type_x_axis, article1_type_y_axis, article_type_width, article_type_height);
+    //rect(article_back_x_axis, article_back_y_axis, article_back_width, article_back_height);
     //rect(playlist2_x_axis, playlist2_y_axis, playlist_width, playlist_height);
     //rect(playlist3_x_axis, playlist3_y_axis, playlist_width, playlist_height);
     //rect(playlist4_x_axis, playlist4_y_axis, playlist_width, playlist_height);
@@ -2073,10 +2086,15 @@ void updateClickableBoxes(Popup box, int f) {
         box.clickable.get(i).y_Axis = box.y_Axis + int((box.height/100)*select_val);
         select_val+=14;
       }
-      else if(box.clickable.get(i).function > 5) {
+      else if(box.clickable.get(i).function > 5 && box.clickable.get(i).function != 9) {
         box.clickable.get(i).x_Axis = box.x_Axis + int((box.width/100)*type_val);
         box.clickable.get(i).y_Axis = box.y_Axis + int((box.height/100)*75);
         type_val+=33;
+      }
+      else if(box.clickable.get(i).function == 9) {
+        box.clickable.get(i).x_Axis = box.x_Axis + int((box.width/100)*33);
+        box.clickable.get(i).y_Axis = box.y_Axis + int((box.height/100)*90);
+        
       }
     }
   }
@@ -2457,6 +2475,17 @@ void UserScreen_MouseReleased(){
         //Inside Article
         else if(currentPopup.function == 5) {
           println("Pressed Article ID: " + currentPopup.clickable.get(i).function);
+          
+          
+          if(currentPopup.clickable.get(i).function == 9) {
+            currentPopup.img = loadImage("Data/Article_Template(list).png");
+            break;
+          }
+          else if(currentPopup.clickable.get(i).function <= 5) {
+            currentPopup.img = loadImage("Data/Article_Template(detail).png");
+            break;
+          }
+
         }        
         //Inside Music
         else if(currentPopup.function == 8) {
