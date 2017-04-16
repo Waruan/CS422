@@ -933,8 +933,12 @@ void keyBoardSetup()
 
 void setup() {
 
- size(2732, 1536);
+
+ //size(2732, 1536);
  //size(canvasWidth, canvasHeight);
+
+ size(canvasWidth, canvasHeight);
+
  //size( 1366 ,768);
 
   initPopups();
