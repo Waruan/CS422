@@ -301,6 +301,22 @@ int weatherHeight = int((canvasHeight/100)*40);
 int music_width = int((canvasWidth/100)*30);
 int music_height = int((canvasHeight/100)*15);
 
+//Music playlist Buttons
+int playlist1_x_axis;
+int playlist1_y_axis;
+
+int playlist2_x_axis;
+int playlist2_y_axis;
+
+int playlist3_x_axis;
+int playlist3_y_axis;
+
+int playlist4_x_axis;
+int playlist4_y_axis;
+
+int playlist_width = int((music_width/100)*30);;
+int playlist_height = int((music_height/100)*25);;
+
 //Music buttons
 int music_reverse_x_axis;
 int music_reverse_y_axis;
@@ -1514,13 +1530,19 @@ void initPopups() {
 
   temp.PopupAddClickable(music_seek_x_axis, music_seek_y_axis, seek_box_width, seek_box_height, 5);   //Seek
   seeker = new HScrollbar( music_seek_x_axis,music_seek_y_axis,  seek_box_width-8, seek_box_height, 1);
+  
+  //Playlist section
+  temp.PopupAddClickable(playlist1_x_axis, playlist1_y_axis, playlist_width, playlist_height, 6);
+  temp.PopupAddClickable(playlist2_x_axis, playlist2_y_axis, playlist_width, playlist_height, 7);
+  temp.PopupAddClickable(playlist3_x_axis, playlist3_y_axis, playlist_width, playlist_height, 8);
+  temp.PopupAddClickable(playlist4_x_axis, playlist4_y_axis, playlist_width, playlist_height, 9);
+  popups.add(temp);
     
   miniPlayer = new Popup("Data/music_small(play).png", 2500, 1200, small_music_box_width, small_music_box_height, 1);
   miniPlayer.PopupAddClickable(2500, 1210, 60, 75, 1); //Reverse
   miniPlayer.PopupAddClickable(2570, 1210, 60, 75, 2); //Play/pause
   miniPlayer.PopupAddClickable(2640, 1210, 60, 75, 3); //Forward
-  
-  popups.add(temp);
+
   
 }
 
@@ -1589,7 +1611,23 @@ void initLocations(Popup currentPopup, int f) {
     
      music_seek_x_axis = currentPopup.x_Axis + int((currentPopup.width/100));
      music_seek_y_axis = currentPopup.y_Axis + int((currentPopup.height/100)*43);
-
+     
+     int playlist_val = 0;
+     playlist1_x_axis = currentPopup.x_Axis + int((currentPopup.width/100)*70);
+     playlist1_y_axis  = currentPopup.y_Axis + int((currentPopup.height/100));
+     
+     playlist_val += 25;
+     playlist2_x_axis = currentPopup.x_Axis + int((currentPopup.width/100)*70);
+     playlist2_y_axis  = currentPopup.y_Axis + int((currentPopup.height/100)*playlist_val);
+     
+     playlist_val += 25;
+     playlist3_x_axis = currentPopup.x_Axis + int((currentPopup.width/100)*70);
+     playlist3_y_axis  = currentPopup.y_Axis + int((currentPopup.height/100)*playlist_val);
+     
+     playlist_val += 25;
+     playlist4_x_axis = currentPopup.x_Axis + int((currentPopup.width/100)*70);
+     playlist4_y_axis  = currentPopup.y_Axis + int((currentPopup.height/100)*playlist_val);
+     
   
   }
   
@@ -1671,7 +1709,10 @@ void userScreenDraw(User current){
       rect(x_drag, y_drag, drag_box_width, drag_box_height, 10);
     }
     image(currentPopup.img, currentPopup.x_Axis, currentPopup.y_Axis, currentPopup.width, currentPopup.height);
-
+    //rect(playlist1_x_axis, playlist1_y_axis, playlist_width, playlist_height);
+    //rect(playlist2_x_axis, playlist2_y_axis, playlist_width, playlist_height);
+    //rect(playlist3_x_axis, playlist3_y_axis, playlist_width, playlist_height);
+    //rect(playlist4_x_axis, playlist4_y_axis, playlist_width, playlist_height);
     //rect(gag_previous_x_axis, gag_previous_y_axis, gag_box_width, gag_box_height);
     //rect(gag_next_x_axis, gag_next_y_axis, gag_box_width, gag_box_height);
 
@@ -1963,6 +2004,7 @@ void updateClickableBoxes(Popup box, int f) {
   }
   else if(f == 8) {
     int val = 12;
+    int playlist_val = 1;
     for(int i = 0; i < box.clickable.size(); i++) {
       //volume
       if(box.clickable.get(i).function == 4) {
@@ -1982,6 +2024,12 @@ void updateClickableBoxes(Popup box, int f) {
 
         seeker.HscrollbarLocationUpdate(box.clickable.get(i).x_Axis-2,box.clickable.get(i).y_Axis +17);
         
+      }
+      else if(box.clickable.get(i).function > 5) {
+        box.clickable.get(i).x_Axis = box.x_Axis + int((box.width/100)*70);
+        box.clickable.get(i).y_Axis = box.y_Axis + int((box.height/100)* playlist_val);
+        playlist_val += 24;
+      
       }
       else{
         box.clickable.get(i).x_Axis = box.x_Axis + int((box.width/100)*val);
@@ -2366,6 +2414,9 @@ void UserScreen_MouseReleased(){
           }
           else if(currentPopup.clickable.get(i).function == 5) {
             println("Pressed Seek button");
+          }
+          else if(currentPopup.clickable.get(i).function > 5) {
+            println("Pressed playlist " + currentPopup.clickable.get(i).function);
           }
         
         }
