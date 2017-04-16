@@ -1969,7 +1969,7 @@ void updateClickableBoxes(Popup box, int f) {
         box.clickable.get(i).x_Axis = box.x_Axis + int((box.width/100)*10);
         box.clickable.get(i).y_Axis = box.y_Axis + int((box.height/100)*84);
         
-        volu.HscrollbarLocationUpdate( box.clickable.get(i).x_Axis,box.clickable.get(i).y_Axis+15 );
+        volu.HscrollbarLocationUpdate( box.clickable.get(i).x_Axis+3,box.clickable.get(i).y_Axis+15 );
         offset= box.clickable.get(i).x_Axis;
       }
       //seek
@@ -1980,7 +1980,7 @@ void updateClickableBoxes(Popup box, int f) {
         box.clickable.get(i).y_Axis = box.y_Axis + int((box.height/100)*43);     
         
 
-        seeker.HscrollbarLocationUpdate(box.clickable.get(i).x_Axis,box.clickable.get(i).y_Axis +15);
+        seeker.HscrollbarLocationUpdate(box.clickable.get(i).x_Axis-2,box.clickable.get(i).y_Axis +17);
         
       }
       else{
@@ -3787,8 +3787,8 @@ class HScrollbar
 
   void display() {
 
-    fill(159, 188, 234)
-    
+    //fill(159, 188, 234);
+    fill(255);
     rect(xpos, ypos, swidth, sheight);
     //println(swidth);
     if(isOver || locked) {
