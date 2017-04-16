@@ -19,6 +19,38 @@ SoundFile beepSound;
 // sounds are also a bit slowerer to start up in Processing.js
 
 
+//Variable for Music
+////////////////////////////////////////////////////////////
+
+
+
+//make a new HTML5 audio object named audio
+Audio audio = new Audio();
+// make string that will house the audio extension
+
+//100 100 before resize
+
+
+float offset =0 ;
+String fileExt;
+var  seek;
+//make a variable for volume and set it to 0
+//(volume runs between 0 and 1)
+float vol=0;
+boolean fadeOut=false;
+
+int col=0;
+ArrayList<String> songNames = new ArrayList<String>();
+int current = 0;
+
+
+ HScrollbar   volu;
+
+ HScrollbar  seeker;
+boolean isMusic = false;
+////////////////////////////////////////////////////////////
+
+
 
 
 
@@ -219,8 +251,6 @@ PImage bgroundimg;
 
 ArrayList<Popup> popups = new ArrayList<Popup>();
 
-Popup miniPlayer;
-
 //Current Popup being used
 int popup_function = 0;
 
@@ -271,18 +301,6 @@ int music_seek_y_axis;
 
 int music_mid_x_axis;
 int music_mid_y_axis;
-
-int small_music_reverse_x_axis;
-int small_music_reverse_y_axis;
-
-int small_music_mid_x_axis;
-int small_music_mid_y_axis;
-
-int small_music_forward_x_axis;
-int small_music_forward_y_axis;
-
-int small_music_box_width = 200;
-int small_music_box_height = 100;
 
 int music_box_width = int((music_width/100)*10);
 int music_box_height = int((music_height/100)*20);
@@ -382,6 +400,33 @@ void playBeep() {
 }
 
 ///////////////////////////////////////////////////////////////////////////
+
+
+void musicSetup(){
+
+  noStroke(); 
+  println(width);
+  String temp  = "snow";
+  songNames.add("groove");
+  songNames.add(temp);
+
+  //this checks to see what type of audio the browser can play
+  //then assigns that file extension to our string
+  fileExt = ".mp3";
+  //loads the audio file and appends the file extension
+  audio.setAttribute("src",songNames.get(current)+fileExt);
+ 
+  //println(end);
+  //this adds a listener to see when the file has finished playing
+  //then calls a function that we named "repeat"
+  audio.addEventListener("ended",next);
+  //play the audio
+  //audio.play();
+  audio.volume=constrain(((volu.spos-offset)/(volu.swidth-10)),0,1);
+  seeker.setsPos(0);
+  
+}
+
 
 // Setup the image and button location for pin input
 void pinSetup()
@@ -1044,6 +1089,7 @@ void setup() {
   //////////////////////////////////////////////////
   pinSetup();
   keyBoardSetup();
+  musicSetup();
   
 }
 
@@ -1067,7 +1113,27 @@ void draw() {
   else if(stage == 3){
     
     userScreenDraw(userList.get(whichUser));
-    
+    if(isMusic){
+      
+      audio.volume=constrain(((volu.spos - offset)/(volu.swidth-10)),0,1);
+      seek = (audio.currentTime);
+      seeker.setsPos(seeker.xpos+audio.currentTime/(audio.duration/seeker.swidth));
+      volu.update();
+      
+      
+      if(seeker.update() == true){
+        println("DEBUG 1 TRUE");
+        audio.pause();
+        audio.currentTime = (seeker.spos - seeker.xpos)* (audio.duration/seeker.swidth);
+        
+        audio.play();
+      }
+      seeker.display();
+      
+     
+      volu.display();
+      
+    }
   }
   else if(stage == 4){
    if(iskeyboard == true){
@@ -1416,14 +1482,14 @@ void initPopups() {
   temp.PopupAddClickable(music_forward_x_axis, music_forward_y_axis, music_box_width, music_box_height, 3); //Forward Button
   
   temp.PopupAddClickable(music_volume_x_axis, music_volume_y_axis, vol_box_width, vol_box_height, 4); //Volume
-  temp.PopupAddClickable(music_seek_x_axis, music_seek_y_axis, seek_box_width, seek_box_height, 5);   //Seek
-  popups.add(temp);
-  
-  miniPlayer = new Popup("Data/music_small(play).png", 2500, 1200, small_music_box_width, small_music_box_height, 1);
-  miniPlayer.PopupAddClickable(2500, 1210, 60, 75, 1); //Reverse
-  miniPlayer.PopupAddClickable(2570, 1210, 60, 75, 2); //Play/pause
-  miniPlayer.PopupAddClickable(2640, 1210, 60, 75, 3); //Forward
+  volu = new HScrollbar(music_volume_x_axis, music_volume_y_axis, vol_box_width, vol_box_height, 1);
+  offset = music_volume_x_axis;
 
+  temp.PopupAddClickable(music_seek_x_axis, music_seek_y_axis, seek_box_width, seek_box_height, 5);   //Seek
+  seeker = new HScrollbar( music_seek_x_axis,music_seek_y_axis,  seek_box_width, seek_box_height, 1);
+    
+  
+  popups.add(temp);
   
 }
 
@@ -1492,8 +1558,7 @@ void initLocations(Popup currentPopup, int f) {
     
      music_seek_x_axis = currentPopup.x_Axis + int((currentPopup.width/100));
      music_seek_y_axis = currentPopup.y_Axis + int((currentPopup.height/100)*43);
-   
-  
+
   
   }
   
@@ -1519,9 +1584,6 @@ void userScreenDraw(User current){
   drawGrid();
   noStroke();
   drawTimeDate();
-  
-  image(miniPlayer.img, miniPlayer.x_Axis, miniPlayer.y_Axis, miniPlayer.width, miniPlayer.height);
-  
   Button temp;  
   temp = userList.get(whichUser).hid;
   image(temp.img, temp.x_Axis, temp.y_Axis, temp.width, temp.height);
@@ -1715,6 +1777,19 @@ void mouseDragged() {
     dragDify = mouseY-currentPopup.y_Axis;
   }
   
+  if(isMusic){
+   if( insideBox(seeker.xpos,seeker.ypos,seeker.swidth,seeker.swidth)){
+   
+     return;
+   }
+   if( insideBox(volu.xpos,volu.ypos,volu.swidth,volu.swidth)){
+   
+     return;
+   }
+    
+    
+    
+  }
   
   if(insideBox(currentPopup.x_Axis, currentPopup.y_Axis, currentPopup.width, currentPopup.height )&& isHidden ==false ){
     drag = true;
@@ -1835,13 +1910,24 @@ void updateClickableBoxes(Popup box, int f) {
   else if(f == 8) {
     int val = 12;
     for(int i = 0; i < box.clickable.size(); i++) {
+      //volume
       if(box.clickable.get(i).function == 4) {
         box.clickable.get(i).x_Axis = box.x_Axis + int((box.width/100)*10);
         box.clickable.get(i).y_Axis = box.y_Axis + int((box.height/100)*84);
+        
+        volu.HscrollbarLocationUpdate( box.clickable.get(i).x_Axis,box.clickable.get(i).y_Axis );
+        offset= box.clickable.get(i).x_Axis;
       }
+      //seek
+      //popup 8 array
       else if(box.clickable.get(i).function == 5) {
         box.clickable.get(i).x_Axis = box.x_Axis + int((box.width/100));
+         
         box.clickable.get(i).y_Axis = box.y_Axis + int((box.height/100)*43);     
+        
+
+        seeker.HscrollbarLocationUpdate(box.clickable.get(i).x_Axis,box.clickable.get(i).y_Axis );
+        
       }
       else{
         box.clickable.get(i).x_Axis = box.x_Axis + int((box.width/100)*val);
@@ -2058,6 +2144,7 @@ void UserScreen_MouseReleased(){
     background(255);
     boxInUse = false;
     imageBox = false;
+    isMusic = false;
     if(clickOtherButton()){
       boxInUse = true;   
       //User u = userList.get(whichUser);
@@ -2074,7 +2161,9 @@ void UserScreen_MouseReleased(){
   if((loopInsideBox() || iconDrag== true)  && !boxInUse){
     println("DEBUG loop " + functionInUse);
     getCurrentButtonPopup(functionInUse);
-    
+    if(functionInUse == 8){
+      isMusic = true;
+    }
     boxInUse = true;
     println("DEBUG 25");
     drag = false;
@@ -2129,14 +2218,33 @@ void UserScreen_MouseReleased(){
         }
         //Inside Music
         else if(currentPopup.function == 8) {
+          
           if(currentPopup.clickable.get(i).function == 1) {
             println("Pressed reverse button");
+            previous();
+            return; 
           }
           else if(currentPopup.clickable.get(i).function == 2) {
             println("Pressed pause/play button");
+            fadeOut=!fadeOut;
+            if (fadeOut){
+              vol=1;
+              col=255;
+              audio.play();
+            }
+            else if (!fadeOut){
+              vol-=.1;
+              col-=25;
+              audio.pause();
+            }
+            return;
+            
+            
           }
           else if(currentPopup.clickable.get(i).function == 3) {
             println("Pressed forward button");
+            next();
+            return;
           }
           else if(currentPopup.clickable.get(i).function == 4) {
             println("Pressed volume button");
@@ -2162,22 +2270,6 @@ void UserScreen_MouseReleased(){
      drag = false;
      iconDrag = false;
     
-  }
-  else if(insideBox(miniPlayer.x_Axis, miniPlayer.y_Axis, miniPlayer.width, miniPlayer.height)) {
-    for(int i = 0; i < miniPlayer.clickable.size(); i++) {
-      if(insideBox(miniPlayer.clickable.get(i).x_Axis, miniPlayer.clickable.get(i).y_Axis, miniPlayer.clickable.get(i).width, miniPlayer.clickable.get(i).height)) {
-        if(miniPlayer.clickable.get(i).function == 1) {
-          println("Small reverse button");
-        }
-        else if(miniPlayer.clickable.get(i).function == 2) {
-          println("Small pause/play button");
-        }
-        else if(miniPlayer.clickable.get(i).function == 3) {
-          println("Small forward button");
-        }
-      }
-    }
-  
   }
   else {
     drag = false;
@@ -2530,6 +2622,38 @@ boolean nameExist(String checkName){
     
   } 
   return false;
+}
+
+
+void repeat(){
+  audio.play();
+}
+
+void next(){
+  current++;
+  int track = current%(songNames.size());
+  println(track);
+  audio.setAttribute("src",songNames.get(current%(songNames.size()))+fileExt);
+  audio.play();
+}
+
+void previous(){
+  println(audio.currentTime);
+  if(audio.currentTime < 2){
+    current--;
+    if(current < 0){
+      current = songNames.size()-1;
+    }
+    int track = current%(songNames.size());
+    println(track);
+    audio.setAttribute("src",songNames.get(current%(songNames.size()))+fileExt);
+    audio.play();
+  }
+  else{
+    audio.setAttribute("src",songNames.get(current%(songNames.size()))+fileExt);
+    audio.play();
+  }
+  
 }
 
 
@@ -3279,6 +3403,178 @@ class ImageKeyButtons extends PinButton
   {
 
     image(currentimage, x, y, w, h);
+
+  }
+
+}
+
+
+
+class HScrollbar
+
+{
+
+  int swidth, sheight;    // width and height of bar
+
+  int xpos, ypos;         // x and y position of bar
+
+  float spos, newspos;    // x position of slider
+
+  int sposMin, sposMax;   // max and min values of slider
+
+  int loose;              // how loose/heavy
+
+  boolean isOver;           // is the mouse over the slider?
+
+  boolean locked;
+
+  float ratio;
+
+
+
+  HScrollbar (int xp, int yp, int sw, int sh, int l) {
+
+    swidth = sw;
+
+    sheight = sh;
+
+    int widthtoheight = sw - sh;
+
+    ratio = (float)sw / (float)widthtoheight;
+
+    xpos = xp;
+
+    ypos = yp-sheight/2;
+
+    spos = xpos + swidth/2 - sheight/2;
+
+    newspos = spos;
+
+    sposMin = xpos;
+
+    sposMax = xpos + swidth - sheight;
+
+    loose = l;
+
+  }
+
+  void HscrollbarLocationUpdate(int xp, int yp){
+     
+     spos = spos + (xp - xpos);
+     xpos = xp;
+     ypos = yp-sheight/2;
+     
+     newspos = spos;
+     sposMin = xpos;
+     sposMax = xpos + swidth - sheight;
+     
+     
+  }
+
+  boolean update() {
+
+    if(over()) {
+
+      isOver = true;
+
+    } else {
+
+      isOver = false;
+
+    }
+
+    if(mousePressed && isOver) {
+
+      locked = true;
+
+    }
+
+    if(!mousePressed) {
+
+      locked = false;
+
+    }
+
+    if(locked) {
+
+      newspos = constrain(mouseX-sheight/2, sposMin, sposMax);
+
+    }
+
+    if(abs(newspos - spos) > 1) {
+
+      spos = spos + (newspos-spos)/loose;
+      return true;
+    }
+    return false;
+  }
+
+
+
+  int constrain(int val, int minv, int maxv) {
+
+    return min(max(val, minv), maxv);
+
+  }
+
+
+
+  boolean over() {
+
+    if(mouseX > xpos && mouseX < xpos+swidth &&
+
+    mouseY > ypos && mouseY < ypos+sheight) {
+
+      return true;
+
+    } else {
+
+      return false;
+
+    }
+
+  }
+
+  void setsPos(int dur){
+  
+    newspos = constrain(dur-sheight/2, sposMin, sposMax);
+    if(abs(newspos - spos) > 1) {
+
+      spos = spos + (newspos-spos)/loose;
+
+    }
+    
+  }
+
+  void display() {
+
+    fill(255);
+
+    rect(xpos, ypos, swidth, sheight);
+    //println(swidth);
+    if(isOver || locked) {
+
+      fill(153, 102, 0);
+
+    } else {
+
+      fill(102, 102, 102);
+
+    }
+
+    ellipse(spos, ypos+sheight/2, sheight, sheight);
+    //println(spos);
+  }
+
+
+
+  float getPos() {
+
+    // Convert spos to be values between
+
+    // 0 and the total width of the scrollbar
+
+    return spos * ratio;
 
   }
 
