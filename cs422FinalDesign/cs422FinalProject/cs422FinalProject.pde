@@ -2301,7 +2301,7 @@ void UserScreen_MouseReleased(){
        activeSmallMusic = true;
     }
     
-    else{
+    else if(functionInUse == 8 && fadeOut == false){
        activeSmallMusic = false; 
     }
     if(clickOtherButton()){
