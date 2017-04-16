@@ -1472,7 +1472,7 @@ void userScreenDraw(User current){
   
   
   // need to change to so that it popup the correct function
-  if(boxInUse == true){
+  if(boxInUse == true && functionInUse != 0 && functionInUse!=1){
     //println("Inside boxInUse True area");
     if(drag) {
       fill(192,192,192);
@@ -1500,6 +1500,15 @@ void userScreenDraw(User current){
     //rect(test.x_Axis, test.y_Axis, test.width, test.height);
     //rect(xtest, ytest, width_test, height_test);
     //pop_up_box(xLocation, yLocation);
+  }
+  else if (boxInUse == true && functionInUse != 0){
+  
+    rect(200,200,200,200);
+  }
+  else if(boxInUse == true && functionInUse != 1){
+    
+    ellipse(200,200,200,200);
+  
   }
   // draw the active button in a different color
   fill(127,127,0);
@@ -1897,6 +1906,11 @@ boolean profileSelect_MouseReleased(){
       userSelected = true;
       whichUser = loopCounter;
       resetInfo();
+      String sTemp  = (userList.get(whichUser)).name;
+      if(sTemp.equals("Guest")){
+        stage = 3;
+        return true;
+      }
       stage = 2;
       return true;
     }
@@ -2612,6 +2626,8 @@ class ImageButtons extends PinButton
         //showMessageDialog(null, "PIN successfully added", "Info", INFORMATION_MESSAGE);
         // User login
         if(stage == 2){
+       
+          
           if(comparePin(pin) ){
             stage = 3;
           }
