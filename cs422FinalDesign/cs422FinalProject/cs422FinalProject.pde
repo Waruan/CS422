@@ -29,8 +29,8 @@ SoundFile beepSound;
 //buttons size for icons
 int gobal_buttonX = 33;
 int gobal_buttonY = 30;
-int profileButtonX = 66;
-int profileButtonY = 30;
+int profileButtonX = int(1.8*66);
+int profileButtonY = int(1.8*30);
 
 
 //0 = start screen
@@ -46,12 +46,12 @@ int stage = 0;
 //float canvasHeight;
 
 // evl monitor size
-//float canvasWidth = 2732;
-//float canvasHeight = 1536;
+float canvasWidth = 2732;
+float canvasHeight = 1536;
 
 // scale down for home monitors
-float canvasWidth = 1366;
-float canvasHeight = 768;
+//float canvasWidth = 1366;
+//float canvasHeight = 768;
 
 int currentTime;
 
@@ -63,6 +63,9 @@ Popup currentPopup;
 
 int whichUser = -1;
 int numberOfUser = 0;
+
+ArrayList<String> storeName = new ArrayList<String>();
+
 //////////////////////////////////////////////////////////////////
 
 
@@ -305,7 +308,7 @@ CircleButton newUserButton;
 
 ArrayList<User> userList = new ArrayList<User>();
 String newUserName;
-
+boolean nameInUse = false;
 
 //////////////////////////////////////////////////////////////////////////
 
@@ -466,10 +469,10 @@ void pinSetup()
   
 
   
-  int y = int(((canvasHeight/100)*55));
+  int y = int(((canvasHeight/100)*70));
   
-  int y2 = int(((canvasHeight/100)*55));
-  int y3 = int(((canvasHeight/100)*55));
+  int y2 = int(((canvasHeight/100)*70));
+  int y3 = int(((canvasHeight/100)*70));
   
   int y4 = y + int(buttonYSize*1.3);
   
@@ -930,15 +933,17 @@ void keyBoardSetup()
 
 void setup() {
 
+ size(2732, 1536);
  //size(canvasWidth, canvasHeight);
- size( 1366 ,768);
+ //size( 1366 ,768);
 
   initPopups();
   //fixOrderofButton(guest.buttonSet,guest.usrFunctionActive);
   currentPopup = new Popup("Data/9gag_desktop.png", int(xLocation), int(yLocation), int(gagWidth), int(gagHeight), 3);
 
-  User guest = new User("guest","0000",gobal_buttonX,gobal_buttonY);
+  User guest = new User("Guest","0000",gobal_buttonX,gobal_buttonY);
   userList.add(guest);
+  storeName.add("Guest");
   
   /*
   Functions:
@@ -1036,7 +1041,7 @@ void pinDraw()
   for(int i = 0;i<pinFlag ;i++){
     
 
-    text("*",int(((canvasWidth/100)*50  + pinSpace - (15 * i))), int((canvasHeight/100)*53));
+    text("*",int(((canvasWidth/100)*50  + pinSpace - (15 * i))), int((canvasHeight/100)*68));
    
   }
   
@@ -1093,23 +1098,23 @@ void pinDraw()
   
   fill(127,127,127);
   if(stage == 2){
-    text("Enter Pin for User: " + userList.get(whichUser).name, int(((canvasWidth/100)*50) + buttonXSize/2),int(((canvasHeight/100)*45)));
+    text("Enter Pin for User: " + userList.get(whichUser).name, int(((canvasWidth/100)*50) + buttonXSize/2),int(((canvasHeight/100)*65)));
     if(wrongPin == true){
        textSize(26);
-       text("Incorrect Pin Please Try Again", int(((canvasWidth/100)*50) + buttonXSize/2),int(((canvasHeight/100)*73)));
+       text("Incorrect Pin Please Try Again", int(((canvasWidth/100)*50) + buttonXSize/2),int(((canvasHeight/100)*85)));
     }
   }
   else if(stage == 4){
     textSize(36);
     if(stage4Part == 1){
-      text("Enter New Pin ", int(((canvasWidth/100)*50) + buttonXSize/2),int(((canvasHeight/100)*45)));
+      text("Enter New Pin ", int(((canvasWidth/100)*50) + buttonXSize/2),int(((canvasHeight/100)*65)));
     }
     else if(stage4Part == 2){
-      text("Comfirm New Pin ", int(((canvasWidth/100)*50) + buttonXSize/2),int(((canvasHeight/100)*45)));
+      text("Comfirm New Pin ", int(((canvasWidth/100)*50) + buttonXSize/2),int(((canvasHeight/100)*65)));
     }
     if(wrongConfirmPin == true){
       textSize(26);
-      text("Pin did not match. Please Try Again", int(((canvasWidth/100)*50) + buttonXSize/2),int(((canvasHeight/100)*73)));
+      text("Pin did not match. Please Try Again", int(((canvasWidth/100)*50) + buttonXSize/2),int(((canvasHeight/100)*85)));
     }
   } 
   
@@ -1128,12 +1133,18 @@ void keyBoardDraw()
   noStroke();
   
   
+  textSize(36);
+  if(nameInUse == false){
+    text("Enter New Username ",int(((canvasWidth/100)*50) + buttonXSize/2),int(((canvasHeight/100)*65)));
+  }
+  else{
+    text("Username Already Inuse Enter Different Username ",int(((canvasWidth/100)*50) + buttonXSize/2),int(((canvasHeight/100)*65)));
+  }
   drawTimeDate();
   if(stage == 4){
-    
-  
     text(keyTracker, (int)canvasWidth/2 + 20,  int((canvasHeight/100)*70));
   }
+  
 
   
   buttonLowA.update();
@@ -1251,6 +1262,8 @@ void keyBoardDraw()
   buttonSpace.display();
   
   buttonGo.display();
+  
+   drawProfileButtons();
 }
 
 
@@ -1406,15 +1419,15 @@ void userScreenDraw(User current){
   drawGrid();
   noStroke();
   drawTimeDate();
-
- 
+  Button temp;  
+  temp = userList.get(whichUser).hid;
+  image(temp.img, temp.x_Axis, temp.y_Axis, temp.width, temp.height);
   if(isHidden){
-    rect(current.hid.x_Axis,current.hid.y_Axis,current.hid.width,current.hid.height, 10);
+
     return;
   }
  
 
-  Button temp;
   if(iconDrag) {
       fill(192,192,192);
       rect(iconX_drag, iconY_drag, iconDrag_box_width,iconDrag_box_height, 10);
@@ -1431,7 +1444,8 @@ void userScreenDraw(User current){
       image(temp.img, temp.x_Axis, temp.y_Axis, temp.width, temp.height);
     }
   } 
-  rect(current.hid.x_Axis,current.hid.y_Axis,current.hid.width,current.hid.height, 10);
+  temp = userList.get(whichUser).hid;
+  image(temp.img, temp.x_Axis, temp.y_Axis, temp.width, temp.height);
   
   
   // need to change to so that it popup the correct function
@@ -1485,13 +1499,19 @@ void drawTimeDate(){
   fill(127,127,0);
 
   textFont(f);
-  textSize(36);
+  textSize(66);
   fill(127,127,127);
   textAlign(LEFT);
   
   timeString = getCurrentTime();
-  text(timeString, 0 , 50);
-  text(month() + "/" + day() + "/" + year(),0 , 80);
+  text(timeString, 20 , 50);
+  textSize(46);
+  text(month() + "/" + day() + "/" + year(),30 , 100);
+  
+  textSize(36);
+  text("57°F",320 ,140 );
+  
+  
   fill(0);
   textAlign(CENTER);
   
@@ -1501,7 +1521,7 @@ void drawProfileButtons(){
   Button temp;
   for (int loopCounter=0; loopCounter < profile.size(); loopCounter++){
     temp = profile.get(loopCounter);
-    textSize(18);
+  
     fill(127,127,127);
     rect(temp.x_Axis,temp.y_Axis,temp.width,temp.height, 10);
      fill(0);
@@ -1511,7 +1531,8 @@ void drawProfileButtons(){
        nameHolder = nameHolder + "..";
        
      }
-    text(nameHolder, temp.x_Axis +30 ,temp.y_Axis + 20 );
+    textSize(38);
+    text(nameHolder, temp.x_Axis +50 ,temp.y_Axis + 40 );
   } 
   temp = profile.get(profile.size()-1);
   fill(127,127,127);
@@ -2076,9 +2097,9 @@ boolean outsidePinArea(){
     
     int xEnd = int( ((canvasWidth/100)*49) + 2*buttonXSize +  (canvasWidth/100)*1.5) ;
     
-    int y = int(((canvasHeight/100)*55));
+    int y = int(((canvasHeight/100)*70));
     
-    int yEnd = int(((canvasHeight/100)*55)+   int(buttonYSize*4.9));
+    int yEnd = y+   int(buttonYSize*4.9);
     
   if((mouseX < x || mouseX >= (xEnd)) || ((mouseY < y) || mouseY > (yEnd))) {
    
@@ -2098,7 +2119,7 @@ boolean outsideKeyboard(){
     
     int y = int((canvasHeight/100)*73.5);
     
-    int yEnd = y + 150 ;
+    int yEnd = y + 200 ;
     
     
   if((mouseX < x || mouseX >= (xEnd)) || ((mouseY < y) || mouseY > (yEnd))) {
@@ -2129,6 +2150,7 @@ void resetInfo(){
   keyTracker = "";
   keyRep = "";
   keySpace = 0;
+  nameInUse = false;
 
 }
 
@@ -2277,6 +2299,16 @@ void addProfileButton(ArrayList<Button> blist , int X, int Y,int f){
 
 }
 
+boolean nameExist(String checkName){
+  
+  for(int i = 0;i <storeName.size();i++){
+    if(storeName.get(i).equals(checkName)){
+      return true;
+    }
+    
+  } 
+  return false;
+}
 
 
 //Classes
@@ -2527,6 +2559,7 @@ class ImageButtons extends PinButton
               addProfileButton(profile,profileButtonX,profileButtonY,numberOfUser);
               User temp = new User(inputName,pin,gobal_buttonX,gobal_buttonY);
               userList.add(temp);
+              storeName.add(inputName);
               stage = 1;
               iskeyboard = true;
               inputName = "";
@@ -2708,13 +2741,14 @@ class User{
     //Create the Default buttons
     ///////////////////////////////////////////////////
     
-    //setting button
-    Button temp = new Button("Data/settings_icon.png", int((canvasWidth/100)*49.5 - buttonX), int((canvasHeight/100)*90) ,buttonX,buttonX,0);
-    buttonSet.add(temp);
-    
     //Menu button
     temp = new Button("Data/menu_icon.png", int((canvasWidth/100)*50.5), int((canvasHeight/100)*90) ,buttonX,buttonY,1);
     buttonSet.add(temp);
+    
+    //setting button
+    Button temp = new Button("Data/settings_icon.png", int((canvasWidth/100)*49.5 - buttonX), int((canvasHeight/100)*90) ,buttonX,buttonX,0);
+    buttonSet.add(temp);
+
     
     ///////////////////////////////////////////////////
     
@@ -2730,7 +2764,7 @@ class User{
      Button temp; 
      Button temp2; 
      temp = new Button(file, 0, int((canvasHeight/100)*90) ,buttonX,buttonY,f);
-     buttonSet.add(temp);
+     buttonSet.add(1,temp);
      temp = buttonSet.get(0);
      temp.changeX(int((canvasWidth/100)*50.5));
      
@@ -2758,7 +2792,7 @@ class User{
      Button temp; 
      Button temp2; 
      temp = new Button(file, 0, int((canvasHeight/100)*90) ,buttonX,buttonY,f);
-     buttonSet.add(temp);
+     buttonSet.add(1,temp);
      temp = buttonSet.get(0);
      temp.changeX(int((canvasWidth/100)*49.9)-(buttonX/2));
      int tempx = int((canvasWidth/100)*49.9)-(buttonX/2);
@@ -2957,14 +2991,23 @@ class ImageKeyButtons extends PinButton
           
           
           }
+          else if(nameExist(keyTracker) == true){
           
-          else{
-            inputName  = keyTracker;
-         
+            inputName  = "";
             keyFlag = 0;
             keyTracker = "";
             keyRep = "";
             keySpace = 0;
+            nameInUse = true;
+            iskeyboard = true;
+          }
+          else{
+            inputName  = keyTracker;
+            keyFlag = 0;
+            keyTracker = "";
+            keyRep = "";
+            keySpace = 0;
+             nameInUse = false;
             iskeyboard = false;
           }
         }
