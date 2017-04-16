@@ -219,6 +219,8 @@ PImage bgroundimg;
 
 ArrayList<Popup> popups = new ArrayList<Popup>();
 
+Popup miniPlayer;
+
 //Current Popup being used
 int popup_function = 0;
 
@@ -269,6 +271,18 @@ int music_seek_y_axis;
 
 int music_mid_x_axis;
 int music_mid_y_axis;
+
+int small_music_reverse_x_axis;
+int small_music_reverse_y_axis;
+
+int small_music_mid_x_axis;
+int small_music_mid_y_axis;
+
+int small_music_forward_x_axis;
+int small_music_forward_y_axis;
+
+int small_music_box_width = 200;
+int small_music_box_height = 100;
 
 int music_box_width = int((music_width/100)*10);
 int music_box_height = int((music_height/100)*20);
@@ -1403,8 +1417,13 @@ void initPopups() {
   
   temp.PopupAddClickable(music_volume_x_axis, music_volume_y_axis, vol_box_width, vol_box_height, 4); //Volume
   temp.PopupAddClickable(music_seek_x_axis, music_seek_y_axis, seek_box_width, seek_box_height, 5);   //Seek
-  
   popups.add(temp);
+  
+  miniPlayer = new Popup("Data/music_small(play).png", 2500, 1200, small_music_box_width, small_music_box_height, 1);
+  miniPlayer.PopupAddClickable(2500, 1210, 60, 75, 1); //Reverse
+  miniPlayer.PopupAddClickable(2570, 1210, 60, 75, 2); //Play/pause
+  miniPlayer.PopupAddClickable(2640, 1210, 60, 75, 3); //Forward
+
   
 }
 
@@ -1500,6 +1519,9 @@ void userScreenDraw(User current){
   drawGrid();
   noStroke();
   drawTimeDate();
+  
+  image(miniPlayer.img, miniPlayer.x_Axis, miniPlayer.y_Axis, miniPlayer.width, miniPlayer.height);
+  
   Button temp;  
   temp = userList.get(whichUser).hid;
   image(temp.img, temp.x_Axis, temp.y_Axis, temp.width, temp.height);
@@ -2140,6 +2162,22 @@ void UserScreen_MouseReleased(){
      drag = false;
      iconDrag = false;
     
+  }
+  else if(insideBox(miniPlayer.x_Axis, miniPlayer.y_Axis, miniPlayer.width, miniPlayer.height)) {
+    for(int i = 0; i < miniPlayer.clickable.size(); i++) {
+      if(insideBox(miniPlayer.clickable.get(i).x_Axis, miniPlayer.clickable.get(i).y_Axis, miniPlayer.clickable.get(i).width, miniPlayer.clickable.get(i).height)) {
+        if(miniPlayer.clickable.get(i).function == 1) {
+          println("Small reverse button");
+        }
+        else if(miniPlayer.clickable.get(i).function == 2) {
+          println("Small pause/play button");
+        }
+        else if(miniPlayer.clickable.get(i).function == 3) {
+          println("Small forward button");
+        }
+      }
+    }
+  
   }
   else {
     drag = false;
