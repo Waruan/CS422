@@ -301,6 +301,40 @@ int weatherHeight = int((canvasHeight/100)*40);
 int music_width = int((canvasWidth/100)*30);
 int music_height = int((canvasHeight/100)*15);
 
+//Size for Article Display
+int articleWidth = int((canvasWidth/100)*20);
+int articleHeight = int((canvasHeight/100)*40);
+
+//Article Buttons
+int article1_type_x_axis;
+int article1_type_y_axis;
+
+int article2_type_x_axis;
+int article2_type_y_axis;
+
+int article3_type_x_axis;
+int article3_type_y_axis;
+
+int article1_select_x_axis;
+int article1_select_y_axis;
+
+int article2_select_x_axis;
+int article2_select_y_axis;
+
+int article3_select_x_axis;
+int article3_select_y_axis;
+
+int article4_select_x_axis;
+int article4_select_y_axis;
+
+int article5_select_x_axis;
+int article5_select_y_axis;
+
+int article_type_width = int((articleWidth/100)*27);
+int article_type_height= int((articleHeight/100)*13);
+
+int article_select_width = int((articleWidth/100)*92);
+int article_select_height= int((articleHeight/100)*12);
 //Music playlist Buttons
 int playlist1_x_axis;
 int playlist1_y_axis;
@@ -1062,24 +1096,7 @@ void setup() {
   User guest = new User("Guest","0000",gobal_buttonX,gobal_buttonY);
   userList.add(guest);
   storeName.add("Guest");
-  
-  /*
-  Functions:
-    3 = 9gag
-    31= 9gag next
-    
-    4 = health
-    41 = health_sleep
-    42 = health_steps
-    43 = health_weight
-    
-    5 = weather
-    51 = weather_today
-    52 = weather_hourly
-    53 = weather_weekly
-    54 = weather_map
-  */
-  
+
   userList.get(0).addButton("Data/9gag_icon.png",2); //9gag
  
   
@@ -1506,7 +1523,17 @@ void initPopups() {
   popups.add(temp);
   
   //Articles
-  temp = new Popup("Data/Article_Template.png", permXLocation, permYLocation, int(gagWidth), int(gagHeight), 5);
+  temp = new Popup("Data/Article_Template(list).png", permXLocation, permYLocation, int(articleWidth), int(articleHeight), 5);
+  initLocations(temp,5);
+  temp.PopupAddClickable(article1_select_x_axis, article1_select_y_axis, article_select_width, article_select_height, 1);
+  temp.PopupAddClickable(article2_select_x_axis, article2_select_y_axis, article_select_width, article_select_height, 2);
+  temp.PopupAddClickable(article3_select_x_axis, article3_select_y_axis, article_select_width, article_select_height, 3);
+  temp.PopupAddClickable(article4_select_x_axis, article4_select_y_axis, article_select_width, article_select_height, 4);
+  temp.PopupAddClickable(article5_select_x_axis, article5_select_y_axis, article_select_width, article_select_height, 5);
+  
+  temp.PopupAddClickable(article1_type_x_axis, article1_type_y_axis, article_type_width, article_type_height, 6);
+  temp.PopupAddClickable(article2_type_x_axis, article2_type_y_axis, article_type_width, article_type_height, 7);
+  temp.PopupAddClickable(article3_type_x_axis, article3_type_y_axis, article_type_width, article_type_height, 8);
   popups.add(temp);
   
   //Facebook
@@ -1592,6 +1619,42 @@ void initLocations(Popup currentPopup, int f) {
      weather_map_y_axis = currentPopup.y_Axis + int((currentPopup.height/100)*80);
   
   }
+  else if(f == 5) {
+    //start 4 (+14)
+    int val = 4;
+    article1_select_x_axis = currentPopup.x_Axis + int((currentPopup.width/100)*4);
+    article1_select_y_axis = currentPopup.y_Axis + int((currentPopup.height/100)*val);
+    
+    val+=14;
+    article2_select_x_axis = currentPopup.x_Axis + int((currentPopup.width/100)*4);
+    article2_select_y_axis = currentPopup.y_Axis + int((currentPopup.height/100)*val);
+    
+    val+=14;
+    article3_select_x_axis = currentPopup.x_Axis + int((currentPopup.width/100)*4);
+    article3_select_y_axis = currentPopup.y_Axis + int((currentPopup.height/100)*val);
+    
+    val+=14;
+    article4_select_x_axis = currentPopup.x_Axis + int((currentPopup.width/100)*4);
+    article4_select_y_axis = currentPopup.y_Axis + int((currentPopup.height/100)*val);
+    
+    val+=14;
+    article5_select_x_axis = currentPopup.x_Axis + int((currentPopup.width/100)*4);
+    article5_select_y_axis = currentPopup.y_Axis + int((currentPopup.height/100)*val);
+    
+    //val = 4 (+33)
+    int new_val = 4;
+    article1_type_x_axis = currentPopup.x_Axis + int((currentPopup.width/100)*new_val);
+    article1_type_y_axis = currentPopup.y_Axis + int((currentPopup.height/100)*75);
+    
+    new_val+=33;
+    article1_type_x_axis = currentPopup.x_Axis + int((currentPopup.width/100)*new_val);
+    article1_type_y_axis = currentPopup.y_Axis + int((currentPopup.height/100)*75);
+    
+    new_val+=33;
+    article1_type_x_axis = currentPopup.x_Axis + int((currentPopup.width/100)*new_val);
+    article1_type_y_axis = currentPopup.y_Axis + int((currentPopup.height/100)*75);
+  }
+  
   else if(f == 8) {    
      int val = 12;
      music_reverse_x_axis = currentPopup.x_Axis + int((currentPopup.width/100)*val);
@@ -1709,7 +1772,7 @@ void userScreenDraw(User current){
       rect(x_drag, y_drag, drag_box_width, drag_box_height, 10);
     }
     image(currentPopup.img, currentPopup.x_Axis, currentPopup.y_Axis, currentPopup.width, currentPopup.height);
-    //rect(playlist1_x_axis, playlist1_y_axis, playlist_width, playlist_height);
+    rect(article1_type_x_axis, article1_type_y_axis, article_type_width, article_type_height);
     //rect(playlist2_x_axis, playlist2_y_axis, playlist_width, playlist_height);
     //rect(playlist3_x_axis, playlist3_y_axis, playlist_width, playlist_height);
     //rect(playlist4_x_axis, playlist4_y_axis, playlist_width, playlist_height);
@@ -2001,6 +2064,21 @@ void updateClickableBoxes(Popup box, int f) {
         }     
         val+=17;
       }
+  }
+  else if( f == 5) {
+    int select_val, type_val = 4;
+    for(int i = 0; i < box.clickable.size(); i++) {
+      if(box.clickable.get(i).function <= 5) {
+        box.clickable.get(i).x_Axis = box.x_Axis + int((box.width/100)*4);
+        box.clickable.get(i).y_Axis = box.y_Axis + int((box.height/100)*select_val);
+        select_val+=14;
+      }
+      else if(box.clickable.get(i).function > 5) {
+        box.clickable.get(i).x_Axis = box.x_Axis + int((box.width/100)*type_val);
+        box.clickable.get(i).y_Axis = box.y_Axis + int((box.height/100)*75);
+        type_val+=33;
+      }
+    }
   }
   else if(f == 8) {
     int val = 12;
@@ -2376,6 +2454,10 @@ void UserScreen_MouseReleased(){
             break;
           }
         }
+        //Inside Article
+        else if(currentPopup.function == 5) {
+          println("Pressed Article ID: " + currentPopup.clickable.get(i).function);
+        }        
         //Inside Music
         else if(currentPopup.function == 8) {
           
