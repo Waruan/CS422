@@ -1067,23 +1067,29 @@ void setup() {
   userList.get(0).addButton("Data/9gag_icon.png",2); //9gag
  
   
-  ArrayList<menuButton> mBList= userList.get(0).menuSet;
-  int idx = findMenuByFunction(mBList,2);
-
-  if(idx != -1){
-    
-    mBList.get(idx).inUse = true; 
-    mBList.get(idx).currentimage = mBList.get(idx).down;
-  }
-  
   userList.get(0).addButton("Data/health_icon.png",3); //health
-
+  
+  
+  
   userList.get(0).addButton("Data/weather_icon.png",4); //weather
 
   userList.get(0).addButton("Data/news_icon.png",5); //article
   userList.get(0).addButton("Data/facebook_icon.png",6); //facebook
   userList.get(0).addButton("Data/twitter_icon.png", 7); //Twiter
   userList.get(0).addButton("Data/music_icon.png", 8); //Music
+  
+  
+  for(int i = 2;i<9;i++){
+    ArrayList<menuButton> mBList= userList.get(0).menuSet;
+    int idx = findMenuByFunction(mBList,i);
+  
+    if(idx != -1){
+      
+      mBList.get(idx).inUse = true; 
+      mBList.get(idx).currentimage = mBList.get(idx).down;
+    }
+  
+  }
   
   f = createFont("Arial",24,true);
   background(255);
@@ -3273,9 +3279,30 @@ class User{
     // rect((canvasWidth/100)*40,(canvasHeight/100)*60,(canvasWidth/100)*20,(canvasWidth/100)*10);
     menuButton menuTemp;
     //9gag
-    menuTemp = new menuButton(menuXaxis+20,menuYaxis+20,buttonX*2,buttonY*2,"Data/9gag_icon_unselected.png","Data/9gag_icon_selected.png", 2);
+    menuTemp = new menuButton(menuXaxis+40,menuYaxis+40,buttonX*2,buttonY*2,"Data/9gag_icon_unselected.png","Data/9gag_icon_selected.png", 2);
     menuSet.add(menuTemp);
-    //
+      //userList.get(0).addButton("Data/health_icon.png",3); //health
+    menuTemp = new menuButton(menuXaxis+70 + buttonX*2,menuYaxis+30,buttonX*2,buttonY*2,"Data/health_icon_unselected.png","Data/health_icon_selected.png", 3);
+    menuSet.add(menuTemp);
+    
+      //userList.get(0).addButton("Data/weather_icon.png",4); //weather
+    menuTemp = new menuButton(menuXaxis+100 + buttonX*4,menuYaxis+40,buttonX*2,buttonY*2,"Data/weather_icon_unselected.png","Data/weather_icon_selected.png", 4);
+    menuSet.add(menuTemp);
+      //userList.get(0).addButton("Data/news_icon.png",5); //article
+      
+    menuTemp = new menuButton(menuXaxis+130 + buttonX*6,menuYaxis+40,buttonX*2,buttonY*2,"Data/news_icon_unselected.png","Data/news_icon_selected.png", 5);
+    menuSet.add(menuTemp);
+      //userList.get(0).addButton("Data/facebook_icon.png",6); //facebook
+      
+   menuTemp = new menuButton(menuXaxis+160 + buttonX*8,menuYaxis+40,buttonX*2,buttonY*2,"Data/facebook_icon_unselected.png","Data/facebook_icon_selected.png", 6);
+    menuSet.add(menuTemp);
+      //userList.get(0).addButton("Data/twitter_icon.png", 7); //Twiter
+   menuTemp = new menuButton(menuXaxis+40,menuYaxis+80 + buttonY*2,buttonX*2,buttonY*2,"Data/twitter_icon_unselected.png","Data/twitter_icon_selected.png", 7);
+   menuSet.add(menuTemp);   
+   
+      //userList.get(0).addButton("Data/music_icon.png", 8); //Music
+  menuTemp = new menuButton(menuXaxis+70 + buttonX*2,menuYaxis+80 + buttonY*2,buttonX*2,buttonY*2,"Data/music_icon_unselected.png","Data/music_icon_selected.png", 8);
+   menuSet.add(menuTemp);  
     
     
     //////////////////////////////////////////////////
@@ -3845,7 +3872,27 @@ class menuButton extends PinButton
           if(func == 2){
             usr.addButton("Data/9gag_icon.png",2);
           }
+          if(func == 3){
+            usr.addButton("Data/health_icon.png",3);
+          }
+          if(func == 4){
+            usr.addButton("Data/weather_icon.png",4);
+          }
+          if(func == 5){
+            usr.addButton("Data/news_icon.png",5);
+          }
+          if(func == 6){
+            usr.addButton("Data/facebook_icon.png",6);
+          }
+          if(func == 7){
+            usr.addButton("Data/twitter_icon.png",7);
+          }
+          if(func == 8){
+            usr.addButton("Data/music_icon.png",8);
+          }
         }
+
+
         else if(inUse == false && inSetup == false){
          
           currentimage = base;
