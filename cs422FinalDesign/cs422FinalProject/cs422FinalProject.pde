@@ -247,6 +247,38 @@ int healthHeight = int((canvasHeight/100)*40);
 int weatherWidth = int((canvasWidth/100)*50);
 int weatherHeight = int((canvasHeight/100)*40);
 
+//Size for music display
+int music_width = int((canvasWidth/100)*30);
+int music_height = int((canvasHeight/100)*15);
+
+//Music buttons
+int music_reverse_x_axis;
+int music_reverse_y_axis;
+
+int music_forward_x_axis;
+int music_forward_y_axis;
+
+int music_volume_x_axis;
+int music_volume_y_axis;
+
+int music_seek_x_axis;
+int music_seek_y_axis;
+
+int music_mid_x_axis;
+int music_mid_y_axis;
+
+int music_box_width = int((music_width/100)*10);
+int music_box_height = int((music_height/100)*20);
+
+int vol_box_width = int((music_width/100)*53);
+int vol_box_height = int((music_height/100)*12);
+
+int button_box_width = int((music_width/100)*10);
+int button_box_height = int((music_height/100)*20);
+
+int seek_box_width = int((music_width/100)*70);
+int seek_box_height = int((music_height/100)*12);
+
 //9Gag Next and previous buttons
 int gag_stage = 1;
 
@@ -964,7 +996,8 @@ void setup() {
   userList.get(0).addButton("Data/weather_icon.png",4); //weather
   userList.get(0).addButton("Data/news_icon.png",5); //article
   userList.get(0).addButton("Data/facebook_icon.png",6); //facebook
-  userList.get(0).addButton("Data/twitter_icon.png", 7);
+  userList.get(0).addButton("Data/twitter_icon.png", 7); //Twiter
+  userList.get(0).addButton("Data/music_icon.png", 8); //Music
   
   f = createFont("Arial",24,true);
   background(255);
@@ -1344,6 +1377,18 @@ void initPopups() {
   temp = new Popup("Data/Twiter.png", permXLocation, permYLocation, int(gagWidth), int(gagHeight), 7);
   popups.add(temp);
   
+  
+  temp = new Popup("Data/music_big.png", permXLocation, permYLocation, int(music_width), int(music_height), 8);
+  initLocations(temp,8);
+  temp.PopupAddClickable(music_reverse_x_axis, music_reverse_y_axis, music_box_width, music_box_height, 1); //Reverse Button
+  temp.PopupAddClickable(music_mid_x_axis, music_mid_y_axis, music_box_width, music_box_height, 2);         //Play/Pause Button
+  temp.PopupAddClickable(music_forward_x_axis, music_forward_y_axis, music_box_width, music_box_height, 3); //Forward Button
+  
+  temp.PopupAddClickable(music_volume_x_axis, music_volume_y_axis, vol_box_width, vol_box_height, 4); //Volume
+  temp.PopupAddClickable(music_seek_x_axis, music_seek_y_axis, seek_box_width, seek_box_height, 5);   //Seek
+  
+  popups.add(temp);
+  
 }
 
 void initLocations(Popup currentPopup, int f) {
@@ -1392,6 +1437,30 @@ void initLocations(Popup currentPopup, int f) {
      weather_map_y_axis = currentPopup.y_Axis + int((currentPopup.height/100)*80);
   
   }
+  else if(f == 8) {    
+     int val = 12;
+     music_reverse_x_axis = currentPopup.x_Axis + int((currentPopup.width/100)*val);
+     music_reverse_y_axis = currentPopup.y_Axis + int((currentPopup.height/100)*60);
+     
+     val+=18;
+     music_mid_x_axis = currentPopup.x_Axis + int((currentPopup.width/100)*val);
+     music_mid_y_axis = currentPopup.y_Axis + int((currentPopup.height/100)*60);
+     
+     val+=18;
+     music_forward_x_axis = currentPopup.x_Axis + int((currentPopup.width/100)*val);
+     music_forward_y_axis = currentPopup.y_Axis + int((currentPopup.height/100)*60);
+    
+    
+     music_volume_x_axis = currentPopup.x_Axis + int((currentPopup.width/100)*10);
+     music_volume_y_axis = currentPopup.y_Axis + int((currentPopup.height/100)*84);
+    
+     music_seek_x_axis = currentPopup.x_Axis + int((currentPopup.width/100));
+     music_seek_y_axis = currentPopup.y_Axis + int((currentPopup.height/100)*43);
+   
+  
+  
+  }
+  
 }
 
 void updateXYLocation(int popUpFunction) {
@@ -1451,7 +1520,7 @@ void userScreenDraw(User current){
       rect(x_drag, y_drag, drag_box_width, drag_box_height, 10);
     }
     image(currentPopup.img, currentPopup.x_Axis, currentPopup.y_Axis, currentPopup.width, currentPopup.height);
-    //rect(gag_previous_x_axis, gag_previous_y_axis, gag_box_width, gag_box_height);
+    //rect(music_reverse_x_axis, music_reverse_y_axis, music_box_width, music_box_height);
     //rect(gag_next_x_axis, gag_next_y_axis, gag_box_width, gag_box_height);
     //rect(weather_weekly_x_axis, weather_weekly_y_axis, weather_box_width, weather_box_height);
     //rect(weather_map_x_axis, weather_map_y_axis, weather_box_width, weather_box_height);
@@ -1686,8 +1755,24 @@ void updateClickableBoxes(Popup box, int f) {
         }     
         val+=17;
       }
-  
-  
+  }
+  else if(f == 8) {
+    int val = 12;
+    for(int i = 0; i < box.clickable.size(); i++) {
+      if(box.clickable.get(i).function == 4) {
+        box.clickable.get(i).x_Axis = box.x_Axis + int((box.width/100)*10);
+        box.clickable.get(i).y_Axis = box.y_Axis + int((box.height/100)*84);
+      }
+      else if(box.clickable.get(i).function == 5) {
+        box.clickable.get(i).x_Axis = box.x_Axis + int((box.width/100));
+        box.clickable.get(i).y_Axis = box.y_Axis + int((box.height/100)*43);     
+      }
+      else{
+        box.clickable.get(i).x_Axis = box.x_Axis + int((box.width/100)*val);
+        box.clickable.get(i).y_Axis = box.y_Axis + int((box.height/100)*60);
+      }
+      val+=18;
+    }
   }
   
 }
@@ -1931,12 +2016,8 @@ void UserScreen_MouseReleased(){
  
   else if(insideBox(currentPopup.x_Axis, currentPopup.y_Axis, currentPopup.width, currentPopup.height) ) {
     //drag = true;
-    println("inside 1");
     for(int i = 0; i < currentPopup.clickable.size(); i++) {
-      println("inside 2");
       if(insideBox(currentPopup.clickable.get(i).x_Axis, currentPopup.clickable.get(i).y_Axis, currentPopup.clickable.get(i).width, currentPopup.clickable.get(i).height)) {
-        
-        println(currentPopup.function);
         //If app is 9gag
         if(currentPopup.function == 2) {
           if(currentPopup.clickable.get(i).function == 1) {
@@ -1965,16 +2046,31 @@ void UserScreen_MouseReleased(){
             break;
           }
         }
+        //Inside Music
+        else if(currentPopup.function == 8) {
+          if(currentPopup.clickable.get(i).function == 1) {
+            println("Pressed reverse button");
+          }
+          else if(currentPopup.clickable.get(i).function == 2) {
+            println("Pressed pause/play button");
+          }
+          else if(currentPopup.clickable.get(i).function == 3) {
+            println("Pressed forward button");
+          }
+          else if(currentPopup.clickable.get(i).function == 4) {
+            println("Pressed volume button");
+          }
+          else if(currentPopup.clickable.get(i).function == 5) {
+            println("Pressed Seek button");
+          }
+        
+        }
         else {
           imageBox = true;
           currentButton = currentPopup.clickable.get(i);
-          break;
-        
-        }
-        
-        
-      }
-    
+          break;      
+        }       
+      }  
     }   
     
      originalX = xLocation;
