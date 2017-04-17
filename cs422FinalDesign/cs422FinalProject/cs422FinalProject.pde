@@ -21,8 +21,8 @@ SoundFile beepSound;
 ////////////////////////////////////////////////////////////
 
 //buttons size for icons
-int gobal_buttonX = 33;
-int gobal_buttonY = 30;
+int gobal_buttonX = 66;
+int gobal_buttonY = 60;
 int profileButtonX = int(1.8*66);
 int profileButtonY = int(1.8*30);
 
@@ -112,7 +112,7 @@ int buttonSize = 90;
 int settingFlag = 0;
 int displayFlag = 0;
 String locationDefault = "Chicago, Illinois";
-int buttonX = 66 ;
+int buttonX = 66;
 int buttonY = 60;
 int languageFlag = 0; //0 for english 1 for spanish
 int filterFlag1 = 0;
@@ -171,8 +171,6 @@ int network3Y = (int)canvasHeight/2 + 395;
 // scale down for home monitors
 //float canvasWidth = 1366;
 //float canvasHeight = 768;
-float slideOffset = (canvasWidth/2 - 250);
-HScrollbar hs1 = new HScrollbar(int(slideOffset), (int)(canvasHeight/2 + 400), 350, 35, 1);
 
 //HScrollbar hs2 = new HScrollbar(0, height-20, width, 10, 1);
 
@@ -185,10 +183,11 @@ HScrollbar hs1 = new HScrollbar(int(slideOffset), (int)(canvasHeight/2 + 400), 3
 
 
 int settingXaxis = int(canvasWidth/2 - 265);
-int settingYaxis = int(canvasHeight/2 + 200);
-int settingWidth = 380;
-int settingHeight = 310;
-
+float slideOffset = int(canvasWidth/2 - 265)+ 50;
+int settingYaxis = int(canvasHeight/2 + 100);
+int settingWidth = 480;
+int settingHeight = 410;
+HScrollbar hs1 = new HScrollbar(int(slideOffset), (int)(canvasHeight/2 + 400), 350, 35, 1);
 
 ////////////////////////////////////////////////////////////
 
@@ -758,13 +757,14 @@ void settingSetup()
   int x0 = (int)canvasWidth/2 - 100;
   
   //Icons in setting tray x and ys from left to right and up to down
-  int iconX1 = (int)canvasWidth/2 - 200;
-  int iconX2 = (int)canvasWidth/2 + 20;
-  int iconY1 = (int)canvasHeight/2 + 220;
-  int iconY2 = (int)canvasHeight/2 + 280;
-  int iconY3 = (int)canvasHeight/2 + 340;
-  int iconY4 = (int)canvasHeight/2 + 400;
-  int iconY5 = (int)canvasHeight/2 + 460;
+  int iconX1 = int(canvasWidth/2 - 200);
+  int iconX2 = int(canvasWidth/2 + 20);
+  
+  int iconY1 = int(canvasHeight/2 + 110);
+  int iconY2 = iconY1 + 90 ;
+  int iconY3 = iconY1 + 150 +30;
+  int iconY4 = iconY1 + 210 + 45;
+  int iconY5 = iconY1 + 270 + 60;
   //
   //settingButtons for each setting
   //top row
@@ -829,16 +829,18 @@ void settingSetup()
   
   //Setting Icons
   //buttongearIcon = new SettingImageButtons(x0, y0, int(buttonX*iconAdjust), int(buttonY*iconAdjust), butgearIcon, butgearIcon, butgearIcon, 0);
-  buttonIconSize = new SettingImageButtons(iconX1, iconY3, int(buttonX*iconAdjust), int(buttonY*iconAdjust), butIconSize, butIconSize, butIconSize, 1);
-  buttonBluetooth = new SettingImageButtons(iconX2, iconY5, int(buttonX*iconAdjust), int(buttonY*iconAdjust), butBluetooth, butBluetooth, butBluetooth, 2);
-  buttonTime = new SettingImageButtons(iconX2, iconY2, int(buttonX*iconAdjust), int(buttonY*iconAdjust), butTime, butTime, butTime, 3);
-  buttonPersonalization = new SettingImageButtons(iconX2, iconY1, int(buttonX*iconAdjust), int(buttonY*iconAdjust), butPersonalization, butPersonalization, butPersonalization, 10);
-  buttonContrast = new SettingImageButtons(iconX1, iconY1, int(buttonX*iconAdjust), int(buttonY*iconAdjust), butContrast, butContrast, butContrast, 13);
-  buttonLanguage = new SettingImageButtons(iconX1, iconY5, int(buttonX*iconAdjust), int(buttonY*iconAdjust), butLanguage, butLanguage, butLanguage, 14);
-  buttonNewsFeed = new SettingImageButtons(iconX2, iconY3, int(buttonX*iconAdjust), int(buttonY*iconAdjust), butNewsFeed, butNewsFeed, butNewsFeed, 25);
-  buttonLocation = new SettingImageButtons(iconX2, iconY4, int(buttonX*iconAdjust), int(buttonY*iconAdjust), butLocation, butLocation, butLocation, 34);
-  buttonTransparency = new SettingImageButtons(iconX1, iconY2, int(buttonX*iconAdjust), int(buttonY*iconAdjust), butTransparency, butTransparency, butTransparency, 35);
-  buttonWifi = new SettingImageButtons(iconX1, iconY4, int(buttonX*iconAdjust), int(buttonY*iconAdjust), butWifi, butWifi, butWifi, 36);
+  buttonIconSize = new SettingImageButtons(iconX1, iconY3, int(buttonX), int(buttonY), butIconSize, butIconSize, butIconSize, 1);
+  buttonBluetooth = new SettingImageButtons(iconX2, iconY5, int(buttonX), int(buttonY), butBluetooth, butBluetooth, butBluetooth, 2);
+  buttonTime = new SettingImageButtons(iconX2, iconY2, int(buttonX), int(buttonY), butTime, butTime, butTime, 3);
+  buttonPersonalization = new SettingImageButtons(iconX2, iconY1, int(buttonX), int(buttonY), butPersonalization, butPersonalization, butPersonalization, 10);
+  buttonContrast = new SettingImageButtons(iconX1, iconY1, int(buttonX), int(buttonY), butContrast, butContrast, butContrast, 13);
+  buttonLanguage = new SettingImageButtons(iconX1, iconY5, int(buttonX), int(buttonY), butLanguage, butLanguage, butLanguage, 14);
+  buttonNewsFeed = new SettingImageButtons(iconX2, iconY3, int(buttonX), int(buttonY), butNewsFeed, butNewsFeed, butNewsFeed, 25);
+  buttonLocation = new SettingImageButtons(iconX2, iconY4, int(buttonX), int(buttonY), butLocation, butLocation, butLocation, 34);
+  buttonTransparency = new SettingImageButtons(iconX1, iconY2, int(buttonX), int(buttonY), butTransparency, butTransparency, butTransparency, 35);
+  buttonWifi = new SettingImageButtons(iconX1, iconY4, int(buttonX), int(buttonY), butWifi, butWifi, butWifi, 36);
+  
+  
   //Buttons for each different setting
   buttonBluetoothOn = new SettingImageButtons(bluetoothX, bluetoothY, w, h, bluetoothOn, bluetoothOn, bluetoothOn, 4);
   buttonBluetoothOff = new SettingImageButtons(bluetoothX, bluetoothY, w, h, bluetoothOff, bluetoothOff, bluetoothOff, 5);
@@ -958,36 +960,20 @@ void settingDraw()
 
     
     iconAdjust = constrain(((hs1.spos - slideOffset)/(hs1.swidth-10)),0.25,1) ;
-    //println( constrain((hs1.spos/(hs1.swidth-10)),0.25,1) );
-    //float temp =  constrain(((hs1.spos-slideOffset)/(hs1.swidth-10)),0.25,1);
 
      
-     //noStroke();
-     //fill(0);
-     //rect(1200,800,buttonX*iconAdjust,buttonY*iconAdjust);
-     //rect(1200+ buttonX,800,buttonX*iconAdjust,buttonY*iconAdjust);
-     //buttongearIcon.w= int(buttonX*iconAdjust);
-     //buttongearIcon.h= int(buttonY*iconAdjust);
-     buttonIconSize.w= int(buttonX*iconAdjust);
-     buttonIconSize.h= int(buttonY*iconAdjust);
-     buttonBluetooth.w= int(buttonX*iconAdjust);
-     buttonBluetooth.h= int(buttonY*iconAdjust);
-     buttonTime.w= int(buttonX*iconAdjust);
-     buttonTime.h= int(buttonY*iconAdjust);
-     buttonPersonalization.w= int(buttonX*iconAdjust);
-     buttonPersonalization.h= int(buttonY*iconAdjust);
-     buttonContrast.w= int(buttonX*iconAdjust);
-     buttonContrast.h= int(buttonY*iconAdjust);
-     buttonLanguage.w= int(buttonX*iconAdjust);
-     buttonLanguage.h= int(buttonY*iconAdjust);
-     buttonNewsFeed.w= int(buttonX*iconAdjust);
-     buttonNewsFeed.h= int(buttonY*iconAdjust);
-     buttonLocation.w= int(buttonX*iconAdjust);
-     buttonLocation.h= int(buttonY*iconAdjust);
-     buttonTransparency.w= int(buttonX*iconAdjust);
-     buttonTransparency.h= int(buttonY*iconAdjust);
-     buttonWifi.w= int(buttonX*iconAdjust);
-     buttonWifi.h= int(buttonY*iconAdjust);
+     User temp = userList.get(whichUser);
+     
+     
+     ArrayList<Button> btnList = temp.buttonSet;
+     for(int i = 0; i < btnList.size();i++){
+       Button btn = btnList.get(i);
+       btn.width = int(temp.buttonX * iconAdjust);
+       btn.height = int(temp.buttonY * iconAdjust);
+     }
+     
+     temp.adjustButton();
+     
      hs1.update();
      hs1.display();
   
@@ -2535,8 +2521,6 @@ void keyBoardSetup()
   buttonSpace = new ImageKeyButtons(boardLeft4, boardyLast, spaceBarWidth, keyboardHeight, butSpace, butSpace, butSpaceChanged, " ");
   buttonCom = new ImageKeyButtons(boardLeft8 - 15, boardyLast, keyboardWidth, keyboardHeight, butCom, butCom, butComChanged, ".com");//done
   
-  
-
 }
 
 
@@ -2604,8 +2588,6 @@ void setup() {
 
   int index = findMostRight(profile);
   newUserButton = new CircleButton(int(index+profileButtonX+(2*(canvasWidth/100))),temp.y_Axis+(profileButtonY/2), profileButtonY, profileButtonY);
-  
-  
   
   //addProfileButton(profile,66,30,-2);
   //////////////////////////////////////////////////
@@ -5053,14 +5035,15 @@ class User{
     ///////////////////////////////////////////////////
     
     //Menu button
-    Button temp = new Button("Data/menu_icon.png", int((canvasWidth/100)*50.5), int((canvasHeight/100)*90) ,buttonX,buttonY,1);
+    Button temp = new Button("Data/menu_icon.png", int((canvasWidth/100)*50.5), int((canvasHeight/100)*90) ,int(buttonX * iconAdjust),int(buttonY * iconAdjust),1);
     buttonSet.add(temp);
     
     //setting button
-    temp = new Button("Data/settings_icon.png", int((canvasWidth/100)*49.5 - buttonX), int((canvasHeight/100)*90) ,buttonX,buttonX,0);
+    temp = new Button("Data/settings_icon.png", int((canvasWidth/100)*49.5 - buttonX), int((canvasHeight/100)*90) ,int(buttonX * iconAdjust),int(buttonY * iconAdjust),0);
     buttonSet.add(temp);
 
-    
+    int localX = 30;
+    int localY = 33;
     ///////////////////////////////////////////////////
     
     //Menu buttons
@@ -5069,29 +5052,29 @@ class User{
     // rect((canvasWidth/100)*40,(canvasHeight/100)*60,(canvasWidth/100)*20,(canvasWidth/100)*10);
     menuButton menuTemp;
     //9gag
-    menuTemp = new menuButton(menuXaxis+40,menuYaxis+40,buttonX*2,buttonY*2,"Data/9gag_icon_unselected.png","Data/9gag_icon_selected.png", 2);
+    menuTemp = new menuButton(menuXaxis+40,menuYaxis+40,localX*2,localY*2,"Data/9gag_icon_unselected.png","Data/9gag_icon_selected.png", 2);
     menuSet.add(menuTemp);
       //userList.get(0).addButton("Data/health_icon.png",3); //health
-    menuTemp = new menuButton(menuXaxis+70 + buttonX*2,menuYaxis+30,buttonX*2,buttonY*2,"Data/health_icon_unselected.png","Data/health_icon_selected.png", 3);
+    menuTemp = new menuButton(menuXaxis+70 + localX*2,menuYaxis+30,localX*2,localY*2,"Data/health_icon_unselected.png","Data/health_icon_selected.png", 3);
     menuSet.add(menuTemp);
     
       //userList.get(0).addButton("Data/weather_icon.png",4); //weather
-    menuTemp = new menuButton(menuXaxis+100 + buttonX*4,menuYaxis+40,buttonX*2,buttonY*2,"Data/weather_icon_unselected.png","Data/weather_icon_selected.png", 4);
+    menuTemp = new menuButton(menuXaxis+100 + localX*4,menuYaxis+40,localX*2,localY*2,"Data/weather_icon_unselected.png","Data/weather_icon_selected.png", 4);
     menuSet.add(menuTemp);
       //userList.get(0).addButton("Data/news_icon.png",5); //article
       
-    menuTemp = new menuButton(menuXaxis+130 + buttonX*6,menuYaxis+40,buttonX*2,buttonY*2,"Data/news_icon_unselected.png","Data/news_icon_selected.png", 5);
+    menuTemp = new menuButton(menuXaxis+130 + localX*6,menuYaxis+40,localX*2,localY*2,"Data/news_icon_unselected.png","Data/news_icon_selected.png", 5);
     menuSet.add(menuTemp);
       //userList.get(0).addButton("Data/facebook_icon.png",6); //facebook
       
-   menuTemp = new menuButton(menuXaxis+160 + buttonX*8,menuYaxis+40,buttonX*2,buttonY*2,"Data/facebook_icon_unselected.png","Data/facebook_icon_selected.png", 6);
+   menuTemp = new menuButton(menuXaxis+160 + localX*8,menuYaxis+40,localX*2,localY*2,"Data/facebook_icon_unselected.png","Data/facebook_icon_selected.png", 6);
     menuSet.add(menuTemp);
       //userList.get(0).addButton("Data/twitter_icon.png", 7); //Twiter
-   menuTemp = new menuButton(menuXaxis+40,menuYaxis+80 + buttonY*2,buttonX*2,buttonY*2,"Data/twitter_icon_unselected.png","Data/twitter_icon_selected.png", 7);
+   menuTemp = new menuButton(menuXaxis+40,menuYaxis+80 + localY*2,localX*2,localY*2,"Data/twitter_icon_unselected.png","Data/twitter_icon_selected.png", 7);
    menuSet.add(menuTemp);   
    
       //userList.get(0).addButton("Data/music_icon.png", 8); //Music
-  menuTemp = new menuButton(menuXaxis+70 + buttonX*2,menuYaxis+80 + buttonY*2,buttonX*2,buttonY*2,"Data/music_icon_unselected.png","Data/music_icon_selected.png", 8);
+  menuTemp = new menuButton(menuXaxis+70 + localX*2,menuYaxis+80 + localY*2,localX*2,localY*2,"Data/music_icon_unselected.png","Data/music_icon_selected.png", 8);
    menuSet.add(menuTemp);  
     
     
@@ -5102,33 +5085,42 @@ class User{
  
   
  void addButton(String file, int f){
-
+   
+   
+   for(int i= 0;i<buttonSet.size();i++){
+     buttonSet.get(i).width = int(buttonX* iconAdjust);
+     buttonSet.get(i).height = int(buttonX* iconAdjust);
+     
+   }
+   
    // odd number of functions before add new
    if(buttonSet.size()%2 == 1){
      
      Button temp; 
      Button temp2; 
-     temp = new Button(file, 0, int((canvasHeight/100)*90) ,buttonX,buttonY,f);
+     temp = new Button(file, 0, int((canvasHeight/100)*90) ,int(buttonX* iconAdjust),int(buttonX* iconAdjust),f);
      buttonSet.add(1,temp);
      temp = buttonSet.get(0);
      temp.changeX(int((canvasWidth/100)*50.5));
      
      
      temp = buttonSet.get(1);
-     temp.changeX(int(((canvasWidth/100)*49.5) - buttonX));
+     temp.changeX(int(((canvasWidth/100)*49.5) - int(buttonX* iconAdjust)));
      
-     int tempx = int(((canvasWidth/100)*49.5)- buttonX);
+     int tempx = int(((canvasWidth/100)*49.5)- int(buttonX* iconAdjust));
   
      for (int i=2; i < buttonSet.size(); i = i+2){
-        tempx = tempx - int(buttonX + (canvasWidth/100));
+        tempx = tempx - int(buttonX* iconAdjust + (canvasWidth/100));
      }
      temp = buttonSet.get(0);
      temp.changeX(tempx);
      for (int i=1; i < buttonSet.size(); i++){
        temp = buttonSet.get(i);
-       temp.changeX(tempx +(i* int(buttonX + (canvasWidth/100))));
-    
+       temp.changeX(tempx +(i* int((buttonX* iconAdjust) + (canvasWidth/100))));
+       
      }
+     
+     
      
      
    }
@@ -5136,16 +5128,16 @@ class User{
    else{
      Button temp; 
      Button temp2; 
-     temp = new Button(file, 0, int((canvasHeight/100)*90) ,buttonX,buttonY,f);
+     temp = new Button(file, 0, int((canvasHeight/100)*90) ,int(buttonX* iconAdjust),int(buttonY* iconAdjust),f);
      buttonSet.add(1,temp);
      temp = buttonSet.get(0);
-     temp.changeX(int((canvasWidth/100)*49.9)-(buttonX/2));
-     int tempx = int((canvasWidth/100)*49.9)-(buttonX/2);
+     temp.changeX(int((canvasWidth/100)*49.9)-(int(buttonX* iconAdjust)/2));
+     int tempx = int((canvasWidth/100)*49.9)-(int(buttonX* iconAdjust)/2);
      
      for (int i=1; i < buttonSet.size(); i = i+2){
         //temp  = buttonSet.get(i);
         //temp2 = buttonSet.get(i+1);
-        tempx = tempx  - int(buttonX + (canvasWidth/100));
+        tempx = tempx  - int((buttonX* iconAdjust) +   (canvasWidth/100));
         
         //temp.changeX( ((buttonSet.get(i-1)).x_Axis) - int(buttonX + (canvasWidth/100)) );
         //temp2.changeX( ((buttonSet.get(i-1)).x_Axis) + int(buttonX + (canvasWidth/100)) );
@@ -5155,11 +5147,51 @@ class User{
      temp.changeX(tempx);
      for (int i=1; i < buttonSet.size(); i++){
        temp = buttonSet.get(i);
-       temp.changeX(tempx +(i* int(buttonX + (canvasWidth/100))));
+       temp.changeX(tempx +(i* int((buttonX* iconAdjust) + (canvasWidth/100))));
 
      }
    }
-   
+      
+  }
+  void adjustButton(){
+    
+    if(buttonSet.size()%2 == 1){
+      Button temp;
+      int tempx = int((canvasWidth/100)*49.9)-(int(buttonX* iconAdjust)/2);
+     
+     for (int i=1; i < buttonSet.size(); i = i+2){
+        //temp  = buttonSet.get(i);
+        //temp2 = buttonSet.get(i+1);
+        tempx = tempx  - int((buttonX* iconAdjust) + (canvasWidth/100));
+        
+        //temp.changeX( ((buttonSet.get(i-1)).x_Axis) - int(buttonX + (canvasWidth/100)) );
+        //temp2.changeX( ((buttonSet.get(i-1)).x_Axis) + int(buttonX + (canvasWidth/100)) );
+        
+     }
+     temp = buttonSet.get(0);
+     temp.changeX(tempx);
+     for (int i=1; i < buttonSet.size(); i++){
+       temp = buttonSet.get(i);
+       temp.changeX(tempx +(i* int((buttonX* iconAdjust) + (canvasWidth/100))));
+
+     }
+    
+    }
+    else{
+      Button temp; 
+      int tempx = int(((canvasWidth/100)*49.5)- int(buttonX* iconAdjust));
+    
+       for (int i=2; i < buttonSet.size(); i = i+2){
+          tempx = tempx - int(buttonX* iconAdjust + (canvasWidth/100));
+       }
+       temp = buttonSet.get(0);
+       temp.changeX(tempx);
+       for (int i=1; i < buttonSet.size(); i++){
+         temp = buttonSet.get(i);
+         temp.changeX(tempx +(i* int((buttonX* iconAdjust) + (canvasWidth/100))));
+         
+       }
+    }
   }
   
   
@@ -5175,14 +5207,14 @@ class User{
      int tempx = int(((canvasWidth/100)*49.5)- buttonX);
   
      for (int i=2; i < buttonSet.size(); i = i+2){
-        tempx = tempx - int(buttonX + (canvasWidth/100));
+        tempx = tempx - int(buttonX* iconAdjust + (canvasWidth/100));
      }
      temp = buttonSet.get(0);
      temp.changeX(tempx);
      
      for (int i=1; i < buttonSet.size(); i++){
        temp = buttonSet.get(i);
-       temp.changeX(tempx +(i* int(buttonX + (canvasWidth/100))));
+       temp.changeX(tempx +(i* int(buttonX* iconAdjust +(canvasWidth/100))));
     
      }
    }
@@ -5195,13 +5227,13 @@ class User{
      int tempx = int((canvasWidth/100)*49.9)-(buttonX/2);
      
      for (int i=1; i < buttonSet.size(); i = i+2){
-        tempx = tempx  - int(buttonX + (canvasWidth/100));
+        tempx = tempx  - int(buttonX* iconAdjust +(canvasWidth/100));
      }
      temp = buttonSet.get(0);
      temp.changeX(tempx);
      for (int i=1; i < buttonSet.size(); i++){
        temp = buttonSet.get(i);
-       temp.changeX(tempx +(i* int(buttonX + (canvasWidth/100))));
+       temp.changeX(tempx +(i* int(buttonX* iconAdjust +(canvasWidth/100))));
      }
    }
    
@@ -5910,8 +5942,9 @@ class SettingImageButtons extends PinButton
     //}
     if(displayFlag == 1)
     {
-        fill(0);  
-        text("Select icon size", (int)canvasWidth/2 - 140, (int)canvasHeight/2 + 280);
+        fill(0); 
+        textAlign(CENTER);
+        text("Select icon size", settingXaxis + (settingWidth/2) , settingYaxis + 50);
         //println("Debug 0");
     }
     if(displayFlag == 2)
