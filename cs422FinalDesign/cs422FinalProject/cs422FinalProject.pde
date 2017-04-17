@@ -26,7 +26,7 @@ int gobal_buttonY = 60;
 int profileButtonX = int(1.8*66);
 int profileButtonY = int(1.8*30);
 
-
+PImage rain = loadImage("Data/rain.png");
 //0 = start screen
 //1 = profile selection
 //2 = login 
@@ -2873,13 +2873,14 @@ void pinDraw()
   
   // draw the active button in a different color
  drawTimeDate();
+ fill(0);
   for(int i = 0;i<pinFlag ;i++){
     
 
     text("*",int(((canvasWidth/100)*50  + pinSpace - (15 * i))), int((canvasHeight/100)*68));
    
   }
-  
+  fill(102);
   
 
   button0.update();
@@ -2933,14 +2934,17 @@ void pinDraw()
   
   fill(127,127,127);
   if(stage == 2){
+    fill(0);
     text("Enter Pin for User: " + userList.get(whichUser).name, int(((canvasWidth/100)*50) + buttonXSize/2),int(((canvasHeight/100)*65)));
     if(wrongPin == true){
        textSize(26);
        text("Incorrect Pin Please Try Again", int(((canvasWidth/100)*50) + buttonXSize/2),int(((canvasHeight/100)*85)));
     }
+    fill(102);
   }
   else if(stage == 4){
     textSize(36);
+    fill(0);
     if(stage4Part == 1){
       text("Enter New Pin ", int(((canvasWidth/100)*50) + buttonXSize/2),int(((canvasHeight/100)*65)));
     }
@@ -2951,6 +2955,7 @@ void pinDraw()
       textSize(26);
       text("Pin did not match. Please Try Again", int(((canvasWidth/100)*50) + buttonXSize/2),int(((canvasHeight/100)*85)));
     }
+    fill(102);
   } 
   
   drawProfileButtons();
@@ -2970,7 +2975,7 @@ void keyBoardDraw()
   //comment out drawGrid if you dont want to see the grid
   drawGrid();
   noStroke();
-  
+  fill(0);
   
   textSize(36);
   if(nameInUse == false){
@@ -3103,6 +3108,7 @@ void keyBoardDraw()
   buttonGo.display();
   
   drawProfileButtons();
+  fill(102);
 }
 
 
@@ -3115,14 +3121,33 @@ void calkeyBoardDraw()
   drawGrid();
   noStroke();
   if(stage == 3){
+    fill(0);
     text(keyTracker, (int)canvasWidth/2 + 20,  int((canvasHeight/100)*70));
   }
   
   
   textSize(36);
-  
-  text("Enter Note",int(((canvasWidth/100)*50) + buttonXSize/2),int(((canvasHeight/100)*65)));
-  
+  if(calenderInput){
+    textAlign(CENTER);
+    fill(0);
+    if(userList.get(whichUser).isEnglish == true){
+        text("Enter Note",int(((canvasWidth/100)*50) + buttonXSize/2),int(((canvasHeight/100)*65)));
+      }
+      else{
+        text("Introducir nota",int(((canvasWidth/100)*50) + buttonXSize/2),int(((canvasHeight/100)*65)));
+      }
+  }
+  else{
+    textAlign(CENTER);
+    fill(0);
+    
+     if(userList.get(whichUser).isEnglish == true){
+        text("Enter Name",int(((canvasWidth/100)*50) + buttonXSize/2),int(((canvasHeight/100)*65)));
+      }
+      else{
+        text("Ingrese su nombre",int(((canvasWidth/100)*50) + buttonXSize/2),int(((canvasHeight/100)*65)));
+      }
+  }
   drawTimeDate();
   
   
@@ -3258,10 +3283,22 @@ void timerPinDraw()
   // draw the active button in a different color
 
     
-  // find time var
-  
-  text(pin,int(((canvasWidth/100)*50 )), int((canvasHeight/100)*68));
 
+  
+  if(isChangePin){
+    textAlign(CENTER);
+    fill(0);
+    text("Enter New Pin",int(((canvasWidth/100)*50) + buttonXSize/2),int(((canvasHeight/100)*65)));
+    for(int i = 0;i<pinFlag ;i++){
+      text("*",int(((canvasWidth/100)*50  + pinSpace - (15 * i))), int((canvasHeight/100)*68));
+    }
+  }
+  else{
+    textAlign(CENTER);
+    fill(0);
+    text("Enter Time",int(((canvasWidth/100)*50) + buttonXSize/2),int(((canvasHeight/100)*65)));
+    text(pin,int(((canvasWidth/100)*50 )), int((canvasHeight/100)*68));
+  }
   
   
 
@@ -3884,12 +3921,12 @@ void createNewUserPinDraw(){
 void drawTimeDate(){
    String timeString;
   
-  
-  fill(127,127,0);
+  fill(0);
+  //fill(127,127,0);
 
   textFont(f);
   textSize(66);
-  fill(127,127,127);
+  //fill(127,127,127);
   textAlign(LEFT);
   
   timeString = getCurrentTime();
@@ -3898,9 +3935,9 @@ void drawTimeDate(){
   text(month() + "/" + day() + "/" + year(),30 , 100);
   
   textSize(36);
-  text("57°F",320 ,140 );
+  text("57°F",270 ,140 );
   
-  
+  image(rain, 260 , 10, 100, 100);
   fill(0);
   textAlign(CENTER);
   
@@ -4433,7 +4470,7 @@ void UserScreen_MouseReleased(){
     isChangePin = false;
     displayFlag = 0;
     settingFlag = 0;
-    
+    resetInfo();
     if(clickOtherButton()){
       boxInUse = true;   
       //User u = userList.get(whichUser);
@@ -4459,7 +4496,7 @@ void UserScreen_MouseReleased(){
     isChangePin = false;
     displayFlag = 0;
     settingFlag = 0;
-    
+    resetInfo();
     if(clickOtherButton()){
       boxInUse = true;   
       //User u = userList.get(whichUser);
@@ -6100,7 +6137,8 @@ class ImageKeyButtons extends PinButton
              removeExistingName(userList.get(whichUser).name );
              storeName.add(inputName);
              userList.get(whichUser).name = inputName;
-             
+             settingFlag = 0;
+             displayFlag = 0;
             isChangeName = false;
           }
         
