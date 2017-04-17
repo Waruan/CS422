@@ -1834,6 +1834,8 @@ void settingDraw()
      
      hs2.update();
      hs2.display();
+     buttonTransparency.update();
+     buttonTransparency.display();
   }
   if(settingFlag == 1 && displayFlag == 36)
   {
@@ -6754,9 +6756,7 @@ class SettingImageButtons extends PinButton
     if(displayFlag == 35)
     {
     //Transperency
-    fill(102);
-    rect(settingXaxis,settingYaxis,settingWidth,settingHeight);
-    fill(0);  
+    //fill(102);
     textSize(20);
     text("Transperency", (int)canvasWidth/2 - 145, (int)canvasHeight/2 + 230);
     }
