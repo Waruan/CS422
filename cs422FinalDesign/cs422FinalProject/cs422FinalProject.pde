@@ -1008,7 +1008,8 @@ void settingDraw()
      
      hs1.update();
      hs1.display();
-  
+     buttonbackArrow.update();
+     buttonbackArrow.display();
   }
   
   
@@ -1557,6 +1558,27 @@ void settingDraw()
     fill(102);
    
    rect(settingXaxis,settingYaxis,settingWidth,settingHeight);
+   if(filterFlag1 == 1)
+    {
+    buttonremovefilter1.update();
+    buttonremovefilter1.display();
+    }
+    
+    if(filterFlag2 == 1)
+    {
+    buttonremovefilter2.update();
+    buttonremovefilter2.display();
+    }
+    if(filterFlag3 == 1)
+    {
+    buttonremovefilter3.update();
+    buttonremovefilter3.display();
+    }
+    if(filterFlag4 == 1)
+    {
+    buttonremovefilter4.update();
+    buttonremovefilter4.display();
+    }
     buttonfilter1.update();
     buttonfilter1.display();
     buttonfilter2.update();
@@ -1566,7 +1588,6 @@ void settingDraw()
     buttonfilter4.update();
     buttonfilter4.display();
     buttonbackArrow.update();
-    
     buttonbackArrow.display();
   }
   if(settingFlag == 1 && displayFlag == 26)
@@ -1923,6 +1944,8 @@ void settingDraw()
     //Location use keyboard
     buttonLocation.update();
     buttonLocation.display();
+    buttonbackArrow.update();
+    buttonbackArrow.display();
   }
   if(settingFlag == 1 && displayFlag == 35)
   {
@@ -1939,6 +1962,8 @@ void settingDraw()
      hs2.display();
      buttonTransparency.update();
      buttonTransparency.display();
+     buttonbackArrow.update();
+     buttonbackArrow.display();
   }
   if(settingFlag == 1 && displayFlag == 36)
   {
@@ -1962,6 +1987,8 @@ void settingDraw()
     buttonuicWifi2.display();
     buttonuicWifi3.update();
     buttonuicWifi3.display();
+    buttonbackArrow.update();
+    buttonbackArrow.display();
   }
   if(settingFlag == 1 && displayFlag == 37)
   {
@@ -1971,6 +1998,8 @@ void settingDraw()
     rect(settingXaxis,settingYaxis,settingWidth,settingHeight);
     buttonwifiOff.update();
     buttonwifiOff.display();
+    buttonbackArrow.update();
+    buttonbackArrow.display();
   }
   if(settingFlag == 1 && displayFlag == 38)
   {
@@ -1986,6 +2015,8 @@ void settingDraw()
     buttonuicWifi2.display();
     buttonuicWifi3.update();
     buttonuicWifi3.display();
+    buttonbackArrow.update();
+    buttonbackArrow.display();
   }
   if(settingFlag == 1 && displayFlag == 39)
   {
@@ -2004,6 +2035,8 @@ void settingDraw()
     buttonuicWifi2.display();
     buttonuicWifi3.update();
     buttonuicWifi3.display();
+    buttonbackArrow.update();
+    buttonbackArrow.display();
   }
   if(settingFlag == 1 && displayFlag == 40)
   {
@@ -2022,6 +2055,8 @@ void settingDraw()
     buttonuicWifi2.display();
     buttonuicWifi3.update();
     buttonuicWifi3.display();
+    buttonbackArrow.update();
+    buttonbackArrow.display();
   }
   if(settingFlag == 1 && displayFlag == 41)
   {
@@ -2040,6 +2075,8 @@ void settingDraw()
     buttonuicWifi2.display();
     buttonuicWifi3.update();
     buttonuicWifi3.display();
+    buttonbackArrow.update();
+    buttonbackArrow.display();
   }
 }
 
