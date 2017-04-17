@@ -398,7 +398,7 @@ int menuHeight = int((canvasWidth/100)*10);
 ArrayList<Popup> popups = new ArrayList<Popup>();
 
 Popup miniPlayer;
-
+Popup miniTimer;
 //Current Popup being used
 int popup_function = 0;
 
@@ -446,6 +446,10 @@ int articleHeight = int((canvasHeight/100)*40);
 int timerWidth = int((canvasWidth/100)*20);
 int timerHeight = int((canvasHeight/100)*40);
 
+//Size for Small Timer Display
+int timerWidth_small = int((canvasWidth/100)*10);
+int timerHeight_small = int((canvasHeight/100)*10);
+
 //Timer Buttons
 int timer_start_x_axis;
 int timer_start_y_axis;
@@ -455,7 +459,6 @@ int timer_set_y_axis;
 
 int timer_button_width = int((timerWidth/100)*83);
 int timer_button_height = int((timerHeight/100)*15);
-
 
 //Cal Buttons/Dats
 int cal_x_axis;
@@ -3286,6 +3289,9 @@ void initPopups() {
   miniPlayer.PopupAddClickable(2500, 1210, 60, 75, 1); //Reverse
   miniPlayer.PopupAddClickable(2570, 1210, 60, 75, 2); //Play/pause
   miniPlayer.PopupAddClickable(2640, 1210, 60, 75, 3); //Forward
+  
+  miniTimer = new Popup("Data/Timer_Small.png", 2450, 1000, timerWidth_small, timerHeight_small, 1);
+  miniTimer.PopupAddClickable(2500, 1100, 155, 55, 1);
 
   
 }
@@ -3546,6 +3552,8 @@ void userScreenDraw(User current){
   if(activeSmallMusic){
     image(miniPlayer.img, miniPlayer.x_Axis, miniPlayer.y_Axis, miniPlayer.width, miniPlayer.height);
   }
+  image(miniTimer.img, miniTimer.x_Axis, miniTimer.y_Axis, miniTimer.width, miniTimer.height);
+  //rect(2500, 1100, 155, 55);
   Button temp;  
   temp = userList.get(whichUser).hid;
   image(temp.img, temp.x_Axis, temp.y_Axis, temp.width, temp.height);
@@ -4489,6 +4497,11 @@ void UserScreen_MouseReleased(){
       }
     }
   
+  }
+  else if(insideBox(miniTimer.x_Axis, miniTimer.y_Axis, miniTimer.width, miniTimer.height)) {
+    if(insideBox(miniTimer.clickable.get(0).x_Axis, miniTimer.clickable.get(0).y_Axis, miniTimer.clickable.get(0).width, miniTimer.clickable.get(0).height)) {
+      println("Pressed Start/Stop Timer Small");
+    }
   }
   else {
     drag = false;
