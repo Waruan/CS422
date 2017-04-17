@@ -1019,7 +1019,7 @@ void settingDraw()
   {
     fill(102);
    
- 
+ rect(settingXaxis,settingYaxis,settingWidth,settingHeight);
     //open up time settings
     buttonpacificTimeZone.update();
     
@@ -6248,15 +6248,17 @@ class SettingImageButtons extends PinButton
     }
     if(displayFlag == 2)
     {
+       fill(102);
+      rect(settingXaxis,settingYaxis,settingWidth,settingHeight);
       fill(0);  
       text("Bluetooth", (int)canvasWidth/2 - 140, (int)canvasHeight/2 + 280);  
       stroke(0);
       fill(102);
-      rect((int)canvasWidth/2 - 200, (int)canvasHeight/2 + 320, 220, 60);
+      rect((int)canvasWidth/2 - 280, (int)canvasHeight/2 + 320, 220, 60);
       fill(0);
-      text("HTC One", (int)canvasWidth/2 - 150, (int)canvasHeight/2 + 360);
+      text("HTC One", (int)canvasWidth/2 - 180, (int)canvasHeight/2 + 360);
       bluetooth.resize(23,20);
-      image(bluetooth, (int)canvasWidth/2 - 190, (int)canvasHeight/2 + 343);
+      image(bluetooth, (int)canvasWidth/2 - 320, (int)canvasHeight/2 + 338);
     }
     if(displayFlag == 3)
     {
@@ -6265,15 +6267,17 @@ class SettingImageButtons extends PinButton
     }
      if(displayFlag == 4)
     {
+      fill(102);
+      rect(settingXaxis,settingYaxis,settingWidth,settingHeight);
       fill(0);  
       text("Bluetooth", (int)canvasWidth/2 - 140, (int)canvasHeight/2 + 280);  
       stroke(0);
       fill(102);
-      rect((int)canvasWidth/2 - 200, (int)canvasHeight/2 + 320, 220, 60);
+      rect((int)canvasWidth/2 - 280, (int)canvasHeight/2 + 320, 220, 60);
       fill(0);
-      text("HTC One", (int)canvasWidth/2 - 150, (int)canvasHeight/2 + 360);
+      text("HTC One", (int)canvasWidth/2 - 180, (int)canvasHeight/2 + 360);
       bluetooth.resize(23,20);
-      image(bluetooth, (int)canvasWidth/2 - 190, (int)canvasHeight/2 + 343);
+      image(bluetooth, (int)canvasWidth/2 - 320, (int)canvasHeight/2 + 338);
     }
     if(displayFlag == 5)
     {
@@ -6283,9 +6287,9 @@ class SettingImageButtons extends PinButton
       fill(102);
       rect((int)canvasWidth/2 - 200, (int)canvasHeight/2 + 320, 220, 60);
       fill(0);
-      text("HTC One", (int)canvasWidth/2 - 150, (int)canvasHeight/2 + 360);
+      text("HTC One", (int)canvasWidth/2 - 180, (int)canvasHeight/2 + 360);
       bluetooth.resize(23,20);
-      image(bluetooth, (int)canvasWidth/2 - 190, (int)canvasHeight/2 + 343);
+      image(bluetooth, (int)canvasWidth/2 - 320, (int)canvasHeight/2 + 338);
     }
     if(displayFlag == 6)
     {
@@ -6346,6 +6350,7 @@ class SettingImageButtons extends PinButton
     {
       fill(0);
       textSize(20);
+      textAlign(LEFT);
       text("Select Language by touching the Flag", (int)canvasWidth/2 - 240, (int)canvasHeight/2 + 230);
       textSize(16);
       text("Arabic(Saudi Arabia) - عربى", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 310);
@@ -6365,6 +6370,7 @@ class SettingImageButtons extends PinButton
       //arabic
       fill(0);  
       textSize(20);
+      textAlign(LEFT);
       text("Select Language by touching the Flag", (int)canvasWidth/2 - 240, (int)canvasHeight/2 + 230);
       text("Language changed to Arabic", (int)canvasWidth/2 - 180, (int)canvasHeight/2 + 270);
       textSize(16);
@@ -6385,6 +6391,7 @@ class SettingImageButtons extends PinButton
       //deutsch
       fill(0);  
       textSize(20);
+      textAlign(LEFT);
       text("Select Language by touching the Flag", (int)canvasWidth/2 - 240, (int)canvasHeight/2 + 230);
       text("Language changed to Deutsch", (int)canvasWidth/2 - 180, (int)canvasHeight/2 + 270);
       textSize(16);
@@ -6405,6 +6412,7 @@ class SettingImageButtons extends PinButton
       //dutch
       fill(0);  
       textSize(20);
+      textAlign(LEFT);
       text("Select Language by touching the Flag", (int)canvasWidth/2 - 240, (int)canvasHeight/2 + 230);
       text("Language changed to Dutch", (int)canvasWidth/2 - 180, (int)canvasHeight/2 + 270);
       textSize(16);
@@ -6426,6 +6434,7 @@ class SettingImageButtons extends PinButton
       languageFlag = 0;
       fill(0);  
       textSize(20);
+      textAlign(LEFT);
       text("Select Language by touching the Flag", (int)canvasWidth/2 - 240, (int)canvasHeight/2 + 230);
       text("Language changed to English", (int)canvasWidth/2 - 180, (int)canvasHeight/2 + 270);
       textSize(16);
@@ -6447,6 +6456,7 @@ class SettingImageButtons extends PinButton
       languageFlag = 1;
       fill(0);  
       textSize(20);
+      textAlign(LEFT);
       text("Select Language by touching the Flag", (int)canvasWidth/2 - 240, (int)canvasHeight/2 + 230);
       text("Language changed to Spanish", (int)canvasWidth/2 - 180, (int)canvasHeight/2 + 270);
       textSize(16);
@@ -6467,6 +6477,7 @@ class SettingImageButtons extends PinButton
       //french
       fill(0);  
       textSize(20);
+      textAlign(LEFT);
       text("Select Language by touching the Flag", (int)canvasWidth/2 - 240, (int)canvasHeight/2 + 230);
       text("Language changed to French", (int)canvasWidth/2 - 180, (int)canvasHeight/2 + 270);
       textSize(16);
@@ -6487,6 +6498,7 @@ class SettingImageButtons extends PinButton
       //italian
       fill(0);  
       textSize(20);
+      textAlign(LEFT);
       text("Select Language by touching the Flag", (int)canvasWidth/2 - 240, (int)canvasHeight/2 + 230);
       text("Language changed to Italian", (int)canvasWidth/2 - 180, (int)canvasHeight/2 + 270);
       textSize(16);
@@ -6507,6 +6519,7 @@ class SettingImageButtons extends PinButton
       //japanese
       fill(0);  
       textSize(20);
+      textAlign(LEFT);
       text("Select Language by touching the Flag", (int)canvasWidth/2 - 240, (int)canvasHeight/2 + 230);
       text("Language changed to Japanese", (int)canvasWidth/2 - 180, (int)canvasHeight/2 + 270);
       textSize(16);
@@ -6527,6 +6540,7 @@ class SettingImageButtons extends PinButton
       //norwegian
       fill(0);  
       textSize(20);
+      textAlign(LEFT);
       text("Select Language by touching the Flag", (int)canvasWidth/2 - 240, (int)canvasHeight/2 + 230);
       text("Language changed to norwegian", (int)canvasWidth/2 - 180, (int)canvasHeight/2 + 270);
       textSize(16);
@@ -6547,6 +6561,7 @@ class SettingImageButtons extends PinButton
       //polish
       fill(0);  
       textSize(20);
+      textAlign(LEFT);
       text("Select Language by touching the Flag", (int)canvasWidth/2 - 240, (int)canvasHeight/2 + 230);
       text("Language changed to Polish", (int)canvasWidth/2 - 180, (int)canvasHeight/2 + 270);
       textSize(16);
@@ -6566,6 +6581,7 @@ class SettingImageButtons extends PinButton
     {
     fill(0);  
     textSize(20);
+    textAlign(LEFT);
     text("Select your filter for the News Feed", (int)canvasWidth/2 - 220, (int)canvasHeight/2 + 230);
     fill(102);
     rect((int)canvasWidth/2 - 30, (int)canvasHeight/2 + 260, 100, 40);
@@ -6579,6 +6595,7 @@ class SettingImageButtons extends PinButton
     //filterFlag1 = 1; 
     fill(0);  
     textSize(20);
+    textAlign(LEFT);
     text("Select your filter for the News Feed", (int)canvasWidth/2 - 220, (int)canvasHeight/2 + 230);
     fill(102);
     rect((int)canvasWidth/2 - 30, (int)canvasHeight/2 + 260, 100, 40);
@@ -6593,6 +6610,7 @@ class SettingImageButtons extends PinButton
     //filterFlag2 = 1;
     fill(0);  
     textSize(20);
+    textAlign(LEFT);
     text("Select your filter for the News Feed", (int)canvasWidth/2 - 220, (int)canvasHeight/2 + 230);
     fill(102);
     rect((int)canvasWidth/2 - 30, (int)canvasHeight/2 + 260, 100, 40);
@@ -6605,6 +6623,7 @@ class SettingImageButtons extends PinButton
     //filterFlag3 = 1; //set filter3(Politics) to on
     fill(0);  
     textSize(20);
+    textAlign(LEFT);
     text("Select your filter for the News Feed", (int)canvasWidth/2 - 220, (int)canvasHeight/2 + 230);
     fill(102);
     rect((int)canvasWidth/2 - 30, (int)canvasHeight/2 + 260, 100, 40);
@@ -6617,6 +6636,7 @@ class SettingImageButtons extends PinButton
     //filterFlag4 = 1; //set filter4(Technology) to on
     fill(0);  
     textSize(20);
+    textAlign(LEFT);
     text("Select your filter for the News Feed", (int)canvasWidth/2 - 220, (int)canvasHeight/2 + 230);
     fill(102);
     rect((int)canvasWidth/2 - 30, (int)canvasHeight/2 + 260, 100, 40);
@@ -6629,6 +6649,7 @@ class SettingImageButtons extends PinButton
     filterFlag1 = 0;
     fill(0);  
     textSize(20);
+    textAlign(LEFT);
     text("Select your filter for the News Feed", (int)canvasWidth/2 - 220, (int)canvasHeight/2 + 230);
     fill(102);
     rect((int)canvasWidth/2 - 30, (int)canvasHeight/2 + 260, 100, 40);
@@ -6641,6 +6662,7 @@ class SettingImageButtons extends PinButton
     filterFlag2 = 0;
     fill(0);  
     textSize(20);
+    textAlign(LEFT);
     text("Select your filter for the News Feed", (int)canvasWidth/2 - 220, (int)canvasHeight/2 + 230);
     fill(102);
     rect((int)canvasWidth/2 - 30, (int)canvasHeight/2 + 260, 100, 40);
@@ -6653,6 +6675,7 @@ class SettingImageButtons extends PinButton
     filterFlag3 = 0;
     fill(0);  
     textSize(20);
+    textAlign(LEFT);
     text("Select your filter for the News Feed", (int)canvasWidth/2 - 220, (int)canvasHeight/2 + 230);
     fill(102);
     rect((int)canvasWidth/2 - 30, (int)canvasHeight/2 + 260, 100, 40);
@@ -6699,6 +6722,7 @@ class SettingImageButtons extends PinButton
     //WiFI
     fill(0);  
     textSize(20);
+    textAlign(LEFT);
     text("WiFI", (int)canvasWidth/2 - 145, (int)canvasHeight/2 + 220);
     text("Other Networks...", (int)canvasWidth/2 - 205, (int)canvasHeight/2 + 325);
     }
@@ -6708,6 +6732,7 @@ class SettingImageButtons extends PinButton
     wifiFlag = 1;
     fill(0);  
     textSize(20);
+    textAlign(LEFT);
     text("WiFI", (int)canvasWidth/2 - 145, (int)canvasHeight/2 + 220);
     text("Other Networks...", (int)canvasWidth/2 - 205, (int)canvasHeight/2 + 325);
     }
@@ -6717,6 +6742,7 @@ class SettingImageButtons extends PinButton
     wifiFlag = 0;
     fill(0);  
     textSize(20);
+    textAlign(LEFT);
     text("WiFI", (int)canvasWidth/2 - 145, (int)canvasHeight/2 + 220);
     text("Other Networks...", (int)canvasWidth/2 - 205, (int)canvasHeight/2 + 325);
     }
@@ -6725,6 +6751,7 @@ class SettingImageButtons extends PinButton
     //clicked on uicWifi do nothing because its default
     fill(0);  
     textSize(20);
+    textAlign(LEFT);
     text("WiFI", (int)canvasWidth/2 - 145, (int)canvasHeight/2 + 220);
     text("Other Networks...", (int)canvasWidth/2 - 205, (int)canvasHeight/2 + 325);
     }
@@ -6733,6 +6760,7 @@ class SettingImageButtons extends PinButton
     //clicked on uicWifi2
     fill(0);  
     textSize(20);
+    textAlign(LEFT);
     text("WiFI", (int)canvasWidth/2 - 145, (int)canvasHeight/2 + 220);
     text("Other Networks...", (int)canvasWidth/2 - 205, (int)canvasHeight/2 + 325);
     }
@@ -6741,6 +6769,7 @@ class SettingImageButtons extends PinButton
     //clicked on uicWifi3
     fill(0);  
     textSize(20);
+    textAlign(LEFT);
     text("WiFI", (int)canvasWidth/2 - 145, (int)canvasHeight/2 + 220);
     text("Other Networks...", (int)canvasWidth/2 - 205, (int)canvasHeight/2 + 325);
     }
