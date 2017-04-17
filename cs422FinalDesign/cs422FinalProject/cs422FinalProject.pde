@@ -594,6 +594,9 @@ int weather_map_y_axis;
 int weather_box_width = int((weatherWidth/100)*15);
 int weather_box_height = int((weatherHeight/100)*13);
 
+
+boolean calenderInput = false;
+String calenderNote = "";
 // Old code before creating user class
 /////////////////////////////////////////////////////////////////////////
 //Hide button
@@ -2656,6 +2659,10 @@ void draw() {
       volu.display();
       
     }
+    else if(calenderInput){
+      calkeyBoardDraw();
+      
+    }
   }
   else if(stage == 4){
    if(iskeyboard == true){
@@ -2904,7 +2911,147 @@ void keyBoardDraw()
   
   buttonGo.display();
   
-   drawProfileButtons();
+  drawProfileButtons();
+}
+
+
+void calkeyBoardDraw()
+
+{
+  userScreenDraw(userList.get(whichUser));
+  stroke(126);
+  //comment out drawGrid if you dont want to see the grid
+  drawGrid();
+  noStroke();
+  if(stage == 3){
+    text(keyTracker, (int)canvasWidth/2 + 20,  int((canvasHeight/100)*70));
+  }
+  
+  
+  textSize(36);
+  
+  text("Enter Note",int(((canvasWidth/100)*50) + buttonXSize/2),int(((canvasHeight/100)*65)));
+  
+  drawTimeDate();
+  
+  
+  buttonLowA.update();
+  
+  buttonLowB.update();
+  
+  buttonLowC.update();
+  
+  buttonLowD.update();
+  
+  buttonLowE.update();
+  
+  buttonLowF.update();
+  
+  buttonLowG.update();
+  
+  buttonLowH.update();
+  
+  buttonLowI.update();
+  
+  buttonLowJ.update();
+  
+  buttonLowK.update();
+  
+  buttonLowL.update();
+  
+  buttonLowM.update();
+  
+  buttonLowN.update();
+  
+  buttonLowO.update();
+  
+  buttonLowP.update();
+  
+  buttonLowQ.update();
+  
+  buttonLowR.update();
+  
+  buttonLowS.update();
+  
+  buttonLowT.update();
+  
+  buttonLowU.update();
+  
+  buttonLowV.update();
+  
+  buttonLowW.update();
+  
+  buttonLowX.update();
+  
+  buttonLowY.update();
+   
+  buttonLowZ.update();
+  
+  buttonBack.update();
+  
+  buttonSpace.update();
+  
+  buttonGo.update();
+  
+  buttonLowA.display();
+
+  buttonLowB.display();
+  
+  buttonLowC.display();
+  
+  buttonLowD.display();
+  
+  buttonLowE.display();
+  
+  buttonLowF.display();
+  
+  buttonLowG.display();
+  
+  buttonLowH.display();
+  
+  buttonLowI.display();
+  
+  buttonLowJ.display();
+  
+  buttonLowK.display();
+  
+  buttonLowL.display();
+  
+  buttonLowM.display();
+  
+  buttonLowN.display();
+  
+  buttonLowO.display();
+  
+  buttonLowP.display();
+  
+  buttonLowQ.display();
+  
+  buttonLowR.display();
+  
+  buttonLowS.display();
+  
+  buttonLowT.display();
+  
+  buttonLowU.display();
+  
+  buttonLowV.display();
+  
+  buttonLowW.display();
+  
+  buttonLowX.display();
+  
+  buttonLowY.display();
+  
+  buttonLowZ.display();
+  
+  buttonBack.display();
+  
+  buttonSpace.display();
+  
+  buttonGo.display();
+  
+   //drawProfileButtons();
 }
 
 
@@ -3317,6 +3464,7 @@ void userScreenDraw(User current){
       //Fix
       rect(x_drag, y_drag, drag_box_width, drag_box_height, 10);
     }
+    
     image(currentPopup.img, currentPopup.x_Axis, currentPopup.y_Axis, currentPopup.width, currentPopup.height);
     //showDates(currentPopup);
     //rect(timer_start_x_axis, timer_start_y_axis, timer_button_width, timer_button_height);
@@ -3951,9 +4099,23 @@ void UserScreen_MouseReleased(){
       return;
     }
     background(255);
-    boxInUse = false;
     imageBox = false;
     isMusic = false;
+    boxInUse = false;   
+    calenderInput = false;
+    console.log("HERE 3" + functionInUse);
+    
+    if(outsideKeyboard() && functionInUse == 9){
+      calenderInput = false;
+      boxInUse = false;   
+      console.log("HERE 2");
+    }
+    else if(outsideKeyboard() == false && functionInUse == 9){
+      calenderInput = true;
+      boxInUse = true;   
+      console.log("HERE 1");
+    }
+
     //music
     if(functionInUse == 8 && fadeOut == true){
        activeSmallMusic = true;
@@ -4096,7 +4258,9 @@ void UserScreen_MouseReleased(){
         //Calendar
         else if(currentPopup.function == 10) {
           println("Calendar ID: " + currentPopup.clickable.get(i).function);
-        
+          calenderInput  =true;
+          currentPopup.x_Axis = int((canvasWidth/100)*35);
+           currentPopup.y_Axis = int((canvasHeight/100)*30);
         }
         else if(currentPopup.function == 11) {
           if(currentPopup.clickable.get(i).function == 1) {
@@ -4161,11 +4325,6 @@ void UserScreen_MouseReleased(){
     
   }
   
-  
-  
- 
-  
-
 }
 
 
@@ -5406,8 +5565,20 @@ class ImageKeyButtons extends PinButton
             iskeyboard = false;
           }
         }
+        if(stage == 3){
+            calenderNote  = keyTracker;
+            keyFlag = 0;
+            keyTracker = "";
+            keyRep = "";
+            keySpace = 0;
+            calenderInput = false;
+            
+        }
+        
+        
       }
-      }
+     
+     }
     } else {
     
       currentimage = base;
