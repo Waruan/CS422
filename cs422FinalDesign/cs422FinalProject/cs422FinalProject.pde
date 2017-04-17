@@ -3177,14 +3177,14 @@ void initPopups() {
   temp.PopupAddClickable(playlist4_x_axis, playlist4_y_axis, playlist_width, playlist_height, 9);
   popups.add(temp);
   
-  temp = new Popup("Data/Jan.png", permXLocation, permYLocation, int(calWidth), int(calHeight), 10);
-  initLocations(temp,10);
+  temp = new Popup("Data/Jan.png", permXLocation, permYLocation, int(calWidth), int(calHeight), 9);
+  initLocations(temp,9);
   addCalDates(temp);
   popups.add(temp);
   
   
-  temp = new Popup("Data/Timer_Template.png", permXLocation, permYLocation, int(gagWidth), int(gagHeight), 11);
-  initLocations(temp,11);
+  temp = new Popup("Data/Timer_Template.png", permXLocation, permYLocation, int(gagWidth), int(gagHeight), 10);
+  initLocations(temp,10);
   temp.PopupAddClickable(timer_set_x_axis, timer_set_y_axis, timer_button_width, timer_button_height, 1);
   temp.PopupAddClickable(timer_start_x_axis, timer_start_y_axis, timer_button_width, timer_button_height, 2);
   popups.add(temp);
@@ -3320,13 +3320,13 @@ void initLocations(Popup currentPopup, int f) {
      
   
   }
-  else if(f == 10) {
+  else if(f == 9) {
     
     //0 (+15) and 10 (+15)
      cal_x_axis = currentPopup.x_Axis + int((currentPopup.width/100));
      cal_y_axis = currentPopup.y_Axis + int((currentPopup.height/100)*10);
   }
-  else if(f == 11) {
+  else if(f == 10) {
     //65 (+15)
     timer_start_x_axis = currentPopup.x_Axis + int((currentPopup.width/100)*8);
     timer_start_y_axis = currentPopup.y_Axis + int((currentPopup.height/100)*65);
@@ -3818,7 +3818,7 @@ void updateClickableBoxes(Popup box, int f) {
       val+=18;
     }
   }
-  else if(f == 10) {
+  else if(f == 9) {
     int x_val = 1;
     int y_val = 10;
     for(int i = 0; i < box.clickable.size(); i++) {
@@ -3835,7 +3835,7 @@ void updateClickableBoxes(Popup box, int f) {
     
     }
   }
-  else if(f == 11) {
+  else if(f == 10) {
     int val = 65;
     for(int i = 0; i < box.clickable.size(); i++) {
     
@@ -4256,13 +4256,13 @@ void UserScreen_MouseReleased(){
         
         }
         //Calendar
-        else if(currentPopup.function == 10) {
+        else if(currentPopup.function == 9) {
           println("Calendar ID: " + currentPopup.clickable.get(i).function);
           calenderInput  =true;
           currentPopup.x_Axis = int((canvasWidth/100)*35);
            currentPopup.y_Axis = int((canvasHeight/100)*30);
         }
-        else if(currentPopup.function == 11) {
+        else if(currentPopup.function == 10) {
           if(currentPopup.clickable.get(i).function == 1) {
             println("Pressed SET TIMER");
           }
