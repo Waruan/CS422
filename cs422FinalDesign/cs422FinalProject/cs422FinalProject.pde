@@ -904,13 +904,7 @@ void settingSetup()
   buttonuicWifi = new SettingImageButtons(networkX, network1Y, networkWidth, networkHeight, uicWifi, uicWifi, uicWifi, 39);
   buttonuicWifi2 = new SettingImageButtons(networkX, network2Y, networkWidth, networkHeight, uicWifi2, uicWifi2, uicWifi2, 40);
   buttonuicWifi3 = new SettingImageButtons(networkX, network3Y, networkWidth, networkHeight, uicWifi3, uicWifi3, uicWifi3, 41);
-  f = createFont("Arial",16,true);
-  textSize(20);
-  fill(102);
-  background(102);
-  //rect((int)canvasWidth/2 - 115,(int)canvasHeight/2 + 320,95,40);
-  fill(0);
-  text("Please Enter Pin:", (int)canvasWidth/2 - 140, (int)canvasHeight/2 + 280);
+
  
 }
 
