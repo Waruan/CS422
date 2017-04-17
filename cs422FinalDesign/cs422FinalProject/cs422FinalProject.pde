@@ -1249,6 +1249,8 @@ void settingDraw()
     buttonnorwegian.display();
     buttonpolish.update();
     buttonpolish.display();
+    buttonbackArrow.update();
+    buttonbackArrow.display();
   }
   if(settingFlag == 1 && displayFlag == 15)
   {
@@ -1276,6 +1278,8 @@ void settingDraw()
     buttonnorwegian.display();
     buttonpolish.update();
     buttonpolish.display();
+    buttonbackArrow.update();
+    buttonbackArrow.display();
   }
   if(settingFlag == 1 && displayFlag == 16)
   {
@@ -1303,6 +1307,9 @@ void settingDraw()
     buttonnorwegian.display();
     buttonpolish.update();
     buttonpolish.display();
+    buttonbackArrow.update();
+    
+    buttonbackArrow.display();
   }
   if(settingFlag == 1 && displayFlag == 17)
   {
@@ -1330,6 +1337,9 @@ void settingDraw()
     buttonnorwegian.display();
     buttonpolish.update();
     buttonpolish.display();
+    buttonbackArrow.update();
+    
+    buttonbackArrow.display();
   }
   if(settingFlag == 1 && displayFlag == 18)
   {
@@ -1357,6 +1367,9 @@ void settingDraw()
     buttonnorwegian.display();
     buttonpolish.update();
     buttonpolish.display();
+    buttonbackArrow.update();
+    
+    buttonbackArrow.display();
   }
   if(settingFlag == 1 && displayFlag == 19)
   {
@@ -1384,6 +1397,9 @@ void settingDraw()
     buttonnorwegian.display();
     buttonpolish.update();
     buttonpolish.display();
+    buttonbackArrow.update();
+    
+    buttonbackArrow.display();
   }
   if(settingFlag == 1 && displayFlag == 20)
   {
@@ -1411,6 +1427,9 @@ void settingDraw()
     buttonnorwegian.display();
     buttonpolish.update();
     buttonpolish.display();
+    buttonbackArrow.update();
+    
+    buttonbackArrow.display();
   }
   if(settingFlag == 1 && displayFlag == 21)
   {
@@ -1438,6 +1457,9 @@ void settingDraw()
     buttonnorwegian.display();
     buttonpolish.update();
     buttonpolish.display();
+    buttonbackArrow.update();
+    
+    buttonbackArrow.display();
   }
   if(settingFlag == 1 && displayFlag == 22)
   {
@@ -1465,6 +1487,9 @@ void settingDraw()
     buttonnorwegian.display();
     buttonpolish.update();
     buttonpolish.display();
+    buttonbackArrow.update();
+    
+    buttonbackArrow.display();
   }
   if(settingFlag == 1 && displayFlag == 23)
   {
@@ -1492,6 +1517,9 @@ void settingDraw()
     buttonnorwegian.display();
     buttonpolish.update();
     buttonpolish.display();
+    buttonbackArrow.update();
+    
+    buttonbackArrow.display();
   }
   if(settingFlag == 1 && displayFlag == 24)
   {
@@ -1519,6 +1547,9 @@ void settingDraw()
     buttonnorwegian.display();
     buttonpolish.update();
     buttonpolish.display();
+    buttonbackArrow.update();
+    
+    buttonbackArrow.display();
   }
   if(settingFlag == 1 && displayFlag == 25)
   {
@@ -1534,6 +1565,9 @@ void settingDraw()
     buttonfilter3.display();
     buttonfilter4.update();
     buttonfilter4.display();
+    buttonbackArrow.update();
+    
+    buttonbackArrow.display();
   }
   if(settingFlag == 1 && displayFlag == 26)
   {
@@ -1578,6 +1612,9 @@ void settingDraw()
     buttonfilter3.display();
     buttonfilter4.update();
     buttonfilter4.display();
+    buttonbackArrow.update();
+    
+    buttonbackArrow.display();
   }
   if(settingFlag == 1 && displayFlag == 27)
   {
@@ -1621,6 +1658,9 @@ void settingDraw()
     buttonfilter3.display();
     buttonfilter4.update();
     buttonfilter4.display();
+    buttonbackArrow.update();
+    
+    buttonbackArrow.display();
   }
   if(settingFlag == 1 && displayFlag == 28)
   {
@@ -1664,6 +1704,9 @@ void settingDraw()
     buttonfilter3.display();
     buttonfilter4.update();
     buttonfilter4.display();
+    buttonbackArrow.update();
+    
+    buttonbackArrow.display();
   }
   if(settingFlag == 1 && displayFlag == 29)
   {
@@ -1707,6 +1750,9 @@ void settingDraw()
     buttonfilter3.display();
     buttonfilter4.update();
     buttonfilter4.display();
+    buttonbackArrow.update();
+    
+    buttonbackArrow.display();
   }
   if(settingFlag == 1 && displayFlag == 30)
   {
@@ -1745,6 +1791,9 @@ void settingDraw()
     buttonfilter3.display();
     buttonfilter4.update();
     buttonfilter4.display();
+    buttonbackArrow.update();
+    
+    buttonbackArrow.display();
   }
   if(settingFlag == 1 && displayFlag == 31)
   {
@@ -1783,6 +1832,9 @@ void settingDraw()
     buttonfilter3.display();
     buttonfilter4.update();
     buttonfilter4.display();
+    buttonbackArrow.update();
+    
+    buttonbackArrow.display();
   }
   if(settingFlag == 1 && displayFlag == 32)
   {
@@ -1821,6 +1873,9 @@ void settingDraw()
     buttonfilter3.display();
     buttonfilter4.update();
     buttonfilter4.display();
+    buttonbackArrow.update();
+    
+    buttonbackArrow.display();
   }
   if(settingFlag == 1 && displayFlag == 33)
   {
@@ -1859,6 +1914,9 @@ void settingDraw()
     buttonfilter3.display();
     buttonfilter4.update();
     buttonfilter4.display();
+    buttonbackArrow.update();
+    
+    buttonbackArrow.display();
   }
   if(settingFlag == 1 && displayFlag == 34)
   {
