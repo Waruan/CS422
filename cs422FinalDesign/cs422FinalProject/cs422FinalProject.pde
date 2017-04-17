@@ -7016,6 +7016,9 @@ class SettingImageButtons extends PinButton
       //english
       languageFlag = 0;
       userList.get(whichUser).isEnglish = true;
+      if(whichUser == 0){
+        gobal_isEng = true;
+      }
       languageText();
       changePopupLanguage();
       text("Language changed to English", (int)canvasWidth/2 - 180, (int)canvasHeight/2 + 270);
@@ -7026,6 +7029,9 @@ class SettingImageButtons extends PinButton
       //spanish
       languageFlag = 1;
       userList.get(whichUser).isEnglish = false;
+      if(whichUser == 0){
+        gobal_isEng = false;
+      }
       changePopupLanguage();
       languageText();
       text("Idioma cambiado a español", (int)canvasWidth/2 - 180, (int)canvasHeight/2 + 270);
