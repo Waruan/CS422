@@ -6757,6 +6757,7 @@ class SettingImageButtons extends PinButton
     {
     //Transperency
     //fill(102);
+    textFont(f);
     textSize(20);
     text("Transperency", (int)canvasWidth/2 - 145, (int)canvasHeight/2 + 230);
     }
