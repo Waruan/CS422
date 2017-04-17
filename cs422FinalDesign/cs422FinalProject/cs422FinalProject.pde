@@ -661,7 +661,7 @@ void settingSetup()
   
   butLanguage.resize(buttonX, buttonY);
   
-  PImage butNewsFeed = loadImage("Data/newsFeedSetting.png");
+  PImage butNewsFeed = loadImage("Data/news_icon.png");
   
   butNewsFeed.resize(buttonX, buttonY);
   
