@@ -3841,7 +3841,8 @@ void swap(Button current){
   int len = blist.size();
   for(int i = 0 ;i<len;i++){
     // right only
-    if(current.x_Axis+ userList.get(whichUser).buttonX > blist.get(i).x_Axis && current.x_Axis+userList.get(whichUser).buttonX < blist.get(i).x_Axis + userList.get(whichUser).buttonX){
+    if(current.x_Axis+ ((userList.get(whichUser).buttonX)*(userList.get(whichUser).iconAdjust))> blist.get(i).x_Axis &&
+       current.x_Axis+ ((userList.get(whichUser).buttonX)*(userList.get(whichUser).iconAdjust)) < blist.get(i).x_Axis +  ((userList.get(whichUser).buttonX)*(userList.get(whichUser).iconAdjust))){
       
      
       tempx = blist.get(i).x_Axis;
