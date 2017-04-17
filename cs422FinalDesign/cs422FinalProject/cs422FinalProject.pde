@@ -123,6 +123,7 @@ int addedFilter = 0; //Moving added filter to added column
 int wifiFlag = 0; //keep track if its on or off on == 0 and off == 1
 
 float iconAdjust = 0.5;
+float imageAdjust = 1;
 PImage butgearIcon;
 PImage bluetoothOn;
 PImage bluetoothOff;
@@ -173,7 +174,7 @@ int network3Y = (int)canvasHeight/2 + 395;
 //float canvasHeight = 768;
 
 //HScrollbar hs2 = new HScrollbar(0, height-20, width, 10, 1);
-
+ 
 
 /////////////////////////////////////////////////////////////
 
@@ -1828,7 +1829,7 @@ void settingDraw()
     rect(settingXaxis,settingYaxis,settingWidth,settingHeight);
 
     
-    iconAdjust = constrain(((hs2.spos - slideOffset)/(hs2.swidth-10)),0.25,1) ;
+    imageAdjust = constrain(((hs2.spos - slideOffset)/(hs2.swidth-10)),0.5,1) ;
 
      
      
@@ -3490,6 +3491,7 @@ void userScreenDraw(User current){
   
   background(255); 
   stroke(126);
+   tint(255, (255*imageAdjust));
   //comment out drawGrid if you dont want to see the grid
   drawGrid();
   noStroke();
