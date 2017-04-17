@@ -188,6 +188,7 @@ int settingYaxis = int(canvasHeight/2 + 100);
 int settingWidth = 480;
 int settingHeight = 410;
 HScrollbar hs1 = new HScrollbar(int(slideOffset), (int)(canvasHeight/2 + 400), 350, 35, 1);
+HScrollbar hs2 = new HScrollbar(int(slideOffset), (int)(canvasHeight/2 + 400), 350, 35, 1);
 
 ////////////////////////////////////////////////////////////
 
@@ -1174,8 +1175,8 @@ void settingDraw()
   {
     //Contrast
     fill(102);
-   
-   rect(settingXaxis,settingYaxis,settingWidth,settingHeight);
+    rect(settingXaxis,settingYaxis,settingWidth,settingHeight);
+    
   }
   if(settingFlag == 1 && displayFlag == 14)
   {
@@ -1823,6 +1824,30 @@ void settingDraw()
   if(settingFlag == 1 && displayFlag == 35)
   {
     //Transperency
+    fill(102);
+    rect(settingXaxis,settingYaxis,settingWidth,settingHeight);
+    buttonIconSize.update();
+    
+    buttonIconSize.display();
+
+    
+    iconAdjust = constrain(((hs2.spos - slideOffset)/(hs2.swidth-10)),0.25,1) ;
+
+     
+     User temp = userList.get(whichUser);
+     
+     
+     ArrayList<Button> btnList = temp.buttonSet;
+     for(int i = 0; i < btnList.size();i++){
+       Button btn = btnList.get(i);
+       btn.width = int(temp.buttonX * iconAdjust);
+       btn.height = int(temp.buttonY * iconAdjust);
+     }
+     
+     temp.adjustButton();
+     
+     hs2.update();
+     hs2.display();
   }
   if(settingFlag == 1 && displayFlag == 36)
   {
@@ -6365,6 +6390,13 @@ class SettingImageButtons extends PinButton
       fill(0);  
       text("Enter your Pin number", (int)canvasWidth/2 - 180, (int)canvasHeight/2 + 230);
     }
+    if(displayFlag == 13)
+    {
+        fill(0); 
+        textAlign(CENTER);
+        text("Select icon size", settingXaxis + (settingWidth/2) , settingYaxis + 50);
+        //println("Debug 0");
+    }
     if(displayFlag == 14)
     {
       fill(0);
@@ -6707,6 +6739,7 @@ class SettingImageButtons extends PinButton
     filterFlag4 = 0;
     fill(0);  
     textSize(20);
+    textAlign(LEFT);
     text("Select your filter for the News Feed", (int)canvasWidth/2 - 220, (int)canvasHeight/2 + 230);
     fill(102);
     rect((int)canvasWidth/2 - 30, (int)canvasHeight/2 + 260, 100, 40);
