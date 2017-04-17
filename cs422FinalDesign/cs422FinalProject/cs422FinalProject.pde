@@ -183,7 +183,7 @@ int network3Y = (int)canvasHeight/2 + 395;
 
 
 int settingXaxis = int(canvasWidth/2 - 265);
-float slideOffset = int(canvasWidth/2 - 265)+ 50;
+float slideOffset = int(canvasWidth/2 - 245)+ 50;
 int settingYaxis = int(canvasHeight/2 + 100);
 int settingWidth = 480;
 int settingHeight = 410;
@@ -834,8 +834,8 @@ void settingSetup()
   int languageHeight = 12;
   
   //Wifi locations
-  int wifiX = (int)canvasWidth/2 - 65;
-  int networkX = (int)canvasWidth/2 - 205;
+  int wifiX = (int)canvasWidth/2 - 25;
+  int networkX = (int)canvasWidth/2 - 165;
   int wifiY = (int)canvasHeight/2 + 205;
   int wifiWidth = 50;
   int wifiHeight = 19;
@@ -6353,7 +6353,7 @@ class SettingImageButtons extends PinButton
       fill(0);
       textSize(20);
       textAlign(LEFT);
-      text("Select Language by touching the Flag", (int)canvasWidth/2 - 240, (int)canvasHeight/2 + 230);
+      text("Select Language by touching the Flag", (int)canvasWidth/2 - 200, (int)canvasHeight/2 + 230);
       textSize(16);
       text("Arabic(Saudi Arabia) - عربى", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 310);
       text("Deutsch(Deutschland)", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 332);
@@ -6373,7 +6373,7 @@ class SettingImageButtons extends PinButton
       fill(0);  
       textSize(20);
       textAlign(LEFT);
-      text("Select Language by touching the Flag", (int)canvasWidth/2 - 240, (int)canvasHeight/2 + 230);
+      text("Select Language by touching the Flag", (int)canvasWidth/2 - 200, (int)canvasHeight/2 + 230);
       text("Language changed to Arabic", (int)canvasWidth/2 - 180, (int)canvasHeight/2 + 270);
       textSize(16);
       text("Arabic(Saudi Arabia) - عربى", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 310);
@@ -6394,7 +6394,7 @@ class SettingImageButtons extends PinButton
       fill(0);  
       textSize(20);
       textAlign(LEFT);
-      text("Select Language by touching the Flag", (int)canvasWidth/2 - 240, (int)canvasHeight/2 + 230);
+      text("Select Language by touching the Flag", (int)canvasWidth/2 - 200, (int)canvasHeight/2 + 230);
       text("Language changed to Deutsch", (int)canvasWidth/2 - 180, (int)canvasHeight/2 + 270);
       textSize(16);
         text("Arabic(Saudi Arabia) - عربى", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 310);
@@ -6415,7 +6415,7 @@ class SettingImageButtons extends PinButton
       fill(0);  
       textSize(20);
       textAlign(LEFT);
-      text("Select Language by touching the Flag", (int)canvasWidth/2 - 240, (int)canvasHeight/2 + 230);
+      text("Select Language by touching the Flag", (int)canvasWidth/2 - 200, (int)canvasHeight/2 + 230);
       text("Language changed to Dutch", (int)canvasWidth/2 - 180, (int)canvasHeight/2 + 270);
       textSize(16);
       text("Arabic(Saudi Arabia) - عربى", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 310);
@@ -6437,7 +6437,7 @@ class SettingImageButtons extends PinButton
       fill(0);  
       textSize(20);
       textAlign(LEFT);
-      text("Select Language by touching the Flag", (int)canvasWidth/2 - 240, (int)canvasHeight/2 + 230);
+      text("Select Language by touching the Flag", (int)canvasWidth/2 - 200, (int)canvasHeight/2 + 230);
       text("Language changed to English", (int)canvasWidth/2 - 180, (int)canvasHeight/2 + 270);
       textSize(16);
     text("Arabic(Saudi Arabia) - عربى", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 310);
@@ -6459,7 +6459,7 @@ class SettingImageButtons extends PinButton
       fill(0);  
       textSize(20);
       textAlign(LEFT);
-      text("Select Language by touching the Flag", (int)canvasWidth/2 - 240, (int)canvasHeight/2 + 230);
+      text("Select Language by touching the Flag", (int)canvasWidth/2 - 200, (int)canvasHeight/2 + 230);
       text("Language changed to Spanish", (int)canvasWidth/2 - 180, (int)canvasHeight/2 + 270);
       textSize(16);
       text("Arabic(Saudi Arabia) - عربى", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 310);
@@ -6480,7 +6480,7 @@ class SettingImageButtons extends PinButton
       fill(0);  
       textSize(20);
       textAlign(LEFT);
-      text("Select Language by touching the Flag", (int)canvasWidth/2 - 240, (int)canvasHeight/2 + 230);
+      text("Select Language by touching the Flag", (int)canvasWidth/2 - 200, (int)canvasHeight/2 + 230);
       text("Language changed to French", (int)canvasWidth/2 - 180, (int)canvasHeight/2 + 270);
       textSize(16);
     text("Arabic(Saudi Arabia) - عربى", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 310);
@@ -6501,7 +6501,7 @@ class SettingImageButtons extends PinButton
       fill(0);  
       textSize(20);
       textAlign(LEFT);
-      text("Select Language by touching the Flag", (int)canvasWidth/2 - 240, (int)canvasHeight/2 + 230);
+      text("Select Language by touching the Flag", (int)canvasWidth/2 - 200, (int)canvasHeight/2 + 230);
       text("Language changed to Italian", (int)canvasWidth/2 - 180, (int)canvasHeight/2 + 270);
       textSize(16);
        text("Arabic(Saudi Arabia) - عربى", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 310);
@@ -6522,7 +6522,7 @@ class SettingImageButtons extends PinButton
       fill(0);  
       textSize(20);
       textAlign(LEFT);
-      text("Select Language by touching the Flag", (int)canvasWidth/2 - 240, (int)canvasHeight/2 + 230);
+      text("Select Language by touching the Flag", (int)canvasWidth/2 - 200, (int)canvasHeight/2 + 230);
       text("Language changed to Japanese", (int)canvasWidth/2 - 180, (int)canvasHeight/2 + 270);
       textSize(16);
    text("Arabic(Saudi Arabia) - عربى", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 310);
@@ -6543,7 +6543,7 @@ class SettingImageButtons extends PinButton
       fill(0);  
       textSize(20);
       textAlign(LEFT);
-      text("Select Language by touching the Flag", (int)canvasWidth/2 - 240, (int)canvasHeight/2 + 230);
+      text("Select Language by touching the Flag", (int)canvasWidth/2 - 200, (int)canvasHeight/2 + 230);
       text("Language changed to norwegian", (int)canvasWidth/2 - 180, (int)canvasHeight/2 + 270);
       textSize(16);
     text("Arabic(Saudi Arabia) - عربى", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 310);
@@ -6564,7 +6564,7 @@ class SettingImageButtons extends PinButton
       fill(0);  
       textSize(20);
       textAlign(LEFT);
-      text("Select Language by touching the Flag", (int)canvasWidth/2 - 240, (int)canvasHeight/2 + 230);
+      text("Select Language by touching the Flag", (int)canvasWidth/2 - 200, (int)canvasHeight/2 + 230);
       text("Language changed to Polish", (int)canvasWidth/2 - 180, (int)canvasHeight/2 + 270);
       textSize(16);
      text("Arabic(Saudi Arabia) - عربى", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 310);
@@ -6725,8 +6725,8 @@ class SettingImageButtons extends PinButton
     fill(0);  
     textSize(20);
     textAlign(LEFT);
-    text("WiFI", (int)canvasWidth/2 - 145, (int)canvasHeight/2 + 220);
-    text("Other Networks...", (int)canvasWidth/2 - 205, (int)canvasHeight/2 + 325);
+    text("WiFI", (int)canvasWidth/2 - 105, (int)canvasHeight/2 + 220);
+    text("Other Networks...", (int)canvasWidth/2 - 165, (int)canvasHeight/2 + 325);
     }
     if(displayFlag == 37)
     {
@@ -6735,8 +6735,8 @@ class SettingImageButtons extends PinButton
     fill(0);  
     textSize(20);
     textAlign(LEFT);
-    text("WiFI", (int)canvasWidth/2 - 145, (int)canvasHeight/2 + 220);
-    text("Other Networks...", (int)canvasWidth/2 - 205, (int)canvasHeight/2 + 325);
+    text("WiFI", (int)canvasWidth/2 - 105, (int)canvasHeight/2 + 220);
+    text("Other Networks...", (int)canvasWidth/2 - 165, (int)canvasHeight/2 + 325);
     }
     if(displayFlag == 38)
     {
@@ -6745,8 +6745,8 @@ class SettingImageButtons extends PinButton
     fill(0);  
     textSize(20);
     textAlign(LEFT);
-    text("WiFI", (int)canvasWidth/2 - 145, (int)canvasHeight/2 + 220);
-    text("Other Networks...", (int)canvasWidth/2 - 205, (int)canvasHeight/2 + 325);
+    text("WiFI", (int)canvasWidth/2 - 105, (int)canvasHeight/2 + 220);
+    text("Other Networks...", (int)canvasWidth/2 - 165, (int)canvasHeight/2 + 325);
     }
     if(displayFlag == 39)
     {
@@ -6754,8 +6754,8 @@ class SettingImageButtons extends PinButton
     fill(0);  
     textSize(20);
     textAlign(LEFT);
-    text("WiFI", (int)canvasWidth/2 - 145, (int)canvasHeight/2 + 220);
-    text("Other Networks...", (int)canvasWidth/2 - 205, (int)canvasHeight/2 + 325);
+    text("WiFI", (int)canvasWidth/2 - 105, (int)canvasHeight/2 + 220);
+    text("Other Networks...", (int)canvasWidth/2 - 165, (int)canvasHeight/2 + 325);
     }
     if(displayFlag == 40)
     {
@@ -6763,8 +6763,8 @@ class SettingImageButtons extends PinButton
     fill(0);  
     textSize(20);
     textAlign(LEFT);
-    text("WiFI", (int)canvasWidth/2 - 145, (int)canvasHeight/2 + 220);
-    text("Other Networks...", (int)canvasWidth/2 - 205, (int)canvasHeight/2 + 325);
+    text("WiFI", (int)canvasWidth/2 - 105, (int)canvasHeight/2 + 220);
+    text("Other Networks...", (int)canvasWidth/2 - 165, (int)canvasHeight/2 + 325);
     }
     if(displayFlag == 41)
     {
@@ -6772,8 +6772,8 @@ class SettingImageButtons extends PinButton
     fill(0);  
     textSize(20);
     textAlign(LEFT);
-    text("WiFI", (int)canvasWidth/2 - 145, (int)canvasHeight/2 + 220);
-    text("Other Networks...", (int)canvasWidth/2 - 205, (int)canvasHeight/2 + 325);
+    text("WiFI", (int)canvasWidth/2 - 105, (int)canvasHeight/2 + 220);
+    text("Other Networks...", (int)canvasWidth/2 - 165, (int)canvasHeight/2 + 325);
     }
     if(displayFlag != number)
     {
