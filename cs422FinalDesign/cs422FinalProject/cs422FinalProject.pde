@@ -596,7 +596,10 @@ int weather_box_height = int((weatherHeight/100)*13);
 
 
 boolean calenderInput = false;
+boolean timerInput = false;
 String calenderNote = "";
+String timerString = "0500";
+Timer tm;
 // Old code before creating user class
 /////////////////////////////////////////////////////////////////////////
 //Hide button
@@ -2663,6 +2666,10 @@ void draw() {
       calkeyBoardDraw();
       
     }
+    else if(timerInput){
+      timerPinDraw();
+      
+    }
   }
   else if(stage == 4){
    if(iskeyboard == true){
@@ -2770,6 +2777,10 @@ void pinDraw()
   
   
 }
+
+
+
+
 
 void keyBoardDraw()
 
@@ -3052,6 +3063,76 @@ void calkeyBoardDraw()
   buttonGo.display();
   
    //drawProfileButtons();
+}
+
+
+void timerPinDraw()
+{
+  userScreenDraw(userList.get(whichUser));
+  stroke(126);
+  //comment out drawGrid if you dont want to see the grid
+  drawGrid();
+  noStroke();
+  
+  
+  // draw the active button in a different color
+
+    
+  // find time var
+  text(pin,int(((canvasWidth/100)*50 )), int((canvasHeight/100)*68));
+
+  
+  
+
+  button0.update();
+  
+  button1.update();
+  
+  button2.update();
+  
+  button3.update();
+  
+  button4.update();
+  
+  button5.update();
+  
+  button6.update();
+  
+  button7.update();
+  
+  button8.update();
+  
+  button9.update();
+  
+  
+  buttonpinBack.update();
+  
+  buttonpinOk.update();
+  
+  button0.display();
+
+  button1.display();
+  
+  button2.display();
+  
+  button3.display();
+  
+  button4.display();
+  
+  button5.display();
+  
+  button6.display();
+  
+  button7.display();
+  
+  button8.display();
+  
+  button9.display();
+  
+  buttonpinBack.display();
+  
+  buttonpinOk.display();
+
 }
 
 
@@ -4103,17 +4184,27 @@ void UserScreen_MouseReleased(){
     isMusic = false;
     boxInUse = false;   
     calenderInput = false;
-    console.log("HERE 3" + functionInUse);
+    timerInput = false;
     
     if(outsideKeyboard() && functionInUse == 9){
       calenderInput = false;
       boxInUse = false;   
-      console.log("HERE 2");
+    
     }
     else if(outsideKeyboard() == false && functionInUse == 9){
       calenderInput = true;
       boxInUse = true;   
-      console.log("HERE 1");
+
+    }
+    else if(outsidePinArea() && functionInUse == 10){
+      timerInput = false;
+      boxInUse = false;   
+    
+    }
+    else if(outsidePinArea() == false && functionInUse == 10){
+      timerInput = true;
+      boxInUse = true;   
+
     }
 
     //music
@@ -4169,7 +4260,7 @@ void UserScreen_MouseReleased(){
     for(int i = 0; i < currentPopup.clickable.size(); i++) {
       if(insideBox(currentPopup.clickable.get(i).x_Axis, currentPopup.clickable.get(i).y_Axis, currentPopup.clickable.get(i).width, currentPopup.clickable.get(i).height)) {
         //If app is 9gag
-        if(currentPopup.function == 2) {
+        if(currentPopup.function == 2 && boxInUse == true) {
           if(currentPopup.clickable.get(i).function == 1) {
             println("Prev");
             
@@ -4197,11 +4288,11 @@ void UserScreen_MouseReleased(){
           }
         }
         //Inside Article
-        else if(currentPopup.function == 5) {
+        else if(currentPopup.function == 5 && boxInUse == true) {
           println("Pressed Article ID: " + currentPopup.clickable.get(i).function);
           
           
-          if(currentPopup.clickable.get(i).function == 9) {
+          if(currentPopup.clickable.get(i).function == 9 ) {
             currentPopup.img = loadImage("Data/Article_Template(list).png");
             break;
           }
@@ -4212,7 +4303,7 @@ void UserScreen_MouseReleased(){
 
         }        
         //Inside Music
-        else if(currentPopup.function == 8) {
+        else if(currentPopup.function == 8 && boxInUse == true) {
           
           if(currentPopup.clickable.get(i).function == 1) {
             println("Pressed reverse button");
@@ -4244,7 +4335,7 @@ void UserScreen_MouseReleased(){
             next();
             return;
           }
-          else if(currentPopup.clickable.get(i).function == 4) {
+          else if(currentPopup.clickable.get(i).function == 4 ) {
             println("Pressed volume button");
           }
           else if(currentPopup.clickable.get(i).function == 5) {
@@ -4256,18 +4347,23 @@ void UserScreen_MouseReleased(){
         
         }
         //Calendar
-        else if(currentPopup.function == 9) {
+        else if(currentPopup.function == 9 && boxInUse == true) {
           println("Calendar ID: " + currentPopup.clickable.get(i).function);
           calenderInput  =true;
           currentPopup.x_Axis = int((canvasWidth/100)*35);
            currentPopup.y_Axis = int((canvasHeight/100)*30);
         }
-        else if(currentPopup.function == 10) {
+        else if(currentPopup.function == 10 && boxInUse == true ) {
           if(currentPopup.clickable.get(i).function == 1) {
             println("Pressed SET TIMER");
+            timerInput = true;
+            currentPopup.x_Axis = int((canvasWidth/100)*40);
+           currentPopup.y_Axis = int((canvasHeight/100)*25);
           }
           else if(currentPopup.clickable.get(i).function == 2) {
             println("Pressed START");
+            int secs = stringToSec(timerString);
+            tm = new Timer(secs);
           }
         
         }
@@ -4704,6 +4800,16 @@ void addProfileButton(ArrayList<Button> blist , int X, int Y,int f){
 
 }
 
+int stringToSec(String givenTime){
+  int mten = parseInt(givenTime.substring(0,1));
+  int mOne = parseInt(givenTime.substring(1,2));
+  int sTen = parseInt(givenTime.substring(2,3));
+  int sOne = parseInt(givenTime.substring(3,4));
+  int total  = (mten*600)+(mOne*60)+(sTen*10)+sOne;
+  return total;
+  
+}
+
 boolean nameExist(String checkName){
   
   for(int i = 0;i <storeName.size();i++){
@@ -4828,7 +4934,7 @@ class Timer {
  
   int savedTime; // When Timer started
   int totalTime; // How long Timer should last
-  
+  int passedTime;
   Timer(int tempTotalTime) {
     totalTime = tempTotalTime;
   }
@@ -4850,7 +4956,7 @@ class Timer {
       return false;
     }
    }
-   
+    
  }
 //class for Pin button 
 class PinButton
@@ -5039,7 +5145,12 @@ class ImageButtons extends PinButton
          
           
         }
+        else if (stage == 3){
         
+          timerString = pin;
+          timerInput = false;
+        
+        }
         textSize(40);
         fill(102);
         pinFlag = 0;
