@@ -3274,7 +3274,7 @@ void initPopups() {
   popups.add(temp);
   
   
-  temp = new Popup("Data/April_eng.png", permXLocation, permYLocation, int(calWidth), int(calHeight), 9);    
+  temp = new Popup("Data/AprilEng.png", permXLocation, permYLocation, int(calWidth), int(calHeight), 9);    
 
   initLocations(temp,9);
   addCalDates(temp);
@@ -6357,11 +6357,11 @@ class SettingImageButtons extends PinButton
     //change the calender
     if(userList.get(whichUser).isEnglish == true){
       Popup  temp = popups.get(9);
-      temp.changeImage("Data/April_eng.png");
+      temp.changeImage("Data/AprilEng.png");
     }
     else{
       Popup  temp = popups.get(9);
-      temp.changeImage("Data/April_spn.png");
+      temp.changeImage("Data/AprilSpn.png");
     }
 
     
