@@ -649,7 +649,7 @@ void settingSetup()
   
   butPersonalization.resize(buttonX, buttonY);
   
-  PImage butContrast = loadImage("Data/contrastSetting.png");
+  PImage butContrast = loadImage("Data/powerButton.png");
   
   butContrast.resize(buttonX, buttonY);
   
@@ -848,10 +848,10 @@ void settingSetup()
   //Setting Icons
   //buttongearIcon = new SettingImageButtons(x0, y0, int(buttonX*iconAdjust), int(buttonY*iconAdjust), butgearIcon, butgearIcon, butgearIcon, 0);
   buttonIconSize = new SettingImageButtons(iconX1, iconY3, int(buttonX), int(buttonY), butIconSize, butIconSize, butIconSize, 1);
-  buttonBluetooth = new SettingImageButtons(iconX2, iconY5, int(buttonX), int(buttonY), butBluetooth, butBluetooth, butBluetooth, 2);
+  buttonBluetooth = new SettingImageButtons(iconX1, iconY1, int(buttonX), int(buttonY), butBluetooth, butBluetooth, butBluetooth, 2);
   buttonTime = new SettingImageButtons(iconX2, iconY2, int(buttonX), int(buttonY), butTime, butTime, butTime, 3);
   buttonPersonalization = new SettingImageButtons(iconX2, iconY1, int(buttonX), int(buttonY), butPersonalization, butPersonalization, butPersonalization, 10);
-  buttonContrast = new SettingImageButtons(iconX1, iconY1, int(buttonX), int(buttonY), butContrast, butContrast, butContrast, 13);
+  buttonContrast = new SettingImageButtons(iconX2, iconY5, int(buttonX), int(buttonY), butContrast, butContrast, butContrast, 13);
   buttonLanguage = new SettingImageButtons(iconX1, iconY5, int(buttonX), int(buttonY), butLanguage, butLanguage, butLanguage, 14);
   buttonNewsFeed = new SettingImageButtons(iconX2, iconY3, int(buttonX), int(buttonY), butNewsFeed, butNewsFeed, butNewsFeed, 25);
   buttonLocation = new SettingImageButtons(iconX2, iconY4, int(buttonX), int(buttonY), butLocation, butLocation, butLocation, 34);
@@ -1846,7 +1846,7 @@ void settingDraw()
     //click turned on wifi to turn it off
     fill(102);
    
-   rect(settingXaxis,settingYaxis,settingWidth,settingHeight);
+    rect(settingXaxis,settingYaxis,settingWidth,settingHeight);
     buttonwifiOff.update();
     buttonwifiOff.display();
   }
