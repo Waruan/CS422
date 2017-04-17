@@ -159,6 +159,8 @@ PImage uicWifi;
 PImage uicWifi2;
 PImage uicWifi3;
 PImage backArrow;
+PImage increaseSize = loadImage("Data/increaseSize.png");
+PImage decreaseSize = loadImage("Data/decreaseSize.png");
 int filterX = (int)canvasWidth/2 - 215;
 int changeX = (int)canvasWidth/2 - 90;
 int languageX = (int)canvasWidth/2 - 185;
@@ -652,7 +654,7 @@ void settingSetup()
   PImage butIconSize = loadImage("Data/sizeSetting.png");
   
   butIconSize.resize(buttonX, buttonY);
-
+  
   PImage butBluetooth = loadImage("Data/bluetoothSetting.png");
   
   butBluetooth.resize(buttonX, buttonY);
@@ -6687,6 +6689,8 @@ class SettingImageButtons extends PinButton
     {
         fill(0); 
         textAlign(CENTER);
+        increaseSize.resize(23,20);
+        image(increaseSize, (int)canvasWidth/2 + 130, (int)canvasHeight/2 + 438);
         if(userList.get(whichUser).isEnglish == true){
           text("Select icon size", settingXaxis + (settingWidth/2) , settingYaxis + 50);
         }
