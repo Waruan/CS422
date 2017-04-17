@@ -2580,18 +2580,18 @@ void setup() {
   userList.add(guest);
   storeName.add("Guest");
 
-  userList.get(0).addButton("Data/9gag_icon.png",2); //9gag
+  //userList.get(0).addButton("Data/9gag_icon.png",2); //9gag
  
   
-  userList.get(0).addButton("Data/health_icon.png",3); //health
+  //userList.get(0).addButton("Data/health_icon.png",3); //health
   
   
   
   userList.get(0).addButton("Data/weather_icon.png",4); //weather
 
   userList.get(0).addButton("Data/news_icon.png",5); //article
-  userList.get(0).addButton("Data/facebook_icon.png",6); //facebook
-  userList.get(0).addButton("Data/twitter_icon.png", 7); //Twiter
+  //userList.get(0).addButton("Data/facebook_icon.png",6); //facebook
+  //userList.get(0).addButton("Data/twitter_icon.png", 7); //Twiter
   userList.get(0).addButton("Data/music_icon.png", 8); //Music
   userList.get(0).addButton("Data/cal_icon.png", 9);
   userList.get(0).addButton("Data/Timer_icon.png", 10);
@@ -3273,7 +3273,9 @@ void initPopups() {
   temp.PopupAddClickable(playlist4_x_axis, playlist4_y_axis, playlist_width, playlist_height, 9);
   popups.add(temp);
   
-  temp = new Popup("Data/Jan.png", permXLocation, permYLocation, int(calWidth), int(calHeight), 9);
+  
+  temp = new Popup("Data/April_eng.png", permXLocation, permYLocation, int(calWidth), int(calHeight), 9);    
+
   initLocations(temp,9);
   addCalDates(temp);
   popups.add(temp);
@@ -3694,7 +3696,7 @@ void createNewUserPinDraw(){
 void drawTimeDate(){
    String timeString;
   
-  // draw the active button in a different color
+  
   fill(127,127,0);
 
   textFont(f);
@@ -4427,14 +4429,18 @@ void UserScreen_MouseReleased(){
         
         }
         //Calendar
-        else if(currentPopup.function == 9 && boxInUse == true) {
-          println("Calendar ID: " + currentPopup.clickable.get(i).function);
-          calenderInput  =true;
-          updateText = false;
-           currentPopup.x_Axis = int((canvasWidth/100)*35);
-           currentPopup.y_Axis = int((canvasHeight/100)*30);
-           
-          currentButton = currentPopup.clickable.get(i);
+        else if(currentPopup.function == 9 && boxInUse == true ) {
+          User u = userList.get(whichUser);
+          String s =u.name;
+          if(!(s.equals("Guest"))){
+             println("Calendar ID: " + currentPopup.clickable.get(i).function);
+            calenderInput  =true;
+            updateText = false;
+             currentPopup.x_Axis = int((canvasWidth/100)*35);
+             currentPopup.y_Axis = int((canvasHeight/100)*30);
+             
+            currentButton = currentPopup.clickable.get(i); 
+          }
         }
         else if(currentPopup.function == 10 && boxInUse == true ) {
           if(currentPopup.clickable.get(i).function == 1) {
@@ -4745,9 +4751,22 @@ void resetInfo(){
 
 //Function to get current Time
 String getCurrentTime(){
-    
+  
+  int adjustment;
+  
+  if(whichUser == -1){
+    adjustment = 0;
+  }
+  else{
+    adjustment = userList.get(whichUser).timeAdjust;
+  
+  }
+  
   int m = minute();  // Values from 0 - 59
-  int h = hour();    // Values from 0 - 23
+  int h = hour() + adjustment;    // Values from 0 - 23
+  if(h > 24){
+    h = h-24;
+  }
   String min;
   String hr;
   String timeString;
@@ -5164,7 +5183,6 @@ class ImageButtons extends PinButton
     } 
     else if (isOver){
      
-      //currentimage = roll;
       if(isPressed == true){
         isPressed = false; 
         
@@ -5176,8 +5194,7 @@ class ImageButtons extends PinButton
           pinSpace = pinSpace - 15;
           textSize(40);
           fill(255);
-          //text("*", (int)canvasWidth/4 + 315 + pinSpace, (int)canvasHeight/3 + 45);
-          //println(pinRep);    //Testing purpose
+
         }
         
         else if(pinFlag < 4 && number != "back" && number!= "ok"){                 
@@ -5380,6 +5397,11 @@ class Popup{
     clickable.add(temp);
    
   }
+  
+  void changeImage(String str){
+    img = loadImage(str);
+  
+  }
 }
 
 class User{
@@ -5435,12 +5457,7 @@ class User{
     //menuButton(int ix, int iy, int iw, int ih, String ibase, String idown, int f) 
     // rect((canvasWidth/100)*40,(canvasHeight/100)*60,(canvasWidth/100)*20,(canvasWidth/100)*10);
     menuButton menuTemp;
-    //9gag
-    menuTemp = new menuButton(menuXaxis+40,menuYaxis+40,localX*2,localY*2,"Data/9gag_icon_unselected.png","Data/9gag_icon_selected.png", 2);
-    menuSet.add(menuTemp);
-      //userList.get(0).addButton("Data/health_icon.png",3); //health
-    menuTemp = new menuButton(menuXaxis+70 + localX*2,menuYaxis+40,localX*2,localY*2,"Data/health_icon_unselected.png","Data/health_icon_selected.png", 3);
-    menuSet.add(menuTemp);
+
     
       //userList.get(0).addButton("Data/weather_icon.png",4); //weather
     menuTemp = new menuButton(menuXaxis+100 + localX*4,menuYaxis+40,localX*2,localY*2,"Data/weather_icon_unselected.png","Data/weather_icon_selected.png", 4);
@@ -5451,15 +5468,12 @@ class User{
     menuSet.add(menuTemp);
       //userList.get(0).addButton("Data/facebook_icon.png",6); //facebook
       
-   menuTemp = new menuButton(menuXaxis+160 + localX*8,menuYaxis+40,localX*2,localY*2,"Data/facebook_icon_unselected.png","Data/facebook_icon_selected.png", 6);
-    menuSet.add(menuTemp);
-      //userList.get(0).addButton("Data/twitter_icon.png", 7); //Twiter
-   menuTemp = new menuButton(menuXaxis+40,menuYaxis+80 + localY*2,localX*2,localY*2,"Data/twitter_icon_unselected.png","Data/twitter_icon_selected.png", 7);
-   menuSet.add(menuTemp);   
+
    
       //userList.get(0).addButton("Data/music_icon.png", 8); //Music
-  menuTemp = new menuButton(menuXaxis+70 + localX*2,menuYaxis+80 + localY*2,localX*2,localY*2,"Data/music_icon_unselected.png","Data/music_icon_selected.png", 8);
+    menuTemp = new menuButton(menuXaxis+70 + localX*2,menuYaxis+80 + localY*2,localX*2,localY*2,"Data/music_icon_unselected.png","Data/music_icon_selected.png", 8);
    menuSet.add(menuTemp);  
+   
    
     menuTemp = new menuButton(menuXaxis+100 + localX*4,menuYaxis+80 + localY*2,localX*2,localY*2,"Data/cal_icon_unselected.png","Data/cal_icon_selected.png", 9);
    menuSet.add(menuTemp);  
@@ -5468,6 +5482,20 @@ class User{
    menuSet.add(menuTemp);  
     
     //////////////////////////////////////////////////
+    
+    if(!(name.equals("Guest"))){
+      menuTemp = new menuButton(menuXaxis+40,menuYaxis+40,localX*2,localY*2,"Data/9gag_icon_unselected.png","Data/9gag_icon_selected.png", 2);
+      menuSet.add(menuTemp);
+        //userList.get(0).addButton("Data/health_icon.png",3); //health
+      menuTemp = new menuButton(menuXaxis+70 + localX*2,menuYaxis+40,localX*2,localY*2,"Data/health_icon_unselected.png","Data/health_icon_selected.png", 3);
+      menuSet.add(menuTemp);
+      
+      menuTemp = new menuButton(menuXaxis+160 + localX*8,menuYaxis+40,localX*2,localY*2,"Data/facebook_icon_unselected.png","Data/facebook_icon_selected.png", 6);
+      menuSet.add(menuTemp);
+        //userList.get(0).addButton("Data/twitter_icon.png", 7); //Twiter
+      menuTemp = new menuButton(menuXaxis+40,menuYaxis+80 + localY*2,localX*2,localY*2,"Data/twitter_icon_unselected.png","Data/twitter_icon_selected.png", 7);
+      menuSet.add(menuTemp);   
+    }
     
   }
  
@@ -5695,45 +5723,24 @@ class ImageKeyButtons extends PinButton
         {
         eraseKey = keyTracker.substring (keyTracker.length()-1, keyTracker.length());
         keyTracker = keyTracker.substring(0, keyTracker.length() - 1);
-        //keyRep = keyRep.substring(0, keyRep.length()-1);
-        //println(eraseKey);
+
         }
         if(keyFlag == 1) //Have to do it afterwards because theres only 1 value you're overwriting then you erase
         {
         eraseKey = keyTracker.substring (0, keyTracker.length());
         keyTracker = keyTracker.substring(0, keyTracker.length()-1);
         }
-        //keySpace = keySpace - 20;
+
         keySpace = keySpace - (int)textWidth(eraseKey);
-        //textSize(30);
-        //fill(102);
-        //text(eraseKey,(int)canvasWidth/2 - 200 + keySpace, (int)canvasHeight/2 + 310);
+
         keyFlag = keyFlag-1;
-        //if(keyFlag > 1) //Do it before drawing the value as you want to draw out the value from -1
-        //{
-        //keyTracker = keyTracker.substring (  0, keyTracker.length()-1 );
-        //keyRep = keyRep.substring( 0, keyRep.length()-1 );
-        //}
-        //println(keyTracker);  //Testing purpose
-        //keySpace = keySpace - 15;
-        //textSize(30);
-        //fill(102);
-        //text(keyTracker, (int)canvasWidth/2 - 200 + keySpace, (int)canvasHeight/2 + 310);
-        //if(keyFlag == 1) //Have to do it afterwards because theres only 1 value you're overwriting then you erase
-        //{
-        //keyTracker = keyTracker.substring (  0, keyTracker.length()-1 );
-        //keyRep = keyRep.substring( 0, keyRep.length()-1 );
-        //}
-        //println(keyRep);    //Testing purpose
-        //keyFlag = keyFlag-1;
+
       }
       else if(keyFlag < 20 && number != "back" && number != "go" && number != " " && number != ".com")
       {                 
-        //fill(0);
+   
         keyRep = keyRep + number;
-        //textSize(30);
-        //text(number,(int)canvasWidth/2 - 200 + keySpace,(int)canvasHeight/2 + 310);
-        //keySpace = keySpace + 20;
+
         keySpace = keySpace + (int)textWidth(number);
         keyTracker = keyTracker + number;
         println(keyTracker);  //Testing purpose
@@ -6237,81 +6244,6 @@ class SettingImageButtons extends PinButton
       {
       isPressed = false; 
       displayFlag = number;
-      /*if(number == 1)
-      {
-        //IconSize
-        if(displayFlag == 1)
-        {
-        fill(0);  
-        //text("Change Icon Size", (int)canvasWidth/2 - 140, (int)canvasHeight/2 + 280);
-        //println("Debug 0");
-        }
-        //Bluetooth
-        
-      }*/
-      /*if(number == 2)
-      {
-        if(displayFlag == 2)
-        {
-        fill(0);  
-        text("Bluetooth", (int)canvasWidth/2 - 140, (int)canvasHeight/2 + 280);  
-        }
-      }*/
-      //Settings icon
-      
-      //Setting Icon Removed
-      //if(number == 0)
-      //{
-      //  fill(102);
-      //  rect((int)canvasWidth/2 - 215,(int)canvasHeight/2 + 320,300,200);
-      //  settingFlag = 1;
-      //}
-      
-      
-      /*if(number == "back" && pinFlag > 0)
-      {  
-        pinFlag = pinFlag-1;
-        pin = pin.substring (  0, pin.length()-1 );
-        println(pin);  //Testing purpose
-        pinRep = pinRep.substring( 0, pinRep.length()-1 );
-        pinSpace = pinSpace - 15;
-        textSize(40);
-        fill(102);
-        text("*", (int)canvasWidth/2 - 100 + pinSpace, (int)canvasHeight/2 + 360);
-        //(int)canvasWidth/2 % 2 + 630,(int)canvasHeight/3 - 25
-        println(pinRep);    //Testing purpose
-      }*/
-      /*else if(pinFlag < 4 && number != "back" && number!= "ok")
-      {                 
-        fill(0);
-        pinRep = pinRep + "*";
-        textSize(40);
-        text("*",(int)canvasWidth/2 - 100 + pinSpace,(int)canvasHeight/2 + 360);
-        pinSpace = pinSpace + 15;
-        pin = pin + number;
-        println(pin);  //Testing purpose
-        pinFlag = pinFlag+1;
-      }*/
-      //if(number == "ok" && pinFlag < 4)
-      //{
-      //  showMessageDialog(null, "Pin requires four numbers!", "Alert", ERROR_MESSAGE);
-      //}
-      /*if(number == "ok" && pinFlag == 4)
-      {
-        //showMessageDialog(null, "PIN successfully added", "Info", INFORMATION_MESSAGE);
-        textSize(40);
-        fill(102);
-        pinFlag = 0;
-        pinSpace = 0;
-        for(int i = 0; i < 4; i++)
-        {
-        text("*",(int)canvasWidth/2 - 100 + pinSpace, (int)canvasHeight/2 + 360);
-        pinSpace = pinSpace+15;
-        }
-        pin = "";
-        pinRep = "";
-        pinSpace = 0;
-      }*/
       }
     } else {
     
@@ -6327,15 +6259,7 @@ class SettingImageButtons extends PinButton
 
   {
     
-     //println("DEBUG 0");
-     //println("x: "+x);
-     //println("y: "+y);
-     //println("w: "+w);
-     //println("h: "+h);
-     //println("mouseX: " + mouseX);
-     //println("mouseX: " + mouseY);
-     //println("//////////////////////////////////////////////////////");
-     
+
     if( overRect(x, y, w, h) ) {
 
       isOver = true;
@@ -6348,7 +6272,101 @@ class SettingImageButtons extends PinButton
 
   }
 
+  void languageText(){
+      fill(0);  
+      textSize(24);
+      textAlign(LEFT);
+      if(userList.get(whichUser).isEnglish == true){
+        text("Select Language by touching the Flag", (int)canvasWidth/2 - 200, (int)canvasHeight/2 + 230);
+      }
+      else{
+        text("Seleccione Idioma tocando la Bandera", (int)canvasWidth/2 - 200, (int)canvasHeight/2 + 230);
+      }
+
+      
+      textSize(18);
+      text("Arabic(Saudi Arabia) - عربى", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 310);
+      text("Deutsch(Deutschland)", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 332);
+      text("Dutch(Netherlands)", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 352);
+      text("English(United States)", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 372);
+      text("Spanish(Internacional) - Español", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 392);
+      text("French(Standard) - français", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 412);
+      text("Italian(Standard) - italiano", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 432);
+      text("Japanese - 日本語", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 452);
+      text("Norwegian(Bokmal) - norsk", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 472);
+      text("Polish(Polski) - Polskie", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 492);
+      textSize(24);
+  }
   
+  void timeText(){
+      textSize(30);
+      fill(0);  
+      if(userList.get(whichUser).isEnglish == true){
+        text("Select Time Zone", (int)canvasWidth/2 - 40, (int)canvasHeight/2 + 230);
+      }
+      else{
+        text("Selecciona la zona horaria", (int)canvasWidth/2 - 40, (int)canvasHeight/2 + 230);
+      }
+      fill(102);
+      rect((int)canvasWidth/2 - 230, (int)canvasHeight/2 + 300, 330, 30);
+      fill(0);
+      textSize(20);
+  
+  }
+  
+  void newsText(){
+    fill(0);  
+    textSize(20);
+    textAlign(LEFT);
+
+    if(userList.get(whichUser).isEnglish == true){
+      text("Select your filter for the News Feed", (int)canvasWidth/2 - 220, (int)canvasHeight/2 + 230);
+    }
+    else{
+      text("Seleccione su filtro para el feed de noticias", (int)canvasWidth/2 - 220, (int)canvasHeight/2 + 230);
+    }
+    fill(102);
+    rect((int)canvasWidth/2 - 30, (int)canvasHeight/2 + 260, 100, 40);
+    fill(0);
+    
+    if(userList.get(whichUser).isEnglish == true){
+      text("Added:", (int)canvasWidth/2 - 10, (int)canvasHeight/2 + 290);  
+    }
+    else{
+      text("Adicional:", (int)canvasWidth/2 - 10, (int)canvasHeight/2 + 290);
+    }
+  }
+  
+  
+  void wifiText(){
+    fill(0);  
+    textSize(20);
+    textAlign(LEFT);
+    text("WiFI", (int)canvasWidth/2 - 105, (int)canvasHeight/2 + 220);
+    if(userList.get(whichUser).isEnglish == true){
+      text("Other Networks...", (int)canvasWidth/2 - 165, (int)canvasHeight/2 + 325);
+    }
+    else{
+      text("Otras Redes...", (int)canvasWidth/2 - 165, (int)canvasHeight/2 + 325);
+    }
+
+    
+  }
+  
+  void changePopupLanguage(){
+    //change the calender
+    if(userList.get(whichUser).isEnglish == true){
+      Popup  temp = popups.get(9);
+      temp.changeImage("Data/April_eng.png");
+    }
+    else{
+      Popup  temp = popups.get(9);
+      temp.changeImage("Data/April_spn.png");
+    }
+
+    
+  
+  }
 
   void display() 
 
@@ -6361,8 +6379,13 @@ class SettingImageButtons extends PinButton
     {
         fill(0); 
         textAlign(CENTER);
-        text("Select icon size", settingXaxis + (settingWidth/2) , settingYaxis + 50);
-        //println("Debug 0");
+        if(userList.get(whichUser).isEnglish == true){
+          text("Select icon size", settingXaxis + (settingWidth/2) , settingYaxis + 50);
+        }
+        else{
+          text("Seleccionar el tamaño del icono", settingXaxis + (settingWidth/2) , settingYaxis + 50);
+        }
+
     }
     if(displayFlag == 2)
     {
@@ -6380,9 +6403,7 @@ class SettingImageButtons extends PinButton
     }
     if(displayFlag == 3)
     {
-      fill(0); 
-      textSize(30);
-      text("Select Time Zone", (int)canvasWidth/2 - 40, (int)canvasHeight/2 + 230);
+      timeText();
     }
      if(displayFlag == 4)
     {
@@ -6414,72 +6435,96 @@ class SettingImageButtons extends PinButton
     }
     if(displayFlag == 6)
     {
-      textSize(30);
-      fill(0);  
-      text("Select Time Zone", (int)canvasWidth/2 - 40, (int)canvasHeight/2 + 230);
-      fill(102);
-      rect((int)canvasWidth/2 - 230, (int)canvasHeight/2 + 300, 330, 30);
-      fill(0);
-      textSize(20);
-      text("Time changed to Pacific Zone Time", (int)canvasWidth/2 - 40, (int)canvasHeight/2 + 320);
+      timeText();
+      userList.get(whichUser).timeAdjust = -2;
+      if(userList.get(whichUser).isEnglish == true){
+        text("Time changed to Pacific Zone Time", (int)canvasWidth/2 - 40, (int)canvasHeight/2 + 320);
+      }
+      else{
+        text("El tiempo cambió a Hora de la zona del Pacífico", (int)canvasWidth/2 - 40, (int)canvasHeight/2 + 320);
+      }
+      
+ 
     }
     if(displayFlag == 7)
     {
-      textSize(30);
-      fill(0);  
-      text("Select Time Zone", (int)canvasWidth/2 - 40, (int)canvasHeight/2 + 230);
-      fill(102);
-      rect((int)canvasWidth/2 - 230, (int)canvasHeight/2 + 300, 330, 30);
-      fill(0);
-      textSize(20);
-      text("Time changed to Central Zone Time", (int)canvasWidth/2 - 40, (int)canvasHeight/2 + 320);
+      timeText();
+      userList.get(whichUser).timeAdjust = 0;
+      if(userList.get(whichUser).isEnglish == true){
+        text("Time changed to Central Zone Time", (int)canvasWidth/2 - 40, (int)canvasHeight/2 + 320);
+      }
+      else{
+        text("La hora cambió a Hora de Zona Central", (int)canvasWidth/2 - 40, (int)canvasHeight/2 + 320);
+      }
+      
     }
     if(displayFlag == 8)
     {
-      textSize(30);
-      fill(0);  
-      text("Select Time Zone", (int)canvasWidth/2 - 40, (int)canvasHeight/2 + 230);
-      fill(102);
-      rect((int)canvasWidth/2 - 230, (int)canvasHeight/2 + 300, 330, 30);
-      fill(0);
-      textSize(20);
-      text("Time changed to Eastern Zone Time", (int)canvasWidth/2 - 40, (int)canvasHeight/2 + 320);
+      timeText();
+      userList.get(whichUser).timeAdjust = 1;
+      if(userList.get(whichUser).isEnglish == true){
+        text("Time changed to Eastern Zone Time", (int)canvasWidth/2 - 40, (int)canvasHeight/2 + 320);
+      }
+      else{
+        text("El tiempo cambió a Hora de Zona Oriental", (int)canvasWidth/2 - 40, (int)canvasHeight/2 + 320);
+      }
     }
     if(displayFlag == 9)
     {
-      textSize(30);
-      fill(0);  
-      text("Select Time Zone", (int)canvasWidth/2 - 40, (int)canvasHeight/2 + 230);
-      fill(102);
-      rect((int)canvasWidth/2 - 230, (int)canvasHeight/2 + 300, 330, 30);
-      fill(0);
-      textSize(20);
-      text("Time changed to Mountain Zone Time", (int)canvasWidth/2 - 40, (int)canvasHeight/2 + 320);
+      timeText();
+      userList.get(whichUser).timeAdjust = -1;
+      if(userList.get(whichUser).isEnglish == true){
+        text("Time changed to Mountain Zone Time", (int)canvasWidth/2 - 40, (int)canvasHeight/2 + 320);
+      }
+      else{
+        text("El tiempo cambió a Hora de la Zona de Montaña", (int)canvasWidth/2 - 40, (int)canvasHeight/2 + 320);
+      }
+      
     }
     if(displayFlag == 10)
     {
       fill(0);
-      text("Personalization", (int)canvasWidth/2 - 40, (int)canvasHeight/2 + 180);
+      if(userList.get(whichUser).isEnglish == true){
+        text("Personalization", (int)canvasWidth/2 - 40, (int)canvasHeight/2 + 180);
+      }
+      else{
+        text("Personalización", (int)canvasWidth/2 - 40, (int)canvasHeight/2 + 180);
+      }
+      
     }
+    //Doesnt work
     if(displayFlag == 11)
     {
       fill(102);
       rect(settingXaxis,settingYaxis,settingWidth,settingHeight);
       fill(0);  
-      text("Enter Name", (int)canvasWidth/2 - 140, (int)canvasHeight/2 + 230);
+      if(userList.get(whichUser).isEnglish == true){
+        text("Enter Name", (int)canvasWidth/2 - 140, (int)canvasHeight/2 + 230);
+      }
+      else{
+        text("Ingrese su nombre", (int)canvasWidth/2 - 140, (int)canvasHeight/2 + 230);
+      }
+      
     }
+    //Doesnt work
     if(displayFlag == 12)
     {
       fill(102);
       rect(settingXaxis,settingYaxis,settingWidth,settingHeight);
       fill(0);  
-      text("Enter your Pin number", (int)canvasWidth/2 - 180, (int)canvasHeight/2 + 230);
+      if(userList.get(whichUser).isEnglish == true){
+        text("Enter your Pin number", (int)canvasWidth/2 - 180, (int)canvasHeight/2 + 230);
+      }
+      else{
+        text("Ingrese su número PIN", (int)canvasWidth/2 - 180, (int)canvasHeight/2 + 230);
+      }
+      
     }
     if(displayFlag == 13)
     {
         fill(0); 
         textAlign(CENTER);
-        text("Select icon size", settingXaxis + (settingWidth/2) , settingYaxis + 50);
+        //text("Select icon size", settingXaxis + (settingWidth/2) , settingYaxis + 50);
         //println("Debug 0");
         stage = 1;
         whichUser = -1;
@@ -6489,352 +6534,136 @@ class SettingImageButtons extends PinButton
     }
     if(displayFlag == 14)
     {
-      fill(0);
-      textSize(20);
-      textAlign(LEFT);
-      text("Select Language by touching the Flag", (int)canvasWidth/2 - 200, (int)canvasHeight/2 + 230);
-      textSize(16);
-      text("Arabic(Saudi Arabia) - عربى", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 310);
-      text("Deutsch(Deutschland)", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 332);
-      text("Dutch(Netherlands)", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 352);
-      text("English(United States)", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 372);
-      text("Spanish(Internacional) - Español", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 392);
-      text("French(Standard) - français", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 412);
-      text("Italian(Standard) - italiano", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 432);
-      text("Japanese - 日本語", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 452);
-      text("Norwegian(Bokmal) - norsk", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 472);
-      text("Polish(Polski) - Polskie", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 492);
-      textSize(20);
+      languageText();
     }
     if(displayFlag == 15 )
     {
-      //arabic
-      fill(0);  
-      textSize(20);
-      textAlign(LEFT);
-      text("Select Language by touching the Flag", (int)canvasWidth/2 - 200, (int)canvasHeight/2 + 230);
+      languageText();
       text("Language changed to Arabic", (int)canvasWidth/2 - 180, (int)canvasHeight/2 + 270);
-      textSize(16);
-      text("Arabic(Saudi Arabia) - عربى", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 310);
-      text("Deutsch(Deutschland)", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 332);
-      text("Dutch(Netherlands)", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 352);
-      text("English(United States)", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 372);
-      text("Spanish(Internacional) - Español", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 392);
-      text("French(Standard) - français", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 412);
-      text("Italian(Standard) - italiano", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 432);
-      text("Japanese - 日本語", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 452);
-      text("Norwegian(Bokmal) - norsk", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 472);
-      text("Polish(Polski) - Polskie", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 492);
-      textSize(20);
-    }
+    } 
     if(displayFlag == 16 )
     {
       //deutsch
-      fill(0);  
-      textSize(20);
-      textAlign(LEFT);
-      text("Select Language by touching the Flag", (int)canvasWidth/2 - 200, (int)canvasHeight/2 + 230);
+      languageText();
       text("Language changed to Deutsch", (int)canvasWidth/2 - 180, (int)canvasHeight/2 + 270);
-      textSize(16);
-        text("Arabic(Saudi Arabia) - عربى", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 310);
-      text("Deutsch(Deutschland)", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 332);
-      text("Dutch(Netherlands)", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 352);
-      text("English(United States)", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 372);
-      text("Spanish(Internacional) - Español", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 392);
-      text("French(Standard) - français", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 412);
-      text("Italian(Standard) - italiano", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 432);
-      text("Japanese - 日本語", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 452);
-      text("Norwegian(Bokmal) - norsk", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 472);
-      text("Polish(Polski) - Polskie", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 492);
-      textSize(20);
+      
     }
     if(displayFlag == 17 )
     {
       //dutch
-      fill(0);  
-      textSize(20);
-      textAlign(LEFT);
-      text("Select Language by touching the Flag", (int)canvasWidth/2 - 200, (int)canvasHeight/2 + 230);
+      languageText();
       text("Language changed to Dutch", (int)canvasWidth/2 - 180, (int)canvasHeight/2 + 270);
-      textSize(16);
-      text("Arabic(Saudi Arabia) - عربى", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 310);
-      text("Deutsch(Deutschland)", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 332);
-      text("Dutch(Netherlands)", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 352);
-      text("English(United States)", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 372);
-      text("Spanish(Internacional) - Español", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 392);
-      text("French(Standard) - français", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 412);
-      text("Italian(Standard) - italiano", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 432);
-      text("Japanese - 日本語", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 452);
-      text("Norwegian(Bokmal) - norsk", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 472);
-      text("Polish(Polski) - Polskie", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 492);
-      textSize(20);
+      
     }
     if(displayFlag == 18 )
     {
       //english
       languageFlag = 0;
-      fill(0);  
-      textSize(20);
-      textAlign(LEFT);
-      text("Select Language by touching the Flag", (int)canvasWidth/2 - 200, (int)canvasHeight/2 + 230);
+      userList.get(whichUser).isEnglish = true;
+      languageText();
+      changePopupLanguage();
       text("Language changed to English", (int)canvasWidth/2 - 180, (int)canvasHeight/2 + 270);
-      textSize(16);
-    text("Arabic(Saudi Arabia) - عربى", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 310);
-      text("Deutsch(Deutschland)", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 332);
-      text("Dutch(Netherlands)", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 352);
-      text("English(United States)", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 372);
-      text("Spanish(Internacional) - Español", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 392);
-      text("French(Standard) - français", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 412);
-      text("Italian(Standard) - italiano", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 432);
-      text("Japanese - 日本語", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 452);
-      text("Norwegian(Bokmal) - norsk", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 472);
-      text("Polish(Polski) - Polskie", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 492);
-      textSize(20);
+      
     }
     if(displayFlag == 19 )
     {
       //spanish
       languageFlag = 1;
-      fill(0);  
-      textSize(20);
-      textAlign(LEFT);
-      text("Select Language by touching the Flag", (int)canvasWidth/2 - 200, (int)canvasHeight/2 + 230);
-      text("Language changed to Spanish", (int)canvasWidth/2 - 180, (int)canvasHeight/2 + 270);
-      textSize(16);
-      text("Arabic(Saudi Arabia) - عربى", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 310);
-      text("Deutsch(Deutschland)", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 332);
-      text("Dutch(Netherlands)", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 352);
-      text("English(United States)", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 372);
-      text("Spanish(Internacional) - Español", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 392);
-      text("French(Standard) - français", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 412);
-      text("Italian(Standard) - italiano", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 432);
-      text("Japanese - 日本語", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 452);
-      text("Norwegian(Bokmal) - norsk", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 472);
-      text("Polish(Polski) - Polskie", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 492);
-      textSize(20);
+      userList.get(whichUser).isEnglish = false;
+      changePopupLanguage();
+      languageText();
+      text("Idioma cambiado a español", (int)canvasWidth/2 - 180, (int)canvasHeight/2 + 270);
+      
     }
     if(displayFlag == 20 )
     {
       //french
-      fill(0);  
-      textSize(20);
-      textAlign(LEFT);
-      text("Select Language by touching the Flag", (int)canvasWidth/2 - 200, (int)canvasHeight/2 + 230);
+      languageText();
       text("Language changed to French", (int)canvasWidth/2 - 180, (int)canvasHeight/2 + 270);
-      textSize(16);
-    text("Arabic(Saudi Arabia) - عربى", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 310);
-      text("Deutsch(Deutschland)", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 332);
-      text("Dutch(Netherlands)", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 352);
-      text("English(United States)", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 372);
-      text("Spanish(Internacional) - Español", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 392);
-      text("French(Standard) - français", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 412);
-      text("Italian(Standard) - italiano", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 432);
-      text("Japanese - 日本語", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 452);
-      text("Norwegian(Bokmal) - norsk", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 472);
-      text("Polish(Polski) - Polskie", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 492);
-      textSize(20);
+     
     }
     if(displayFlag == 21 )
     {
       //italian
-      fill(0);  
-      textSize(20);
-      textAlign(LEFT);
-      text("Select Language by touching the Flag", (int)canvasWidth/2 - 200, (int)canvasHeight/2 + 230);
+      languageText();
       text("Language changed to Italian", (int)canvasWidth/2 - 180, (int)canvasHeight/2 + 270);
-      textSize(16);
-       text("Arabic(Saudi Arabia) - عربى", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 310);
-      text("Deutsch(Deutschland)", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 332);
-      text("Dutch(Netherlands)", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 352);
-      text("English(United States)", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 372);
-      text("Spanish(Internacional) - Español", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 392);
-      text("French(Standard) - français", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 412);
-      text("Italian(Standard) - italiano", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 432);
-      text("Japanese - 日本語", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 452);
-      text("Norwegian(Bokmal) - norsk", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 472);
-      text("Polish(Polski) - Polskie", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 492);
-      textSize(20);
+      
     }
     if(displayFlag == 22 )
     {
       //japanese
-      fill(0);  
-      textSize(20);
-      textAlign(LEFT);
-      text("Select Language by touching the Flag", (int)canvasWidth/2 - 200, (int)canvasHeight/2 + 230);
+      languageText();
       text("Language changed to Japanese", (int)canvasWidth/2 - 180, (int)canvasHeight/2 + 270);
-      textSize(16);
-   text("Arabic(Saudi Arabia) - عربى", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 310);
-      text("Deutsch(Deutschland)", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 332);
-      text("Dutch(Netherlands)", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 352);
-      text("English(United States)", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 372);
-      text("Spanish(Internacional) - Español", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 392);
-      text("French(Standard) - français", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 412);
-      text("Italian(Standard) - italiano", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 432);
-      text("Japanese - 日本語", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 452);
-      text("Norwegian(Bokmal) - norsk", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 472);
-      text("Polish(Polski) - Polskie", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 492);
-      textSize(20);
+     
     }
     if(displayFlag == 23 )
     {
       //norwegian
-      fill(0);  
-      textSize(20);
-      textAlign(LEFT);
-      text("Select Language by touching the Flag", (int)canvasWidth/2 - 200, (int)canvasHeight/2 + 230);
+      languageText();
       text("Language changed to norwegian", (int)canvasWidth/2 - 180, (int)canvasHeight/2 + 270);
-      textSize(16);
-    text("Arabic(Saudi Arabia) - عربى", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 310);
-      text("Deutsch(Deutschland)", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 332);
-      text("Dutch(Netherlands)", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 352);
-      text("English(United States)", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 372);
-      text("Spanish(Internacional) - Español", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 392);
-      text("French(Standard) - français", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 412);
-      text("Italian(Standard) - italiano", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 432);
-      text("Japanese - 日本語", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 452);
-      text("Norwegian(Bokmal) - norsk", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 472);
-      text("Polish(Polski) - Polskie", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 492);
-      textSize(20);
+     
     }
     if(displayFlag == 24 )
     {
-      //polish
-      fill(0);  
-      textSize(20);
-      textAlign(LEFT);
-      text("Select Language by touching the Flag", (int)canvasWidth/2 - 200, (int)canvasHeight/2 + 230);
+      languageText();
       text("Language changed to Polish", (int)canvasWidth/2 - 180, (int)canvasHeight/2 + 270);
-      textSize(16);
-     text("Arabic(Saudi Arabia) - عربى", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 310);
-      text("Deutsch(Deutschland)", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 332);
-      text("Dutch(Netherlands)", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 352);
-      text("English(United States)", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 372);
-      text("Spanish(Internacional) - Español", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 392);
-      text("French(Standard) - français", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 412);
-      text("Italian(Standard) - italiano", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 432);
-      text("Japanese - 日本語", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 452);
-      text("Norwegian(Bokmal) - norsk", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 472);
-      text("Polish(Polski) - Polskie", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 492);
-      textSize(20);
+      
     }
     if(displayFlag == 25)
     {
-    fill(0);  
-    textSize(20);
-    textAlign(LEFT);
-    text("Select your filter for the News Feed", (int)canvasWidth/2 - 220, (int)canvasHeight/2 + 230);
-    fill(102);
-    rect((int)canvasWidth/2 - 30, (int)canvasHeight/2 + 260, 100, 40);
-    fill(0);
-    text("Added:", (int)canvasWidth/2 - 10, (int)canvasHeight/2 + 290);
+      newsText();
     }
     if(displayFlag == 26)
     {
     filterFlag1 = 1; //add
     //set filter1(gaming) to on
     //filterFlag1 = 1; 
-    fill(0);  
-    textSize(20);
-    textAlign(LEFT);
-    text("Select your filter for the News Feed", (int)canvasWidth/2 - 220, (int)canvasHeight/2 + 230);
-    fill(102);
-    rect((int)canvasWidth/2 - 30, (int)canvasHeight/2 + 260, 100, 40);
-    fill(0);
-    text("Added:", (int)canvasWidth/2 - 10, (int)canvasHeight/2 + 290);
+    newsText();
     
     }
     if(displayFlag == 27)
     {
       filterFlag2 = 1; //add
-     //set filter2(Business) to on
-    //filterFlag2 = 1;
-    fill(0);  
-    textSize(20);
-    textAlign(LEFT);
-    text("Select your filter for the News Feed", (int)canvasWidth/2 - 220, (int)canvasHeight/2 + 230);
-    fill(102);
-    rect((int)canvasWidth/2 - 30, (int)canvasHeight/2 + 260, 100, 40);
-    fill(0);
-    text("Added:", (int)canvasWidth/2 - 10, (int)canvasHeight/2 + 290);
+       //set filter2(Business) to on
+      //filterFlag2 = 1;
+      newsText();
+    
     }
     if(displayFlag == 28)
     {
     filterFlag3 = 1; //add
     //filterFlag3 = 1; //set filter3(Politics) to on
-    fill(0);  
-    textSize(20);
-    textAlign(LEFT);
-    text("Select your filter for the News Feed", (int)canvasWidth/2 - 220, (int)canvasHeight/2 + 230);
-    fill(102);
-    rect((int)canvasWidth/2 - 30, (int)canvasHeight/2 + 260, 100, 40);
-    fill(0);
-    text("Added:", (int)canvasWidth/2 - 10, (int)canvasHeight/2 + 290);
+    newsText();
     }
     if(displayFlag == 29)
     {
     filterFlag4 = 1; //add
     //filterFlag4 = 1; //set filter4(Technology) to on
-    fill(0);  
-    textSize(20);
-    textAlign(LEFT);
-    text("Select your filter for the News Feed", (int)canvasWidth/2 - 220, (int)canvasHeight/2 + 230);
-    fill(102);
-    rect((int)canvasWidth/2 - 30, (int)canvasHeight/2 + 260, 100, 40);
-    fill(0);
-    text("Added:", (int)canvasWidth/2 - 10, (int)canvasHeight/2 + 290);
+    newsText();
     }
     if(displayFlag == 30)
     {
      //removeFilter1
     filterFlag1 = 0;
-    fill(0);  
-    textSize(20);
-    textAlign(LEFT);
-    text("Select your filter for the News Feed", (int)canvasWidth/2 - 220, (int)canvasHeight/2 + 230);
-    fill(102);
-    rect((int)canvasWidth/2 - 30, (int)canvasHeight/2 + 260, 100, 40);
-    fill(0);
-    text("Added:", (int)canvasWidth/2 - 10, (int)canvasHeight/2 + 290);
+    newsText();
     }
     if(displayFlag == 31)
     {
      //removeFilter2
     filterFlag2 = 0;
-    fill(0);  
-    textSize(20);
-    textAlign(LEFT);
-    text("Select your filter for the News Feed", (int)canvasWidth/2 - 220, (int)canvasHeight/2 + 230);
-    fill(102);
-    rect((int)canvasWidth/2 - 30, (int)canvasHeight/2 + 260, 100, 40);
-    fill(0);
-    text("Added:", (int)canvasWidth/2 - 10, (int)canvasHeight/2 + 290);
+    newsText();
     }
     if(displayFlag == 32)
     {
      //removeFilter3
     filterFlag3 = 0;
-    fill(0);  
-    textSize(20);
-    textAlign(LEFT);
-    text("Select your filter for the News Feed", (int)canvasWidth/2 - 220, (int)canvasHeight/2 + 230);
-    fill(102);
-    rect((int)canvasWidth/2 - 30, (int)canvasHeight/2 + 260, 100, 40);
-    fill(0);
-    text("Added:", (int)canvasWidth/2 - 10, (int)canvasHeight/2 + 290);
+    newsText();
     }
     if(displayFlag == 33)
     {
      //removeFilter4
     filterFlag4 = 0;
-    fill(0);  
-    textSize(20);
-    textAlign(LEFT);
-    text("Select your filter for the News Feed", (int)canvasWidth/2 - 220, (int)canvasHeight/2 + 230);
-    fill(102);
-    rect((int)canvasWidth/2 - 30, (int)canvasHeight/2 + 260, 100, 40);
-    fill(0);
-    text("Added:", (int)canvasWidth/2 - 10, (int)canvasHeight/2 + 290);
+    newsText();
     }
     if(displayFlag == 34)
     {
@@ -6845,8 +6674,14 @@ class SettingImageButtons extends PinButton
     textSize(20);
     //text("Location", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 280);
     //Change String in next box
-    text("Current Location:" + locationDefault, (int)canvasWidth/2 - 35, (int)canvasHeight/2 + 240);
-    text("Enter your Location using the Keyboard", (int)canvasWidth/2 - 40, (int)canvasHeight/2 + 290);
+    
+    if(userList.get(whichUser).isEnglish == true){
+      text("Current Location:" + locationDefault, (int)canvasWidth/2 - 35, (int)canvasHeight/2 + 240);  
+    }
+    else{
+      text("Ubicación actual:" + locationDefault, (int)canvasWidth/2 - 35, (int)canvasHeight/2 + 240);
+    }
+    //text("Enter your Location using the Keyboard", (int)canvasWidth/2 - 40, (int)canvasHeight/2 + 290);
     }
     if(displayFlag == 35)
     {
@@ -6854,63 +6689,46 @@ class SettingImageButtons extends PinButton
     //fill(102);
     textFont(f);
     textSize(20);
-    text("Transperency", (int)canvasWidth/2 - 145, (int)canvasHeight/2 + 230);
+    
+    if(userList.get(whichUser).isEnglish == true){
+      text("Transperency", (int)canvasWidth/2 - 145, (int)canvasHeight/2 + 230);  
+    }
+    else{
+      text("Transparencia", (int)canvasWidth/2 - 145, (int)canvasHeight/2 + 230);
+    }
+    
     }
     if(displayFlag == 36)
     {
     //WiFI
-    fill(0);  
-    textSize(20);
-    textAlign(LEFT);
-    text("WiFI", (int)canvasWidth/2 - 105, (int)canvasHeight/2 + 220);
-    text("Other Networks...", (int)canvasWidth/2 - 165, (int)canvasHeight/2 + 325);
+    wifiText();
     }
     if(displayFlag == 37)
     {
     //clicked WiFI on to turn it off
     wifiFlag = 1;
-    fill(0);  
-    textSize(20);
-    textAlign(LEFT);
-    text("WiFI", (int)canvasWidth/2 - 105, (int)canvasHeight/2 + 220);
-    text("Other Networks...", (int)canvasWidth/2 - 165, (int)canvasHeight/2 + 325);
+    wifiText();
     }
     if(displayFlag == 38)
     {
     //clicked WiFI off to turn it on
     wifiFlag = 0;
-    fill(0);  
-    textSize(20);
-    textAlign(LEFT);
-    text("WiFI", (int)canvasWidth/2 - 105, (int)canvasHeight/2 + 220);
-    text("Other Networks...", (int)canvasWidth/2 - 165, (int)canvasHeight/2 + 325);
+    wifiText();
     }
     if(displayFlag == 39)
     {
     //clicked on uicWifi do nothing because its default
-    fill(0);  
-    textSize(20);
-    textAlign(LEFT);
-    text("WiFI", (int)canvasWidth/2 - 105, (int)canvasHeight/2 + 220);
-    text("Other Networks...", (int)canvasWidth/2 - 165, (int)canvasHeight/2 + 325);
+    wifiText();
     }
     if(displayFlag == 40)
     {
     //clicked on uicWifi2
-    fill(0);  
-    textSize(20);
-    textAlign(LEFT);
-    text("WiFI", (int)canvasWidth/2 - 105, (int)canvasHeight/2 + 220);
-    text("Other Networks...", (int)canvasWidth/2 - 165, (int)canvasHeight/2 + 325);
+    wifiText();
     }
     if(displayFlag == 41)
     {
     //clicked on uicWifi3
-    fill(0);  
-    textSize(20);
-    textAlign(LEFT);
-    text("WiFI", (int)canvasWidth/2 - 105, (int)canvasHeight/2 + 220);
-    text("Other Networks...", (int)canvasWidth/2 - 165, (int)canvasHeight/2 + 325);
+    wifiText();
     }
     if(displayFlag != number)
     {
