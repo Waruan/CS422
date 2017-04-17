@@ -438,6 +438,21 @@ int music_height = int((canvasHeight/100)*15);
 int articleWidth = int((canvasWidth/100)*20);
 int articleHeight = int((canvasHeight/100)*40);
 
+//Size for Timer Display
+int timerWidth = int((canvasWidth/100)*20);
+int timerHeight = int((canvasHeight/100)*40);
+
+//Timer Buttons
+int timer_start_x_axis;
+int timer_start_y_axis;
+
+int timer_set_x_axis;
+int timer_set_y_axis; 
+
+int timer_button_width = int((timerWidth/100)*83);
+int timer_button_height = int((timerHeight/100)*15);
+
+
 //Cal Buttons/Dats
 int cal_x_axis;
 int cal_y_axis;
@@ -3020,7 +3035,11 @@ void initPopups() {
   addCalDates(temp);
   popups.add(temp);
   
+  
   temp = new Popup("Data/Timer_Template.png", permXLocation, permYLocation, int(gagWidth), int(gagHeight), 11);
+  initLocations(temp,11);
+  temp.PopupAddClickable(timer_set_x_axis, timer_set_y_axis, timer_button_width, timer_button_height, 1);
+  temp.PopupAddClickable(timer_start_x_axis, timer_start_y_axis, timer_button_width, timer_button_height, 2);
   popups.add(temp);
     
   miniPlayer = new Popup("Data/music_small(play).png", 2500, 1200, small_music_box_width, small_music_box_height, 1);
@@ -3160,6 +3179,14 @@ void initLocations(Popup currentPopup, int f) {
      cal_x_axis = currentPopup.x_Axis + int((currentPopup.width/100));
      cal_y_axis = currentPopup.y_Axis + int((currentPopup.height/100)*10);
   }
+  else if(f == 11) {
+    //65 (+15)
+    timer_start_x_axis = currentPopup.x_Axis + int((currentPopup.width/100)*8);
+    timer_start_y_axis = currentPopup.y_Axis + int((currentPopup.height/100)*65);
+    
+    timer_set_x_axis = currentPopup.x_Axis + int((currentPopup.width/100)*8);
+    timer_set_y_axis = currentPopup.y_Axis + int((currentPopup.height/100)*80);
+  }
   
 }
 
@@ -3292,7 +3319,7 @@ void userScreenDraw(User current){
     }
     image(currentPopup.img, currentPopup.x_Axis, currentPopup.y_Axis, currentPopup.width, currentPopup.height);
     //showDates(currentPopup);
-    //rect(cal_x_axis, cal_y_axis, cal_date_width, cal_date_height);
+    //rect(timer_start_x_axis, timer_start_y_axis, timer_button_width, timer_button_height);
     //rect(playlist2_x_axis, playlist2_y_axis, playlist_width, playlist_height);
     //rect(playlist3_x_axis, playlist3_y_axis, playlist_width, playlist_height);
     //rect(playlist4_x_axis, playlist4_y_axis, playlist_width, playlist_height);
@@ -3659,34 +3686,15 @@ void updateClickableBoxes(Popup box, int f) {
       
     
     }
-    
-  
-    
-    /*void addCalDates(Popup current) {
-void addCalDates(Popup current) {
-  //35
-  int day = 1;
-  int x_val = 1;
-  int y_val = 10;
-  int cal_x, cal_y;
-  for(int i = 0; i < 5; i++) {
-    for(int j = 0; j < 7; j++) {
-      cal_x = current.x_Axis + int((current.width/100)*x_val);
-      cal_y = current.y_Axis + int((current.height/100)*y_val);
-      
-      current.PopupAddClickable(cal_x, cal_y, cal_date_width, cal_date_height, day);
-      //rect(cal_x_axis, cal_y_axis, cal_date_width, cal_date_height);
-      println("day: "+day);
-      x_val+=15;
-      day++;
-    }
-    x_val = 0;
-    y_val+=15;
-  
   }
-
-}*/
-  
+  else if(f == 11) {
+    int val = 65;
+    for(int i = 0; i < box.clickable.size(); i++) {
+    
+      box.clickable.get(i).x_Axis = box.x_Axis + int((box.width/100)*8);
+      box.clickable.get(i).y_Axis = box.y_Axis + int((box.height/100)*val);
+      val+=15;
+    }
   }
   
 }
@@ -4088,6 +4096,15 @@ void UserScreen_MouseReleased(){
         //Calendar
         else if(currentPopup.function == 10) {
           println("Calendar ID: " + currentPopup.clickable.get(i).function);
+        
+        }
+        else if(currentPopup.function == 11) {
+          if(currentPopup.clickable.get(i).function == 1) {
+            println("Pressed SET TIMER");
+          }
+          else if(currentPopup.clickable.get(i).function == 2) {
+            println("Pressed START");
+          }
         
         }
         else {
