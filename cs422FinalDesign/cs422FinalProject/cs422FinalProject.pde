@@ -6044,6 +6044,13 @@ class menuButton extends PinButton
           if(func == 8){
             usr.addButton("Data/music_icon.png",8);
           }
+          if(func == 9){
+            usr.addButton("Data/cal_icon.png",9);
+          }
+          if(func == 10){
+            usr.addButton("Data/Timer_icon.png",10);
+          }
+          
         }
 
 
