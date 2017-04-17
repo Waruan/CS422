@@ -792,7 +792,7 @@ void settingSetup()
   //Left to right
   
   //bluetooth
-  int bluetoothX = (int)canvasWidth/2 - 30;
+  int bluetoothX = (int)canvasWidth/2 + 100;
   int bluetoothY = (int)canvasHeight/2 + 340;
   
   //timezone
@@ -6248,17 +6248,17 @@ class SettingImageButtons extends PinButton
     }
     if(displayFlag == 2)
     {
-       fill(102);
+      fill(102);
       rect(settingXaxis,settingYaxis,settingWidth,settingHeight);
       fill(0);  
-      text("Bluetooth", (int)canvasWidth/2 - 140, (int)canvasHeight/2 + 280);  
+      text("Bluetooth", (int)canvasWidth/2 - 20, (int)canvasHeight/2 + 280);  
       stroke(0);
       fill(102);
-      rect((int)canvasWidth/2 - 280, (int)canvasHeight/2 + 320, 220, 60);
+      rect((int)canvasWidth/2 - 140, (int)canvasHeight/2 + 320, 220, 60);
       fill(0);
-      text("HTC One", (int)canvasWidth/2 - 180, (int)canvasHeight/2 + 360);
+      text("HTC One", (int)canvasWidth/2 - 20, (int)canvasHeight/2 + 360);
       bluetooth.resize(23,20);
-      image(bluetooth, (int)canvasWidth/2 - 320, (int)canvasHeight/2 + 338);
+      image(bluetooth, (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 338);
     }
     if(displayFlag == 3)
     {
@@ -6270,26 +6270,28 @@ class SettingImageButtons extends PinButton
       fill(102);
       rect(settingXaxis,settingYaxis,settingWidth,settingHeight);
       fill(0);  
-      text("Bluetooth", (int)canvasWidth/2 - 140, (int)canvasHeight/2 + 280);  
+      text("Bluetooth", (int)canvasWidth/2 - 20, (int)canvasHeight/2 + 280);  
       stroke(0);
       fill(102);
-      rect((int)canvasWidth/2 - 280, (int)canvasHeight/2 + 320, 220, 60);
+      rect((int)canvasWidth/2 - 140, (int)canvasHeight/2 + 320, 220, 60);
       fill(0);
-      text("HTC One", (int)canvasWidth/2 - 180, (int)canvasHeight/2 + 360);
+      text("HTC One", (int)canvasWidth/2 - 20, (int)canvasHeight/2 + 360);
       bluetooth.resize(23,20);
-      image(bluetooth, (int)canvasWidth/2 - 320, (int)canvasHeight/2 + 338);
+      image(bluetooth, (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 338);
     }
     if(displayFlag == 5)
     {
+      fill(102);
+      rect(settingXaxis,settingYaxis,settingWidth,settingHeight);
       fill(0);  
-      text("Bluetooth", (int)canvasWidth/2 - 140, (int)canvasHeight/2 + 280);  
+      text("Bluetooth", (int)canvasWidth/2 - 20, (int)canvasHeight/2 + 280);  
       stroke(0);
       fill(102);
-      rect((int)canvasWidth/2 - 200, (int)canvasHeight/2 + 320, 220, 60);
+      rect((int)canvasWidth/2 - 140, (int)canvasHeight/2 + 320, 220, 60);
       fill(0);
-      text("HTC One", (int)canvasWidth/2 - 180, (int)canvasHeight/2 + 360);
+      text("HTC One", (int)canvasWidth/2 - 20, (int)canvasHeight/2 + 360);
       bluetooth.resize(23,20);
-      image(bluetooth, (int)canvasWidth/2 - 320, (int)canvasHeight/2 + 338);
+      image(bluetooth, (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 338);
     }
     if(displayFlag == 6)
     {
