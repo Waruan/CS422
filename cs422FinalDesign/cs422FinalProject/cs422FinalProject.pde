@@ -3491,7 +3491,7 @@ void userScreenDraw(User current){
   
   background(255); 
   stroke(126);
-   tint(255, (255*imageAdjust));
+   //tint(255, (255*imageAdjust));
   //comment out drawGrid if you dont want to see the grid
   drawGrid();
   noStroke();
