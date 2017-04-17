@@ -206,6 +206,7 @@ boolean isChangePin = false;
 
 //make a new HTML5 audio object named audio
 Audio audio = new Audio();
+Audio timerAudio = new Audio();
 // make string that will house the audio extension
 
 //100 100 before resize
@@ -2118,9 +2119,13 @@ void musicSetup(){
   //then calls a function that we named "repeat"
   audio.addEventListener("ended",next);
   //play the audio
-  //audio.play();
+  
   audio.volume=constrain(((volu.spos-offset)/(volu.swidth-10)),0,1);
   seeker.setsPos(0);
+  
+  
+  //Timer audio
+  timerAudio.setAttribute("src","bing.mp3");
   
 }
 
@@ -3831,7 +3836,7 @@ void userScreenDraw(User current){
       console.log(tm.totalTime - tm.passedTime);
     }
     else{
-      //play an audio 
+      timerAudio.play();
       isTimerRunning = false;
     }
     
@@ -3843,7 +3848,7 @@ void userScreenDraw(User current){
       console.log(tm.totalTime - tm.passedTime);
     }
     else{
-      //play an audio 
+      timerAudio.play();
       isTimerRunning = false;
     }
   }
