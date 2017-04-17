@@ -405,6 +405,7 @@ int popup_function = 0;
 Button currentButton;
 
 boolean imageBox = false;
+boolean readingArticle = false;
 boolean evl_on = true;
 
 //Size of popup or popups
@@ -3461,6 +3462,56 @@ void addCalDates(Popup current) {
 
 }
 
+void setArticleTopics(Popup current) {
+  int limit = 0;
+  ArrayList<String> topics = new ArrayList<String>();
+  //StringList topics = new StringList();
+  if(filterFlag1 == 1) {
+    limit++;
+    topics.add("Gaming");
+    println("Adding Gaming");
+  }
+  if(filterFlag2 == 1) {
+    limit++; 
+    topics.add("Business");
+    println("Adding Business");
+  }
+  if(filterFlag3 == 1) {
+    limit++;
+    topics.add("Politics");
+    println("Adding Politics");
+  }
+  if(filterFlag4 == 1 && limit < 3) {
+    limit++;
+    topics.add("Tech");
+    println("Adding Tech");
+  }
+  //Default
+  if(limit < 3) {
+    println("Default");
+    topics = new ArrayList<String>();
+    topics.add("Gaming");
+    topics.add("Business");
+    topics.add("Politics");
+  
+  }
+  for(int i = 5; i < current.clickable.size(); i++) {
+    current.clickable.get(i).buttonMessage = topics.get(i-5);
+  }
+
+}
+
+void displayArticleTopics(Popup current) {
+  
+  for(int i = 4; i < current.clickable.size(); i++) {
+    textSize(30);
+    text(current.clickable.get(i).buttonMessage, current.clickable.get(i).x_Axis+60, current.clickable.get(i).y_Axis+50);
+    textSize(24);
+  
+  }
+
+}
+
 void setCalText(Button current) {
     current.setButtonMessage(calenderNote);
 }
@@ -3553,9 +3604,22 @@ void userScreenDraw(User current){
     }
     
     image(currentPopup.img, currentPopup.x_Axis, currentPopup.y_Axis, currentPopup.width, currentPopup.height);
+    
+    if(currentPopup.function == 5) {
+      setArticleTopics(currentPopup);
+      if(readingArticle){
+      
+      }
+      else {
+        displayArticleTopics(currentPopup);
+      }
+    }
+    
     if(currentPopup.function == 9) {
       displayCalText(currentPopup);
+      displayArticleTopics(currentPopup);
     }
+    
     //showDates(currentPopup);
     //rect(timer_start_x_axis, timer_start_y_axis, timer_button_width, timer_button_height);
     //rect(playlist2_x_axis, playlist2_y_axis, playlist_width, playlist_height);
@@ -4266,6 +4330,7 @@ void UserScreen_MouseReleased(){
  
   else if(insideBox(currentPopup.x_Axis, currentPopup.y_Axis, currentPopup.width, currentPopup.height) ) {
     //drag = true;
+    
     for(int i = 0; i < currentPopup.clickable.size(); i++) {
       if(insideBox(currentPopup.clickable.get(i).x_Axis, currentPopup.clickable.get(i).y_Axis, currentPopup.clickable.get(i).width, currentPopup.clickable.get(i).height)) {
         //If app is 9gag
@@ -4302,10 +4367,12 @@ void UserScreen_MouseReleased(){
           
           
           if(currentPopup.clickable.get(i).function == 9 ) {
+            readingArticle = false;
             currentPopup.img = loadImage("Data/Article_Template(list).png");
             break;
           }
           else if(currentPopup.clickable.get(i).function <= 5) {
+            readingArticle = true;
             currentPopup.img = loadImage("Data/Article_Template(detail).png");
             break;
           }
