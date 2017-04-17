@@ -1826,25 +1826,11 @@ void settingDraw()
     //Transperency
     fill(102);
     rect(settingXaxis,settingYaxis,settingWidth,settingHeight);
-    buttonIconSize.update();
-    
-    buttonIconSize.display();
 
     
     iconAdjust = constrain(((hs2.spos - slideOffset)/(hs2.swidth-10)),0.25,1) ;
 
      
-     User temp = userList.get(whichUser);
-     
-     
-     ArrayList<Button> btnList = temp.buttonSet;
-     for(int i = 0; i < btnList.size();i++){
-       Button btn = btnList.get(i);
-       btn.width = int(temp.buttonX * iconAdjust);
-       btn.height = int(temp.buttonY * iconAdjust);
-     }
-     
-     temp.adjustButton();
      
      hs2.update();
      hs2.display();
