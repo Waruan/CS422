@@ -420,6 +420,9 @@ int permYLocation = int((canvasHeight/100)*40);
 int gagWidth = int((canvasWidth/100)*20);
 int gagHeight = int((canvasHeight/100)*40);
 
+int calWidth = int((canvasWidth/100)*30);
+int calHeight = int((canvasHeight/100)*30);
+
 //Size for Health display
 int healthWidth = int((canvasWidth/100)*50);
 int healthHeight = int((canvasHeight/100)*40);
@@ -435,6 +438,13 @@ int music_height = int((canvasHeight/100)*15);
 //Size for Article Display
 int articleWidth = int((canvasWidth/100)*20);
 int articleHeight = int((canvasHeight/100)*40);
+
+//Cal Buttons/Dats
+int cal_x_axis;
+int cal_y_axis;
+
+int cal_date_width = int((calWidth/100)*14);
+int cal_date_height = int((calHeight/100)*15);
 
 //Article Buttons
 int article1_type_x_axis;
@@ -2563,6 +2573,8 @@ void setup() {
   userList.get(0).addButton("Data/facebook_icon.png",6); //facebook
   userList.get(0).addButton("Data/twitter_icon.png", 7); //Twiter
   userList.get(0).addButton("Data/music_icon.png", 8); //Music
+  userList.get(0).addButton("Data/cal_icon.png", 9);
+  userList.get(0).addButton("Data/Timer_icon.png", 10);
   
   
   for(int i = 2;i<9;i++){
@@ -3019,7 +3031,14 @@ void initPopups() {
   temp.PopupAddClickable(playlist2_x_axis, playlist2_y_axis, playlist_width, playlist_height, 7);
   temp.PopupAddClickable(playlist3_x_axis, playlist3_y_axis, playlist_width, playlist_height, 8);
   temp.PopupAddClickable(playlist4_x_axis, playlist4_y_axis, playlist_width, playlist_height, 9);
-
+  popups.add(temp);
+  
+  temp = new Popup("Data/Jan.png", permXLocation, permYLocation, int(calWidth), int(calHeight), 10);
+  initLocations(temp,10);
+  addCalDates(temp);
+  popups.add(temp);
+  
+  temp = new Popup("Data/Timer_Template.png", permXLocation, permYLocation, int(gagWidth), int(gagHeight), 11);
   popups.add(temp);
     
   miniPlayer = new Popup("Data/music_small(play).png", 2500, 1200, small_music_box_width, small_music_box_height, 1);
@@ -3153,7 +3172,65 @@ void initLocations(Popup currentPopup, int f) {
      
   
   }
+  else if(f == 10) {
+    
+    //0 (+15) and 10 (+15)
+     cal_x_axis = currentPopup.x_Axis + int((currentPopup.width/100));
+     cal_y_axis = currentPopup.y_Axis + int((currentPopup.height/100)*10);
+  }
   
+}
+
+void addCalDates(Popup current) {
+  //35
+  int day = 1;
+  int x_val = 1;
+  int y_val = 10;
+  int cal_x, cal_y;
+  for(int i = 0; i < 35; i++) {
+    if(i % 7 == 0 && i != 0) {
+      y_val+=15;
+      x_val = 1;
+    
+    }
+    
+    
+      cal_x = current.x_Axis + int((current.width/100)*x_val);
+      cal_y = current.y_Axis + int((current.height/100)*y_val);
+      
+      current.PopupAddClickable(cal_x, cal_y, cal_date_width, cal_date_height, day);
+      //rect(cal_x_axis, cal_y_axis, cal_date_width, cal_date_height);
+      println("day: "+day);
+      x_val+=14;
+      day++;
+  }
+
+}
+
+void showDates(Popup current) {
+  //35
+  int day = 1;
+  int x_val = 1;
+  int y_val = 10;
+  int cal_x, cal_y;
+  for(int i = 0; i < 35; i++) {
+    if(i % 7 == 0 && i != 0) {
+      y_val+=15;
+      x_val = 1;
+    
+    }
+    
+    
+      cal_x = current.x_Axis + int((current.width/100)*x_val);
+      cal_y = current.y_Axis + int((current.height/100)*y_val);
+      
+      //current.PopupAddClickable(cal_x, cal_y, cal_date_width, cal_date_height, day);
+      rect(cal_x, cal_y, cal_date_width, cal_date_height);
+      println("day: "+day);
+      x_val+=14;
+      day++;
+  }
+
 }
 
 void updateXYLocation(int popUpFunction) {
@@ -3232,7 +3309,8 @@ void userScreenDraw(User current){
       rect(x_drag, y_drag, drag_box_width, drag_box_height, 10);
     }
     image(currentPopup.img, currentPopup.x_Axis, currentPopup.y_Axis, currentPopup.width, currentPopup.height);
-    //rect(article_back_x_axis, article_back_y_axis, article_back_width, article_back_height);
+    //showDates(currentPopup);
+    //rect(cal_x_axis, cal_y_axis, cal_date_width, cal_date_height);
     //rect(playlist2_x_axis, playlist2_y_axis, playlist_width, playlist_height);
     //rect(playlist3_x_axis, playlist3_y_axis, playlist_width, playlist_height);
     //rect(playlist4_x_axis, playlist4_y_axis, playlist_width, playlist_height);
@@ -3582,6 +3660,51 @@ void updateClickableBoxes(Popup box, int f) {
       }
       val+=18;
     }
+  }
+  else if(f == 10) {
+    int x_val = 1;
+    int y_val = 10;
+    for(int i = 0; i < box.clickable.size(); i++) {
+      if(i % 7 == 0 && i != 0) {
+        y_val+=15;
+        x_val = 1;
+      }
+             
+      box.clickable.get(i).x_Axis = box.x_Axis + int((box.width/100)*x_val);
+      box.clickable.get(i).y_Axis = box.y_Axis + int((box.height/100)*y_val);
+        
+      x_val+=14;
+      
+    
+    }
+    
+  
+    
+    /*void addCalDates(Popup current) {
+void addCalDates(Popup current) {
+  //35
+  int day = 1;
+  int x_val = 1;
+  int y_val = 10;
+  int cal_x, cal_y;
+  for(int i = 0; i < 5; i++) {
+    for(int j = 0; j < 7; j++) {
+      cal_x = current.x_Axis + int((current.width/100)*x_val);
+      cal_y = current.y_Axis + int((current.height/100)*y_val);
+      
+      current.PopupAddClickable(cal_x, cal_y, cal_date_width, cal_date_height, day);
+      //rect(cal_x_axis, cal_y_axis, cal_date_width, cal_date_height);
+      println("day: "+day);
+      x_val+=15;
+      day++;
+    }
+    x_val = 0;
+    y_val+=15;
+  
+  }
+
+}*/
+  
   }
   
 }
@@ -3978,6 +4101,11 @@ void UserScreen_MouseReleased(){
           else if(currentPopup.clickable.get(i).function > 5) {
             println("Pressed playlist " + currentPopup.clickable.get(i).function);
           }
+        
+        }
+        //Calendar
+        else if(currentPopup.function == 10) {
+          println("Calendar ID: " + currentPopup.clickable.get(i).function);
         
         }
         else {
