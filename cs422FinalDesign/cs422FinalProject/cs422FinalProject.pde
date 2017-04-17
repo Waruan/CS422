@@ -108,6 +108,7 @@ SettingImageButtons buttonwifiOff;
 SettingImageButtons buttonuicWifi;
 SettingImageButtons buttonuicWifi2;
 SettingImageButtons buttonuicWifi3;
+SettingImageButtons buttonbackArrow;
 int buttonSize = 90;
 int settingFlag = 0;
 int displayFlag = 0;
@@ -157,6 +158,7 @@ PImage wifiOff;
 PImage uicWifi;
 PImage uicWifi2;
 PImage uicWifi3;
+PImage backArrow;
 int filterX = (int)canvasWidth/2 - 215;
 int changeX = (int)canvasWidth/2 - 90;
 int languageX = (int)canvasWidth/2 - 185;
@@ -782,12 +784,13 @@ void settingSetup()
   uicWifi2.resize(270, 40);
   uicWifi3 = loadImage("Data/uicWifi3.png");
   uicWifi3.resize(270, 40);
+  backArrow = loadImage("Data/backArrow.png");
+  backArrow.resize(33, 30);
   int x0 = (int)canvasWidth/2 - 100;
   
   //Icons in setting tray x and ys from left to right and up to down
   int iconX1 = int(canvasWidth/2 - 200);
   int iconX2 = int(canvasWidth/2 + 20);
-  
   int iconY1 = int(canvasHeight/2 + 110);
   int iconY2 = iconY1 + 90 ;
   int iconY3 = iconY1 + 150 +30;
@@ -855,6 +858,12 @@ void settingSetup()
   //icon height
   int h = 30;
   
+  //For backArrow
+  int backArrowX = (int)canvasWidth/2 - 260;
+  int backArrowY = (int)canvasHeight/2 + 460;
+  int backArrowWidth = 33;
+  int backArrowHeight = 30;
+  
   //Setting Icons
   //buttongearIcon = new SettingImageButtons(x0, y0, int(buttonX*iconAdjust), int(buttonY*iconAdjust), butgearIcon, butgearIcon, butgearIcon, 0);
   buttonIconSize = new SettingImageButtons(iconX1, iconY3, int(buttonX), int(buttonY), butIconSize, butIconSize, butIconSize, 1);
@@ -907,7 +916,8 @@ void settingSetup()
   buttonuicWifi = new SettingImageButtons(networkX, network1Y, networkWidth, networkHeight, uicWifi, uicWifi, uicWifi, 39);
   buttonuicWifi2 = new SettingImageButtons(networkX, network2Y, networkWidth, networkHeight, uicWifi2, uicWifi2, uicWifi2, 40);
   buttonuicWifi3 = new SettingImageButtons(networkX, network3Y, networkWidth, networkHeight, uicWifi3, uicWifi3, uicWifi3, 41);
-
+  //For backArrow
+  buttonbackArrow = new SettingImageButtons(backArrowX, backArrowY, backArrowWidth, backArrowHeight, backArrow, backArrow, backArrow, 42);
  
 }
 
@@ -1005,7 +1015,7 @@ void settingDraw()
   if(settingFlag == 1 && displayFlag == 2)
   {
     fill(102);
-   
+    rect(settingXaxis,settingYaxis,settingWidth,settingHeight);
    
     //Open Bluetooth settings
     buttonBluetooth.update();
@@ -1015,6 +1025,10 @@ void settingDraw()
     buttonBluetoothOn.update();
     
     buttonBluetoothOn.display();
+    
+    buttonbackArrow.update();
+    buttonbackArrow.display();
+    
   }
   if(settingFlag == 1 && displayFlag == 3)
   {
@@ -1037,6 +1051,10 @@ void settingDraw()
     buttonmountainTimeZone.update();
     
     buttonmountainTimeZone.display();
+    
+    buttonbackArrow.update();
+    
+    buttonbackArrow.display();
   }
   if(settingFlag == 1 && displayFlag == 4)
   {
@@ -1047,16 +1065,24 @@ void settingDraw()
     buttonBluetoothOff.update();
     
     buttonBluetoothOff.display();
+    
+    buttonbackArrow.update();
+    
+    buttonbackArrow.display();
   }
   if(settingFlag == 1 && displayFlag == 5)
   {
     fill(102);
    
-   rect(settingXaxis,settingYaxis,settingWidth,settingHeight);
+    rect(settingXaxis,settingYaxis,settingWidth,settingHeight);
     //bluetooth Off
     buttonBluetoothOn.update();
     
     buttonBluetoothOn.display();
+    
+    buttonbackArrow.update();
+    
+    buttonbackArrow.display();
   }
     if(settingFlag == 1 && displayFlag == 6)
   {
@@ -1079,6 +1105,10 @@ void settingDraw()
     buttonmountainTimeZone.update();
     
     buttonmountainTimeZone.display();
+    
+    buttonbackArrow.update();
+    
+    buttonbackArrow.display();
   }
     if(settingFlag == 1 && displayFlag == 7)
   {
@@ -1102,6 +1132,10 @@ void settingDraw()
     buttonmountainTimeZone.update();
     
     buttonmountainTimeZone.display();
+    
+    buttonbackArrow.update();
+    
+    buttonbackArrow.display();
   }
   if(settingFlag == 1 && displayFlag == 8)
   {
@@ -1124,6 +1158,10 @@ void settingDraw()
     buttonmountainTimeZone.update();
     
     buttonmountainTimeZone.display();
+    
+    buttonbackArrow.update();
+    
+    buttonbackArrow.display();
   }
     if(settingFlag == 1 && displayFlag == 9)
   {
@@ -1146,6 +1184,10 @@ void settingDraw()
     buttonmountainTimeZone.update();
     
     buttonmountainTimeZone.display();
+    
+    buttonbackArrow.update();
+    
+    buttonbackArrow.display();
   }
   if(settingFlag == 1 && displayFlag == 10)
   {
@@ -1161,6 +1203,10 @@ void settingDraw()
     buttonchangePin.update();
     
     buttonchangePin.display();
+    
+    buttonbackArrow.update();
+    
+    buttonbackArrow.display();
   }
   if(settingFlag == 1 && displayFlag == 11)
   {
@@ -6389,8 +6435,8 @@ class SettingImageButtons extends PinButton
     }
     if(displayFlag == 2)
     {
-      fill(102);
-      rect(settingXaxis,settingYaxis,settingWidth,settingHeight);
+      //fill(102);
+      //rect(settingXaxis,settingYaxis,settingWidth,settingHeight);
       fill(0);  
       text("Bluetooth", (int)canvasWidth/2 - 20, (int)canvasHeight/2 + 280);  
       stroke(0);
@@ -6407,8 +6453,8 @@ class SettingImageButtons extends PinButton
     }
      if(displayFlag == 4)
     {
-      fill(102);
-      rect(settingXaxis,settingYaxis,settingWidth,settingHeight);
+      //fill(102);
+      //rect(settingXaxis,settingYaxis,settingWidth,settingHeight);
       fill(0);  
       text("Bluetooth", (int)canvasWidth/2 - 20, (int)canvasHeight/2 + 280);  
       stroke(0);
@@ -6421,8 +6467,8 @@ class SettingImageButtons extends PinButton
     }
     if(displayFlag == 5)
     {
-      fill(102);
-      rect(settingXaxis,settingYaxis,settingWidth,settingHeight);
+      //fill(102);
+      //rect(settingXaxis,settingYaxis,settingWidth,settingHeight);
       fill(0);  
       text("Bluetooth", (int)canvasWidth/2 - 20, (int)canvasHeight/2 + 280);  
       stroke(0);
@@ -6729,6 +6775,11 @@ class SettingImageButtons extends PinButton
     {
     //clicked on uicWifi3
     wifiText();
+    }
+    if(displayFlag == 42)
+    {
+      settingFlag = 1;
+      displayFlag = 0;
     }
     if(displayFlag != number)
     {
