@@ -157,7 +157,7 @@ PImage uicWifi;
 PImage uicWifi2;
 PImage uicWifi3;
 int filterX = (int)canvasWidth/2 - 215;
-int changeX = (int)canvasWidth/2 - 135;
+int changeX = (int)canvasWidth/2 - 90;
 int languageX = (int)canvasWidth/2 - 185;
 
 int filterY1 = (int)canvasHeight/2 + 300;
@@ -6331,8 +6331,8 @@ class SettingImageButtons extends PinButton
     }
     if(displayFlag == 10)
     {
-      
-      text("personalization", (int)canvasWidth/2 - 150, (int)canvasHeight/2 + 230);
+      fill(0);
+      text("Personalization", (int)canvasWidth/2 - 40, (int)canvasHeight/2 + 180);
     }
     if(displayFlag == 11)
     {
