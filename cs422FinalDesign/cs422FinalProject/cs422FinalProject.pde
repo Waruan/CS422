@@ -25,7 +25,7 @@ int gobal_buttonX = 66;
 int gobal_buttonY = 60;
 int profileButtonX = int(1.8*66);
 int profileButtonY = int(1.8*30);
-
+boolean gobal_isEng = true;
 PImage rain = loadImage("Data/rain.png");
 //0 = start screen
 //1 = profile selection
@@ -2935,10 +2935,27 @@ void pinDraw()
   fill(127,127,127);
   if(stage == 2){
     fill(0);
+    
     text("Enter Pin for User: " + userList.get(whichUser).name, int(((canvasWidth/100)*50) + buttonXSize/2),int(((canvasHeight/100)*65)));
+    if(userList.get(whichUser).isEnglish == true){
+        text("Enter Pin for User: " + userList.get(whichUser).name, int(((canvasWidth/100)*50) + buttonXSize/2),int(((canvasHeight/100)*65)));
+    }
+    else{
+        text("Introduzca Pin para el usuario:: " + userList.get(whichUser).name, int(((canvasWidth/100)*50) + buttonXSize/2),int(((canvasHeight/100)*65)));
+      
+    }
+    
+    
     if(wrongPin == true){
        textSize(26);
        text("Incorrect Pin Please Try Again", int(((canvasWidth/100)*50) + buttonXSize/2),int(((canvasHeight/100)*85)));
+       if(userList.get(whichUser).isEnglish == true){
+          text("Incorrect Pin Please Try Again", int(((canvasWidth/100)*50) + buttonXSize/2),int(((canvasHeight/100)*85)));
+        }
+        else{
+          text("Pin incorrecto intente nuevamente", int(((canvasWidth/100)*50) + buttonXSize/2),int(((canvasHeight/100)*85)));
+          
+        }
     }
     fill(102);
   }
@@ -2946,14 +2963,39 @@ void pinDraw()
     textSize(36);
     fill(0);
     if(stage4Part == 1){
-      text("Enter New Pin ", int(((canvasWidth/100)*50) + buttonXSize/2),int(((canvasHeight/100)*65)));
+      
+      if(gobal_isEng == true){
+        text("Enter New Pin ", int(((canvasWidth/100)*50) + buttonXSize/2),int(((canvasHeight/100)*65)));
+   
+      }
+      else{
+        text("Introducir nuevo pin ", int(((canvasWidth/100)*50) + buttonXSize/2),int(((canvasHeight/100)*65)));
+      
+      }
     }
     else if(stage4Part == 2){
-      text("Comfirm New Pin ", int(((canvasWidth/100)*50) + buttonXSize/2),int(((canvasHeight/100)*65)));
+      
+      if(gobal_isEng == true){
+        text("Confirm New Pin ", int(((canvasWidth/100)*50) + buttonXSize/2),int(((canvasHeight/100)*65)));
+   
+      }
+      else{
+        text("Confirmar nuevo Pin ", int(((canvasWidth/100)*50) + buttonXSize/2),int(((canvasHeight/100)*65)));
+      
+      }
     }
     if(wrongConfirmPin == true){
       textSize(26);
-      text("Pin did not match. Please Try Again", int(((canvasWidth/100)*50) + buttonXSize/2),int(((canvasHeight/100)*85)));
+      if(gobal_isEng == true){
+        text("Pin did not match. Please Try Again", int(((canvasWidth/100)*50) + buttonXSize/2),int(((canvasHeight/100)*85)));
+   
+      }
+      else{
+        text("Pin no coinciden. Inténtalo de nuevo", int(((canvasWidth/100)*50) + buttonXSize/2),int(((canvasHeight/100)*85)));
+      
+      }
+      
+ 
     }
     fill(102);
   } 
@@ -2979,10 +3021,26 @@ void keyBoardDraw()
   
   textSize(36);
   if(nameInUse == false){
-    text("Enter New Username ",int(((canvasWidth/100)*50) + buttonXSize/2),int(((canvasHeight/100)*65)));
+    
+    if(gobal_isEng == true){
+      text("Enter New Username ",int(((canvasWidth/100)*50) + buttonXSize/2),int(((canvasHeight/100)*65)));
+   
+    }
+    else{
+      text("Introducir nuevo nombre de usuario ",int(((canvasWidth/100)*50) + buttonXSize/2),int(((canvasHeight/100)*65)));
+    
+    }
   }
   else{
-    text("Username Already Inuse Enter Different Username ",int(((canvasWidth/100)*50) + buttonXSize/2),int(((canvasHeight/100)*65)));
+    if(gobal_isEng == true){
+      text("Username Already Inuse Enter Different Username ",int(((canvasWidth/100)*50) + buttonXSize/2),int(((canvasHeight/100)*65)));
+   
+    }
+    else{
+      text("El nombre de usuario ya está en uso ",int(((canvasWidth/100)*50) + buttonXSize/2),int(((canvasHeight/100)*65)));
+    
+    }
+
   }
   drawTimeDate();
   if(stage == 4){
@@ -3370,9 +3428,18 @@ void startDraw(){
   //else{
   
   //}
-   textSize(36);
+  textSize(36);
   textAlign(CENTER);
-  text("Touch Screen to Start ", (canvasWidth/100)*50 , (canvasHeight/100)*90);
+  
+  if(gobal_isEng == true){
+    text("Touch Screen to Start ", (canvasWidth/100)*50 , (canvasHeight/100)*90);
+   
+  }
+  else{
+    text("Pantalla táctil para iniciar", (canvasWidth/100)*50 , (canvasHeight/100)*90);
+  
+  }
+
   
   drawTimeDate();
 
@@ -3967,8 +4034,17 @@ void drawProfileButtons(){
   } 
   temp = profile.get(profile.size()-1);
   
+
+ 
   fill(127,127,127); 
+  textSize(65);
   ellipse(newUserButton.x_Axis,newUserButton.y_Axis,newUserButton.width, newUserButton.height);
+  
+  textAlign(CENTER);
+  fill(0);
+  text("+",newUserButton.x_Axis, newUserButton.y_Axis+20);
+   fill(127,127,127); 
+   textSize(38);
 }
 
 // Draw a grid 
