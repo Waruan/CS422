@@ -3351,7 +3351,16 @@ void timerPinDraw()
   if(isChangePin){
     textAlign(CENTER);
     fill(0);
-    text("Enter New Pin",int(((canvasWidth/100)*50) + buttonXSize/2),int(((canvasHeight/100)*65)));
+    
+    
+    
+   
+    if(userList.get(whichUser).isEnglish == true){
+        text("Enter New Pin",int(((canvasWidth/100)*50) + buttonXSize/2),int(((canvasHeight/100)*65)));
+    }
+     else{
+        text("Introducir nuevo pin",int(((canvasWidth/100)*50) + buttonXSize/2),int(((canvasHeight/100)*65)));
+    }
     for(int i = 0;i<pinFlag ;i++){
       text("*",int(((canvasWidth/100)*50  + pinSpace - (15 * i))), int((canvasHeight/100)*68));
     }
@@ -3360,7 +3369,22 @@ void timerPinDraw()
     textAlign(CENTER);
     fill(0);
     text("Enter Time",int(((canvasWidth/100)*50) + buttonXSize/2),int(((canvasHeight/100)*65)));
-    text(pin,int(((canvasWidth/100)*50 )), int((canvasHeight/100)*68));
+    if(userList.get(whichUser).isEnglish == true){
+        text("Enter Time",int(((canvasWidth/100)*50) + buttonXSize/2),int(((canvasHeight/100)*65)));
+    }
+     else{
+        text("Introducir la hora",int(((canvasWidth/100)*50) + buttonXSize/2),int(((canvasHeight/100)*65)));
+    }
+    if(pin.length() == 3){
+      text("0" + pin.substring(0,1) + ":" + pin.substring(1,3),int(((canvasWidth/100)*50 )), int((canvasHeight/100)*68));
+    }
+    else if(pin.length() == 4){
+       text(pin.substring(0,2)+":"+pin.substring(2,4),int(((canvasWidth/100)*50 )), int((canvasHeight/100)*68));
+    }
+    else{
+      text(pin,int(((canvasWidth/100)*50 )), int((canvasHeight/100)*68));
+    }
+    
   }
   
   
@@ -4813,7 +4837,7 @@ void UserScreen_MouseReleased(){
             println("Pressed SET TIMER");
             timerInput = true;
             currentPopup.x_Axis = int((canvasWidth/100)*40);
-           currentPopup.y_Axis = int((canvasHeight/100)*25);
+           currentPopup.y_Axis = int((canvasHeight/100)*22);
           }
           else if(currentPopup.clickable.get(i).function == 2) {
             println("Pressed START");
