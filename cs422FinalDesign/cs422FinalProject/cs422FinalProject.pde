@@ -2663,11 +2663,11 @@ void draw() {
       volu.display();
       
     }
-    else if(calenderInput){
+    else if(calenderInput && isHidden == false){
       calkeyBoardDraw();
       
     }
-    else if(timerInput){
+    else if(timerInput && isHidden == false){
       timerPinDraw();
       
     }
@@ -4175,16 +4175,16 @@ void UserScreen_MouseReleased(){
     imageBox = false;
     isMusic = false;
     boxInUse = false;   
-    calenderInput = false;
-    timerInput = false;
+    //calenderInput = false;
+    //timerInput = false;
     
     if(outsideKeyboard() && functionInUse == 9){
       calenderInput = false;
       boxInUse = false;   
     
     }
-    else if(outsideKeyboard() == false && functionInUse == 9){
-      calenderInput = true;
+    else if(outsideKeyboard() == false && functionInUse == 9 && calenderInput == true){
+
       boxInUse = true;   
 
     }
@@ -4193,8 +4193,8 @@ void UserScreen_MouseReleased(){
       boxInUse = false;   
     
     }
-    else if(outsidePinArea() == false && functionInUse == 10){
-      timerInput = true;
+    else if(outsidePinArea() == false && functionInUse == 10 && timerInput == true){
+      
       boxInUse = true;   
 
     }
