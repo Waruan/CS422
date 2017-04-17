@@ -797,8 +797,8 @@ void settingSetup()
   int bluetoothY = (int)canvasHeight/2 + 340;
   
   //timezone
-  int timezoneX = (int)canvasWidth/2 - 240;
-  int timezoneX2 = (int)canvasWidth/2 - 30;
+  int timezoneX = (int)canvasWidth/2 - 200;
+  int timezoneX2 = (int)canvasWidth/2 + 10;
   int timezoneY1 = (int)canvasHeight/2 + 340;
   int timezoneY2 = (int)canvasHeight/2 + 440;
   
@@ -1817,6 +1817,8 @@ void settingDraw()
   if(settingFlag == 1 && displayFlag == 34)
   {
     //Location use keyboard
+    buttonLocation.update();
+    buttonLocation.display();
   }
   if(settingFlag == 1 && displayFlag == 35)
   {
@@ -6263,8 +6265,9 @@ class SettingImageButtons extends PinButton
     }
     if(displayFlag == 3)
     {
-      fill(0);  
-      text("Select Time Zone", (int)canvasWidth/2 - 140, (int)canvasHeight/2 + 230);
+      fill(0); 
+      textSize(30);
+      text("Select Time Zone", (int)canvasWidth/2 - 40, (int)canvasHeight/2 + 230);
     }
      if(displayFlag == 4)
     {
@@ -6296,39 +6299,47 @@ class SettingImageButtons extends PinButton
     }
     if(displayFlag == 6)
     {
+      textSize(30);
       fill(0);  
-      text("Select Time Zone", (int)canvasWidth/2 - 140, (int)canvasHeight/2 + 230);
+      text("Select Time Zone", (int)canvasWidth/2 - 40, (int)canvasHeight/2 + 230);
       fill(102);
       rect((int)canvasWidth/2 - 230, (int)canvasHeight/2 + 300, 330, 30);
       fill(0);
-      text("Time changed to Pacific Zone Time", (int)canvasWidth/2 - 220, (int)canvasHeight/2 + 320);
+      textSize(20);
+      text("Time changed to Pacific Zone Time", (int)canvasWidth/2 - 40, (int)canvasHeight/2 + 320);
     }
     if(displayFlag == 7)
     {
+      textSize(30);
       fill(0);  
-      text("Select Time Zone", (int)canvasWidth/2 - 140, (int)canvasHeight/2 + 230);
+      text("Select Time Zone", (int)canvasWidth/2 - 40, (int)canvasHeight/2 + 230);
       fill(102);
-      rect((int)canvasWidth/2 - 240, (int)canvasHeight/2 + 300, 330, 30);
+      rect((int)canvasWidth/2 - 230, (int)canvasHeight/2 + 300, 330, 30);
       fill(0);
-      text("Time changed to Central Zone Time", (int)canvasWidth/2 - 230, (int)canvasHeight/2 + 320);
+      textSize(20);
+      text("Time changed to Central Zone Time", (int)canvasWidth/2 - 40, (int)canvasHeight/2 + 320);
     }
     if(displayFlag == 8)
     {
+      textSize(30);
       fill(0);  
-      text("Select Time Zone", (int)canvasWidth/2 - 140, (int)canvasHeight/2 + 230);
+      text("Select Time Zone", (int)canvasWidth/2 - 40, (int)canvasHeight/2 + 230);
       fill(102);
-      rect((int)canvasWidth/2 - 250, (int)canvasHeight/2 + 300, 350, 30);
+      rect((int)canvasWidth/2 - 230, (int)canvasHeight/2 + 300, 330, 30);
       fill(0);
-      text("Time changed to Eastern Zone Time", (int)canvasWidth/2 - 240, (int)canvasHeight/2 + 320);
+      textSize(20);
+      text("Time changed to Eastern Zone Time", (int)canvasWidth/2 - 40, (int)canvasHeight/2 + 320);
     }
     if(displayFlag == 9)
     {
+      textSize(30);
       fill(0);  
-      text("Select Time Zone", (int)canvasWidth/2 - 140, (int)canvasHeight/2 + 230);
+      text("Select Time Zone", (int)canvasWidth/2 - 40, (int)canvasHeight/2 + 230);
       fill(102);
-      rect((int)canvasWidth/2 - 260, (int)canvasHeight/2 + 300, 370, 30);
+      rect((int)canvasWidth/2 - 230, (int)canvasHeight/2 + 300, 330, 30);
       fill(0);
-      text("Time changed to Mountain Zone Time", (int)canvasWidth/2 - 260, (int)canvasHeight/2 + 320);
+      textSize(20);
+      text("Time changed to Mountain Zone Time", (int)canvasWidth/2 - 40, (int)canvasHeight/2 + 320);
     }
     if(displayFlag == 10)
     {
@@ -6706,10 +6717,8 @@ class SettingImageButtons extends PinButton
     textSize(20);
     //text("Location", (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 280);
     //Change String in next box
-    text("Current Location:" + locationDefault, (int)canvasWidth/2 - 235, (int)canvasHeight/2 + 240);
-    text("Enter your Location using the Keyboard", (int)canvasWidth/2 - 255, (int)canvasHeight/2 + 290);
-    fill(102);
-    rect((int)canvasWidth/2 - 205, (int)canvasHeight/2 + 310, 260, 40);
+    text("Current Location:" + locationDefault, (int)canvasWidth/2 - 35, (int)canvasHeight/2 + 240);
+    text("Enter your Location using the Keyboard", (int)canvasWidth/2 - 40, (int)canvasHeight/2 + 290);
     }
     if(displayFlag == 35)
     {
