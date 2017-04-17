@@ -3878,7 +3878,7 @@ void userScreenDraw(User current){
   }
   //rect(2500, 1100, 155, 55);
   Button temp;  
-  temp = userList.get(whichUser).hid;
+  temp = userList.get(whichUser).open;
   image(temp.img, temp.x_Axis, temp.y_Axis, temp.width, temp.height);
   if(isHidden){
 
@@ -5833,7 +5833,7 @@ class User{
   ArrayList<menuButton> menuSet = new ArrayList<menuButton>();
   
   Button hid;
- 
+  Button open;
   
   
   //Saved Setting info
@@ -5857,6 +5857,7 @@ class User{
     name = usr;
     pin = pass;
     hid = new Button("Data/hide_icon.png", int((canvasWidth - buttonX) - ((canvasWidth/100) *2)),int((canvasHeight- buttonY) - ((canvasHeight/100) *2)),buttonX,buttonY,-1);
+    open =new Button("Data/hide_icon_open.png", int((canvasWidth - buttonX) - ((canvasWidth/100) *2)),int((canvasHeight- buttonY) - ((canvasHeight/100) *2)),buttonX,buttonY,-1);
     //isHidden = false;
     //Create the Default buttons
     ///////////////////////////////////////////////////
