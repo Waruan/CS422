@@ -1,0 +1,20 @@
+Select icon size
+Bluetooth
+Select Time Zone
+Time changed to Pacific Zone Time
+Time changed to Central Zone Time
+Time changed to Eastern Zone Time
+Time changed to Mountain Zone Time
+Personalization
+Enter Name
+Enter your Pin number
+Select icon size
+Select Language by touching the Flag
+Language changed to
+Select your filter for the News Feed
+Added:
+Current Location:
+Enter your Location using the Keyboard
+Transperency
+WiFI
+Other Networks...

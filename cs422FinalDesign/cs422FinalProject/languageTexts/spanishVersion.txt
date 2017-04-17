@@ -1,0 +1,20 @@
+Seleccionar el tamaño del icono
+Bluetooth
+Selecciona la zona horaria
+El tiempo cambió a Hora de la zona del Pacífico
+La hora cambió a Hora de Zona Central
+El tiempo cambió a Hora de Zona Oriental
+El tiempo cambió a Hora de la Zona de Montaña
+Personalización
+Ingrese su nombre
+Ingrese su número PIN
+Seleccionar el tamaño del icono
+Seleccione Idioma tocando la Bandera
+Idioma cambiado a
+Seleccione su filtro para el feed de noticias
+Adicional:
+Ubicación actual:
+Ingrese su ubicación usando el teclado
+Transparencia
+WiFI
+Otras Redes ...
