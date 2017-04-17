@@ -122,7 +122,7 @@ int filterFlag4 = 0;
 int addedFilter = 0; //Moving added filter to added column
 int wifiFlag = 0; //keep track if its on or off on == 0 and off == 1
 
-float iconAdjust = 0.5;
+//float iconAdjust = 0.5;
 float imageAdjust = 1;
 PImage butgearIcon;
 PImage bluetoothOn;
@@ -982,9 +982,9 @@ void settingDraw()
     buttonIconSize.update();
     
     buttonIconSize.display();
-
     
-    iconAdjust = constrain(((hs1.spos - slideOffset)/(hs1.swidth-10)),0.25,1) ;
+    
+    userList.get(whichUser).iconAdjust = constrain(((hs1.spos - slideOffset)/(hs1.swidth-10)),0.25,1) ;
 
      
      User temp = userList.get(whichUser);
@@ -993,8 +993,8 @@ void settingDraw()
      ArrayList<Button> btnList = temp.buttonSet;
      for(int i = 0; i < btnList.size();i++){
        Button btn = btnList.get(i);
-       btn.width = int(temp.buttonX * iconAdjust);
-       btn.height = int(temp.buttonY * iconAdjust);
+       btn.width = int(temp.buttonX * userList.get(whichUser).iconAdjust );
+       btn.height = int(temp.buttonY * userList.get(whichUser).iconAdjust );
      }
      
      temp.adjustButton();
@@ -1177,7 +1177,7 @@ void settingDraw()
   {
     //Contrast
     fill(102);
-    rect(settingXaxis,settingYaxis,settingWidth,settingHeight);
+    
     
   }
   if(settingFlag == 1 && displayFlag == 14)
@@ -4167,6 +4167,7 @@ boolean profileSelect_MouseReleased(){
       String sTemp  = (userList.get(whichUser)).name;
       if(sTemp.equals("Guest")){
         stage = 3;
+        hs1.sposPercentageAdjust(userList.get(whichUser).iconAdjust);
         return true;
       }
       stage = 2;
@@ -5196,6 +5197,7 @@ class ImageButtons extends PinButton
           
           if(comparePin(pin) ){
             stage = 3;
+            hs1.sposPercentageAdjust(userList.get(whichUser).iconAdjust);
           }
           else{
              wrongPin = true;
@@ -5386,6 +5388,9 @@ class User{
   //Saved Setting info
   ////////////////////////
   
+  float iconAdjust = 0.5;
+  int timeAdjust = 0;
+  boolean isEnglish = true;
   
   ////////////////////////
   // some buttons
@@ -5889,6 +5894,14 @@ class HScrollbar
      
      
   }
+  
+  void sposPercentageAdjust(float x){
+     
+    spos = (swidth  * x) + xpos;
+    newspos = spos;
+   
+  }
+  
 
   boolean update() {
 
@@ -6460,6 +6473,11 @@ class SettingImageButtons extends PinButton
         textAlign(CENTER);
         text("Select icon size", settingXaxis + (settingWidth/2) , settingYaxis + 50);
         //println("Debug 0");
+        stage = 1;
+        whichUser = -1;
+        displayFlag = 0;
+        settingFlag = 0;
+        boxInUse = false;
     }
     if(displayFlag == 14)
     {
