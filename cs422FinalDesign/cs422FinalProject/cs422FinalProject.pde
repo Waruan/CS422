@@ -2585,7 +2585,7 @@ void setup() {
   userList.get(0).addButton("Data/Timer_icon.png", 10);
   
   
-  for(int i = 2;i<9;i++){
+  for(int i = 2;i<11;i++){
     ArrayList<menuButton> mBList= userList.get(0).menuSet;
     int idx = findMenuByFunction(mBList,i);
   
@@ -5344,7 +5344,7 @@ class User{
     menuTemp = new menuButton(menuXaxis+40,menuYaxis+40,localX*2,localY*2,"Data/9gag_icon_unselected.png","Data/9gag_icon_selected.png", 2);
     menuSet.add(menuTemp);
       //userList.get(0).addButton("Data/health_icon.png",3); //health
-    menuTemp = new menuButton(menuXaxis+70 + localX*2,menuYaxis+30,localX*2,localY*2,"Data/health_icon_unselected.png","Data/health_icon_selected.png", 3);
+    menuTemp = new menuButton(menuXaxis+70 + localX*2,menuYaxis+40,localX*2,localY*2,"Data/health_icon_unselected.png","Data/health_icon_selected.png", 3);
     menuSet.add(menuTemp);
     
       //userList.get(0).addButton("Data/weather_icon.png",4); //weather
@@ -5365,7 +5365,12 @@ class User{
       //userList.get(0).addButton("Data/music_icon.png", 8); //Music
   menuTemp = new menuButton(menuXaxis+70 + localX*2,menuYaxis+80 + localY*2,localX*2,localY*2,"Data/music_icon_unselected.png","Data/music_icon_selected.png", 8);
    menuSet.add(menuTemp);  
-    
+   
+    menuTemp = new menuButton(menuXaxis+100 + localX*4,menuYaxis+80 + localY*2,localX*2,localY*2,"Data/cal_icon_unselected.png","Data/cal_icon_selected.png", 9);
+   menuSet.add(menuTemp);  
+   
+    menuTemp = new menuButton(menuXaxis+130 + localX*6,menuYaxis+80 + localY*2,localX*2,localY*2,"Data/stopwatch-tool_unselected.png","Data/stopwatch-tool_selected.png", 10);
+   menuSet.add(menuTemp);  
     
     //////////////////////////////////////////////////
     
