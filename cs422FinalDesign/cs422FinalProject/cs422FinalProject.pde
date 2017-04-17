@@ -318,6 +318,7 @@ int stage4Part = 1;
 /////////////////////////////////////////////////////////////////////////
 
 boolean boxInUse = false;
+boolean updateText = false;
 int functionInUse;
 
 
@@ -3444,30 +3445,18 @@ void addCalDates(Popup current) {
 
 }
 
-void showDates(Popup current) {
-  //35
-  int day = 1;
-  int x_val = 1;
-  int y_val = 10;
-  int cal_x, cal_y;
-  for(int i = 0; i < 35; i++) {
-    if(i % 7 == 0 && i != 0) {
-      y_val+=15;
-      x_val = 1;
-    
-    }
-    
-    
-      cal_x = current.x_Axis + int((current.width/100)*x_val);
-      cal_y = current.y_Axis + int((current.height/100)*y_val);
-      
-      //current.PopupAddClickable(cal_x, cal_y, cal_date_width, cal_date_height, day);
-      rect(cal_x, cal_y, cal_date_width, cal_date_height);
-      println("day: "+day);
-      x_val+=14;
-      day++;
-  }
+void setCalText(Button current) {
+    current.setButtonMessage(calenderNote);
+}
 
+void displayCalText(Popup current) {
+  
+  for(int i = 0; i < current.clickable.size(); i++) {
+    textSize(15);
+    fill(0,102,153);
+    text(current.clickable.get(i).buttonMessage, int(current.clickable.get(i).x_Axis+20), int(current.clickable.get(i).y_Axis+30) );
+    textSize(24);  
+  }
 }
 
 void updateXYLocation(int popUpFunction) {
@@ -3547,6 +3536,9 @@ void userScreenDraw(User current){
     }
     
     image(currentPopup.img, currentPopup.x_Axis, currentPopup.y_Axis, currentPopup.width, currentPopup.height);
+    if(currentPopup.function == 9) {
+      displayCalText(currentPopup);
+    }
     //showDates(currentPopup);
     //rect(timer_start_x_axis, timer_start_y_axis, timer_button_width, timer_button_height);
     //rect(playlist2_x_axis, playlist2_y_axis, playlist_width, playlist_height);
@@ -4350,8 +4342,11 @@ void UserScreen_MouseReleased(){
         else if(currentPopup.function == 9 && boxInUse == true) {
           println("Calendar ID: " + currentPopup.clickable.get(i).function);
           calenderInput  =true;
-          currentPopup.x_Axis = int((canvasWidth/100)*35);
+          updateText = false;
+           currentPopup.x_Axis = int((canvasWidth/100)*35);
            currentPopup.y_Axis = int((canvasHeight/100)*30);
+           
+          currentButton = currentPopup.clickable.get(i);
         }
         else if(currentPopup.function == 10 && boxInUse == true ) {
           if(currentPopup.clickable.get(i).function == 1) {
@@ -4893,6 +4888,7 @@ class Button{
   int width;
   int height;
   int function;
+  String buttonMessage = "";
   PImage img; 
   Button(String file, int x, int y,int w,int h, int f){
     img = loadImage(file);
@@ -4914,6 +4910,10 @@ class Button{
     //1 for setting
     function = f;
   }
+  void setButtonMessage(String input) {
+    buttonMessage = input;
+  }
+  
   void changeFunction(int f){
     function = f;
   }
@@ -5683,6 +5683,7 @@ class ImageKeyButtons extends PinButton
             keyRep = "";
             keySpace = 0;
             calenderInput = false;
+            setCalText(currentButton);
             
         }
         
