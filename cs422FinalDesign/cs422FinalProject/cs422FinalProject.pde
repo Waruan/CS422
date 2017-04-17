@@ -192,6 +192,8 @@ int settingWidth = 480;
 int settingHeight = 410;
 HScrollbar hs1 = new HScrollbar(int(slideOffset), (int)(canvasHeight/2 + 400), 350, 35, 1);
 HScrollbar hs2 = new HScrollbar(int(slideOffset), (int)(canvasHeight/2 + 400), 350, 35, 1);
+boolean isChangeName = false;
+boolean isChangePin = false;
 
 ////////////////////////////////////////////////////////////
 
@@ -347,7 +349,7 @@ float y_drag = (canvasHeight/29)*3;
 float drag_box_width = canvasWidth - ((canvasWidth/29)*4);
 float drag_box_height = canvasHeight - ((canvasHeight/29)*7);
 
-Timer timer = new Timer(2000);
+//Timer timer = new Timer(2000);
 //////////////////////////////////////////////////////////////////////////////
 
 
@@ -609,6 +611,8 @@ boolean timerInput = false;
 String calenderNote = "";
 String timerString = "0500";
 Timer tm;
+boolean isTimerRunning = false;
+boolean activeSmallTimer = false;
 // Old code before creating user class
 /////////////////////////////////////////////////////////////////////////
 //Hide button
@@ -1192,6 +1196,12 @@ void settingDraw()
   }
   if(settingFlag == 1 && displayFlag == 10)
   {
+    if(whichUser == 0){
+      settingFlag = 0;
+      displayFlag = 0;
+      inSetting = false;
+      return;
+    }
     //personalization
     fill(102);
    
@@ -1212,10 +1222,14 @@ void settingDraw()
   if(settingFlag == 1 && displayFlag == 11)
   {
     //Change Name need keyboard
+    
+    isChangeName = true;
   }
   if(settingFlag == 1 && displayFlag == 12)
   {
     //Change pin need pin pad
+    isChangePin = true;
+    
   }
   if(settingFlag == 1 && displayFlag == 13)
   {
@@ -2826,6 +2840,14 @@ void draw() {
       timerPinDraw();
       
     }
+    else if(isChangeName && isHidden == false){
+      calkeyBoardDraw();
+      
+    }
+    else if(isChangePin && isHidden == false){
+      console.log("still here");
+      timerPinDraw();
+    }
   }
   else if(stage == 4){
    if(iskeyboard == true){
@@ -3235,6 +3257,7 @@ void timerPinDraw()
 
     
   // find time var
+  
   text(pin,int(((canvasWidth/100)*50 )), int((canvasHeight/100)*68));
 
   
@@ -3695,7 +3718,29 @@ void userScreenDraw(User current){
   if(activeSmallMusic){
     image(miniPlayer.img, miniPlayer.x_Axis, miniPlayer.y_Axis, miniPlayer.width, miniPlayer.height);
   }
-  image(miniTimer.img, miniTimer.x_Axis, miniTimer.y_Axis, miniTimer.width, miniTimer.height);
+  if(activeSmallTimer && isTimerRunning){
+    image(miniTimer.img, miniTimer.x_Axis, miniTimer.y_Axis, miniTimer.width, miniTimer.height);
+    if(tm.isFinished()  == false ){
+      //display the time remaining
+      console.log(tm.totalTime - tm.passedTime);
+    }
+    else{
+      //play an audio 
+      isTimerRunning = false;
+    }
+    
+  }
+  else if(isTimerRunning){
+    tm.isFinished();
+    if(tm.isFinished() == false){
+      //display the time remaining
+      console.log(tm.totalTime - tm.passedTime);
+    }
+    else{
+      //play an audio 
+      isTimerRunning = false;
+    }
+  }
   //rect(2500, 1100, 155, 55);
   Button temp;  
   temp = userList.get(whichUser).hid;
@@ -3704,7 +3749,7 @@ void userScreenDraw(User current){
 
     return;
   }
- 
+  
 
   if(iconDrag) {
       fill(192,192,192);
@@ -3714,7 +3759,7 @@ void userScreenDraw(User current){
   for (int loopCounter=0; loopCounter < current.buttonSet.size(); loopCounter++){
     temp = current.buttonSet.get(loopCounter);
     if(loopCounter == iconIndex && iconDrag){
-      fill(148, 183, 239)
+      fill(148, 183, 239);
       rect(temp.x_Axis-5,temp.y_Axis-5,temp.width+10,temp.height+10);
       fill(127,127,127);
       image(temp.img, temp.x_Axis, temp.y_Axis, temp.width, temp.height);
@@ -4352,7 +4397,7 @@ void UserScreen_MouseReleased(){
   } 
   
   if(boxInUse && inMenu == true  && outsideMenuArea() == true){
-    console.log("check ");
+
     
     boxInUse = false;
     imageBox = false;
@@ -4361,6 +4406,58 @@ void UserScreen_MouseReleased(){
     inSetting = false;
     iconDrag = false;
     inMenu = false;
+    if(clickOtherButton()){
+      boxInUse = true;   
+      //User u = userList.get(whichUser);
+      //Button currentButton = u.buttonSet.get(iconIndex);      
+      getCurrentButtonPopup(functionInUse);
+
+    }
+    
+    return;
+  }
+   if(boxInUse && inSetting == true && outsideKeyboard() == true && isChangeName == true){
+    
+     console.log("check ");
+    
+    boxInUse = false;
+    imageBox = false;
+    isMusic = false;
+    drag = false;
+    inSetting = false;
+    iconDrag = false;
+    inMenu = false;
+    isChangeName = false;
+    isChangePin = false;
+    displayFlag = 0;
+    settingFlag = 0;
+    
+    if(clickOtherButton()){
+      boxInUse = true;   
+      //User u = userList.get(whichUser);
+      //Button currentButton = u.buttonSet.get(iconIndex);      
+      getCurrentButtonPopup(functionInUse);
+
+    }
+    
+    return;
+  }
+  if(boxInUse && inSetting == true && outsidePinArea() == true && isChangePin == true){
+    
+     console.log("check ");
+    
+    boxInUse = false;
+    imageBox = false;
+    isMusic = false;
+    drag = false;
+    inSetting = false;
+    iconDrag = false;
+    inMenu = false;
+    isChangeName = false;
+    isChangePin = false;
+    displayFlag = 0;
+    settingFlag = 0;
+    
     if(clickOtherButton()){
       boxInUse = true;   
       //User u = userList.get(whichUser);
@@ -4382,6 +4479,9 @@ void UserScreen_MouseReleased(){
     inSetting = false;
     iconDrag = false;
     inMenu = false;
+    
+    
+    
     if(clickOtherButton()){
       boxInUse = true;   
       //User u = userList.get(whichUser);
@@ -4418,20 +4518,22 @@ void UserScreen_MouseReleased(){
     }
     else if(outsidePinArea() && functionInUse == 10){
       timerInput = false;
-      boxInUse = false;   
+      boxInUse = false;  
+      activeSmallTimer = true;
     
     }
+   
     else if(outsidePinArea() == false && functionInUse == 10 && timerInput == true){
       
       boxInUse = true;   
 
     }
-
+    
+    
     //music
     if(functionInUse == 8 && fadeOut == true){
        activeSmallMusic = true;
     }
-    
     else if(functionInUse == 8 && fadeOut == false){
        activeSmallMusic = false; 
     }
@@ -4454,6 +4556,9 @@ void UserScreen_MouseReleased(){
     if(functionInUse == 8){
       isMusic = true;
       activeSmallMusic = false;
+    }
+    else if(functionInUse == 10){
+      activeSmallTimer = false;
     }
     boxInUse = true;
     println("DEBUG 25");
@@ -4592,8 +4697,11 @@ void UserScreen_MouseReleased(){
           }
           else if(currentPopup.clickable.get(i).function == 2) {
             println("Pressed START");
+            isTimerRunning = true;
             int secs = stringToSec(timerString);
+            println("DEBUG sec " + secs);
             tm = new Timer(secs);
+            tm.start();
           }
         
         }
@@ -4648,6 +4756,7 @@ void UserScreen_MouseReleased(){
   else if(insideBox(miniTimer.x_Axis, miniTimer.y_Axis, miniTimer.width, miniTimer.height)) {
     if(insideBox(miniTimer.clickable.get(0).x_Axis, miniTimer.clickable.get(0).y_Axis, miniTimer.clickable.get(0).width, miniTimer.clickable.get(0).height)) {
       println("Pressed Start/Stop Timer Small");
+      isTimerRunning = !isTimerRunning;
     }
   }
   else {
@@ -5049,11 +5158,18 @@ void addProfileButton(ArrayList<Button> blist , int X, int Y,int f){
 }
 
 int stringToSec(String givenTime){
+  println("DEBUG givenTime " + givenTime);
   int mten = parseInt(givenTime.substring(0,1));
+  println("DEBUG mten "+ mten);
   int mOne = parseInt(givenTime.substring(1,2));
+  println("DEBUG mOne "+ mOne);
   int sTen = parseInt(givenTime.substring(2,3));
+  println("DEBUG sTen "+ sTen);
   int sOne = parseInt(givenTime.substring(3,4));
+  println("DEBUG sOne "+ sOne);
   int total  = (mten*600)+(mOne*60)+(sTen*10)+sOne;
+  total = total * 1000;
+  println("DEBUG total "+ total);
   return total;
   
 }
@@ -5067,6 +5183,15 @@ boolean nameExist(String checkName){
     
   } 
   return false;
+}
+
+void removeExistingName(String checkName){
+  
+  for(int i = 0;i <storeName.size();i++){
+    if(storeName.get(i).equals(checkName)){
+      storeName.remove(i);
+    }
+  } 
 }
 
 
@@ -5202,7 +5327,7 @@ class Timer {
   // The work of the timer is farmed out to this method.
   boolean isFinished() { 
     // Check how much time has passed
-    int passedTime = millis()- savedTime;
+    passedTime = millis()- savedTime;
     if (passedTime > totalTime) {
       return true;
     } else {
@@ -5397,11 +5522,22 @@ class ImageButtons extends PinButton
          
           
         }
-        else if (stage == 3){
+        else if (stage == 3 && timerInput == true){
         
           timerString = pin;
           timerInput = false;
         
+        }
+        else if (stage == 3 && isChangePin == true){
+          
+          User u = userList.get(whichUser);
+          u.pin = pin; 
+          
+          isChangePin = false;
+          settingFlag = 0;
+          displayFlag = 0;
+           console.log("Changed");
+           console.log(isChangePin);
         }
         textSize(40);
         fill(102);
@@ -5926,7 +6062,7 @@ class ImageKeyButtons extends PinButton
             iskeyboard = false;
           }
         }
-        if(stage == 3){
+        if(stage == 3 && calenderInput == true){
             calenderNote  = keyTracker;
             keyFlag = 0;
             keyTracker = "";
@@ -5935,6 +6071,37 @@ class ImageKeyButtons extends PinButton
             calenderInput = false;
             setCalText(currentButton);
             
+        }
+        else if(stage == 3 && isChangeName == true){
+          if(keyFlag < 1){
+          
+          
+          }
+          else if(nameExist(keyTracker) == true){
+          
+            inputName  = "";
+            keyFlag = 0;
+            keyTracker = "";
+            keyRep = "";
+            keySpace = 0;
+            nameInUse = true;
+            //iskeyboard = true;
+            
+          }
+          else{
+            inputName  = keyTracker;
+            keyFlag = 0;
+            keyTracker = "";
+            keyRep = "";
+            keySpace = 0;
+             nameInUse = false;
+             removeExistingName(userList.get(whichUser).name );
+             storeName.add(inputName);
+             userList.get(whichUser).name = inputName;
+             
+            isChangeName = false;
+          }
+        
         }
         
         
@@ -6622,7 +6789,7 @@ class SettingImageButtons extends PinButton
       }
       
     }
-    if(displayFlag == 10)
+    if(displayFlag == 10 && whichUser != 0)
     {
       fill(0);
       if(userList.get(whichUser).isEnglish == true){
