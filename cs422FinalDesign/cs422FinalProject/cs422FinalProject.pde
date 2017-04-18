@@ -27,13 +27,15 @@ int profileButtonX = int(1.8*66);
 int profileButtonY = int(1.8*30);
 boolean gobal_isEng = true;
 PImage rain = loadImage("Data/rain.png");
+
+//-1 = First time use Setting
 //0 = start screen
 //1 = profile selection
 //2 = login 
 //3 = Exsitng User display
 //4 = guest User display
 
-int stage = 0;
+int stage = -1;
 
 // scale down for home monitors
 //float canvasWidth ;
@@ -62,6 +64,19 @@ ArrayList<String> storeName = new ArrayList<String>();
 boolean inSetup = true;
 //////////////////////////////////////////////////////////////////
 
+//startup
+////////////////////////////////////////////////////////////////
+LangImageButtons buttonstartupEnglish;
+LangImageButtons buttonstartupSpanish;
+int startuplanguageFlag = 0; // 1 for english, 2 for spanish
+int startuplanguageX = (int)canvasWidth/2 - 120;
+//(int)canvasWidth/2 - 340;
+int startuplanguageX2 = (int)canvasWidth/2 - 20;
+int startuplanguageY = (int)canvasHeight/2 + 390;
+int flagWidth = 66;
+int flagHeight = 32;
+boolean isLangPressed;
+////////////////////////////////////////////////////////////////
 
 //Shanil Variable for Setting
 ////////////////////////////////////////////////////////////
@@ -929,6 +944,60 @@ void settingSetup()
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void startUpsetup()
+
+{
+
+
+  
+  background(255);
+  
+  // Define and create image button
+
+  PImage startupEnglish = loadImage("Data/english.jpg");
+  PImage startupSpanish = loadImage("Data/spanish.jpg");
+  
+
+  
+  int boardLeft1 = (int)canvasWidth/2 - 340;
+  
+  
+  
+  int boardyMiddle = (int)canvasHeight/2 + 390;
+  
+  
+ 
+  buttonstartupEnglish = new LangImageButtons(startuplanguageX, startuplanguageY, flagWidth, flagHeight, startupEnglish, startupEnglish, startupEnglish, "english");//done
+  buttonstartupSpanish = new LangImageButtons(startuplanguageX2, startuplanguageY, flagWidth, flagHeight, startupSpanish, startupSpanish, startupSpanish, "spanish");//done
+
+  textSize(20);
+  fill(0);
+  text("Please Select Language", (int)canvasWidth/2 - 140, (int)canvasHeight/2 + 230);
+}
+
+
+
+void startUpdraw()
+
+{
+  textSize(30);
+  background(255);
+  stroke(126);
+  textAlign(LEFT);
+  text("Please Select Language", (int)canvasWidth/2 - 160, (int)canvasHeight/2 + 230);
+  drawTimeDate();
+  
+  buttonstartupEnglish.update();
+  
+  buttonstartupEnglish.display();
+  
+  buttonstartupSpanish.update();
+  
+  buttonstartupSpanish.display();
+}
+
+
 
 void settingDraw()
 
@@ -2793,12 +2862,16 @@ void setup() {
   keyBoardSetup();
   musicSetup();
   settingSetup();
+  startUpsetup();
 }
 
 /////////////////////////////////////////////////////
 
 
 void draw() {
+  if(stage == -1){
+    startUpdraw();
+  }
   //Start Screen
   if(stage == 0){
     startDraw();
@@ -3211,6 +3284,7 @@ void calkeyBoardDraw()
         text("Ingrese su nombre",int(((canvasWidth/100)*50) + buttonXSize/2),int(((canvasHeight/100)*65)));
       }
   }
+
   drawTimeDate();
   
   
@@ -7220,6 +7294,124 @@ class SettingImageButtons extends PinButton
     {
       image(currentimage, x, y, w, h); 
     }
+  }
+
+}
+
+class LangImageButtons extends PinButton 
+
+{
+
+  PImage base;
+
+  PImage roll;
+
+  PImage down;
+
+  PImage currentimage;
+  
+  String number = "";
+
+
+  LangImageButtons(int ix, int iy, int iw, int ih, PImage ibase, PImage iroll, PImage idown, String num) 
+
+  {
+
+    x = ix;
+
+    y = iy;
+
+    w = iw;
+
+    h = ih;
+
+    base = ibase;
+
+    roll = iroll;
+
+    down = idown;
+
+    currentimage = base;
+    
+    number = num;
+
+  }
+
+  
+
+  void update() 
+
+  {
+
+    over();
+    
+    mouseReleased();
+    
+    if(pressed) {
+     
+      currentimage = down;
+      isPressed = true;
+
+    } else if (isOver){
+     
+      currentimage = roll;
+      if(isPressed == true)
+      {
+      isPressed = false; 
+      if(number == "english")
+      {
+        gobal_isEng = true;
+        stage = 1;
+      }
+      if(number == "spanish")
+      {
+        gobal_isEng = false;
+        stage = 1;
+      }
+      }
+    } else {
+    
+      currentimage = base;
+
+    }
+
+  }
+
+  
+
+  void over() 
+
+  {
+    
+     //println("DEBUG 0");
+     //println("x: "+x);
+     //println("y: "+y);
+     //println("w: "+w);
+     //println("h: "+h);
+     //println("mouseX: " + mouseX);
+     //println("mouseX: " + mouseY);
+     //println("//////////////////////////////////////////////////////");
+     
+    if( overRect(x, y, w, h) ) {
+
+      isOver = true;
+     
+    } else {
+      
+      isOver = false;
+
+    }
+
+  }
+
+  
+
+  void display() 
+
+  {
+
+    image(currentimage, x, y, w, h);
+
   }
 
 }
