@@ -2169,7 +2169,7 @@ void settingDraw()
 void musicSetup(){
 
   noStroke(); 
-  println(width);
+  ////println(width);
   String temp  = "snow";
   songNames.add("Mario Elevator");
   songNames.add("Teddybears Cobrastyle");
@@ -2181,7 +2181,7 @@ void musicSetup(){
   //loads the audio file and appends the file extension
   audio.setAttribute("src",songNames.get(current)+fileExt);
  
-  //println(end);
+  ////println(end);
   //this adds a listener to see when the file has finished playing
   //then calls a function that we named "repeat"
   audio.addEventListener("ended",next);
@@ -2895,7 +2895,7 @@ void draw() {
       
       
       if(seeker.update() == true){
-        println("DEBUG 1 TRUE");
+        ////println("DEBUG 1 TRUE");
         
         //fadeOut = false;
         //audio.pause();
@@ -3566,7 +3566,7 @@ void profileDraw(){
 }
 
 void initPopups() {
-  println("Init Popup function");
+  //println("Init Popup function");
   //Settings
   Popup temp = new Popup("Data/settings_icon.png", permXLocation, permYLocation, int(gagWidth), int(gagHeight), 0);
   popups.add(temp);
@@ -3828,7 +3828,7 @@ void addCalDates(Popup current) {
       
       current.PopupAddClickable(cal_x, cal_y, cal_date_width, cal_date_height, day);
       //rect(cal_x_axis, cal_y_axis, cal_date_width, cal_date_height);
-      println("day: "+day);
+      //println("day: "+day);
       x_val+=14;
       day++;
   }
@@ -3842,26 +3842,26 @@ void setArticleTopics(Popup current) {
   if(filterFlag1 == 1) {
     limit++;
     topics.add("Gaming");
-    //println("Adding Gaming");
+    ////println("Adding Gaming");
   }
   if(filterFlag2 == 1) {
     limit++; 
     topics.add("Business");
-    //println("Adding Business");
+    ////println("Adding Business");
   }
   if(filterFlag3 == 1) {
     limit++;
     topics.add("Politics");
-    //println("Adding Politics");
+    ////println("Adding Politics");
   }
   if(filterFlag4 == 1 && limit < 3) {
     limit++;
     topics.add("Tech");
-    //println("Adding Tech");
+    ////println("Adding Tech");
   }
   //Default
   if(limit < 3) {
-    //println("Default");
+    ////println("Default");
     topics = new ArrayList<String>();
     topics.add("Gaming");
     topics.add("Business");
@@ -3970,7 +3970,7 @@ void userScreenDraw(User current){
   
   // need to change to so that it popup the correct function
   if(boxInUse == true && functionInUse != 0 && functionInUse!=1){
-    //println("Inside boxInUse True area");
+    ////println("Inside boxInUse True area");
     inMenu = false;;
     inSetting = false;
     if(drag) {
@@ -4030,7 +4030,7 @@ void userScreenDraw(User current){
     }
     //Button test = currentPopup.clickable.get(0);
     
-   // println(test.x_Axis);
+   // //println(test.x_Axis);
     //rect(test.x_Axis, test.y_Axis, test.width, test.height);
     //rect(xtest, ytest, width_test, height_test);
     //pop_up_box(xLocation, yLocation);
@@ -4239,14 +4239,14 @@ void mouseDragged() {
   
   if(iconDrag == false && isHidden == false){
      dragLoopInsideBox() ;
-     println("DEBUG whichuser " + whichUser);
-     println("DEBUG iconIndex" + iconIndex);
+     //println("DEBUG whichuser " + whichUser);
+     //println("DEBUG iconIndex" + iconIndex);
      int x = userList.get(whichUser).buttonSet.get(iconIndex).x_Axis;
      draggingIndex = iconIndex;
      iconDragDifx = mouseX-x;
      selectedIconX_axis = x;
 
-     //println("DEBUG 2: " + iconIndex + "selected: " + selectedIconX_axis);
+     ////println("DEBUG 2: " + iconIndex + "selected: " + selectedIconX_axis);
      
   }
    
@@ -4276,7 +4276,7 @@ void swap(Button current){
       
      
       tempx = blist.get(i).x_Axis;
-      println("DEBUG 0: " + draggingIndex + " selected: " + selectedIconX_axis + " new Selected" +  tempx );
+      //println("DEBUG 0: " + draggingIndex + " selected: " + selectedIconX_axis + " new Selected" +  tempx );
       
       
       blist.get(i).x_Axis = selectedIconX_axis;
@@ -4289,7 +4289,7 @@ void swap(Button current){
     //  tempx = blist.get(i).x_Axis;
     //  blist.get(i).x_Axis = selectedIconX_axis;
     //  selectedIconX_axis = tempx;
-    //  println("DEBUG 1");
+    //  //println("DEBUG 1");
     //  return;
       
     //}
@@ -4791,7 +4791,7 @@ void UserScreen_MouseReleased(){
     
   }
   if((loopInsideBox() || iconDrag== true)  && !boxInUse){
-    println("DEBUG loop " + functionInUse);
+    //println("DEBUG loop " + functionInUse);
     getCurrentButtonPopup(functionInUse);
     if(functionInUse == 8){
       isMusic = true;
@@ -4801,7 +4801,7 @@ void UserScreen_MouseReleased(){
       activeSmallTimer = false;
     }
     boxInUse = true;
-    println("DEBUG 25");
+    //println("DEBUG 25");
     drag = false;
     iconDrag = false;
     return;
@@ -4812,7 +4812,7 @@ void UserScreen_MouseReleased(){
     User u = userList.get(whichUser);
     Button b = u.buttonSet.get(iconIndex);
     int x = userList.get(whichUser).buttonSet.get(iconIndex).x_Axis;
-    //println("DEBUG 1");
+    ////println("DEBUG 1");
     //iconDrag = true;
     iconDragDifx = mouseX-x;
      //dragDify = mouseY-yLocation;
@@ -4828,7 +4828,7 @@ void UserScreen_MouseReleased(){
         //If app is 9gag
         if(currentPopup.function == 2 && boxInUse == true) {
           if(currentPopup.clickable.get(i).function == 1) {
-            println("Prev");
+            //println("Prev");
             
             if(gag_stage == 1) {
               gag_stage = 1;
@@ -4841,7 +4841,7 @@ void UserScreen_MouseReleased(){
             break;
           }
           else if(currentPopup.clickable.get(i).function == 2) {
-            println("Next");
+            //println("Next");
             if(gag_stage > 2) {
               gag_stage = 3;
             }
@@ -4855,7 +4855,7 @@ void UserScreen_MouseReleased(){
         }
         //Inside Article
         else if(currentPopup.function == 5 && boxInUse == true) {
-          println("Pressed Article ID: " + currentPopup.clickable.get(i).function);
+          //println("Pressed Article ID: " + currentPopup.clickable.get(i).function);
           
           
           if(currentPopup.clickable.get(i).function == 9 ) {
@@ -4864,7 +4864,7 @@ void UserScreen_MouseReleased(){
             break;
           }
           else if(currentPopup.clickable.get(i).function > 5 && currentPopup.clickable.get(i).function < 9) {
-            //println("Topic: " + currentPopup.clickable.get(i).buttonMessage);
+            ////println("Topic: " + currentPopup.clickable.get(i).buttonMessage);
             if(currentPopup.clickable.get(i).function == 6) {
               currentArticleTopic = currentPopup.clickable.get(i).buttonMessage;
               if(currentArticleTopic.equals("Gaming")) {
@@ -4936,12 +4936,12 @@ void UserScreen_MouseReleased(){
         else if(currentPopup.function == 8 && boxInUse == true) {
           
           if(currentPopup.clickable.get(i).function == 1) {
-            println("Pressed reverse button");
+            //println("Pressed reverse button");
             previous();
             return; 
           }
           else if(currentPopup.clickable.get(i).function == 2) {
-            println("Pressed pause/play button");
+            //println("Pressed pause/play button");
             
             text(currentSongName, currentPopup.x_Axis+200,currentPopup.y_Axis+50);
             fadeOut=!fadeOut;
@@ -4965,15 +4965,15 @@ void UserScreen_MouseReleased(){
             
           }
           else if(currentPopup.clickable.get(i).function == 3) {
-            println("Pressed forward button");
+            //println("Pressed forward button");
             next();
             return;
           }
           else if(currentPopup.clickable.get(i).function == 4 ) {
-            println("Pressed volume button");
+            //println("Pressed volume button");
           }
           else if(currentPopup.clickable.get(i).function == 5) {
-            println("Pressed Seek button");
+            //println("Pressed Seek button");
           }
           
           
@@ -4984,7 +4984,7 @@ void UserScreen_MouseReleased(){
           
 
           else if(currentPopup.clickable.get(i).function > 5) {
-            println("Pressed playlist " + currentPopup.clickable.get(i).function);
+            //println("Pressed playlist " + currentPopup.clickable.get(i).function);
             if(currentPopup.clickable.get(i).function == 6){
               current = 0;
               audio.setAttribute("src",songNames.get(current%(songNames.size()))+fileExt);
@@ -5027,7 +5027,7 @@ void UserScreen_MouseReleased(){
           User u = userList.get(whichUser);
           String s =u.name;
           if(!(s.equals("Guest"))){
-             println("Calendar ID: " + currentPopup.clickable.get(i).function);
+             //println("Calendar ID: " + currentPopup.clickable.get(i).function);
             calenderInput  =true;
             updateText = false;
              currentPopup.x_Axis = int((canvasWidth/100)*35);
@@ -5038,16 +5038,16 @@ void UserScreen_MouseReleased(){
         }
         else if(currentPopup.function == 10 && boxInUse == true ) {
           if(currentPopup.clickable.get(i).function == 1) {
-            println("Pressed SET TIMER");
+            //println("Pressed SET TIMER");
             timerInput = true;
             currentPopup.x_Axis = int((canvasWidth/100)*40);
            currentPopup.y_Axis = int((canvasHeight/100)*22);
           }
           else if(currentPopup.clickable.get(i).function == 2) {
-            println("Pressed START");
+            //println("Pressed START");
             isTimerRunning = true;
             int secs = stringToSec(timerString);
-            println("DEBUG sec " + secs);
+            //println("DEBUG sec " + secs);
             tm = new Timer(secs);
             tm.start();
           }
@@ -5065,7 +5065,7 @@ void UserScreen_MouseReleased(){
      originalY = yLocation;
      dragDifx = mouseX-xLocation;
      dragDify = mouseY-yLocation;
-     println("DEBUG 2");
+     //println("DEBUG 2");
      drag = false;
      iconDrag = false;
     
@@ -5074,11 +5074,11 @@ void UserScreen_MouseReleased(){
     for(int i = 0; i < miniPlayer.clickable.size(); i++) {
       if(insideBox(miniPlayer.clickable.get(i).x_Axis, miniPlayer.clickable.get(i).y_Axis, miniPlayer.clickable.get(i).width, miniPlayer.clickable.get(i).height)) {
         if(miniPlayer.clickable.get(i).function == 1) {
-          println("Small reverse button");
+          //println("Small reverse button");
           previous();
         }
         else if(miniPlayer.clickable.get(i).function == 2) {
-          println("Small pause/play button");
+          //println("Small pause/play button");
           fadeOut=!fadeOut;
             if (fadeOut){
               vol=1;
@@ -5096,7 +5096,7 @@ void UserScreen_MouseReleased(){
             return;
         }
         else if(miniPlayer.clickable.get(i).function == 3) {
-          println("Small forward button");
+          //println("Small forward button");
           next();
         }
       }
@@ -5105,7 +5105,7 @@ void UserScreen_MouseReleased(){
   }
   else if(insideBox(miniTimer.x_Axis, miniTimer.y_Axis, miniTimer.width, miniTimer.height)) {
     if(insideBox(miniTimer.clickable.get(0).x_Axis, miniTimer.clickable.get(0).y_Axis, miniTimer.clickable.get(0).width, miniTimer.clickable.get(0).height)) {
-      println("Pressed Start/Stop Timer Small");
+      //println("Pressed Start/Stop Timer Small");
       isTimerRunning = !isTimerRunning;
     }
   }
@@ -5124,7 +5124,7 @@ void changeArticles(Popup current, String str) {
 // Check if a different function button has been press
 boolean clickOtherButton(){
   int temp = findButton();
-  println("DEBUG(5): functionInUse: " + functionInUse + "return :"+temp );
+  //println("DEBUG(5): functionInUse: " + functionInUse + "return :"+temp );
   if(temp != -1 && temp != functionInUse ){
     functionInUse = temp;
     return true;
@@ -5141,7 +5141,7 @@ boolean loopInsideBox(){
     temp = guest.buttonSet.get(i);
     if(insideBox(temp.x_Axis,temp.y_Axis,temp.width,temp.height)){
       functionInUse = temp.function;
-      println("Button "+ temp.function  + " Clicked" );
+      //println("Button "+ temp.function  + " Clicked" );
       iconIndex = i;
       return true;
     }
@@ -5157,7 +5157,7 @@ boolean dragLoopInsideBox(){
     temp = guest.buttonSet.get(i);
     if(insideBox(temp.x_Axis,temp.y_Axis,temp.width,temp.height)){
      // functionInUse = temp.function;
-      println("Button "+ temp.function  + " Clicked" );
+      //println("Button "+ temp.function  + " Clicked" );
       iconIndex = i;
       return true;
     }
@@ -5175,7 +5175,7 @@ boolean loopInsideBoxWithoutSet(){
     temp = guest.buttonSet.get(i);
     if(insideBox(temp.x_Axis,temp.y_Axis,temp.width,temp.height)){
        //functionInUse = temp.function;
-       println("Button "+ temp.function  + " Clicked" );
+       //println("Button "+ temp.function  + " Clicked" );
       return true;
     }
   }
@@ -5192,7 +5192,7 @@ int findButton(){
     
     temp = guest.buttonSet.get(i);
     if(insideBox(temp.x_Axis,temp.y_Axis,temp.width,temp.height)){
-      println("find Button "+ temp.function + " Clicked" );
+      //println("find Button "+ temp.function + " Clicked" );
       return temp.function;
     }
   }
@@ -5500,7 +5500,7 @@ void addProfileButton(ArrayList<Button> blist , int X, int Y,int f){
      temp = blist.get(i);
      temp.changeX(tempx +(i* int(X + (canvasWidth/100))));
      
-     //println("DEBUG 10 tempx " +i+ ": " + tempx);
+     ////println("DEBUG 10 tempx " +i+ ": " + tempx);
    }
  } 
  int index = findMostRight(profile);
@@ -5510,18 +5510,18 @@ void addProfileButton(ArrayList<Button> blist , int X, int Y,int f){
 }
 
 int stringToSec(String givenTime){
-  println("DEBUG givenTime " + givenTime);
+  //println("DEBUG givenTime " + givenTime);
   int mten = parseInt(givenTime.substring(0,1));
-  println("DEBUG mten "+ mten);
+  //println("DEBUG mten "+ mten);
   int mOne = parseInt(givenTime.substring(1,2));
-  println("DEBUG mOne "+ mOne);
+  //println("DEBUG mOne "+ mOne);
   int sTen = parseInt(givenTime.substring(2,3));
-  println("DEBUG sTen "+ sTen);
+  //println("DEBUG sTen "+ sTen);
   int sOne = parseInt(givenTime.substring(3,4));
-  println("DEBUG sOne "+ sOne);
+  //println("DEBUG sOne "+ sOne);
   int total  = (mten*600)+(mOne*60)+(sTen*10)+sOne;
   total = total * 1000;
-  println("DEBUG total "+ total);
+  //println("DEBUG total "+ total);
   return total;
   
 }
@@ -5557,21 +5557,21 @@ void next(){
   int track = current%(songNames.size());
   
   currentSongName = songNames.get(track);
-  println(track);
+  //println(track);
   audio.setAttribute("src",songNames.get(current%(songNames.size()))+fileExt);
   audio.play();
   isplaying = true;
 }
 
 void previous(){
-  println(audio.currentTime);
+  //println(audio.currentTime);
   if(audio.currentTime < 2){
     current--;
     if(current < 0){
       current = songNames.size()-1;
     }
     int track = current%(songNames.size());
-    println(track);
+    //println(track);
     audio.setAttribute("src",songNames.get(current%(songNames.size()))+fileExt);
     audio.play();
     isplaying = true;
@@ -5813,7 +5813,7 @@ class ImageButtons extends PinButton
         if(number == "back" && pinFlag > 0){  
           pinFlag = pinFlag-1;
           pin = pin.substring (  0, pin.length()-1 );
-          //println(pin);  //Testing purpose
+          ////println(pin);  //Testing purpose
           pinRep = pinRep.substring( 0, pinRep.length()-1 );
           pinSpace = pinSpace - 15;
           textSize(40);
@@ -5828,7 +5828,7 @@ class ImageButtons extends PinButton
           //text("*",(int)canvasWidth/4 + 315 + pinSpace, (int)canvasHeight/3 + 45);
           pinSpace = pinSpace + 15;
           pin = pin + number;
-          //println(pin);  //Testing purpose
+          ////println(pin);  //Testing purpose
           pinFlag = pinFlag+1;
         }
         
@@ -5941,14 +5941,14 @@ class ImageButtons extends PinButton
 
   {
     
-     //println("DEBUG 0");
-     //println("x: "+x);
-     //println("y: "+y);
-     //println("w: "+w);
-     //println("h: "+h);
-     //println("mouseX: " + mouseX);
-     //println("mouseX: " + mouseY);
-     //println("//////////////////////////////////////////////////////");
+     ////println("DEBUG 0");
+     ////println("x: "+x);
+     ////println("y: "+y);
+     ////println("w: "+w);
+     ////println("h: "+h);
+     ////println("mouseX: " + mouseX);
+     ////println("mouseX: " + mouseY);
+     ////println("//////////////////////////////////////////////////////");
      
     if( overRect(x, y, w, h) ) {
 
@@ -6379,7 +6379,7 @@ class ImageKeyButtons extends PinButton
 
         keySpace = keySpace + (int)textWidth(number);
         keyTracker = keyTracker + number;
-        println(keyTracker);  //Testing purpose
+        //println(keyTracker);  //Testing purpose
         keyFlag = keyFlag+1;
       }
       if(number == " ")
@@ -6482,14 +6482,14 @@ class ImageKeyButtons extends PinButton
 
   {
     
-     //println("DEBUG 0");
-     //println("x: "+x);
-     //println("y: "+y);
-     //println("w: "+w);
-     //println("h: "+h);
-     //println("mouseX: " + mouseX);
-     //println("mouseX: " + mouseY);
-     //println("//////////////////////////////////////////////////////");
+     ////println("DEBUG 0");
+     ////println("x: "+x);
+     ////println("y: "+y);
+     ////println("w: "+w);
+     ////println("h: "+h);
+     ////println("mouseX: " + mouseX);
+     ////println("mouseX: " + mouseY);
+     ////println("//////////////////////////////////////////////////////");
      
     if( overRect(x, y, w, h) ) {
 
@@ -6666,7 +6666,7 @@ class HScrollbar
     //fill(159, 188, 234);
     fill(255);
     rect(xpos, ypos, swidth, sheight);
-    //println(swidth);
+    ////println(swidth);
     if(isOver || locked) {
 
       fill(153, 102, 0);
@@ -6678,7 +6678,7 @@ class HScrollbar
     }
 
     ellipse(spos, ypos+sheight/2, sheight, sheight);
-    //println(spos);
+    ////println(spos);
     
   }
 
@@ -7201,7 +7201,7 @@ class SettingImageButtons extends PinButton
         fill(0); 
         textAlign(CENTER);
         //text("Select icon size", settingXaxis + (settingWidth/2) , settingYaxis + 50);
-        //println("Debug 0");
+        ////println("Debug 0");
         stage = 1;
         whichUser = -1;
         displayFlag = 0;
@@ -7527,14 +7527,14 @@ class LangImageButtons extends PinButton
 
   {
     
-     //println("DEBUG 0");
-     //println("x: "+x);
-     //println("y: "+y);
-     //println("w: "+w);
-     //println("h: "+h);
-     //println("mouseX: " + mouseX);
-     //println("mouseX: " + mouseY);
-     //println("//////////////////////////////////////////////////////");
+     ////println("DEBUG 0");
+     ////println("x: "+x);
+     ////println("y: "+y);
+     ////println("w: "+w);
+     ////println("h: "+h);
+     ////println("mouseX: " + mouseX);
+     ////println("mouseX: " + mouseY);
+     ////println("//////////////////////////////////////////////////////");
      
     if( overRect(x, y, w, h) ) {
 
