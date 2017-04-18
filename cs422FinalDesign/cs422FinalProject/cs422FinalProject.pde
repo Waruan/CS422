@@ -33,7 +33,7 @@ PImage rain = loadImage("Data/rain.png");
 //3 = Exsitng User display
 //4 = guest User display
 
-int stage = 0;
+int stage = -1;
 
 // scale down for home monitors
 //float canvasWidth ;
@@ -62,6 +62,19 @@ ArrayList<String> storeName = new ArrayList<String>();
 boolean inSetup = true;
 //////////////////////////////////////////////////////////////////
 
+//startup
+////////////////////////////////////////////////////////////////
+LangImageButtons buttonstartupEnglish;
+LangImageButtons buttonstartupSpanish;
+int startuplanguageFlag = 0; // 1 for english, 2 for spanish
+int startuplanguageX = (int)canvasWidth/2 - 120;
+//(int)canvasWidth/2 - 340;
+int startuplanguageX2 = (int)canvasWidth/2 - 20;
+int startuplanguageY = (int)canvasHeight/2 + 390;
+int flagWidth = 66;
+int flagHeight = 32;
+boolean isLangPressed;
+////////////////////////////////////////////////////////////////
 
 //Shanil Variable for Setting
 ////////////////////////////////////////////////////////////
@@ -223,7 +236,7 @@ boolean fadeOut=false;
 int col=0;
 ArrayList<String> songNames = new ArrayList<String>();
 int current = 0;
-
+boolean isplaying = false;
 
  HScrollbar   volu;
 
@@ -931,6 +944,57 @@ void settingSetup()
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+void startUpdraw()
+
+{
+  textSize(30);
+  background(255);
+  stroke(126);
+  textAlign(LEFT);
+  text("Please Select Language", (int)canvasWidth/2 - 160, (int)canvasHeight/2 + 230);
+  drawTimeDate();
+  
+  buttonstartupEnglish.update();
+  
+  buttonstartupEnglish.display();
+  
+  buttonstartupSpanish.update();
+  
+  buttonstartupSpanish.display();
+}
+
+
+void startUpsetup()
+
+{
+
+
+  
+  background(255);
+  
+  // Define and create image button
+
+  PImage startupEnglish = loadImage("Data/english.jpg");
+  PImage startupSpanish = loadImage("Data/spanish.jpg");
+  
+
+  
+  int boardLeft1 = (int)canvasWidth/2 - 340;
+  
+  
+  
+  int boardyMiddle = (int)canvasHeight/2 + 390;
+  
+  
+ 
+  buttonstartupEnglish = new LangImageButtons(startuplanguageX, startuplanguageY, flagWidth, flagHeight, startupEnglish, startupEnglish, startupEnglish, "english");//done
+  buttonstartupSpanish = new LangImageButtons(startuplanguageX2, startuplanguageY, flagWidth, flagHeight, startupSpanish, startupSpanish, startupSpanish, "spanish");//done
+
+  textSize(20);
+  fill(0);
+  text("Please Select Language", (int)canvasWidth/2 - 140, (int)canvasHeight/2 + 230);
+}
+
 
 void settingDraw()
 
@@ -2107,9 +2171,10 @@ void musicSetup(){
   noStroke(); 
   println(width);
   String temp  = "snow";
+  songNames.add("Mario Elevator");
+  songNames.add("Teddybears Cobrastyle");
+  songNames.add("Serious Snow");
   songNames.add("Nightcore Sotsugyou");
-  songNames.add(temp);
-
   //this checks to see what type of audio the browser can play
   //then assigns that file extension to our string
   fileExt = ".mp3";
@@ -2795,12 +2860,16 @@ void setup() {
   keyBoardSetup();
   musicSetup();
   settingSetup();
+  startUpsetup();
 }
 
 /////////////////////////////////////////////////////
 
 
 void draw() {
+  if(stage == -1){
+    startUpdraw();
+  }
   //Start Screen
   if(stage == 0){
     startDraw();
@@ -3370,6 +3439,7 @@ void timerPinDraw()
   else{
     textAlign(CENTER);
     fill(0);
+    textSize(26);
     text("Enter Time",int(((canvasWidth/100)*50) + buttonXSize/2),int(((canvasHeight/100)*65)));
     if(userList.get(whichUser).isEnglish == true){
         text("Enter Time",int(((canvasWidth/100)*50) + buttonXSize/2),int(((canvasHeight/100)*65)));
@@ -3554,7 +3624,7 @@ void initPopups() {
   popups.add(temp);
   
   
-  temp = new Popup("Data/music_big.png", permXLocation, permYLocation, int(music_width), int(music_height), 8);
+  temp = new Popup("Data/music_pause.png", permXLocation, permYLocation, int(music_width), int(music_height), 8);
   initLocations(temp,8);
   temp.PopupAddClickable(music_reverse_x_axis, music_reverse_y_axis, music_box_width, music_box_height, 1); //Reverse Button
   temp.PopupAddClickable(music_mid_x_axis, music_mid_y_axis, music_box_width, music_box_height, 2);         //Play/Pause Button
@@ -3908,6 +3978,15 @@ void userScreenDraw(User current){
       //Fix
       rect(x_drag, y_drag, drag_box_width, drag_box_height, 10);
     }
+    
+    //if(functionInUse == 8){
+    //  if(isplaying == true){
+    //    popups.get(8).changeImage("Data/music_play.png");
+    //  }
+    //  else{
+    //    popups.get(8).changeImage("Data/music_pause.png");
+    //  }
+    //}
     
     image(currentPopup.img, currentPopup.x_Axis, currentPopup.y_Axis, currentPopup.width, currentPopup.height);
     
@@ -4870,6 +4949,7 @@ void UserScreen_MouseReleased(){
               vol=1;
               col=255;
               audio.play();
+              isplaying = true;
               
             }
             else if (!fadeOut){
@@ -4878,6 +4958,7 @@ void UserScreen_MouseReleased(){
               
      
               audio.pause();
+              isplaying = false;
             }
             return;
             
@@ -4894,8 +4975,50 @@ void UserScreen_MouseReleased(){
           else if(currentPopup.clickable.get(i).function == 5) {
             println("Pressed Seek button");
           }
+          
+          
+          //songNames.add("Mario Elevator");
+          //songNames.add("Teddybears Cobrastyle");
+          //songNames.add("Serious Snow");
+          //songNames.add("Nightcore Sotsugyou");
+          
+
           else if(currentPopup.clickable.get(i).function > 5) {
             println("Pressed playlist " + currentPopup.clickable.get(i).function);
+            if(currentPopup.clickable.get(i).function == 6){
+              current = 0;
+              audio.setAttribute("src",songNames.get(current%(songNames.size()))+fileExt);
+              if(fadeOut == true){
+                audio.play();
+                isplaying = true;
+              }
+            }
+            if(currentPopup.clickable.get(i).function == 7){
+              current = 1;
+              audio.setAttribute("src",songNames.get(current%(songNames.size()))+fileExt);
+              if(fadeOut == true){
+                audio.play();
+                isplaying = true;
+              }
+            }
+            if(currentPopup.clickable.get(i).function == 8){
+              current = 2;
+              audio.setAttribute("src",songNames.get(current%(songNames.size()))+fileExt);
+              if(fadeOut == true){
+                audio.play();
+                isplaying = true;
+              }
+            }
+            if(currentPopup.clickable.get(i).function == 9){
+              current = 3;
+              audio.setAttribute("src",songNames.get(current%(songNames.size()))+fileExt);
+              if(fadeOut == true){
+                audio.play();
+                isplaying = true;
+              }
+            }
+            
+            
           }
         
         }
@@ -4961,11 +5084,13 @@ void UserScreen_MouseReleased(){
               vol=1;
               col=255;
               audio.play();
+              isplaying = true;
             }
             else if (!fadeOut){
               vol-=.1;
               col-=25;
               audio.pause();
+              isplaying = false;
               activeSmallMusic = false;
             }
             return;
@@ -5424,6 +5549,7 @@ void removeExistingName(String checkName){
 
 void repeat(){
   audio.play();
+  isplaying = true;
 }
 
 void next(){
@@ -5434,6 +5560,7 @@ void next(){
   println(track);
   audio.setAttribute("src",songNames.get(current%(songNames.size()))+fileExt);
   audio.play();
+  isplaying = true;
 }
 
 void previous(){
@@ -5447,10 +5574,12 @@ void previous(){
     println(track);
     audio.setAttribute("src",songNames.get(current%(songNames.size()))+fileExt);
     audio.play();
+    isplaying = true;
   }
   else{
     audio.setAttribute("src",songNames.get(current%(songNames.size()))+fileExt);
     audio.play();
+    isplaying = true;
   }
   
 }
@@ -7309,6 +7438,124 @@ class SettingImageButtons extends PinButton
     {
       image(currentimage, x, y, w, h); 
     }
+  }
+
+}
+
+class LangImageButtons extends PinButton 
+
+{
+
+  PImage base;
+
+  PImage roll;
+
+  PImage down;
+
+  PImage currentimage;
+  
+  String number = "";
+
+
+  LangImageButtons(int ix, int iy, int iw, int ih, PImage ibase, PImage iroll, PImage idown, String num) 
+
+  {
+
+    x = ix;
+
+    y = iy;
+
+    w = iw;
+
+    h = ih;
+
+    base = ibase;
+
+    roll = iroll;
+
+    down = idown;
+
+    currentimage = base;
+    
+    number = num;
+
+  }
+
+  
+
+  void update() 
+
+  {
+
+    over();
+    
+    mouseReleased();
+    
+    if(pressed) {
+     
+      currentimage = down;
+      isPressed = true;
+
+    } else if (isOver){
+     
+      currentimage = roll;
+      if(isPressed == true)
+      {
+      isPressed = false; 
+      if(number == "english")
+      {
+        gobal_isEng = true;
+        stage = 1;
+      }
+      if(number == "spanish")
+      {
+        gobal_isEng = false;
+        stage = 1;
+      }
+      }
+    } else {
+    
+      currentimage = base;
+
+    }
+
+  }
+
+  
+
+  void over() 
+
+  {
+    
+     //println("DEBUG 0");
+     //println("x: "+x);
+     //println("y: "+y);
+     //println("w: "+w);
+     //println("h: "+h);
+     //println("mouseX: " + mouseX);
+     //println("mouseX: " + mouseY);
+     //println("//////////////////////////////////////////////////////");
+     
+    if( overRect(x, y, w, h) ) {
+
+      isOver = true;
+     
+    } else {
+      
+      isOver = false;
+
+    }
+
+  }
+
+  
+
+  void display() 
+
+  {
+
+    image(currentimage, x, y, w, h);
+
   }
 
 }
