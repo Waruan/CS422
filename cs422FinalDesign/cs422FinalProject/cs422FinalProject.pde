@@ -1011,7 +1011,7 @@ void settingDraw()
   //Selecting setting icons
   if(settingFlag == 1 && displayFlag == 0)
   {
-   fill(102);
+   fill(127, 127, 127);
    
    //the gray back box
    rect(settingXaxis,settingYaxis,settingWidth,settingHeight);
@@ -1060,7 +1060,7 @@ void settingDraw()
   if(settingFlag == 1 && displayFlag == 1)
   {
     
-    fill(102);
+    fill(127, 127, 127);
     rect(settingXaxis,settingYaxis,settingWidth,settingHeight);
     buttonIconSize.update();
     
@@ -1091,7 +1091,7 @@ void settingDraw()
   
   if(settingFlag == 1 && displayFlag == 2)
   {
-    fill(102);
+    fill(127, 127, 127);
     rect(settingXaxis,settingYaxis,settingWidth,settingHeight);
    
     //Open Bluetooth settings
@@ -1109,7 +1109,7 @@ void settingDraw()
   }
   if(settingFlag == 1 && displayFlag == 3)
   {
-    fill(102);
+    fill(127, 127, 127);
    
  rect(settingXaxis,settingYaxis,settingWidth,settingHeight);
     //open up time settings
@@ -1135,7 +1135,7 @@ void settingDraw()
   }
   if(settingFlag == 1 && displayFlag == 4)
   {
-    fill(102);
+    fill(127, 127, 127);
    
     rect(settingXaxis,settingYaxis,settingWidth,settingHeight);
     //Bluetooth on
@@ -1149,7 +1149,7 @@ void settingDraw()
   }
   if(settingFlag == 1 && displayFlag == 5)
   {
-    fill(102);
+    fill(127, 127, 127);
    
     rect(settingXaxis,settingYaxis,settingWidth,settingHeight);
     //bluetooth Off
@@ -1163,7 +1163,7 @@ void settingDraw()
   }
     if(settingFlag == 1 && displayFlag == 6)
   {
-    fill(102);
+    fill(127,127,127);
    
     rect(settingXaxis,settingYaxis,settingWidth,settingHeight);
     //Enter code to change time to pacific
@@ -1190,7 +1190,7 @@ void settingDraw()
     if(settingFlag == 1 && displayFlag == 7)
   {
     //Enter code to change time to central
-    fill(102);
+    fill(127,127,127);
    
     rect(settingXaxis,settingYaxis,settingWidth,settingHeight);
    
@@ -1217,7 +1217,7 @@ void settingDraw()
   if(settingFlag == 1 && displayFlag == 8)
   {
     //Enter code to change time to eastern
-    fill(102);
+    fill(127,127,127);
    
    rect(settingXaxis,settingYaxis,settingWidth,settingHeight);
     buttonpacificTimeZone.update();
@@ -1243,7 +1243,7 @@ void settingDraw()
     if(settingFlag == 1 && displayFlag == 9)
   {
     //Enter code to change time to mountain
-    fill(102);
+    fill(127,127,127);
    
    rect(settingXaxis,settingYaxis,settingWidth,settingHeight);
     buttonpacificTimeZone.update();
@@ -1275,7 +1275,7 @@ void settingDraw()
       return;
     }
     //personalization
-    fill(102);
+    fill(127, 127, 127);
    
     rect(settingXaxis,settingYaxis,settingWidth,settingHeight);
     
@@ -1306,14 +1306,14 @@ void settingDraw()
   if(settingFlag == 1 && displayFlag == 13)
   {
     //Contrast
-    fill(102);
+    fill(127, 127, 127);
     
     
   }
   if(settingFlag == 1 && displayFlag == 14)
   {
     //Language
-    fill(102);
+    fill(127, 127, 127);
    
    rect(settingXaxis,settingYaxis,settingWidth,settingHeight);
     buttonarabic.display();
@@ -1342,7 +1342,7 @@ void settingDraw()
   if(settingFlag == 1 && displayFlag == 15)
   {
     //Arabic
-    fill(102);
+    fill(127, 127, 127);
    
    rect(settingXaxis,settingYaxis,settingWidth,settingHeight);
     buttonarabic.display();
@@ -1371,7 +1371,7 @@ void settingDraw()
   if(settingFlag == 1 && displayFlag == 16)
   {
     //Deutsch
-    fill(102);
+    fill(127, 127, 127);
    
    rect(settingXaxis,settingYaxis,settingWidth,settingHeight);
     buttonarabic.display();
@@ -1401,7 +1401,7 @@ void settingDraw()
   if(settingFlag == 1 && displayFlag == 17)
   {
     //dutch
-    fill(102);
+    fill(127, 127, 127);
    
    rect(settingXaxis,settingYaxis,settingWidth,settingHeight);
     buttonarabic.display();
@@ -1431,7 +1431,7 @@ void settingDraw()
   if(settingFlag == 1 && displayFlag == 18)
   {
     //english
-    fill(102);
+    fill(127, 127, 127);
    
    rect(settingXaxis,settingYaxis,settingWidth,settingHeight);
     buttonarabic.display();
@@ -1461,7 +1461,7 @@ void settingDraw()
   if(settingFlag == 1 && displayFlag == 19)
   {
     //spanish
-    fill(102);
+    fill(127, 127, 127);
    
    rect(settingXaxis,settingYaxis,settingWidth,settingHeight);
     buttonarabic.display();
@@ -1491,7 +1491,7 @@ void settingDraw()
   if(settingFlag == 1 && displayFlag == 20)
   {
     //french
-    fill(102);
+    fill(127, 127, 127);
    
    rect(settingXaxis,settingYaxis,settingWidth,settingHeight);
     buttonarabic.display();
@@ -1521,7 +1521,7 @@ void settingDraw()
   if(settingFlag == 1 && displayFlag == 21)
   {
     //italian
-    fill(102);
+    fill(127, 127, 127);
    
    rect(settingXaxis,settingYaxis,settingWidth,settingHeight);
     buttonarabic.display();
@@ -1551,7 +1551,7 @@ void settingDraw()
   if(settingFlag == 1 && displayFlag == 22)
   {
     //japanese
-    fill(102);
+    fill(127, 127, 127);
    
    rect(settingXaxis,settingYaxis,settingWidth,settingHeight);
     buttonarabic.display();
@@ -1581,7 +1581,7 @@ void settingDraw()
   if(settingFlag == 1 && displayFlag == 23)
   {
     //norwegian
-    fill(102);
+    fill(127, 127, 127);
    
    rect(settingXaxis,settingYaxis,settingWidth,settingHeight);
     buttonarabic.display();
@@ -1611,7 +1611,7 @@ void settingDraw()
   if(settingFlag == 1 && displayFlag == 24)
   {
     //polish
-    fill(102);
+    fill(127, 127, 127);
    
    rect(settingXaxis,settingYaxis,settingWidth,settingHeight);
     buttonarabic.display();
@@ -1641,7 +1641,7 @@ void settingDraw()
   if(settingFlag == 1 && displayFlag == 25)
   {
     //News filter
-    fill(102);
+    fill(127, 127, 127);
    
    rect(settingXaxis,settingYaxis,settingWidth,settingHeight);
    if(filterFlag1 == 1)
@@ -1679,7 +1679,7 @@ void settingDraw()
   if(settingFlag == 1 && displayFlag == 26)
   {
     //Filter1(gaming)
-    fill(102);
+    fill(127, 127, 127);
    
    rect(settingXaxis,settingYaxis,settingWidth,settingHeight);
     if(filterFlag1 == 1)
@@ -1726,7 +1726,7 @@ void settingDraw()
   if(settingFlag == 1 && displayFlag == 27)
   {
     //Filter2(Business)
-    fill(102);
+    fill(127, 127, 127);
    
    rect(settingXaxis,settingYaxis,settingWidth,settingHeight);
     if(filterFlag1 == 1)
@@ -1772,7 +1772,7 @@ void settingDraw()
   if(settingFlag == 1 && displayFlag == 28)
   {
     //Filter3(Politics)
-    fill(102);
+    fill(127, 127, 127);
    
    rect(settingXaxis,settingYaxis,settingWidth,settingHeight);
     if(filterFlag1 == 1)
@@ -1818,7 +1818,7 @@ void settingDraw()
   if(settingFlag == 1 && displayFlag == 29)
   {
     //Filter4(Technology)
-    fill(102);
+    fill(127, 127, 127);
    
    rect(settingXaxis,settingYaxis,settingWidth,settingHeight);
     if(filterFlag1 == 1)
@@ -1864,7 +1864,7 @@ void settingDraw()
   if(settingFlag == 1 && displayFlag == 30)
   {
     //Remove filter1
-    fill(102);
+    fill(127, 127, 127);
    
    rect(settingXaxis,settingYaxis,settingWidth,settingHeight);
     buttonfilter1.x = filterX;
@@ -1905,7 +1905,7 @@ void settingDraw()
   if(settingFlag == 1 && displayFlag == 31)
   {
     //Remove filter2
-    fill(102);
+    fill(127, 127, 127);
    
    rect(settingXaxis,settingYaxis,settingWidth,settingHeight);
     buttonfilter2.x = filterX;
@@ -1946,7 +1946,7 @@ void settingDraw()
   if(settingFlag == 1 && displayFlag == 32)
   {
     //Remove filter3
-    fill(102);
+    fill(127, 127, 127);
    
    rect(settingXaxis,settingYaxis,settingWidth,settingHeight);
     buttonfilter3.x = filterX;
@@ -1987,7 +1987,7 @@ void settingDraw()
   if(settingFlag == 1 && displayFlag == 33)
   {
     //Remove filter4
-    fill(102);
+    fill(127, 127, 127);
    
    rect(settingXaxis,settingYaxis,settingWidth,settingHeight);
     buttonfilter4.x = filterX;
@@ -2036,7 +2036,7 @@ void settingDraw()
   if(settingFlag == 1 && displayFlag == 35)
   {
     //Transperency
-    fill(102);
+    fill(127, 127, 127);
     rect(settingXaxis,settingYaxis,settingWidth,settingHeight);
 
     
@@ -2054,7 +2054,7 @@ void settingDraw()
   if(settingFlag == 1 && displayFlag == 36)
   {
     //WiFI
-    fill(102);
+    fill(127, 127, 127);
    
    rect(settingXaxis,settingYaxis,settingWidth,settingHeight);
     if(wifiFlag == 0)
@@ -2079,7 +2079,7 @@ void settingDraw()
   if(settingFlag == 1 && displayFlag == 37)
   {
     //click turned on wifi to turn it off
-    fill(102);
+    fill(127, 127, 127);
    
     rect(settingXaxis,settingYaxis,settingWidth,settingHeight);
     buttonwifiOff.update();
@@ -2090,7 +2090,7 @@ void settingDraw()
   if(settingFlag == 1 && displayFlag == 38)
   {
     //click turned off wifi to turn it on
-    fill(102);
+    fill(127, 127, 127);
    
    rect(settingXaxis,settingYaxis,settingWidth,settingHeight);
     buttonwifiOn.update();
@@ -2107,7 +2107,7 @@ void settingDraw()
   if(settingFlag == 1 && displayFlag == 39)
   {
     //uicWifi pressed dont do anything as that is the default account
-    fill(102);
+    fill(127, 127, 127);
    
    rect(settingXaxis,settingYaxis,settingWidth,settingHeight);
     buttonuicWifi.y = network1Y;
@@ -2127,7 +2127,7 @@ void settingDraw()
   if(settingFlag == 1 && displayFlag == 40)
   {
     //uicWifi2 pressed change default
-    fill(102);
+    fill(127, 127, 127);
    
    rect(settingXaxis,settingYaxis,settingWidth,settingHeight);
     buttonuicWifi.y = network2Y;
@@ -2147,7 +2147,7 @@ void settingDraw()
   if(settingFlag == 1 && displayFlag == 41)
   {
     //uicWifi3 pressed change default
-    fill(102);
+    fill(127, 127, 127);
    
    rect(settingXaxis,settingYaxis,settingWidth,settingHeight);
     buttonuicWifi.y = network3Y;
@@ -6926,7 +6926,7 @@ class SettingImageButtons extends PinButton
       fill(0);  
       text("Bluetooth", (int)canvasWidth/2 - 20, (int)canvasHeight/2 + 280);  
       stroke(0);
-      fill(102);
+      fill(127, 127, 127);
       rect((int)canvasWidth/2 - 140, (int)canvasHeight/2 + 320, 220, 60);
       fill(0);
       text("Alex's FitBit", (int)canvasWidth/2 - 20, (int)canvasHeight/2 + 360);
@@ -6944,7 +6944,7 @@ class SettingImageButtons extends PinButton
       fill(0);  
       text("Bluetooth", (int)canvasWidth/2 - 20, (int)canvasHeight/2 + 280);  
       stroke(0);
-      fill(102);
+      fill(127, 127, 127);
       rect((int)canvasWidth/2 - 140, (int)canvasHeight/2 + 320, 220, 60);
       fill(0);
       text("Alex's FitBit", (int)canvasWidth/2 - 20, (int)canvasHeight/2 + 360);
@@ -6958,7 +6958,7 @@ class SettingImageButtons extends PinButton
       fill(0);  
       text("Bluetooth", (int)canvasWidth/2 - 20, (int)canvasHeight/2 + 280);  
       stroke(0);
-      fill(102);
+      fill(127, 127, 127);
       rect((int)canvasWidth/2 - 140, (int)canvasHeight/2 + 320, 220, 60);
       fill(0);
       text("Alex's FitBit", (int)canvasWidth/2 - 20, (int)canvasHeight/2 + 360);
@@ -7027,7 +7027,7 @@ class SettingImageButtons extends PinButton
     //Doesnt work
     if(displayFlag == 11)
     {
-      fill(102);
+      fill(127, 127, 127);
       rect(settingXaxis,settingYaxis,settingWidth,settingHeight);
       fill(0);  
       if(userList.get(whichUser).isEnglish == true){
@@ -7041,7 +7041,7 @@ class SettingImageButtons extends PinButton
     //Doesnt work
     if(displayFlag == 12)
     {
-      fill(102);
+      fill(127, 127, 127);
       rect(settingXaxis,settingYaxis,settingWidth,settingHeight);
       fill(0);  
       if(userList.get(whichUser).isEnglish == true){
@@ -7206,7 +7206,7 @@ class SettingImageButtons extends PinButton
     if(displayFlag == 34)
     {
     //location
-    fill(102);
+    fill(127, 127, 127);
     rect(settingXaxis,settingYaxis,settingWidth,settingHeight);
     fill(0);  
     textSize(20);
