@@ -330,6 +330,7 @@ boolean boxInUse = false;
 boolean updateText = false;
 int functionInUse;
 
+String currentTimer;
 
 float dragX;
 float dragY;
@@ -3854,29 +3855,7 @@ void userScreenDraw(User current){
   if(activeSmallMusic){
     image(miniPlayer.img, miniPlayer.x_Axis, miniPlayer.y_Axis, miniPlayer.width, miniPlayer.height);
   }
-  if(activeSmallTimer && isTimerRunning){
-    image(miniTimer.img, miniTimer.x_Axis, miniTimer.y_Axis, miniTimer.width, miniTimer.height);
-    if(tm.isFinished()  == false ){
-      //display the time remaining
-      console.log(tm.totalTime - tm.passedTime);
-    }
-    else{
-      timerAudio.play();
-      isTimerRunning = false;
-    }
-    
-  }
-  else if(isTimerRunning){
-    tm.isFinished();
-    if(tm.isFinished() == false){
-      //display the time remaining
-      console.log(tm.totalTime - tm.passedTime);
-    }
-    else{
-      timerAudio.play();
-      isTimerRunning = false;
-    }
-  }
+  
   //rect(2500, 1100, 155, 55);
   Button temp;  
   temp = userList.get(whichUser).open;
@@ -3886,6 +3865,7 @@ void userScreenDraw(User current){
     return;
   }
   
+
 
   if(iconDrag) {
       fill(192,192,192);
@@ -3946,6 +3926,7 @@ void userScreenDraw(User current){
       displayArticleTopics(currentPopup);
     }
     
+    
     //showDates(currentPopup);
     //rect(timer_start_x_axis, timer_start_y_axis, timer_button_width, timer_button_height);
     //rect(playlist2_x_axis, playlist2_y_axis, playlist_width, playlist_height);
@@ -3998,6 +3979,37 @@ void userScreenDraw(User current){
     settingDraw();
   
   }
+  
+  if(activeSmallTimer && isTimerRunning){
+    image(miniTimer.img, miniTimer.x_Axis, miniTimer.y_Axis, miniTimer.width, miniTimer.height);
+    currentTimer = str(int((tm.totalTime - tm.passedTime)/1000));
+    textSize(50);
+    text(currentTimer, 2600, 1060);
+    if(tm.isFinished()  == false ){
+      //display the time remaining
+      console.log(tm.totalTime - tm.passedTime);
+    }
+    else{
+      timerAudio.play();
+      isTimerRunning = false;
+    }
+    
+  }
+  else if(isTimerRunning){
+    tm.isFinished();
+    if(tm.isFinished() == false){
+      //display the time remaining
+      textSize(100);
+      currentTimer = str(int((tm.totalTime - tm.passedTime)/1000));
+      text(currentTimer, currentPopup.x_Axis+200, currentPopup.y_Axis+200);     
+      console.log(tm.totalTime - tm.passedTime);
+    }
+    else{
+      timerAudio.play();
+      isTimerRunning = false;
+    }
+  }
+  
   // draw the active button in a different color
   fill(127,127,0);
 
