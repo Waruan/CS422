@@ -408,6 +408,7 @@ Popup miniPlayer;
 Popup miniTimer;
 //Current Popup being used
 int popup_function = 0;
+String currentArticleTopic;
 
 Button currentButton;
 
@@ -3528,7 +3529,7 @@ void initPopups() {
   popups.add(temp);
   
   //Articles
-  temp = new Popup("Data/Article_Template(list).png", permXLocation, permYLocation, int(articleWidth), int(articleHeight), 5);
+  temp = new Popup("Data/Article_Template _Gaming(list).png", permXLocation, permYLocation, int(articleWidth), int(articleHeight), 5);
   initLocations(temp,5);
   temp.PopupAddClickable(article1_select_x_axis, article1_select_y_axis, article_select_width, article_select_height, 1);
   temp.PopupAddClickable(article2_select_x_axis, article2_select_y_axis, article_select_width, article_select_height, 2);
@@ -3770,26 +3771,26 @@ void setArticleTopics(Popup current) {
   if(filterFlag1 == 1) {
     limit++;
     topics.add("Gaming");
-    println("Adding Gaming");
+    //println("Adding Gaming");
   }
   if(filterFlag2 == 1) {
     limit++; 
     topics.add("Business");
-    println("Adding Business");
+    //println("Adding Business");
   }
   if(filterFlag3 == 1) {
     limit++;
     topics.add("Politics");
-    println("Adding Politics");
+    //println("Adding Politics");
   }
   if(filterFlag4 == 1 && limit < 3) {
     limit++;
     topics.add("Tech");
-    println("Adding Tech");
+    //println("Adding Tech");
   }
   //Default
   if(limit < 3) {
-    println("Default");
+    //println("Default");
     topics = new ArrayList<String>();
     topics.add("Gaming");
     topics.add("Business");
@@ -4764,12 +4765,74 @@ void UserScreen_MouseReleased(){
           
           if(currentPopup.clickable.get(i).function == 9 ) {
             readingArticle = false;
-            currentPopup.img = loadImage("Data/Article_Template(list).png");
+            currentPopup.img = loadImage("Data/Article_Template _Gaming(list).png");
             break;
+          }
+          else if(currentPopup.clickable.get(i).function > 5 && currentPopup.clickable.get(i).function < 9) {
+            //println("Topic: " + currentPopup.clickable.get(i).buttonMessage);
+            if(currentPopup.clickable.get(i).function == 6) {
+              currentArticleTopic = currentPopup.clickable.get(i).buttonMessage;
+              if(currentArticleTopic.equals("Gaming")) {
+              currentPopup.img = loadImage("Data/Article_Template _Gaming(list).png");
+              }
+              else if(currentArticleTopic.equals("Business")) {
+                currentPopup.img = loadImage("Data/Article_Template _businesslist).png");
+              }
+              else if(currentArticleTopic.equals("Politics")) {
+                currentPopup.img = loadImage("Data/Article_Template _politics(list).png");
+              }
+              else if(currentArticleTopic.equals("Tech")) {
+                currentPopup.img = loadImage("Data/Article_Template _tech(list).png");
+              }
+              
+            }
+            else if(currentPopup.clickable.get(i).function == 7) {
+              currentArticleTopic = currentPopup.clickable.get(i).buttonMessage;
+              if(currentArticleTopic.equals("Gaming")) {
+              currentPopup.img = loadImage("Data/Article_Template _Gaming(list).png");
+              }
+              else if(currentArticleTopic.equals("Business")) {
+                currentPopup.img = loadImage("Data/Article_Template _businesslist).png");
+              }
+              else if(currentArticleTopic.equals("Politics")) {
+                currentPopup.img = loadImage("Data/Article_Template _politics(list).png");
+              }
+              else if(currentArticleTopic.equals("Tech")) {
+                currentPopup.img = loadImage("Data/Article_Template _tech(list).png");
+              }
+            }
+            else if(currentPopup.clickable.get(i).function == 8) {
+              currentArticleTopic = currentPopup.clickable.get(i).buttonMessage;
+              if(currentArticleTopic.equals("Gaming")) {
+              currentPopup.img = loadImage("Data/Article_Template _Gaming(list).png");
+              }
+              else if(currentArticleTopic.equals("Business")) {
+                currentPopup.img = loadImage("Data/Article_Template _businesslist).png");
+              }
+              else if(currentArticleTopic.equals("Politics")) {
+                currentPopup.img = loadImage("Data/Article_Template _politics(list).png");
+              }
+              else if(currentArticleTopic.equals("Tech")) {
+                currentPopup.img = loadImage("Data/Article_Template _tech(list).png");
+              }
+            }
+            
           }
           else if(currentPopup.clickable.get(i).function <= 5) {
             readingArticle = true;
-            currentPopup.img = loadImage("Data/Article_Template(detail).png");
+            
+            if(currentArticleTopic.equals("Gaming")) {
+              currentPopup.img = loadImage("Data/Article_Template_Gaming(detail).png");
+            }
+            else if(currentArticleTopic.equals("Business")) {
+              currentPopup.img = loadImage("Data/Article_Template_business(detail).png");
+            }
+            else if(currentArticleTopic.equals("Politics")) {
+              currentPopup.img = loadImage("Data/Article_Template_politics(detail).png");
+            }
+            else if(currentArticleTopic.equals("Tech")) {
+              currentPopup.img = loadImage("Data/Article_Template_Tech(detail).png");
+            }
             break;
           }
 
@@ -4911,7 +4974,9 @@ void UserScreen_MouseReleased(){
   
 }
 
-
+void changeArticles(Popup current, String str) {
+  
+}
 
 // Check if a different function button has been press
 boolean clickOtherButton(){
