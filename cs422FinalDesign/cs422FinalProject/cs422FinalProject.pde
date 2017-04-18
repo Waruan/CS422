@@ -6833,8 +6833,10 @@ class SettingImageButtons extends PinButton
     {
         fill(0); 
         textAlign(CENTER);
-        increaseSize.resize(23,20);
-        image(increaseSize, (int)canvasWidth/2 + 130, (int)canvasHeight/2 + 438);
+        increaseSize.resize(33,30);
+        image(increaseSize, (int)canvasWidth/2 + 165, (int)canvasHeight/2 + 390);
+        decreaseSize.resize(33, 30);
+        image(decreaseSize, (int)canvasWidth/2 - 235, (int)canvasHeight/2 + 390);
         if(userList.get(whichUser).isEnglish == true){
           text("Select icon size", settingXaxis + (settingWidth/2) , settingYaxis + 50);
         }
@@ -6853,9 +6855,9 @@ class SettingImageButtons extends PinButton
       fill(102);
       rect((int)canvasWidth/2 - 140, (int)canvasHeight/2 + 320, 220, 60);
       fill(0);
-      text("HTC One", (int)canvasWidth/2 - 20, (int)canvasHeight/2 + 360);
+      text("Alex's FitBit", (int)canvasWidth/2 - 20, (int)canvasHeight/2 + 360);
       bluetooth.resize(23,20);
-      image(bluetooth, (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 338);
+      image(bluetooth, (int)canvasWidth/2 - 140, (int)canvasHeight/2 + 338);
     }
     if(displayFlag == 3)
     {
@@ -6871,9 +6873,9 @@ class SettingImageButtons extends PinButton
       fill(102);
       rect((int)canvasWidth/2 - 140, (int)canvasHeight/2 + 320, 220, 60);
       fill(0);
-      text("HTC One", (int)canvasWidth/2 - 20, (int)canvasHeight/2 + 360);
+      text("Alex's FitBit", (int)canvasWidth/2 - 20, (int)canvasHeight/2 + 360);
       bluetooth.resize(23,20);
-      image(bluetooth, (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 338);
+      image(bluetooth, (int)canvasWidth/2 - 140, (int)canvasHeight/2 + 338);
     }
     if(displayFlag == 5)
     {
@@ -6885,9 +6887,9 @@ class SettingImageButtons extends PinButton
       fill(102);
       rect((int)canvasWidth/2 - 140, (int)canvasHeight/2 + 320, 220, 60);
       fill(0);
-      text("HTC One", (int)canvasWidth/2 - 20, (int)canvasHeight/2 + 360);
+      text("Alex's FitBit", (int)canvasWidth/2 - 20, (int)canvasHeight/2 + 360);
       bluetooth.resize(23,20);
-      image(bluetooth, (int)canvasWidth/2 - 130, (int)canvasHeight/2 + 338);
+      image(bluetooth, (int)canvasWidth/2 - 140, (int)canvasHeight/2 + 338);
     }
     if(displayFlag == 6)
     {
