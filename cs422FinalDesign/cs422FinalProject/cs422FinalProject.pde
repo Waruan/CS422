@@ -6844,7 +6844,7 @@ class SettingImageButtons extends PinButton
     else{
       text("Seleccione su filtro para el feed de noticias", (int)canvasWidth/2 - 220, (int)canvasHeight/2 + 230);
     }
-    fill(102);
+    fill(127, 127, 127);
     rect((int)canvasWidth/2 - 30, (int)canvasHeight/2 + 260, 100, 40);
     fill(0);
     
