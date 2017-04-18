@@ -380,7 +380,7 @@ int selectedIconY_axis;
 
 int draggingIndex;
 
-
+String currentSongName = "None";
 
 
 // placeholder for future image
@@ -3911,6 +3911,10 @@ void userScreenDraw(User current){
     
     image(currentPopup.img, currentPopup.x_Axis, currentPopup.y_Axis, currentPopup.width, currentPopup.height);
     
+    if(currentPopup.function == 8) {
+      text(currentSongName, currentPopup.x_Axis+200,currentPopup.y_Axis+50);
+    }
+    
     if(currentPopup.function == 5) {
       setArticleTopics(currentPopup);
       if(readingArticle){
@@ -4859,6 +4863,8 @@ void UserScreen_MouseReleased(){
           }
           else if(currentPopup.clickable.get(i).function == 2) {
             println("Pressed pause/play button");
+            
+            text(currentSongName, currentPopup.x_Axis+200,currentPopup.y_Axis+50);
             fadeOut=!fadeOut;
             if (fadeOut){
               vol=1;
@@ -5423,6 +5429,8 @@ void repeat(){
 void next(){
   current++;
   int track = current%(songNames.size());
+  
+  currentSongName = songNames.get(track);
   println(track);
   audio.setAttribute("src",songNames.get(current%(songNames.size()))+fileExt);
   audio.play();
